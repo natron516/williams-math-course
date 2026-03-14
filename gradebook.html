@@ -76,6 +76,7 @@
         <button class="primary" onclick="saveData()">💾 Save</button>
         <button onclick="addStudent()">➕ Add Student</button>
         <button onclick="exportCSV()">📤 Export CSV</button>
+        <button onclick="exportToSheets()">📊 Open in Google Sheets</button>
         <button class="danger" onclick="if(confirm('Clear ALL grades? This cannot be undone.'))clearAll()">🗑️ Clear All</button>
         <span class="save-status" id="saveStatus"></span>
     </div>
@@ -318,6 +319,36 @@ function exportCSV() {
     a.href = URL.createObjectURL(blob);
     a.download = 'math_grades.csv';
     a.click();
+}
+
+function exportToSheets() {
+    // Build TSV data that Google Sheets can import
+    let tsv = 'Name\tQ1\tQ2\tQ3\tQ4\tQ5\tQ6\tQ7\tT1\tT2\tFinal\tParticip.\tWeighted Avg\tLetter Grade\n';
+    students.forEach((s, i) => {
+        let tw = 0, ws = 0;
+        COLS.forEach((col, j) => {
+            if (s[col] !== '' && s[col] !== null) { ws += parseFloat(s[col]) * WEIGHTS[j]; tw += WEIGHTS[j]; }
+        });
+        const avg = tw > 0 ? (ws/tw).toFixed(1) : '';
+        const letter = tw > 0 ? getLetterGrade(ws/tw) : '';
+        tsv += `${s.name}\t${COLS.map(c => s[c]).join('\t')}\t${avg}\t${letter}\n`;
+    });
+    
+    // Copy to clipboard and open Google Sheets
+    navigator.clipboard.writeText(tsv).then(() => {
+        alert('Grade data copied to clipboard!\\n\\n1. Google Sheets will open in a new tab\\n2. Click cell A1\\n3. Press Ctrl+V (or Cmd+V) to paste\\n\\nAll grades will appear in the spreadsheet!');
+        window.open('https://sheets.new', '_blank');
+    }).catch(() => {
+        // Fallback: create a textarea for manual copy
+        const ta = document.createElement('textarea');
+        ta.value = tsv;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        alert('Grade data copied! Opening Google Sheets...');
+        window.open('https://sheets.new', '_blank');
+    });
 }
 
 loadData();
