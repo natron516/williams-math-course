@@ -81,7 +81,11 @@
                   display: flex; align-items: center; justify-content: center; cursor: pointer;
                   font-size: 0.72em; font-weight: 800; color: #C06C84; flex-shrink: 0;
                   transition: all 0.2s; background: white; }
-        .s-check:hover { background: #FDE8EE; border-color: #C06C84; transform: scale(1.1); }
+        .s-check:hover { background: #FDE8EE; border-color: #C06C84; transform: scale(1.1); color: transparent; }
+        .s-check:hover::after { content: '✓'; color: #C06C84; position: absolute; font-weight: 800; font-size: 0.85em; }
+        .s-check { position: relative; display: flex; align-items: center; justify-content: center; }
+        .s-check.done:hover { color: white; }
+        .s-check.done:hover::after { color: white; }
         .s-check.done { background: #C06C84; border-color: #C06C84; color: white; }
         .s-info { flex: 1; min-width: 0; }
         .s-title { font-size: 0.88em; font-weight: 700; color: #444; }
