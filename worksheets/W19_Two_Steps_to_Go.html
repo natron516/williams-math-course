@@ -3,503 +3,411 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Worksheet 19: Two Steps to Go</title>
-    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
-<style>
+    <title>Two Steps to Go</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-               max-width: 800px; margin: 0 auto; padding: 20px; background: #f5f5f5; color: #333; }
-        .header { background: linear-gradient(135deg, #1F4E79, #2E75B6); color: white;
-                   padding: 20px; border-radius: 12px; margin-bottom: 20px; text-align: center; }
-        .header h1 { font-size: 1.5em; margin-bottom: 5px; }
-        .header p { font-size: 0.9em; opacity: 0.9; }
-        .student-info input { border: none; border-bottom: 2px solid #2E75B6; padding: 8px;
-                               font-size: 1em; flex: 1; min-width: 150px; outline: none; }
-        .section { background: white; padding: 20px; border-radius: 12px; margin-bottom: 15px;
-                   box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
-        .section h2 { color: #1F4E79; font-size: 1.2em; margin-bottom: 15px;
-                      border-bottom: 2px solid #D6E4F0; padding-bottom: 8px; }
-        .problem { padding: 12px 0; border-bottom: 1px solid #eee; }
-        .problem:last-child { border-bottom: none; }
-        .problem-num { display: inline-block; background: #2E75B6; color: white;
-                       width: 28px; height: 28px; border-radius: 50%; text-align: center;
-                       line-height: 28px; font-size: 0.85em; font-weight: bold; margin-right: 10px; }
-        .problem-text { display: inline; font-size: 1.05em; }
-        .answer-box { display: block; margin: 10px 0 5px 38px; border: 2px dashed #ccc;
-                      border-radius: 8px; padding: 12px; min-height: 45px;
-                      font-size: 1em; width: calc(100% - 38px); }
-        .answer-box:focus { border-color: #2E75B6; outline: none; background: #f8fbff; }
-        .work-area { display: block; margin: 8px 0 5px 38px; border: 1px solid #ddd;
-                     border-radius: 8px; padding: 10px; min-height: 80px;
-                     font-size: 0.9em; width: calc(100% - 38px); color: #666; }
-        .work-area:focus { border-color: #2E75B6; outline: none; }
-        .emoji { font-size: 1.3em; margin-right: 5px; }
-        .context { background: #f0f7ff; padding: 12px; border-radius: 8px;
-                   margin: 10px 0; border-left: 4px solid #2E75B6; font-size: 0.95em; }
-        .hint { color: #888; font-size: 0.85em; font-style: italic; margin-left: 38px; }
-        .mc-option { display: block; padding: 10px 15px; margin: 5px 0 5px 38px;
-                     background: #f8f8f8; border: 2px solid #e0e0e0; border-radius: 8px;
-                     cursor: pointer; transition: all 0.2s; font-size: 1em; }
-        .mc-option:hover { background: #e8f0fe; border-color: #2E75B6; }
-        .mc-option.selected { background: #d0e4ff; border-color: #2E75B6; font-weight: bold; }
-        .answer-key { background: #fff9e6; padding: 20px; border-radius: 12px;
-                      margin: 20px 0; border: 2px solid #f0c040; }
-        .answer-key h2 { color: #8B6914; }
-        .toggle-btn { display: block; margin: 15px auto; padding: 12px 30px;
-                      background: #1F4E79; color: white; border: none; border-radius: 8px;
-                      font-size: 1em; cursor: pointer; }
-        .toggle-btn:hover { background: #2E75B6; }
-        .score-box { background: #e2efda; padding: 15px; border-radius: 8px;
-                     text-align: center; font-size: 1.2em; margin-top: 15px; }
-        @media print {
-            .toggle-btn, .answer-key { display: none !important; }
-            .section { break-inside: avoid; }
+        body { font-family: 'Nunito', sans-serif; max-width: 820px; margin: 0 auto;
+               background: #F5F7FA; color: #333; -webkit-tap-highlight-color: transparent; }
+
+        .hero { background: linear-gradient(135deg, #E65100, #FB8C00, #FFA726);
+                color: white; padding: 28px 22px; position: relative; overflow: hidden;
+                border-radius: 0 0 24px 24px; }
+        .hero::after { content: '🪜'; position: absolute; font-size: 6em; opacity: 0.1;
+                      top: -10px; right: 10px; transform: rotate(12deg); }
+        .hero .badge { display: inline-block; background: rgba(255,255,255,0.2);
+                      padding: 4px 12px; border-radius: 16px; font-size: 0.75em; font-weight: 700; }
+        .hero h1 { font-size: 1.6em; font-weight: 900; margin: 6px 0 3px; }
+        .hero p { opacity: 0.85; font-size: 0.9em; }
+
+        .progress-wrap { padding: 10px 16px 0; display: flex; align-items: center; gap: 8px; }
+        .progress-track { flex: 1; height: 6px; background: #E0E4EA; border-radius: 6px; overflow: hidden; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #4CAF50, #81C784);
+                        border-radius: 6px; transition: width 0.3s; width: 0%; }
+        .progress-label { font-size: 0.75em; font-weight: 700; color: #999; }
+
+        .card { background: white; border-radius: 18px; margin: 12px 14px; overflow: hidden;
+                box-shadow: 0 1px 6px rgba(0,0,0,0.05); }
+        .card-head { padding: 14px 18px; font-weight: 800; font-size: 1em;
+                    display: flex; align-items: center; gap: 10px; }
+        .card-head .emoji { font-size: 1.3em; }
+        .card-head.blue { color: #1565C0; border-bottom: 2px solid #E3F2FD; }
+        .card-head.orange { color: #E65100; border-bottom: 2px solid #FFF3E0; }
+        .card-head.green { color: #2E7D32; border-bottom: 2px solid #E8F5E9; }
+        .card-head.purple { color: #6A1B9A; border-bottom: 2px solid #F3E5F5; }
+        .card-body { padding: 16px; }
+
+        .scene { display: flex; gap: 14px; align-items: center; padding: 16px;
+                background: #F9FAFB; border-radius: 14px; margin-bottom: 14px; }
+        .scene svg { flex-shrink: 0; }
+        .scene .desc h4 { font-size: 0.95em; font-weight: 800; margin-bottom: 3px; }
+        .scene .desc p { font-size: 0.83em; color: #888; line-height: 1.4; }
+
+        .eq-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+                 font-size: 1.05em; font-weight: 700; color: #555; padding: 10px 0; }
+        .eq-row .eq-input { width: 60px; padding: 6px 8px; border: 2px solid #E0E0E0;
+                          border-radius: 8px; font-size: 0.95em; font-weight: 700;
+                          font-family: 'Nunito', sans-serif; text-align: center;
+                          outline: none; color: #E65100; }
+        .eq-row .eq-input:focus { border-color: #FB8C00; box-shadow: 0 0 0 3px rgba(251,140,0,0.1); }
+        .eq-row .eq-input.wide { width: 80px; }
+        .eq-arrow { color: #FB8C00; font-size: 1.1em; font-weight: 900; }
+
+        /* Step badges */
+        .step-badge { display: inline-block; padding: 2px 8px; border-radius: 6px;
+                     font-size: 0.72em; font-weight: 800; margin-right: 4px; }
+        .step-badge.s1 { background: #FFF3E0; color: #E65100; }
+        .step-badge.s2 { background: #E8F5E9; color: #2E7D32; }
+
+        /* Mini card grid for Part 2 */
+        .mini-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .mini-card { background: #FAFBFC; border: 2px solid #EEE; border-radius: 14px; padding: 14px; }
+        .mini-card .eq-label { font-size: 0.92em; font-weight: 800; color: #555; margin-bottom: 6px; }
+        .mini-card .eq-row { padding: 6px 0; font-size: 0.95em; }
+        .mini-card .eq-row .eq-input { width: 52px; }
+
+        .mc-options { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+        .mc-btn { flex: 1; padding: 10px; border: 2px solid #E0E0E0; border-radius: 10px;
+                 background: white; font-weight: 700; font-size: 0.85em; cursor: pointer;
+                 text-align: center; transition: all 0.15s; font-family: 'Nunito', sans-serif; color: #666; min-width: 80px; }
+        .mc-btn:hover { border-color: #FB8C00; color: #E65100; }
+        .mc-btn.selected { background: #6A1B9A; color: white; border-color: #6A1B9A; }
+
+        .q-inline { display: flex; align-items: flex-start; gap: 10px; padding: 12px 0;
+                   border-bottom: 1px solid #F0F0F0; }
+        .q-inline:last-child { border-bottom: none; }
+        .q-num { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center;
+                justify-content: center; font-weight: 800; font-size: 0.78em; color: white;
+                background: linear-gradient(135deg, #42A5F5, #1565C0); flex-shrink: 0; }
+        .q-num.orange { background: linear-gradient(135deg, #FF9800, #E65100); }
+        .q-num.green { background: linear-gradient(135deg, #66BB6A, #2E7D32); }
+        .q-num.purple { background: linear-gradient(135deg, #AB47BC, #6A1B9A); }
+        .q-body { flex: 1; }
+        .q-body .text { font-size: 0.92em; line-height: 1.5; margin-bottom: 6px; }
+        .hint { font-size: 0.8em; color: #FB8C00; font-weight: 600; margin-bottom: 4px; }
+
+        .fact { margin: 14px 0; padding: 14px 16px; border-radius: 14px;
+               background: #FFFDE7; border: 1.5px solid #FFE082; font-size: 0.85em; line-height: 1.5; }
+
+        .submit-wrap { text-align: center; padding: 20px; }
+        .submit-btn { background: linear-gradient(135deg, #4CAF50, #388E3C); color: white;
+                     border: none; padding: 14px 42px; border-radius: 14px; font-size: 1.1em;
+                     font-weight: 800; font-family: 'Nunito', sans-serif; cursor: pointer;
+                     box-shadow: 0 2px 8px rgba(76,175,80,0.3); }
+        .submit-btn:disabled { opacity: 0.5; }
+        #submitMsg { margin-top: 10px; font-weight: 700; }
+
+        .answer-key { background: #FFF9E6; padding: 18px; border-radius: 14px; margin: 0 14px 14px;
+                     border: 2px solid #F0C040; display: none; }
+        .answer-key-header { display: flex; justify-content: space-between; align-items: center;
+                            font-weight: 800; color: #8B6914; margin-bottom: 10px; padding-bottom: 8px;
+                            border-bottom: 2px solid rgba(240,192,64,0.25); }
+        .answer-btn { display: block; margin: 0 auto 16px; padding: 10px 24px;
+                     background: linear-gradient(135deg, #1565C0, #42A5F5); color: white;
+                     border: none; border-radius: 10px; font-size: 0.9em; font-weight: 700;
+                     cursor: pointer; font-family: 'Nunito', sans-serif; }
+        .close-btn { background: none; border: 1px solid #ddd; padding: 4px 10px;
+                    border-radius: 6px; cursor: pointer; font-size: 0.8em; color: #888; }
+
+        @media (max-width: 500px) {
+            .mini-grid { grid-template-columns: 1fr; }
+            .scene { flex-direction: column; text-align: center; }
         }
-    
-.work-wrapper { position: relative; }
-.work-tabs { display: flex; align-items: center; gap: 4px; margin-bottom: 6px; }
-.work-tab { padding: 6px 14px; border: 1.5px solid #e0e0e0; border-radius: 8px 8px 0 0;
-            background: #f5f5f5; cursor: pointer; font-family: 'Nunito', sans-serif;
-            font-size: 0.85em; font-weight: 600; color: #888; transition: all 0.2s; border-bottom: none; }
-.work-tab.active { background: white; color: #2E75B6; border-color: #2E75B6; }
-.draw-tools { display: flex; align-items: center; gap: 6px; margin-left: auto;
-              padding: 3px 8px; background: #f8f9fa; border-radius: 8px; }
-.tool-btn { background: none; border: 1.5px solid transparent; padding: 3px 6px;
-            border-radius: 6px; cursor: pointer; font-size: 1em; transition: all 0.2s; }
-.tool-btn.active { border-color: #2E75B6; background: #e8f0fe; }
-.tool-btn:hover { background: #e8e8e8; }
-.draw-panel canvas { display: block; }
-@media (max-width: 600px) {
-    .draw-tools { flex-wrap: wrap; gap: 4px; }
-    .work-tabs { flex-wrap: wrap; }
-}
-</style>
+    </style>
 </head>
 <body>
-    <div class="header">
-        <h1>Worksheet 19: Two Steps to Go</h1>
-        <p>Session 19 — Two-step equations and phone plan math</p>
+    <div class="hero">
+        <div class="badge">📄 WORKSHEET · SESSION 19</div>
+        <h1>🪜 Two Steps to Go</h1>
+        <p>Climb up to the answer — one step at a time!</p>
     </div>
-    <div class="section"><h2>Part 1: Two-Step Equations</h2><div class="problem">
-        <span class="problem-num">1</span>
-        <span class="problem-text">2x + 5 = 17</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">2</span>
-        <span class="problem-text">3n − 4 = 20</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">3</span>
-        <span class="problem-text">4y + 7 = 31</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">4</span>
-        <span class="problem-text">x/3 + 5 = 11</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">5</span>
-        <span class="problem-text">5m − 12 = 28</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">6</span>
-        <span class="problem-text">n/4 − 3 = 7</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">7</span>
-        <span class="problem-text">2.5x + 10 = 35</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">8</span>
-        <span class="problem-text">6p + 15 = 57</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div></div><div class="section"><h2>Part 2: 📱 Phone Plan Math</h2><div class="context">Compare these phone plans:<br>• Plan A: $25/month + $0.10 per text<br>• Plan B: $15/month + $0.15 per text<br>• Plan C: $40/month unlimited texts</div><div class="problem">
-        <span class="problem-num">9</span>
-        <span class="problem-text">On Plan A, your bill was $37. How many texts did you send? Write and solve: 25 + 0.10t = 37</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">10</span>
-        <span class="problem-text">On Plan B, your bill was $33. How many texts?</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">11</span>
-        <span class="problem-text">At what number of texts do Plan A and Plan B cost the same? (Set 25 + 0.10t = 15 + 0.15t)</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">12</span>
-        <span class="problem-text">If you send 200 texts/month, which plan is cheapest?</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div></div><div class="section"><h2>Part 3: Real-World Two-Step Problems</h2><div class="context">Write the equation, then solve!</div><div class="problem">
-        <span class="problem-num">13</span>
-        <span class="problem-text">A gym charges $30 to join plus $15/month. You've paid $105 total. How many months? Write and solve.</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">14</span>
-        <span class="problem-text">A taxi charges $3.50 base fare plus $2.00 per mile. Your fare was $15.50. How many miles?</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">15</span>
-        <span class="problem-text">You're saving for a $200 guitar. You have $50 already and save $25/week. How many weeks until you can buy it?</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">16</span>
-        <span class="problem-text">A movie streaming service costs $8/month plus $4 per rental. This month's bill was $28. How many movies did you rent?</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">17</span>
-        <span class="problem-text">You earn $12/hour at your job. After paying $35 for gas, you have $109 left from your paycheck. How many hours did you work?</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">18</span>
-        <span class="problem-text">A pizza place charges $10 for a plain pizza plus $1.75 per topping. Your pizza cost $17.25. How many toppings?</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div></div>
-    
-    
-    <div style="text-align:center; margin: 30px 20px;">
-        <button id="submitBtn" onclick="doSubmit()" style="background:linear-gradient(135deg,#4CAF50,#388E3C); color:white; border:none; padding:14px 40px; border-radius:12px; font-size:1.1em; font-weight:700; font-family:Nunito,sans-serif; cursor:pointer; box-shadow:0 4px 15px rgba(76,175,80,0.3);">📤 Submit Worksheet</button>
-        <div id="submitMsg" style="margin-top:10px; font-weight:600;"></div>
+    <div class="progress-wrap">
+        <div class="progress-track"><div class="progress-fill" id="prog"></div></div>
+        <div class="progress-label" id="progLabel">0 / 14</div>
     </div>
-<div class="answer-key" style="display:none;" id="answerKey">
-        <h2>🔑 Answer Key</h2>
-        <p><strong>1.</strong> x = 6 | <strong>2.</strong> n = 8 | <strong>3.</strong> y = 6 | <strong>4.</strong> x = 18</p>
-<p><strong>5.</strong> m = 8 | <strong>6.</strong> n = 40 | <strong>7.</strong> x = 10 | <strong>8.</strong> p = 7</p>
-<p><strong>9.</strong> 0.10t = 12, t = 120 texts | <strong>10.</strong> 15 + 0.15t = 33, t = 120 texts</p>
-<p><strong>11.</strong> 0.05t = 10, t = 200 texts — both cost $45 | <strong>12.</strong> A: $45, B: $45, C: $40 — Plan C is cheapest</p>
-<p><strong>13.</strong> 30 + 15m = 105, m = 5 months | <strong>14.</strong> 3.50 + 2m = 15.50, m = 6 miles</p>
-<p><strong>15.</strong> 50 + 25w = 200, w = 6 weeks | <strong>16.</strong> 8 + 4r = 28, r = 5 movies</p>
-<p><strong>17.</strong> 12h − 35 = 109, h = 12 hours | <strong>18.</strong> 10 + 1.75t = 17.25, t = ~4 toppings</p>
-    </div>
-    <div id="pinOverlay" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0;
-         background:rgba(0,0,0,0.7); z-index:1000; align-items:center; justify-content:center;">
-        <div style="background:white; padding:30px; border-radius:16px; text-align:center; max-width:320px; margin:20px;">
-            <div style="font-size:2em; margin-bottom:10px;">🔒</div>
-            <h3 style="color:#1F4E79; margin-bottom:15px;">Teacher Access</h3>
-            <p style="color:#666; font-size:0.9em; margin-bottom:15px;">Enter today's PIN to view answer key</p>
-            <input type="number" id="pinInput" placeholder="Enter PIN"
-                   style="width:120px; padding:12px; font-size:1.3em; text-align:center;
-                          border:2px solid #ddd; border-radius:8px; outline:none;"
-                   oninput="checkPin()" />
-            <p id="pinError" style="color:#E74C3C; font-size:0.85em; margin-top:8px; display:none;">Incorrect PIN</p>
-            <br><button onclick="closePinDialog()" style="margin-top:10px; padding:8px 20px;
-                   background:none; border:1px solid #ddd; border-radius:6px; cursor:pointer; color:#888;">Cancel</button>
-        </div>
-    </div>
-    <button class="toggle-btn" onclick="showPinDialog()" id="showAnswerBtn">🔒 Answer Key (Teacher Only)</button>
-    <script>
-        function showPinDialog() {
-            document.getElementById('pinOverlay').style.display = 'flex';
-            document.getElementById('pinInput').value = '';
-            document.getElementById('pinInput').focus();
-            document.getElementById('pinError').style.display = 'none';
-        }
-        function closePinDialog() {
-            document.getElementById('pinOverlay').style.display = 'none';
-        }
-        function checkPin() {
-            var pin = document.getElementById('pinInput').value;
-            var today = new Date().getDate().toString();
-            if (pin === today) {
-                document.getElementById('pinOverlay').style.display = 'none';
-                document.getElementById('answerKey').style.display = 'block';
-                document.getElementById('showAnswerBtn').style.display = 'none';
-                window.scrollTo(0, document.body.scrollHeight);
-            } else if (pin.length >= 2) {
-                document.getElementById('pinError').style.display = 'block';
-            }
-        }
-    </script>
-<script>
-// Drawing Canvas System
-(function() {
-    let canvasId = 0;
-    
-    // Replace all work-area textareas with hybrid draw+type areas
-    document.querySelectorAll('.work-area').forEach(ta => {
-        const id = 'canvas_' + (canvasId++);
-        const wrapper = document.createElement('div');
-        wrapper.className = 'work-wrapper';
-        wrapper.style.cssText = 'margin:8px 0 5px 42px; width:calc(100% - 42px);';
-        
-        wrapper.innerHTML = `
-            <div class="work-tabs">
-                <button class="work-tab active" onclick="switchWorkTab(this,'draw')">✏️ Draw</button>
-                <button class="work-tab" onclick="switchWorkTab(this,'type')">⌨️ Type</button>
-                <div class="draw-tools" id="tools_${id}">
-                    <button class="tool-btn active" onclick="setTool(this,'${id}','pen')" title="Pen">🖊️</button>
-                    <button class="tool-btn" onclick="setTool(this,'${id}','eraser')" title="Eraser">🧽</button>
-                    <input type="color" value="#333333" onchange="setColor('${id}',this.value)" 
-                           style="width:28px;height:28px;border:none;border-radius:4px;cursor:pointer;" title="Color"/>
-                    <select onchange="setSize('${id}',this.value)" style="padding:2px 4px;border-radius:4px;border:1px solid #ddd;font-size:0.8em;">
-                        <option value="2">Fine</option>
-                        <option value="3" selected>Medium</option>
-                        <option value="5">Thick</option>
-                    </select>
-                    <button class="tool-btn" onclick="undoDraw('${id}')" title="Undo">↩️</button>
-                    <button class="tool-btn" onclick="clearCanvas('${id}')" title="Clear All">🗑️</button>
+
+    <!-- PART 1: TWO-STEP PROCESS — inline showing BOTH steps -->
+    <div class="card">
+        <div class="card-head blue"><span class="emoji">🪜</span> Part 1: Two Steps — Fill Each Rung</div>
+        <div class="card-body">
+            <div class="scene">
+                <!-- Staircase SVG with 2 labeled steps -->
+                <svg width="120" height="110" viewBox="0 0 120 110">
+                    <!-- ground -->
+                    <rect x="5" y="98" width="110" height="6" rx="3" fill="#DDD"/>
+                    <!-- step 1 (bottom) -->
+                    <rect x="5" y="78" width="70" height="20" rx="4" fill="#FFF3E0" stroke="#FB8C00" stroke-width="2"/>
+                    <text x="12" y="92" font-size="10" font-weight="800" fill="#E65100">Step 1: undo +/−</text>
+                    <!-- step 2 (top) -->
+                    <rect x="5" y="52" width="110" height="22" rx="4" fill="#E8F5E9" stroke="#43A047" stroke-width="2"/>
+                    <text x="12" y="67" font-size="10" font-weight="800" fill="#2E7D32">Step 2: undo × / ÷</text>
+                    <!-- arrow up -->
+                    <line x1="90" y1="96" x2="90" y2="56" stroke="#FB8C00" stroke-width="2" stroke-dasharray="4,3"/>
+                    <polygon points="85,60 90,50 95,60" fill="#FB8C00"/>
+                </svg>
+                <div class="desc">
+                    <h4>Always undo addition/subtraction first!</h4>
+                    <p>Two-step equations need two moves.<br/>Work backwards using <strong>inverse operations</strong>.</p>
                 </div>
             </div>
-            <div class="draw-panel" id="drawPanel_${id}">
-                <canvas id="${id}" width="600" height="160" 
-                        style="width:100%;border:1.5px solid #e0e0e0;border-radius:8px;
-                               background:white;touch-action:none;cursor:crosshair;"></canvas>
+
+            <div class="q-inline">
+                <span class="q-num">1</span>
+                <div class="q-body">
+                    <div class="hint"><span class="step-badge s1">Step 1</span> subtract 3 &nbsp; <span class="step-badge s2">Step 2</span> divide by 2</div>
+                    <div class="eq-row">
+                        2x + 3 = 11
+                        <span class="eq-arrow">→</span> 2x =
+                        <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/>
+                        <span class="eq-arrow">→</span> x =
+                        <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/>
+                    </div>
+                </div>
             </div>
-            <div class="type-panel" id="typePanel_${id}" style="display:none;">
-                <textarea class="work-area-text" placeholder="Type your work here..."
-                          style="width:100%;min-height:80px;border:1.5px solid #e0e0e0;border-radius:8px;
-                                 padding:10px;font-family:Nunito,sans-serif;font-size:0.9em;resize:vertical;
-                                 outline:none;color:#444;"></textarea>
+            <div class="q-inline">
+                <span class="q-num">2</span>
+                <div class="q-body">
+                    <div class="hint"><span class="step-badge s1">Step 1</span> add 4 &nbsp; <span class="step-badge s2">Step 2</span> divide by 3</div>
+                    <div class="eq-row">
+                        3n − 4 = 14
+                        <span class="eq-arrow">→</span> 3n =
+                        <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/>
+                        <span class="eq-arrow">→</span> n =
+                        <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/>
+                    </div>
+                </div>
             </div>
-        `;
-        
-        ta.parentNode.replaceChild(wrapper, ta);
-        
-        // Initialize canvas
-        setTimeout(() => initCanvas(id), 50);
-    });
-    
-    // Canvas state storage
-    window._canvasState = {};
-    
-    window.initCanvas = function(id) {
-        const canvas = document.getElementById(id);
-        if (!canvas) return;
-        const ctx = canvas.getContext('2d');
-        
-        // Set actual pixel size based on display size
-        const rect = canvas.getBoundingClientRect();
-        canvas.width = rect.width * 2;
-        canvas.height = rect.height * 2;
-        ctx.scale(2, 2);
-        
-        const state = {
-            drawing: false,
-            tool: 'pen',
-            color: '#333333',
-            size: 3,
-            history: [],
-            ctx: ctx,
-            canvas: canvas,
-            lastX: 0, lastY: 0
-        };
-        window._canvasState[id] = state;
-        
-        // Save initial blank state
-        saveHistory(id);
-        
-        // Pointer events (works with touch, pencil, and mouse)
-        canvas.addEventListener('pointerdown', e => startDraw(e, id));
-        canvas.addEventListener('pointermove', e => draw(e, id));
-        canvas.addEventListener('pointerup', e => endDraw(e, id));
-        canvas.addEventListener('pointerleave', e => endDraw(e, id));
-        
-        // Prevent scroll while drawing
-        canvas.addEventListener('touchstart', e => e.preventDefault(), {passive: false});
-        canvas.addEventListener('touchmove', e => e.preventDefault(), {passive: false});
-    };
-    
-    function getPos(e, canvas) {
-        const rect = canvas.getBoundingClientRect();
-        return {
-            x: (e.clientX - rect.left),
-            y: (e.clientY - rect.top)
-        };
-    }
-    
-    window.startDraw = function(e, id) {
-        const s = window._canvasState[id];
-        s.drawing = true;
-        const pos = getPos(e, s.canvas);
-        s.lastX = pos.x;
-        s.lastY = pos.y;
-        s.ctx.beginPath();
-        s.ctx.moveTo(pos.x, pos.y);
-    };
-    
-    window.draw = function(e, id) {
-        const s = window._canvasState[id];
-        if (!s.drawing) return;
-        const pos = getPos(e, s.canvas);
-        
-        s.ctx.lineWidth = s.tool === 'eraser' ? s.size * 4 : s.size;
-        s.ctx.lineCap = 'round';
-        s.ctx.lineJoin = 'round';
-        s.ctx.strokeStyle = s.tool === 'eraser' ? '#ffffff' : s.color;
-        s.ctx.globalCompositeOperation = s.tool === 'eraser' ? 'destination-out' : 'source-over';
-        
-        // Use pressure for Apple Pencil if available
-        if (e.pressure && e.pressure > 0 && e.pressure < 1) {
-            s.ctx.lineWidth *= (0.5 + e.pressure);
-        }
-        
-        s.ctx.lineTo(pos.x, pos.y);
-        s.ctx.stroke();
-        s.ctx.beginPath();
-        s.ctx.moveTo(pos.x, pos.y);
-        s.lastX = pos.x;
-        s.lastY = pos.y;
-    };
-    
-    window.endDraw = function(e, id) {
-        const s = window._canvasState[id];
-        if (s.drawing) {
-            s.drawing = false;
-            s.ctx.globalCompositeOperation = 'source-over';
-            saveHistory(id);
-        }
-    };
-    
-    function saveHistory(id) {
-        const s = window._canvasState[id];
-        const imgData = s.canvas.toDataURL();
-        s.history.push(imgData);
-        if (s.history.length > 20) s.history.shift(); // limit memory
-    }
-    
-    window.undoDraw = function(id) {
-        const s = window._canvasState[id];
-        if (s.history.length > 1) {
-            s.history.pop();
-            const img = new Image();
-            img.onload = () => {
-                s.ctx.clearRect(0, 0, s.canvas.width/2, s.canvas.height/2);
-                s.ctx.drawImage(img, 0, 0, s.canvas.width/2, s.canvas.height/2);
-            };
-            img.src = s.history[s.history.length - 1];
-        }
-    };
-    
-    window.clearCanvas = function(id) {
-        const s = window._canvasState[id];
-        s.ctx.clearRect(0, 0, s.canvas.width/2, s.canvas.height/2);
-        saveHistory(id);
-    };
-    
-    window.setTool = function(btn, id, tool) {
-        window._canvasState[id].tool = tool;
-        btn.parentElement.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const canvas = document.getElementById(id);
-        canvas.style.cursor = tool === 'eraser' ? 'cell' : 'crosshair';
-    };
-    
-    window.setColor = function(id, color) {
-        window._canvasState[id].color = color;
-    };
-    
-    window.setSize = function(id, size) {
-        window._canvasState[id].size = parseInt(size);
-    };
-    
-    window.switchWorkTab = function(btn, mode) {
-        const wrapper = btn.closest('.work-wrapper');
-        wrapper.querySelectorAll('.work-tab').forEach(t => t.classList.remove('active'));
-        btn.classList.add('active');
-        
-        const drawPanel = wrapper.querySelector('[id^="drawPanel_"]');
-        const typePanel = wrapper.querySelector('[id^="typePanel_"]');
-        const tools = wrapper.querySelector('[id^="tools_"]');
-        
-        if (mode === 'draw') {
-            drawPanel.style.display = 'block';
-            typePanel.style.display = 'none';
-            tools.style.display = 'flex';
-            // Resize canvas on show
-            const canvasEl = drawPanel.querySelector('canvas');
-            if (canvasEl && window._canvasState[canvasEl.id]) {
-                const rect = canvasEl.getBoundingClientRect();
-                if (rect.width > 0) {
-                    // Don't resize if already initialized properly
-                }
-            }
-        } else {
-            drawPanel.style.display = 'none';
-            typePanel.style.display = 'block';
-            tools.style.display = 'none';
-        }
-    };
-})();
-</script>
+            <div class="q-inline">
+                <span class="q-num">3</span>
+                <div class="q-body">
+                    <div class="hint"><span class="step-badge s1">Step 1</span> subtract 5 &nbsp; <span class="step-badge s2">Step 2</span> divide by 4</div>
+                    <div class="eq-row">
+                        4y + 5 = 25
+                        <span class="eq-arrow">→</span> 4y =
+                        <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/>
+                        <span class="eq-arrow">→</span> y =
+                        <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/>
+                    </div>
+                </div>
+            </div>
+            <div class="q-inline">
+                <span class="q-num">4</span>
+                <div class="q-body">
+                    <div class="hint"><span class="step-badge s1">Step 1</span> add 6 &nbsp; <span class="step-badge s2">Step 2</span> divide by 5</div>
+                    <div class="eq-row">
+                        5k − 6 = 19
+                        <span class="eq-arrow">→</span> 5k =
+                        <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/>
+                        <span class="eq-arrow">→</span> k =
+                        <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<!-- Firebase SDK -->
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-<script src="../firebase-config.js?v=5"></script>
-<script src="../grade-sync.js?v=5"></script>
+    <!-- PART 2: SOLVE TWO-STEP — mini card grid -->
+    <div class="card">
+        <div class="card-head orange"><span class="emoji">🧮</span> Part 2: Solve on Your Own</div>
+        <div class="card-body">
+            <p style="font-size:0.85em;color:#888;margin-bottom:14px;">No hints this time — show both steps in the blanks.</p>
+            <div class="mini-grid">
+                <div class="mini-card">
+                    <div class="eq-label">Q5: &nbsp; 2m + 7 = 21</div>
+                    <div class="eq-row">2m = <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/></div>
+                    <div class="eq-row">m = <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/></div>
+                </div>
+                <div class="mini-card">
+                    <div class="eq-label">Q6: &nbsp; 3p + 2 = 17</div>
+                    <div class="eq-row">3p = <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/></div>
+                    <div class="eq-row">p = <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/></div>
+                </div>
+                <div class="mini-card">
+                    <div class="eq-label">Q7: &nbsp; 6w − 3 = 27</div>
+                    <div class="eq-row">6w = <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/></div>
+                    <div class="eq-row">w = <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/></div>
+                </div>
+                <div class="mini-card">
+                    <div class="eq-label">Q8: &nbsp; 4a + 1 = 29</div>
+                    <div class="eq-row">4a = <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/></div>
+                    <div class="eq-row">a = <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/></div>
+                </div>
+            </div>
 
-<script>
-async function doSubmit() {
-    const btn = document.getElementById('submitBtn');
-    const msg = document.getElementById('submitMsg');
-    btn.disabled = true; btn.textContent = '⏳ Submitting...';
-    
-    // Count filled inputs
-    const inputs = document.querySelectorAll('input[type="text"], textarea, select');
-    const filled = Array.from(inputs).filter(i => i.value.trim() !== '').length;
-    const total = inputs.length;
-    const score = total > 0 ? Math.round((filled / total) * 100 * 10) / 10 : 0;
-    
-    try {
-        const result = await submitScore('w19', score, { filled, total, type: 'completion' });
-        if (result) {
-            msg.textContent = '✅ Submitted! Your teacher will see your work.';
-            msg.style.color = '#5B8C5A';
-            btn.textContent = '✓ Submitted';
-        } else {
-            msg.textContent = '⚠️ Could not submit — make sure you are logged in.';
-            msg.style.color = '#D35400';
-            btn.disabled = false; btn.textContent = '📤 Submit Worksheet';
-        }
-    } catch(e) {
-        msg.textContent = '⚠️ Error submitting. Try again.';
-        msg.style.color = '#D35400';
-        btn.disabled = false; btn.textContent = '📤 Submit Worksheet';
+            <div class="fact" style="margin-top:14px;">
+                <strong>🪜 Remember:</strong> Always undo addition or subtraction first, then multiplication or division. Think of "undoing" the order of operations in reverse!
+            </div>
+        </div>
+    </div>
+
+    <!-- PART 3: WRITE FROM WORDS — two-step inline -->
+    <div class="card">
+        <div class="card-head green"><span class="emoji">📖</span> Part 3: Words → Equation → Solve</div>
+        <div class="card-body">
+            <div class="q-inline">
+                <span class="q-num green">9</span>
+                <div class="q-body">
+                    <div class="text">Maya earns $<strong>h</strong> per hour. She worked <strong>3 hours</strong> and got a <strong>$5 bonus</strong>, making <strong>$32</strong> total. Write and solve.</div>
+                    <div class="eq-row">
+                        <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/>h +
+                        <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/>
+                        = <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/>
+                    </div>
+                    <div class="eq-row">
+                        h = <input type="text" class="eq-input wide" placeholder="?" oninput="updateProgress()"/>
+                    </div>
+                </div>
+            </div>
+            <div class="q-inline">
+                <span class="q-num green">10</span>
+                <div class="q-body">
+                    <div class="text">A box holds <strong>b</strong> books per shelf. There are <strong>4 shelves</strong> and <strong>3 extra</strong> books on the floor — <strong>23 books</strong> total. Write and solve.</div>
+                    <div class="eq-row">
+                        <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/>b +
+                        <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/>
+                        = <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/>
+                    </div>
+                    <div class="eq-row">
+                        b = <input type="text" class="eq-input wide" placeholder="?" oninput="updateProgress()"/>
+                    </div>
+                </div>
+            </div>
+            <div class="q-inline">
+                <span class="q-num green">11</span>
+                <div class="q-body">
+                    <div class="text">A taxi charges a flat fee of <strong>$2</strong> plus <strong>$3 per mile</strong>. The total bill was <strong>$17</strong>. How many miles did the rider travel?</div>
+                    <div class="eq-row">
+                        3m + 2 = 17
+                        <span class="eq-arrow">→</span> 3m =
+                        <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/>
+                        <span class="eq-arrow">→</span> m =
+                        <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PART 4: CHALLENGE -->
+    <div class="card">
+        <div class="card-head purple"><span class="emoji">⭐</span> Part 4: Challenge Round</div>
+        <div class="card-body">
+            <div class="q-inline">
+                <span class="q-num purple">12</span>
+                <div class="q-body">
+                    <div class="text">Solve: <strong>2(x + 3) = 14</strong><br/>Hint: First divide both sides by 2, then subtract.</div>
+                    <div class="eq-row">
+                        x + 3 = <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/>
+                        <span class="eq-arrow">→</span> x =
+                        <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/>
+                    </div>
+                </div>
+            </div>
+            <div class="q-inline">
+                <span class="q-num purple">13</span>
+                <div class="q-body">
+                    <div class="text">Which two-step equation matches: <em>"I think of a number, multiply by 5, then subtract 3, and get 22."</em></div>
+                    <div class="mc-options" data-q="13">
+                        <button class="mc-btn" onclick="selectMC(this)">5n − 3 = 22</button>
+                        <button class="mc-btn" onclick="selectMC(this)">5n + 3 = 22</button>
+                        <button class="mc-btn" onclick="selectMC(this)">n/5 − 3 = 22</button>
+                    </div>
+                    <input type="hidden" class="answer-hidden"/>
+                </div>
+            </div>
+            <div class="q-inline">
+                <span class="q-num purple">14</span>
+                <div class="q-body">
+                    <div class="text">Now solve that equation for <strong>n</strong>.</div>
+                    <div class="eq-row">
+                        5n = <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/>
+                        <span class="eq-arrow">→</span> n =
+                        <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="submit-wrap">
+        <button class="submit-btn" id="submitBtn" onclick="doSubmit()">📤 Submit Worksheet</button>
+        <div id="submitMsg"></div>
+    </div>
+
+    <!-- PIN + Answer Key -->
+    <div id="pinOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:1000;align-items:center;justify-content:center;">
+        <div style="background:white;padding:28px;border-radius:16px;text-align:center;max-width:300px;margin:20px;">
+            <div style="font-size:2em;margin-bottom:8px;">🔒</div>
+            <h3 style="color:#1565C0;margin-bottom:12px;">Teacher Access</h3>
+            <input type="number" id="pinInput" placeholder="Today's PIN" style="width:100px;padding:10px;font-size:1.2em;text-align:center;border:2px solid #ddd;border-radius:8px;outline:none;" oninput="checkPin()"/>
+            <p id="pinError" style="color:#E74C3C;font-size:0.82em;margin-top:6px;display:none;">Wrong PIN</p>
+            <br><button onclick="closePinDialog()" style="margin-top:8px;padding:6px 18px;background:none;border:1px solid #ddd;border-radius:6px;cursor:pointer;color:#888;font-size:0.85em;">Cancel</button>
+        </div>
+    </div>
+    <div class="answer-key" id="answerKey">
+        <div class="answer-key-header"><span>🔑 Answer Key</span><button onclick="hideAnswers()" class="close-btn">✕</button></div>
+        <p><strong>1.</strong> 2x=8, x=4 &nbsp;·&nbsp; <strong>2.</strong> 3n=18, n=6 &nbsp;·&nbsp; <strong>3.</strong> 4y=20, y=5 &nbsp;·&nbsp; <strong>4.</strong> 5k=25, k=5</p>
+        <p><strong>5.</strong> 2m=14, m=7 &nbsp;·&nbsp; <strong>6.</strong> 3p=15, p=5 &nbsp;·&nbsp; <strong>7.</strong> 6w=30, w=5 &nbsp;·&nbsp; <strong>8.</strong> 4a=28, a=7</p>
+        <p><strong>9.</strong> 3h+5=32 → h=<strong>$9</strong> &nbsp;·&nbsp; <strong>10.</strong> 4b+3=23 → b=<strong>5</strong> &nbsp;·&nbsp; <strong>11.</strong> m=<strong>5 miles</strong></p>
+        <p><strong>12.</strong> x+3=7, x=<strong>4</strong> &nbsp;·&nbsp; <strong>13.</strong> 5n − 3 = 22 &nbsp;·&nbsp; <strong>14.</strong> 5n=25, n=<strong>5</strong></p>
+    </div>
+    <button class="answer-btn" id="showAnswerBtn" onclick="showPinDialog()">🔒 Answer Key (Teacher Only)</button>
+
+    <script>
+    function selectMC(btn) {
+        btn.parentElement.querySelectorAll('.mc-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        btn.parentElement.parentElement.querySelector('.answer-hidden').value = btn.textContent;
+        updateProgress();
     }
-}
-</script>
 
-<script>
-// Hide answer key for students
-if (localStorage.getItem('math_current_user')) {
-    const akBtn = document.getElementById('showAnswerBtn');
-    if (akBtn) akBtn.style.display = 'none';
-}
-</script>
+    function updateProgress() {
+        let filled = 0;
+        document.querySelectorAll('.eq-input').forEach(i => { if(i.value.trim()) filled++; });
+        document.querySelectorAll('.answer-hidden').forEach(i => { if(i.value) filled++; });
+        const total = 14;
+        // eq-inputs: part1=8, part2=8, part3=10, part4=4 = 30; mc=1 = 31 raw
+        const raw = 31;
+        const pct = Math.round((filled / raw) * 100);
+        document.getElementById('prog').style.width = Math.min(pct,100) + '%';
+        document.getElementById('progLabel').textContent = Math.min(Math.round((filled/raw)*total),total) + ' / ' + total;
+    }
+
+    function showPinDialog() { document.getElementById('pinOverlay').style.display='flex'; document.getElementById('pinInput').value=''; document.getElementById('pinError').style.display='none'; document.getElementById('pinInput').focus(); }
+    function closePinDialog() { document.getElementById('pinOverlay').style.display='none'; }
+    function checkPin() {
+        const p = document.getElementById('pinInput').value;
+        if(p.length>=1 && parseInt(p)===new Date().getDate()) {
+            document.getElementById('pinOverlay').style.display='none';
+            document.getElementById('answerKey').style.display='block';
+            document.getElementById('showAnswerBtn').style.display='none';
+        } else if(p.length>=2) { document.getElementById('pinError').style.display='block'; }
+    }
+    function hideAnswers() { document.getElementById('answerKey').style.display='none'; document.getElementById('showAnswerBtn').style.display='block'; }
+    </script>
+
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="../firebase-config.js?v=5"></script>
+    <script src="../grade-sync.js?v=5"></script>
+    <script>
+    async function doSubmit() {
+        const btn = document.getElementById('submitBtn');
+        const msg = document.getElementById('submitMsg');
+        btn.disabled = true; btn.textContent = '⏳ Submitting...';
+        try {
+            let filled = 0;
+            document.querySelectorAll('.eq-input').forEach(i => { if(i.value.trim()) filled++; });
+            document.querySelectorAll('.answer-hidden').forEach(i => { if(i.value) filled++; });
+            const raw = 31;
+            const score = Math.round((filled / raw) * 100 * 10) / 10;
+            const result = await submitScore('w19', score, { filled, total: 14, type: 'completion' });
+            if(result) { msg.textContent = '✅ Submitted!'; msg.style.color='#2E7D32'; btn.textContent='✓ Submitted'; }
+            else { msg.textContent='⚠️ Log in on Student Portal first.'; msg.style.color='#E65100'; btn.disabled=false; btn.textContent='📤 Submit Worksheet'; }
+        } catch(e) { msg.textContent='⚠️ Error — try again.'; msg.style.color='#E65100'; btn.disabled=false; btn.textContent='📤 Submit Worksheet'; }
+    }
+    </script>
+    <script>if(localStorage.getItem('math_current_user')){const b=document.getElementById('showAnswerBtn');if(b)b.style.display='none';}</script>
 </body>
 </html>

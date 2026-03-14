@@ -3,497 +3,423 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Worksheet 23: Connect the Data</title>
-    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
-<style>
+    <title>Connect the Data</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-               max-width: 800px; margin: 0 auto; padding: 20px; background: #f5f5f5; color: #333; }
-        .header { background: linear-gradient(135deg, #1F4E79, #2E75B6); color: white;
-                   padding: 20px; border-radius: 12px; margin-bottom: 20px; text-align: center; }
-        .header h1 { font-size: 1.5em; margin-bottom: 5px; }
-        .header p { font-size: 0.9em; opacity: 0.9; }
-        .student-info input { border: none; border-bottom: 2px solid #2E75B6; padding: 8px;
-                               font-size: 1em; flex: 1; min-width: 150px; outline: none; }
-        .section { background: white; padding: 20px; border-radius: 12px; margin-bottom: 15px;
-                   box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
-        .section h2 { color: #1F4E79; font-size: 1.2em; margin-bottom: 15px;
-                      border-bottom: 2px solid #D6E4F0; padding-bottom: 8px; }
-        .problem { padding: 12px 0; border-bottom: 1px solid #eee; }
-        .problem:last-child { border-bottom: none; }
-        .problem-num { display: inline-block; background: #2E75B6; color: white;
-                       width: 28px; height: 28px; border-radius: 50%; text-align: center;
-                       line-height: 28px; font-size: 0.85em; font-weight: bold; margin-right: 10px; }
-        .problem-text { display: inline; font-size: 1.05em; }
-        .answer-box { display: block; margin: 10px 0 5px 38px; border: 2px dashed #ccc;
-                      border-radius: 8px; padding: 12px; min-height: 45px;
-                      font-size: 1em; width: calc(100% - 38px); }
-        .answer-box:focus { border-color: #2E75B6; outline: none; background: #f8fbff; }
-        .work-area { display: block; margin: 8px 0 5px 38px; border: 1px solid #ddd;
-                     border-radius: 8px; padding: 10px; min-height: 80px;
-                     font-size: 0.9em; width: calc(100% - 38px); color: #666; }
-        .work-area:focus { border-color: #2E75B6; outline: none; }
-        .emoji { font-size: 1.3em; margin-right: 5px; }
-        .context { background: #f0f7ff; padding: 12px; border-radius: 8px;
-                   margin: 10px 0; border-left: 4px solid #2E75B6; font-size: 0.95em; }
-        .hint { color: #888; font-size: 0.85em; font-style: italic; margin-left: 38px; }
-        .mc-option { display: block; padding: 10px 15px; margin: 5px 0 5px 38px;
-                     background: #f8f8f8; border: 2px solid #e0e0e0; border-radius: 8px;
-                     cursor: pointer; transition: all 0.2s; font-size: 1em; }
-        .mc-option:hover { background: #e8f0fe; border-color: #2E75B6; }
-        .mc-option.selected { background: #d0e4ff; border-color: #2E75B6; font-weight: bold; }
-        .answer-key { background: #fff9e6; padding: 20px; border-radius: 12px;
-                      margin: 20px 0; border: 2px solid #f0c040; }
-        .answer-key h2 { color: #8B6914; }
-        .toggle-btn { display: block; margin: 15px auto; padding: 12px 30px;
-                      background: #1F4E79; color: white; border: none; border-radius: 8px;
-                      font-size: 1em; cursor: pointer; }
-        .toggle-btn:hover { background: #2E75B6; }
-        .score-box { background: #e2efda; padding: 15px; border-radius: 8px;
-                     text-align: center; font-size: 1.2em; margin-top: 15px; }
-        @media print {
-            .toggle-btn, .answer-key { display: none !important; }
-            .section { break-inside: avoid; }
+        body { font-family: 'Nunito', sans-serif; max-width: 820px; margin: 0 auto;
+               background: #F5F7FA; color: #333; -webkit-tap-highlight-color: transparent; }
+
+        .hero { background: linear-gradient(135deg, #1B5E20, #388E3C, #66BB6A);
+                color: white; padding: 28px 22px; position: relative; overflow: hidden;
+                border-radius: 0 0 24px 24px; }
+        .hero::after { content: '📈'; position: absolute; font-size: 6em; opacity: 0.1;
+                      top: -10px; right: 10px; transform: rotate(12deg); }
+        .hero .badge { display: inline-block; background: rgba(255,255,255,0.2);
+                      padding: 4px 12px; border-radius: 16px; font-size: 0.75em; font-weight: 700; }
+        .hero h1 { font-size: 1.6em; font-weight: 900; margin: 6px 0 3px; }
+        .hero p { opacity: 0.85; font-size: 0.9em; }
+
+        .progress-wrap { padding: 10px 16px 0; display: flex; align-items: center; gap: 8px; }
+        .progress-track { flex: 1; height: 6px; background: #E0E4EA; border-radius: 6px; overflow: hidden; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #4CAF50, #81C784);
+                        border-radius: 6px; transition: width 0.3s; width: 0%; }
+        .progress-label { font-size: 0.75em; font-weight: 700; color: #999; }
+
+        .card { background: white; border-radius: 18px; margin: 12px 14px; overflow: hidden;
+                box-shadow: 0 1px 6px rgba(0,0,0,0.05); }
+        .card-head { padding: 14px 18px; font-weight: 800; font-size: 1em;
+                    display: flex; align-items: center; gap: 10px; }
+        .card-head .emoji { font-size: 1.3em; }
+        .card-head.blue { color: #1565C0; border-bottom: 2px solid #E3F2FD; }
+        .card-head.orange { color: #E65100; border-bottom: 2px solid #FFF3E0; }
+        .card-head.green { color: #2E7D32; border-bottom: 2px solid #E8F5E9; }
+        .card-head.purple { color: #6A1B9A; border-bottom: 2px solid #F3E5F5; }
+        .card-body { padding: 16px; }
+
+        /* Input/output table styling */
+        .io-table { width: 100%; border-collapse: collapse; margin: 12px 0; }
+        .io-table th { background: #E8F5E9; color: #2E7D32; font-weight: 800; padding: 10px 14px;
+                      font-size: 0.88em; text-align: center; border: 1px solid #C8E6C9; }
+        .io-table td { padding: 8px 12px; border: 1px solid #E8F5E9; text-align: center;
+                      font-weight: 700; font-size: 0.92em; }
+        .io-table tr:nth-child(even) td { background: #F9FFF9; }
+        .io-table input { width: 60px; padding: 6px; border: 2px solid #E0E0E0;
+                         border-radius: 8px; text-align: center; font-family: 'Nunito', sans-serif;
+                         font-weight: 700; font-size: 0.9em; outline: none; color: #2E7D32; }
+        .io-table input:focus { border-color: #66BB6A; }
+
+        .scene { display: flex; gap: 14px; align-items: center; padding: 16px;
+                background: #F9FAFB; border-radius: 14px; margin-bottom: 14px; }
+        .scene svg { flex-shrink: 0; }
+        .scene .desc h4 { font-size: 0.95em; font-weight: 800; margin-bottom: 3px; }
+        .scene .desc p { font-size: 0.83em; color: #888; line-height: 1.4; }
+
+        /* Classify grid */
+        .classify-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .classify-item { background: #FAFBFC; border: 2px solid #EEE; border-radius: 14px;
+                        padding: 14px; transition: border-color 0.2s; }
+        .classify-item .degree { font-size: 0.82em; font-weight: 700; color: #333; text-align: center; }
+        .classify-item .degree table { width: 100%; border-collapse: collapse; margin-bottom: 6px; }
+        .classify-item .degree table td { border: 1px solid #E0E0E0; padding: 3px 6px; font-size: 0.9em; }
+        .classify-item .degree table th { background: #F0F0F0; border: 1px solid #E0E0E0;
+                                          padding: 3px 6px; font-size: 0.85em; color: #555; }
+        .classify-item .choices { display: flex; gap: 5px; margin-top: 8px; justify-content: center; }
+        .classify-item .ch { padding: 6px 14px; border-radius: 8px; border: 2px solid #E0E0E0;
+                           background: white; font-size: 0.8em; font-weight: 700; cursor: pointer;
+                           transition: all 0.15s; font-family: 'Nunito', sans-serif; color: #666; }
+        .classify-item .ch:hover { border-color: #66BB6A; color: #2E7D32; }
+        .classify-item .ch.selected { background: #2E7D32; color: white; border-color: #2E7D32; }
+        .classify-item .ch.selected.linear    { background: #1565C0; border-color: #1565C0; }
+        .classify-item .ch.selected.nonlinear { background: #E65100; border-color: #E65100; }
+        .classify-item.answered { border-color: #81C784; }
+        .classify-item input[type="hidden"] { display: none; }
+
+        .eq-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+                 font-size: 1.05em; font-weight: 700; color: #555; padding: 10px 0; }
+        .eq-row .eq-input { width: 60px; padding: 6px 8px; border: 2px solid #E0E0E0;
+                          border-radius: 8px; font-size: 0.95em; font-weight: 700;
+                          font-family: 'Nunito', sans-serif; text-align: center;
+                          outline: none; color: #2E7D32; }
+        .eq-row .eq-input:focus { border-color: #66BB6A; box-shadow: 0 0 0 3px rgba(102,187,106,0.1); }
+        .eq-row .eq-input.wide { width: 90px; }
+
+        .mc-options { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+        .mc-btn { flex: 1; padding: 10px; border: 2px solid #E0E0E0; border-radius: 10px;
+                 background: white; font-weight: 700; font-size: 0.85em; cursor: pointer;
+                 text-align: center; transition: all 0.15s; font-family: 'Nunito', sans-serif; color: #666; min-width: 80px; }
+        .mc-btn:hover { border-color: #66BB6A; color: #2E7D32; }
+        .mc-btn.selected { background: #6A1B9A; color: white; border-color: #6A1B9A; }
+
+        .q-inline { display: flex; align-items: flex-start; gap: 10px; padding: 12px 0;
+                   border-bottom: 1px solid #F0F0F0; }
+        .q-inline:last-child { border-bottom: none; }
+        .q-num { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center;
+                justify-content: center; font-weight: 800; font-size: 0.78em; color: white;
+                background: linear-gradient(135deg, #42A5F5, #1565C0); flex-shrink: 0; }
+        .q-num.orange { background: linear-gradient(135deg, #FF9800, #E65100); }
+        .q-num.green { background: linear-gradient(135deg, #66BB6A, #2E7D32); }
+        .q-num.purple { background: linear-gradient(135deg, #AB47BC, #6A1B9A); }
+        .q-body { flex: 1; }
+        .q-body .text { font-size: 0.92em; line-height: 1.5; margin-bottom: 6px; }
+        .hint { font-size: 0.8em; color: #66BB6A; font-weight: 600; margin-bottom: 4px; }
+
+        .fact { margin: 14px 0; padding: 14px 16px; border-radius: 14px;
+               background: #FFFDE7; border: 1.5px solid #FFE082; font-size: 0.85em; line-height: 1.5; }
+
+        .submit-wrap { text-align: center; padding: 20px; }
+        .submit-btn { background: linear-gradient(135deg, #4CAF50, #388E3C); color: white;
+                     border: none; padding: 14px 42px; border-radius: 14px; font-size: 1.1em;
+                     font-weight: 800; font-family: 'Nunito', sans-serif; cursor: pointer;
+                     box-shadow: 0 2px 8px rgba(76,175,80,0.3); }
+        .submit-btn:disabled { opacity: 0.5; }
+        #submitMsg { margin-top: 10px; font-weight: 700; }
+
+        .answer-key { background: #FFF9E6; padding: 18px; border-radius: 14px; margin: 0 14px 14px;
+                     border: 2px solid #F0C040; display: none; }
+        .answer-key-header { display: flex; justify-content: space-between; align-items: center;
+                            font-weight: 800; color: #8B6914; margin-bottom: 10px; padding-bottom: 8px;
+                            border-bottom: 2px solid rgba(240,192,64,0.25); }
+        .answer-btn { display: block; margin: 0 auto 16px; padding: 10px 24px;
+                     background: linear-gradient(135deg, #1565C0, #42A5F5); color: white;
+                     border: none; border-radius: 10px; font-size: 0.9em; font-weight: 700;
+                     cursor: pointer; font-family: 'Nunito', sans-serif; }
+        .close-btn { background: none; border: 1px solid #ddd; padding: 4px 10px;
+                    border-radius: 6px; cursor: pointer; font-size: 0.8em; color: #888; }
+
+        @media (max-width: 500px) {
+            .classify-grid { grid-template-columns: 1fr; }
+            .scene { flex-direction: column; text-align: center; }
         }
-    
-.work-wrapper { position: relative; }
-.work-tabs { display: flex; align-items: center; gap: 4px; margin-bottom: 6px; }
-.work-tab { padding: 6px 14px; border: 1.5px solid #e0e0e0; border-radius: 8px 8px 0 0;
-            background: #f5f5f5; cursor: pointer; font-family: 'Nunito', sans-serif;
-            font-size: 0.85em; font-weight: 600; color: #888; transition: all 0.2s; border-bottom: none; }
-.work-tab.active { background: white; color: #2E75B6; border-color: #2E75B6; }
-.draw-tools { display: flex; align-items: center; gap: 6px; margin-left: auto;
-              padding: 3px 8px; background: #f8f9fa; border-radius: 8px; }
-.tool-btn { background: none; border: 1.5px solid transparent; padding: 3px 6px;
-            border-radius: 6px; cursor: pointer; font-size: 1em; transition: all 0.2s; }
-.tool-btn.active { border-color: #2E75B6; background: #e8f0fe; }
-.tool-btn:hover { background: #e8e8e8; }
-.draw-panel canvas { display: block; }
-@media (max-width: 600px) {
-    .draw-tools { flex-wrap: wrap; gap: 4px; }
-    .work-tabs { flex-wrap: wrap; }
-}
-</style>
+    </style>
 </head>
 <body>
-    <div class="header">
-        <h1>Worksheet 23: Connect the Data</h1>
-        <p>Session 23 — Linear relationships and road trip math</p>
+    <div class="hero">
+        <div class="badge">📄 WORKSHEET · SESSION 23</div>
+        <h1>📈 Connect the Data</h1>
+        <p>Tables, rules, graphs — see the pattern hiding in the numbers!</p>
     </div>
-    <div class="section"><h2>Part 1: Complete Tables from Rules</h2><div class="context">Fill in the missing values using the rule given.</div><div class="problem">
-        <span class="problem-num">1</span>
-        <span class="problem-text">Rule: y = 2x + 1. Complete: x = 0 → y = ____, x = 1 → y = ____, x = 2 → y = ____, x = 3 → y = ____, x = 5 → y = ____</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">2</span>
-        <span class="problem-text">Rule: y = 3x − 2. Complete: x = 1 → ____, x = 2 → ____, x = 3 → ____, x = 4 → ____, x = 10 → ____</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">3</span>
-        <span class="problem-text">Rule: y = x/2 + 4. Complete: x = 0 → ____, x = 2 → ____, x = 4 → ____, x = 6 → ____, x = 10 → ____</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div></div><div class="section"><h2>Part 2: Find the Rule from Tables</h2><div class="problem">
-        <span class="problem-num">4</span>
-        <span class="problem-text">x: 1, 2, 3, 4, 5 → y: 5, 8, 11, 14, 17. What's the rule? y = ____</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">5</span>
-        <span class="problem-text">x: 0, 1, 2, 3, 4 → y: 3, 5, 7, 9, 11. Rule: y = ____</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">6</span>
-        <span class="problem-text">x: 1, 2, 3, 4, 5 → y: 4, 7, 10, 13, 16. Rule: y = ____</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div></div><div class="section"><h2>Part 3: 🚗 Road Trip Math</h2><div class="context">Car A travels at 60 mph. Car B travels at 45 mph. Both leave at the same time.</div><div class="problem">
-        <span class="problem-num">7</span>
-        <span class="problem-text">Complete the table for Car A (d = 60t):<br>t = 0 → d = ____, t = 1 → ____, t = 2 → ____, t = 3 → ____, t = 4 → ____</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">8</span>
-        <span class="problem-text">Complete the table for Car B (d = 45t):<br>t = 0 → d = ____, t = 1 → ____, t = 2 → ____, t = 3 → ____, t = 4 → ____</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">9</span>
-        <span class="problem-text">After 3 hours, how much farther has Car A traveled than Car B?</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">10</span>
-        <span class="problem-text">How long until Car A is 60 miles ahead of Car B?</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">11</span>
-        <span class="problem-text">Car A needs to travel 300 miles. How many hours will it take?</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div></div><div class="section"><h2>Part 4: More Linear Relationships</h2><div class="context">💰 Earning Money: You earn $12/hour at your job.</div><div class="problem">
-        <span class="problem-num">12</span>
-        <span class="problem-text">Write the rule for total earnings (e) based on hours worked (h).</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">13</span>
-        <span class="problem-text">Complete: h = 0 → e = ____, h = 5 → ____, h = 10 → ____, h = 20 → ____, h = 40 → ____</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">14</span>
-        <span class="problem-text">You want to earn $360. How many hours do you need to work?</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="context">🌱 Plant Growth: A plant is 3 cm tall and grows 2 cm per week.</div><div class="problem">
-        <span class="problem-num">15</span>
-        <span class="problem-text">Write the rule for height (h) based on weeks (w): h = ____</span>
-        
-        
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">16</span>
-        <span class="problem-text">How tall after 6 weeks?</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">17</span>
-        <span class="problem-text">When will the plant reach 25 cm?</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div></div>
-    
-    
-    <div style="text-align:center; margin: 30px 20px;">
-        <button id="submitBtn" onclick="doSubmit()" style="background:linear-gradient(135deg,#4CAF50,#388E3C); color:white; border:none; padding:14px 40px; border-radius:12px; font-size:1.1em; font-weight:700; font-family:Nunito,sans-serif; cursor:pointer; box-shadow:0 4px 15px rgba(76,175,80,0.3);">📤 Submit Worksheet</button>
-        <div id="submitMsg" style="margin-top:10px; font-weight:600;"></div>
+    <div class="progress-wrap">
+        <div class="progress-track"><div class="progress-fill" id="prog"></div></div>
+        <div class="progress-label" id="progLabel">0 / 15</div>
     </div>
-<div class="answer-key" style="display:none;" id="answerKey">
-        <h2>🔑 Answer Key</h2>
-        <p><strong>1.</strong> 1, 3, 5, 7, 11 | <strong>2.</strong> 1, 4, 7, 10, 28 | <strong>3.</strong> 4, 5, 6, 7, 9</p>
-<p><strong>4.</strong> y = 3x + 2 | <strong>5.</strong> y = 2x + 3 | <strong>6.</strong> y = 3x + 1</p>
-<p><strong>7.</strong> 0, 60, 120, 180, 240 | <strong>8.</strong> 0, 45, 90, 135, 180</p>
-<p><strong>9.</strong> 180 − 135 = 45 miles | <strong>10.</strong> 60t − 45t = 60 → 15t = 60 → t = 4 hours</p>
-<p><strong>11.</strong> 300/60 = 5 hours</p>
-<p><strong>12.</strong> e = 12h | <strong>13.</strong> 0, 60, 120, 240, 480 | <strong>14.</strong> 360/12 = 30 hours</p>
-<p><strong>15.</strong> h = 2w + 3 | <strong>16.</strong> 2(6) + 3 = 15 cm | <strong>17.</strong> 2w + 3 = 25, w = 11 weeks</p>
-    </div>
-    <div id="pinOverlay" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0;
-         background:rgba(0,0,0,0.7); z-index:1000; align-items:center; justify-content:center;">
-        <div style="background:white; padding:30px; border-radius:16px; text-align:center; max-width:320px; margin:20px;">
-            <div style="font-size:2em; margin-bottom:10px;">🔒</div>
-            <h3 style="color:#1F4E79; margin-bottom:15px;">Teacher Access</h3>
-            <p style="color:#666; font-size:0.9em; margin-bottom:15px;">Enter today's PIN to view answer key</p>
-            <input type="number" id="pinInput" placeholder="Enter PIN"
-                   style="width:120px; padding:12px; font-size:1.3em; text-align:center;
-                          border:2px solid #ddd; border-radius:8px; outline:none;"
-                   oninput="checkPin()" />
-            <p id="pinError" style="color:#E74C3C; font-size:0.85em; margin-top:8px; display:none;">Incorrect PIN</p>
-            <br><button onclick="closePinDialog()" style="margin-top:10px; padding:8px 20px;
-                   background:none; border:1px solid #ddd; border-radius:6px; cursor:pointer; color:#888;">Cancel</button>
-        </div>
-    </div>
-    <button class="toggle-btn" onclick="showPinDialog()" id="showAnswerBtn">🔒 Answer Key (Teacher Only)</button>
-    <script>
-        function showPinDialog() {
-            document.getElementById('pinOverlay').style.display = 'flex';
-            document.getElementById('pinInput').value = '';
-            document.getElementById('pinInput').focus();
-            document.getElementById('pinError').style.display = 'none';
-        }
-        function closePinDialog() {
-            document.getElementById('pinOverlay').style.display = 'none';
-        }
-        function checkPin() {
-            var pin = document.getElementById('pinInput').value;
-            var today = new Date().getDate().toString();
-            if (pin === today) {
-                document.getElementById('pinOverlay').style.display = 'none';
-                document.getElementById('answerKey').style.display = 'block';
-                document.getElementById('showAnswerBtn').style.display = 'none';
-                window.scrollTo(0, document.body.scrollHeight);
-            } else if (pin.length >= 2) {
-                document.getElementById('pinError').style.display = 'block';
-            }
-        }
-    </script>
-<script>
-// Drawing Canvas System
-(function() {
-    let canvasId = 0;
-    
-    // Replace all work-area textareas with hybrid draw+type areas
-    document.querySelectorAll('.work-area').forEach(ta => {
-        const id = 'canvas_' + (canvasId++);
-        const wrapper = document.createElement('div');
-        wrapper.className = 'work-wrapper';
-        wrapper.style.cssText = 'margin:8px 0 5px 42px; width:calc(100% - 42px);';
-        
-        wrapper.innerHTML = `
-            <div class="work-tabs">
-                <button class="work-tab active" onclick="switchWorkTab(this,'draw')">✏️ Draw</button>
-                <button class="work-tab" onclick="switchWorkTab(this,'type')">⌨️ Type</button>
-                <div class="draw-tools" id="tools_${id}">
-                    <button class="tool-btn active" onclick="setTool(this,'${id}','pen')" title="Pen">🖊️</button>
-                    <button class="tool-btn" onclick="setTool(this,'${id}','eraser')" title="Eraser">🧽</button>
-                    <input type="color" value="#333333" onchange="setColor('${id}',this.value)" 
-                           style="width:28px;height:28px;border:none;border-radius:4px;cursor:pointer;" title="Color"/>
-                    <select onchange="setSize('${id}',this.value)" style="padding:2px 4px;border-radius:4px;border:1px solid #ddd;font-size:0.8em;">
-                        <option value="2">Fine</option>
-                        <option value="3" selected>Medium</option>
-                        <option value="5">Thick</option>
-                    </select>
-                    <button class="tool-btn" onclick="undoDraw('${id}')" title="Undo">↩️</button>
-                    <button class="tool-btn" onclick="clearCanvas('${id}')" title="Clear All">🗑️</button>
+
+    <!-- PART 1: READ A TABLE — fill in missing values -->
+    <div class="card">
+        <div class="card-head blue"><span class="emoji">📋</span> Part 1: Complete the Table</div>
+        <div class="card-body">
+            <div class="scene">
+                <!-- Simple line graph SVG -->
+                <svg width="110" height="90" viewBox="0 0 110 90">
+                    <!-- axes -->
+                    <line x1="18" y1="75" x2="105" y2="75" stroke="#90A4AE" stroke-width="2"/>
+                    <line x1="18" y1="10" x2="18" y2="75" stroke="#90A4AE" stroke-width="2"/>
+                    <polygon points="14,12 18,4 22,12" fill="#90A4AE"/>
+                    <polygon points="103,71 111,75 103,79" fill="#90A4AE"/>
+                    <!-- data line -->
+                    <polyline points="28,65 48,55 68,45 88,35" stroke="#2E7D32" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                    <!-- dots -->
+                    <circle cx="28" cy="65" r="4" fill="#2E7D32"/>
+                    <circle cx="48" cy="55" r="4" fill="#2E7D32"/>
+                    <circle cx="68" cy="45" r="4" fill="#2E7D32"/>
+                    <circle cx="88" cy="35" r="4" fill="#2E7D32"/>
+                    <!-- axis labels -->
+                    <text x="5" y="78" font-size="8" fill="#888">0</text>
+                    <text x="25" y="84" font-size="8" fill="#888">1</text>
+                    <text x="45" y="84" font-size="8" fill="#888">2</text>
+                    <text x="65" y="84" font-size="8" fill="#888">3</text>
+                    <text x="85" y="84" font-size="8" fill="#888">4</text>
+                    <text x="95" y="80" font-size="8" fill="#888">x</text>
+                    <text x="20" y="10" font-size="8" fill="#888">y</text>
+                </svg>
+                <div class="desc">
+                    <h4>Tables hide equations!</h4>
+                    <p>Look for a pattern between input (x) and output (y). Each row should follow the <strong>same rule</strong>.</p>
                 </div>
             </div>
-            <div class="draw-panel" id="drawPanel_${id}">
-                <canvas id="${id}" width="600" height="160" 
-                        style="width:100%;border:1.5px solid #e0e0e0;border-radius:8px;
-                               background:white;touch-action:none;cursor:crosshair;"></canvas>
+
+            <p style="font-size:0.85em;color:#888;margin-bottom:10px;"><strong>Table A:</strong> Rule is y = 3x. Fill in the missing outputs.</p>
+            <table class="io-table">
+                <tr><th>x (input)</th><th>y (output)</th></tr>
+                <tr><td>1</td><td>3</td></tr>
+                <tr><td>2</td><td><input type="text" placeholder="?" oninput="updateProgress()"/></td></tr>
+                <tr><td>3</td><td><input type="text" placeholder="?" oninput="updateProgress()"/></td></tr>
+                <tr><td>4</td><td><input type="text" placeholder="?" oninput="updateProgress()"/></td></tr>
+                <tr><td>5</td><td><input type="text" placeholder="?" oninput="updateProgress()"/></td></tr>
+            </table>
+
+            <p style="font-size:0.85em;color:#888;margin:14px 0 10px;"><strong>Table B:</strong> Rule is y = x + 7. Fill in the missing outputs.</p>
+            <table class="io-table">
+                <tr><th>x (input)</th><th>y (output)</th></tr>
+                <tr><td>0</td><td>7</td></tr>
+                <tr><td>3</td><td><input type="text" placeholder="?" oninput="updateProgress()"/></td></tr>
+                <tr><td>6</td><td><input type="text" placeholder="?" oninput="updateProgress()"/></td></tr>
+                <tr><td>10</td><td><input type="text" placeholder="?" oninput="updateProgress()"/></td></tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- PART 2: IDENTIFY THE RULE — MC -->
+    <div class="card">
+        <div class="card-head orange"><span class="emoji">🔎</span> Part 2: Find the Equation</div>
+        <div class="card-body">
+            <p style="font-size:0.85em;color:#888;margin-bottom:14px;">Look at the table and tap the equation that matches.</p>
+
+            <div class="q-inline">
+                <span class="q-num orange">8</span>
+                <div class="q-body">
+                    <div class="text">
+                        <table style="display:inline-table;border-collapse:collapse;font-size:0.85em;">
+                            <tr><th style="border:1px solid #EEE;padding:4px 10px;background:#FFF3E0;">x</th><td style="border:1px solid #EEE;padding:4px 10px;">1</td><td style="border:1px solid #EEE;padding:4px 10px;">2</td><td style="border:1px solid #EEE;padding:4px 10px;">3</td><td style="border:1px solid #EEE;padding:4px 10px;">4</td></tr>
+                            <tr><th style="border:1px solid #EEE;padding:4px 10px;background:#FFF3E0;">y</th><td style="border:1px solid #EEE;padding:4px 10px;">5</td><td style="border:1px solid #EEE;padding:4px 10px;">10</td><td style="border:1px solid #EEE;padding:4px 10px;">15</td><td style="border:1px solid #EEE;padding:4px 10px;">20</td></tr>
+                        </table>
+                    </div>
+                    <div class="mc-options" data-q="8">
+                        <button class="mc-btn" onclick="selectMC(this)">y = x + 4</button>
+                        <button class="mc-btn" onclick="selectMC(this)">y = 5x</button>
+                        <button class="mc-btn" onclick="selectMC(this)">y = 2x + 3</button>
+                    </div>
+                    <input type="hidden" class="answer-hidden"/>
+                </div>
             </div>
-            <div class="type-panel" id="typePanel_${id}" style="display:none;">
-                <textarea class="work-area-text" placeholder="Type your work here..."
-                          style="width:100%;min-height:80px;border:1.5px solid #e0e0e0;border-radius:8px;
-                                 padding:10px;font-family:Nunito,sans-serif;font-size:0.9em;resize:vertical;
-                                 outline:none;color:#444;"></textarea>
+            <div class="q-inline">
+                <span class="q-num orange">9</span>
+                <div class="q-body">
+                    <div class="text">
+                        <table style="display:inline-table;border-collapse:collapse;font-size:0.85em;">
+                            <tr><th style="border:1px solid #EEE;padding:4px 10px;background:#FFF3E0;">x</th><td style="border:1px solid #EEE;padding:4px 10px;">0</td><td style="border:1px solid #EEE;padding:4px 10px;">1</td><td style="border:1px solid #EEE;padding:4px 10px;">2</td><td style="border:1px solid #EEE;padding:4px 10px;">3</td></tr>
+                            <tr><th style="border:1px solid #EEE;padding:4px 10px;background:#FFF3E0;">y</th><td style="border:1px solid #EEE;padding:4px 10px;">2</td><td style="border:1px solid #EEE;padding:4px 10px;">4</td><td style="border:1px solid #EEE;padding:4px 10px;">6</td><td style="border:1px solid #EEE;padding:4px 10px;">8</td></tr>
+                        </table>
+                    </div>
+                    <div class="mc-options" data-q="9">
+                        <button class="mc-btn" onclick="selectMC(this)">y = x + 2</button>
+                        <button class="mc-btn" onclick="selectMC(this)">y = 3x − 1</button>
+                        <button class="mc-btn" onclick="selectMC(this)">y = 2x + 2</button>
+                    </div>
+                    <input type="hidden" class="answer-hidden"/>
+                </div>
             </div>
-        `;
-        
-        ta.parentNode.replaceChild(wrapper, ta);
-        
-        // Initialize canvas
-        setTimeout(() => initCanvas(id), 50);
+        </div>
+    </div>
+
+    <!-- PART 3: LINEAR vs NON-LINEAR — classify -->
+    <div class="card">
+        <div class="card-head green"><span class="emoji">📊</span> Part 3: Linear or Non-Linear?</div>
+        <div class="card-body">
+            <p style="font-size:0.85em;color:#888;margin-bottom:6px;"><strong>Linear:</strong> the output changes by the same amount each time (constant rate of change).</p>
+            <p style="font-size:0.85em;color:#888;margin-bottom:14px;"><strong>Non-linear:</strong> the change is not constant — it speeds up or slows down.</p>
+            <div class="classify-grid" id="classifyGrid"></div>
+        </div>
+    </div>
+
+    <!-- PART 4: WORD PROBLEMS — table + equation -->
+    <div class="card">
+        <div class="card-head purple"><span class="emoji">📝</span> Part 4: Words → Table → Equation</div>
+        <div class="card-body">
+            <div class="q-inline">
+                <span class="q-num purple">14</span>
+                <div class="q-body">
+                    <div class="text">A candle burns <strong>2 cm per hour</strong>. It starts at <strong>20 cm</strong>. Fill in the table and write the equation for height <em>h</em> after <em>t</em> hours.</div>
+                    <table class="io-table" style="max-width:280px;margin:10px 0;">
+                        <tr><th>t (hours)</th><th>h (cm)</th></tr>
+                        <tr><td>0</td><td>20</td></tr>
+                        <tr><td>1</td><td><input type="text" placeholder="?" oninput="updateProgress()"/></td></tr>
+                        <tr><td>2</td><td><input type="text" placeholder="?" oninput="updateProgress()"/></td></tr>
+                        <tr><td>3</td><td><input type="text" placeholder="?" oninput="updateProgress()"/></td></tr>
+                    </table>
+                    <div class="eq-row">
+                        Equation: h =
+                        <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/>
+                        − <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/>t
+                    </div>
+                </div>
+            </div>
+            <div class="q-inline">
+                <span class="q-num purple">15</span>
+                <div class="q-body">
+                    <div class="text">A parking garage charges <strong>$3 per hour</strong> plus a <strong>$5 flat fee</strong>. Which equation models the total cost <em>C</em> for <em>h</em> hours?</div>
+                    <div class="mc-options" data-q="15">
+                        <button class="mc-btn" onclick="selectMC(this)">C = 3h</button>
+                        <button class="mc-btn" onclick="selectMC(this)">C = 5h + 3</button>
+                        <button class="mc-btn" onclick="selectMC(this)">C = 3h + 5</button>
+                        <button class="mc-btn" onclick="selectMC(this)">C = h + 8</button>
+                    </div>
+                    <input type="hidden" class="answer-hidden"/>
+                </div>
+            </div>
+
+            <div class="fact">
+                <strong>📈 Connection:</strong> Every linear equation makes a <strong>straight line</strong> when graphed. The constant you add each step is the <em>slope</em> — you'll study it more in algebra!
+            </div>
+        </div>
+    </div>
+
+    <div class="submit-wrap">
+        <button class="submit-btn" id="submitBtn" onclick="doSubmit()">📤 Submit Worksheet</button>
+        <div id="submitMsg"></div>
+    </div>
+
+    <!-- PIN + Answer Key -->
+    <div id="pinOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:1000;align-items:center;justify-content:center;">
+        <div style="background:white;padding:28px;border-radius:16px;text-align:center;max-width:300px;margin:20px;">
+            <div style="font-size:2em;margin-bottom:8px;">🔒</div>
+            <h3 style="color:#1565C0;margin-bottom:12px;">Teacher Access</h3>
+            <input type="number" id="pinInput" placeholder="Today's PIN" style="width:100px;padding:10px;font-size:1.2em;text-align:center;border:2px solid #ddd;border-radius:8px;outline:none;" oninput="checkPin()"/>
+            <p id="pinError" style="color:#E74C3C;font-size:0.82em;margin-top:6px;display:none;">Wrong PIN</p>
+            <br><button onclick="closePinDialog()" style="margin-top:8px;padding:6px 18px;background:none;border:1px solid #ddd;border-radius:6px;cursor:pointer;color:#888;font-size:0.85em;">Cancel</button>
+        </div>
+    </div>
+    <div class="answer-key" id="answerKey">
+        <div class="answer-key-header"><span>🔑 Answer Key</span><button onclick="hideAnswers()" class="close-btn">✕</button></div>
+        <p><strong>Table A (y=3x):</strong> 6, 9, 12, 15 &nbsp;·&nbsp; <strong>Table B (y=x+7):</strong> 10, 13, 17</p>
+        <p><strong>8.</strong> y = 5x &nbsp;·&nbsp; <strong>9.</strong> y = 2x + 2</p>
+        <p><strong>Part 3 — Linear/Non-linear:</strong> Table 1=Linear · Table 2=Non-linear · Table 3=Linear · Table 4=Non-linear</p>
+        <p><strong>14.</strong> h: 18, 16, 14 &nbsp;→&nbsp; Equation: h = 20 − 2t &nbsp;·&nbsp; <strong>15.</strong> C = 3h + 5</p>
+    </div>
+    <button class="answer-btn" id="showAnswerBtn" onclick="showPinDialog()">🔒 Answer Key (Teacher Only)</button>
+
+    <script>
+    // Build linear/non-linear classify grid
+    const tables = [
+        {
+            num: 1,
+            rows: [[1,3],[2,6],[3,9],[4,12]]
+        },
+        {
+            num: 2,
+            rows: [[1,1],[2,4],[3,9],[4,16]]
+        },
+        {
+            num: 3,
+            rows: [[0,5],[1,8],[2,11],[3,14]]
+        },
+        {
+            num: 4,
+            rows: [[1,2],[2,8],[3,18],[4,32]]
+        }
+    ];
+    const linearTypes = [
+        { label: 'Linear',     css: 'linear'    },
+        { label: 'Non-linear', css: 'nonlinear' }
+    ];
+    const grid = document.getElementById('classifyGrid');
+    tables.forEach(t => {
+        const tableHtml = `<table><tr><th>x</th><th>y</th></tr>${t.rows.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join('')}</table>`;
+        const div = document.createElement('div');
+        div.className = 'classify-item';
+        div.innerHTML = `<div class="degree">${tableHtml}</div>
+            <div class="choices">${linearTypes.map(lt =>
+                `<button class="ch" data-type="${lt.css}" onclick="selectClassify(this,${t.num})">${lt.label}</button>`
+            ).join('')}</div>
+            <input type="hidden" class="classify-answer" data-num="${t.num}"/>`;
+        grid.appendChild(div);
     });
-    
-    // Canvas state storage
-    window._canvasState = {};
-    
-    window.initCanvas = function(id) {
-        const canvas = document.getElementById(id);
-        if (!canvas) return;
-        const ctx = canvas.getContext('2d');
-        
-        // Set actual pixel size based on display size
-        const rect = canvas.getBoundingClientRect();
-        canvas.width = rect.width * 2;
-        canvas.height = rect.height * 2;
-        ctx.scale(2, 2);
-        
-        const state = {
-            drawing: false,
-            tool: 'pen',
-            color: '#333333',
-            size: 3,
-            history: [],
-            ctx: ctx,
-            canvas: canvas,
-            lastX: 0, lastY: 0
-        };
-        window._canvasState[id] = state;
-        
-        // Save initial blank state
-        saveHistory(id);
-        
-        // Pointer events (works with touch, pencil, and mouse)
-        canvas.addEventListener('pointerdown', e => startDraw(e, id));
-        canvas.addEventListener('pointermove', e => draw(e, id));
-        canvas.addEventListener('pointerup', e => endDraw(e, id));
-        canvas.addEventListener('pointerleave', e => endDraw(e, id));
-        
-        // Prevent scroll while drawing
-        canvas.addEventListener('touchstart', e => e.preventDefault(), {passive: false});
-        canvas.addEventListener('touchmove', e => e.preventDefault(), {passive: false});
-    };
-    
-    function getPos(e, canvas) {
-        const rect = canvas.getBoundingClientRect();
-        return {
-            x: (e.clientX - rect.left),
-            y: (e.clientY - rect.top)
-        };
-    }
-    
-    window.startDraw = function(e, id) {
-        const s = window._canvasState[id];
-        s.drawing = true;
-        const pos = getPos(e, s.canvas);
-        s.lastX = pos.x;
-        s.lastY = pos.y;
-        s.ctx.beginPath();
-        s.ctx.moveTo(pos.x, pos.y);
-    };
-    
-    window.draw = function(e, id) {
-        const s = window._canvasState[id];
-        if (!s.drawing) return;
-        const pos = getPos(e, s.canvas);
-        
-        s.ctx.lineWidth = s.tool === 'eraser' ? s.size * 4 : s.size;
-        s.ctx.lineCap = 'round';
-        s.ctx.lineJoin = 'round';
-        s.ctx.strokeStyle = s.tool === 'eraser' ? '#ffffff' : s.color;
-        s.ctx.globalCompositeOperation = s.tool === 'eraser' ? 'destination-out' : 'source-over';
-        
-        // Use pressure for Apple Pencil if available
-        if (e.pressure && e.pressure > 0 && e.pressure < 1) {
-            s.ctx.lineWidth *= (0.5 + e.pressure);
-        }
-        
-        s.ctx.lineTo(pos.x, pos.y);
-        s.ctx.stroke();
-        s.ctx.beginPath();
-        s.ctx.moveTo(pos.x, pos.y);
-        s.lastX = pos.x;
-        s.lastY = pos.y;
-    };
-    
-    window.endDraw = function(e, id) {
-        const s = window._canvasState[id];
-        if (s.drawing) {
-            s.drawing = false;
-            s.ctx.globalCompositeOperation = 'source-over';
-            saveHistory(id);
-        }
-    };
-    
-    function saveHistory(id) {
-        const s = window._canvasState[id];
-        const imgData = s.canvas.toDataURL();
-        s.history.push(imgData);
-        if (s.history.length > 20) s.history.shift(); // limit memory
-    }
-    
-    window.undoDraw = function(id) {
-        const s = window._canvasState[id];
-        if (s.history.length > 1) {
-            s.history.pop();
-            const img = new Image();
-            img.onload = () => {
-                s.ctx.clearRect(0, 0, s.canvas.width/2, s.canvas.height/2);
-                s.ctx.drawImage(img, 0, 0, s.canvas.width/2, s.canvas.height/2);
-            };
-            img.src = s.history[s.history.length - 1];
-        }
-    };
-    
-    window.clearCanvas = function(id) {
-        const s = window._canvasState[id];
-        s.ctx.clearRect(0, 0, s.canvas.width/2, s.canvas.height/2);
-        saveHistory(id);
-    };
-    
-    window.setTool = function(btn, id, tool) {
-        window._canvasState[id].tool = tool;
-        btn.parentElement.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const canvas = document.getElementById(id);
-        canvas.style.cursor = tool === 'eraser' ? 'cell' : 'crosshair';
-    };
-    
-    window.setColor = function(id, color) {
-        window._canvasState[id].color = color;
-    };
-    
-    window.setSize = function(id, size) {
-        window._canvasState[id].size = parseInt(size);
-    };
-    
-    window.switchWorkTab = function(btn, mode) {
-        const wrapper = btn.closest('.work-wrapper');
-        wrapper.querySelectorAll('.work-tab').forEach(t => t.classList.remove('active'));
-        btn.classList.add('active');
-        
-        const drawPanel = wrapper.querySelector('[id^="drawPanel_"]');
-        const typePanel = wrapper.querySelector('[id^="typePanel_"]');
-        const tools = wrapper.querySelector('[id^="tools_"]');
-        
-        if (mode === 'draw') {
-            drawPanel.style.display = 'block';
-            typePanel.style.display = 'none';
-            tools.style.display = 'flex';
-            // Resize canvas on show
-            const canvasEl = drawPanel.querySelector('canvas');
-            if (canvasEl && window._canvasState[canvasEl.id]) {
-                const rect = canvasEl.getBoundingClientRect();
-                if (rect.width > 0) {
-                    // Don't resize if already initialized properly
-                }
-            }
-        } else {
-            drawPanel.style.display = 'none';
-            typePanel.style.display = 'block';
-            tools.style.display = 'none';
-        }
-    };
-})();
-</script>
 
-<!-- Firebase SDK -->
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-<script src="../firebase-config.js?v=5"></script>
-<script src="../grade-sync.js?v=5"></script>
-
-<script>
-async function doSubmit() {
-    const btn = document.getElementById('submitBtn');
-    const msg = document.getElementById('submitMsg');
-    btn.disabled = true; btn.textContent = '⏳ Submitting...';
-    
-    // Count filled inputs
-    const inputs = document.querySelectorAll('input[type="text"], textarea, select');
-    const filled = Array.from(inputs).filter(i => i.value.trim() !== '').length;
-    const total = inputs.length;
-    const score = total > 0 ? Math.round((filled / total) * 100 * 10) / 10 : 0;
-    
-    try {
-        const result = await submitScore('w23', score, { filled, total, type: 'completion' });
-        if (result) {
-            msg.textContent = '✅ Submitted! Your teacher will see your work.';
-            msg.style.color = '#5B8C5A';
-            btn.textContent = '✓ Submitted';
-        } else {
-            msg.textContent = '⚠️ Could not submit — make sure you are logged in.';
-            msg.style.color = '#D35400';
-            btn.disabled = false; btn.textContent = '📤 Submit Worksheet';
-        }
-    } catch(e) {
-        msg.textContent = '⚠️ Error submitting. Try again.';
-        msg.style.color = '#D35400';
-        btn.disabled = false; btn.textContent = '📤 Submit Worksheet';
+    function selectClassify(btn, num) {
+        const item = btn.closest('.classify-item');
+        item.querySelectorAll('.ch').forEach(b => b.classList.remove('selected','linear','nonlinear'));
+        btn.classList.add('selected', btn.dataset.type);
+        item.classList.add('answered');
+        item.querySelector('.classify-answer').value = btn.textContent;
+        updateProgress();
     }
-}
-</script>
 
-<script>
-// Hide answer key for students
-if (localStorage.getItem('math_current_user')) {
-    const akBtn = document.getElementById('showAnswerBtn');
-    if (akBtn) akBtn.style.display = 'none';
-}
-</script>
+    function selectMC(btn) {
+        btn.parentElement.querySelectorAll('.mc-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        btn.parentElement.parentElement.querySelector('.answer-hidden').value = btn.textContent;
+        updateProgress();
+    }
+
+    function updateProgress() {
+        let filled = 0;
+        document.querySelectorAll('.classify-answer').forEach(i => { if(i.value) filled++; });
+        document.querySelectorAll('.io-table input').forEach(i => { if(i.value.trim()) filled++; });
+        document.querySelectorAll('.eq-input').forEach(i => { if(i.value.trim()) filled++; });
+        document.querySelectorAll('.answer-hidden').forEach(i => { if(i.value) filled++; });
+        const total = 15;
+        // table-A=4, table-B=3, classify=4, mc(p2)=2, table-p4=3, eq-p4=2, mc-p4=1 = 19 raw
+        const raw = 19;
+        const pct = Math.round((filled / raw) * 100);
+        document.getElementById('prog').style.width = Math.min(pct,100) + '%';
+        document.getElementById('progLabel').textContent = Math.min(Math.round((filled/raw)*total),total) + ' / ' + total;
+    }
+
+    function showPinDialog() { document.getElementById('pinOverlay').style.display='flex'; document.getElementById('pinInput').value=''; document.getElementById('pinError').style.display='none'; document.getElementById('pinInput').focus(); }
+    function closePinDialog() { document.getElementById('pinOverlay').style.display='none'; }
+    function checkPin() {
+        const p = document.getElementById('pinInput').value;
+        if(p.length>=1 && parseInt(p)===new Date().getDate()) {
+            document.getElementById('pinOverlay').style.display='none';
+            document.getElementById('answerKey').style.display='block';
+            document.getElementById('showAnswerBtn').style.display='none';
+        } else if(p.length>=2) { document.getElementById('pinError').style.display='block'; }
+    }
+    function hideAnswers() { document.getElementById('answerKey').style.display='none'; document.getElementById('showAnswerBtn').style.display='block'; }
+    </script>
+
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="../firebase-config.js?v=5"></script>
+    <script src="../grade-sync.js?v=5"></script>
+    <script>
+    async function doSubmit() {
+        const btn = document.getElementById('submitBtn');
+        const msg = document.getElementById('submitMsg');
+        btn.disabled = true; btn.textContent = '⏳ Submitting...';
+        try {
+            let filled = 0;
+            document.querySelectorAll('.classify-answer,.answer-hidden').forEach(i => { if(i.value) filled++; });
+            document.querySelectorAll('.io-table input,.eq-input').forEach(i => { if(i.value.trim()) filled++; });
+            const raw = 19;
+            const score = Math.round((filled / raw) * 100 * 10) / 10;
+            const result = await submitScore('w23', score, { filled, total: 15, type: 'completion' });
+            if(result) { msg.textContent = '✅ Submitted!'; msg.style.color='#2E7D32'; btn.textContent='✓ Submitted'; }
+            else { msg.textContent='⚠️ Log in on Student Portal first.'; msg.style.color='#E65100'; btn.disabled=false; btn.textContent='📤 Submit Worksheet'; }
+        } catch(e) { msg.textContent='⚠️ Error — try again.'; msg.style.color='#E65100'; btn.disabled=false; btn.textContent='📤 Submit Worksheet'; }
+    }
+    </script>
+    <script>if(localStorage.getItem('math_current_user')){const b=document.getElementById('showAnswerBtn');if(b)b.style.display='none';}</script>
 </body>
 </html>

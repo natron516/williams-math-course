@@ -3,657 +3,891 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>📝 FINAL TEST: Comprehensive</title>
-    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
-<style>
+    <title>Final Test: Comprehensive</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-               max-width: 800px; margin: 0 auto; padding: 20px; background: #f5f5f5; color: #333; }
-        .header { background: linear-gradient(135deg, #1F4E79, #2E75B6); color: white;
-                   padding: 20px; border-radius: 12px; margin-bottom: 20px; text-align: center; }
-        .header h1 { font-size: 1.5em; margin-bottom: 5px; }
-        .header p { font-size: 0.9em; opacity: 0.9; }
-        .student-info { background: white; padding: 15px; border-radius: 8px; margin-bottom: 20px;
-                        display: flex; gap: 15px; flex-wrap: wrap; }
-        .student-info input { border: none; border-bottom: 2px solid #2E75B6; padding: 8px;
-                               font-size: 1em; flex: 1; min-width: 150px; outline: none; }
-        .section { background: white; padding: 20px; border-radius: 12px; margin-bottom: 15px;
-                   box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
-        .section h2 { color: #1F4E79; font-size: 1.2em; margin-bottom: 15px;
-                      border-bottom: 2px solid #D6E4F0; padding-bottom: 8px; }
-        .problem { padding: 12px 0; border-bottom: 1px solid #eee; }
-        .problem:last-child { border-bottom: none; }
-        .problem-num { display: inline-block; background: #2E75B6; color: white;
-                       width: 28px; height: 28px; border-radius: 50%; text-align: center;
-                       line-height: 28px; font-size: 0.85em; font-weight: bold; margin-right: 10px; }
-        .problem-text { display: inline; font-size: 1.05em; }
-        .answer-box { display: block; margin: 10px 0 5px 38px; border: 2px dashed #ccc;
-                      border-radius: 8px; padding: 12px; min-height: 45px;
-                      font-size: 1em; width: calc(100% - 38px); }
-        .answer-box:focus { border-color: #2E75B6; outline: none; background: #f8fbff; }
-        .work-area { display: block; margin: 8px 0 5px 38px; border: 1px solid #ddd;
-                     border-radius: 8px; padding: 10px; min-height: 80px;
-                     font-size: 0.9em; width: calc(100% - 38px); color: #666; }
-        .work-area:focus { border-color: #2E75B6; outline: none; }
-        .emoji { font-size: 1.3em; margin-right: 5px; }
-        .context { background: #f0f7ff; padding: 12px; border-radius: 8px;
-                   margin: 10px 0; border-left: 4px solid #2E75B6; font-size: 0.95em; }
-        .hint { color: #888; font-size: 0.85em; font-style: italic; margin-left: 38px; }
-        .mc-option { display: block; padding: 10px 15px; margin: 5px 0 5px 38px;
-                     background: #f8f8f8; border: 2px solid #e0e0e0; border-radius: 8px;
-                     cursor: pointer; transition: all 0.2s; font-size: 1em; }
-        .mc-option:hover { background: #e8f0fe; border-color: #2E75B6; }
-        .mc-option.selected { background: #d0e4ff; border-color: #2E75B6; font-weight: bold; }
-        .answer-key { background: #fff9e6; padding: 20px; border-radius: 12px;
-                      margin: 20px 0; border: 2px solid #f0c040; }
-        .answer-key h2 { color: #8B6914; }
-        .toggle-btn { display: block; margin: 15px auto; padding: 12px 30px;
-                      background: #1F4E79; color: white; border: none; border-radius: 8px;
-                      font-size: 1em; cursor: pointer; }
-        .toggle-btn:hover { background: #2E75B6; }
-        .score-box { background: #e2efda; padding: 15px; border-radius: 8px;
-                     text-align: center; font-size: 1.2em; margin-top: 15px; }
-        @media print {
-            .toggle-btn, .answer-key { display: none !important; }
-            .section { break-inside: avoid; }
-        }
-    
-.work-wrapper { position: relative; }
-.work-tabs { display: flex; align-items: center; gap: 4px; margin-bottom: 6px; }
-.work-tab { padding: 6px 14px; border: 1.5px solid #e0e0e0; border-radius: 8px 8px 0 0;
-            background: #f5f5f5; cursor: pointer; font-family: 'Nunito', sans-serif;
-            font-size: 0.85em; font-weight: 600; color: #888; transition: all 0.2s; border-bottom: none; }
-.work-tab.active { background: white; color: #2E75B6; border-color: #2E75B6; }
-.draw-tools { display: flex; align-items: center; gap: 6px; margin-left: auto;
-              padding: 3px 8px; background: #f8f9fa; border-radius: 8px; }
-.tool-btn { background: none; border: 1.5px solid transparent; padding: 3px 6px;
-            border-radius: 6px; cursor: pointer; font-size: 1em; transition: all 0.2s; }
-.tool-btn.active { border-color: #2E75B6; background: #e8f0fe; }
-.tool-btn:hover { background: #e8e8e8; }
-.draw-panel canvas { display: block; }
-@media (max-width: 600px) {
-    .draw-tools { flex-wrap: wrap; gap: 4px; }
-    .work-tabs { flex-wrap: wrap; }
-}
-</style>
+        body { font-family: 'Nunito', sans-serif; max-width: 820px; margin: 0 auto;
+               background: #F5F7FA; color: #333; -webkit-tap-highlight-color: transparent; }
 
-<style>
-.submit-bar { text-align: center; padding: 20px; margin: 10px 0; }
-.submit-btn { background: linear-gradient(135deg, #C06C84, #8B5E83); color: white;
-             border: none; padding: 14px 40px; border-radius: 12px; font-size: 1.1em;
-             font-weight: 700; cursor: pointer; font-family: 'Nunito', sans-serif;
-             box-shadow: 0 4px 15px rgba(192,108,132,0.3); transition: all 0.2s; }
-.submit-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(192,108,132,0.4); }
-.submit-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-.submit-msg { margin-top: 10px; font-weight: 700; font-size: 0.95em; }
-.submit-msg.ok { color: #5B8C5A; }
-.submit-msg.err { color: #dc3545; }
-</style>
+        /* Rainbow hero */
+        .hero { background: linear-gradient(135deg, #1565C0 0%, #6A1B9A 40%, #00695C 80%, #1565C0 100%);
+                color: white; padding: 28px 22px; position: relative; overflow: hidden;
+                border-radius: 0 0 24px 24px; }
+        .hero::after { content: '🏆'; position: absolute; font-size: 6em; opacity: 0.12;
+                      top: -10px; right: 10px; transform: rotate(12deg); }
+        .hero .badge { display: inline-block; background: rgba(255,255,255,0.2);
+                      padding: 4px 12px; border-radius: 16px; font-size: 0.75em; font-weight: 700; }
+        .hero h1 { font-size: 1.6em; font-weight: 900; margin: 6px 0 3px; }
+        .hero p { opacity: 0.85; font-size: 0.9em; }
+
+        .progress-wrap { padding: 10px 16px 0; display: flex; align-items: center; gap: 8px; }
+        .progress-track { flex: 1; height: 6px; background: #E0E4EA; border-radius: 6px; overflow: hidden; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #4CAF50, #81C784);
+                        border-radius: 6px; transition: width 0.3s; width: 0%; }
+        .progress-label { font-size: 0.75em; font-weight: 700; color: #999; }
+
+        /* Section divider */
+        .section-divider { margin: 14px 14px 0; padding: 10px 16px; border-radius: 14px 14px 0 0;
+                          font-weight: 900; font-size: 1em; color: white; display: flex; align-items: center; gap: 10px; }
+        .section-divider.sd-blue { background: linear-gradient(135deg, #1565C0, #42A5F5); }
+        .section-divider.sd-orange { background: linear-gradient(135deg, #E65100, #FF9800); }
+        .section-divider.sd-green { background: linear-gradient(135deg, #2E7D32, #66BB6A); }
+        .section-divider.sd-purple { background: linear-gradient(135deg, #6A1B9A, #AB47BC); }
+        .section-divider.sd-teal { background: linear-gradient(135deg, #00695C, #26C6DA); }
+        .section-divider.sd-indigo { background: linear-gradient(135deg, #283593, #5C6BC0); }
+        .section-divider.sd-gold { background: linear-gradient(135deg, #F57F17, #FFB300); }
+        .section-divider .pts { margin-left: auto; font-size: 0.8em; opacity: 0.85; }
+
+        .card { background: white; border-radius: 0 0 18px 18px; margin: 0 14px 12px; overflow: hidden;
+                box-shadow: 0 1px 6px rgba(0,0,0,0.05); }
+        /* Standalone card (no preceding divider) */
+        .card.standalone { border-radius: 18px; margin-top: 12px; }
+        .card-body { padding: 16px; }
+
+        /* Classify grids */
+        .classify-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .classify-item { background: #FAFBFC; border: 2px solid #EEE; border-radius: 14px;
+                        padding: 14px; transition: border-color 0.2s; }
+        .classify-item .degree { font-size: 1.3em; font-weight: 900; color: #1565C0; text-align: center; margin-bottom: 2px; }
+        .classify-item .sublabel { font-size: 0.75em; color: #888; text-align: center; margin-bottom: 6px; }
+        .classify-item .choices { display: flex; gap: 5px; flex-wrap: wrap; justify-content: center; }
+        .classify-item .ch { padding: 6px 10px; border-radius: 8px; border: 2px solid #E0E0E0;
+                           background: white; font-size: 0.72em; font-weight: 700; cursor: pointer;
+                           transition: all 0.15s; font-family: 'Nunito', sans-serif; color: #666; }
+        .classify-item .ch:hover { border-color: #42A5F5; color: #1565C0; }
+        .classify-item .ch.selected { background: #1565C0; color: white; border-color: #1565C0; }
+        .classify-item.answered { border-color: #81C784; }
+        .classify-item input[type="hidden"] { display: none; }
+
+        /* Shape grid */
+        .shape-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 14px; }
+        .shape-card { background: #FAFBFC; border: 2px solid #EEE; border-radius: 14px; padding: 12px; text-align: center; }
+        .shape-card svg { display: block; margin: 0 auto 6px; }
+        .shape-card .shape-label { font-size: 0.78em; font-weight: 800; color: #555; }
+        .shape-card .shape-dims { font-size: 0.72em; color: #888; }
+
+        /* Scene */
+        .scene { display: flex; gap: 14px; align-items: center; padding: 16px;
+                background: #F9FAFB; border-radius: 14px; margin-bottom: 14px; }
+        .scene svg { flex-shrink: 0; }
+        .scene .desc h4 { font-size: 0.95em; font-weight: 800; margin-bottom: 3px; }
+        .scene .desc p { font-size: 0.83em; color: #888; line-height: 1.4; }
+
+        /* Equation fill-in */
+        .eq-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+                 font-size: 1.05em; font-weight: 700; color: #555; padding: 8px 0; }
+        .eq-row .eq-input { width: 70px; padding: 6px 8px; border: 2px solid #E0E0E0;
+                          border-radius: 8px; font-size: 0.95em; font-weight: 700;
+                          font-family: 'Nunito', sans-serif; text-align: center;
+                          outline: none; color: #1565C0; }
+        .eq-row .eq-input:focus { border-color: #42A5F5; box-shadow: 0 0 0 3px rgba(66,165,245,0.1); }
+        .eq-row .eq-input.wide { width: 90px; }
+        .eq-row .eq-input.xwide { width: 130px; }
+        .eq-row .eq-input.purple { color: #6A1B9A; }
+        .eq-row .eq-input.purple:focus { border-color: #AB47BC; }
+        .eq-row .eq-input.green { color: #2E7D32; }
+        .eq-row .eq-input.orange { color: #E65100; }
+
+        /* MC buttons */
+        .mc-options { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+        .mc-btn { flex: 1; min-width: 90px; padding: 10px; border: 2px solid #E0E0E0; border-radius: 10px;
+                 background: white; font-weight: 700; font-size: 0.85em; cursor: pointer;
+                 text-align: center; transition: all 0.15s; font-family: 'Nunito', sans-serif; color: #666; }
+        .mc-btn:hover { border-color: #42A5F5; color: #1565C0; }
+        .mc-btn.selected { background: #1565C0; color: white; border-color: #1565C0; }
+        .mc-btn.purple:hover { border-color: #AB47BC; color: #6A1B9A; }
+        .mc-btn.purple.selected { background: #6A1B9A; border-color: #6A1B9A; }
+
+        /* Question rows */
+        .q-inline { display: flex; align-items: flex-start; gap: 10px; padding: 12px 0;
+                   border-bottom: 1px solid #F0F0F0; }
+        .q-inline:last-child { border-bottom: none; }
+        .q-num { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center;
+                justify-content: center; font-weight: 800; font-size: 0.78em; color: white;
+                background: linear-gradient(135deg, #42A5F5, #1565C0); flex-shrink: 0; }
+        .q-num.orange { background: linear-gradient(135deg, #FF9800, #E65100); }
+        .q-num.green { background: linear-gradient(135deg, #66BB6A, #2E7D32); }
+        .q-num.purple { background: linear-gradient(135deg, #AB47BC, #6A1B9A); }
+        .q-num.teal { background: linear-gradient(135deg, #26C6DA, #00695C); }
+        .q-num.indigo { background: linear-gradient(135deg, #7986CB, #283593); }
+        .q-num.gold { background: linear-gradient(135deg, #FFB300, #F57F17); }
+        .q-body { flex: 1; }
+        .q-body .text { font-size: 0.92em; line-height: 1.5; margin-bottom: 6px; }
+        .hint { font-size: 0.8em; color: #42A5F5; font-weight: 600; margin-bottom: 4px; }
+
+        /* Answer input */
+        .ans-input { padding: 8px 12px; border: 2px solid #E0E0E0; border-radius: 8px;
+                    font-size: 0.95em; font-weight: 700; font-family: 'Nunito', sans-serif;
+                    outline: none; color: #1565C0; width: 100%; margin-top: 4px; }
+        .ans-input:focus { border-color: #42A5F5; box-shadow: 0 0 0 3px rgba(66,165,245,0.1); }
+        .ans-input.purple { color: #6A1B9A; }
+        .ans-input.purple:focus { border-color: #AB47BC; }
+
+        /* Step box */
+        .step-box { background: #F3F4FF; border: 1.5px solid #C5CAE9; border-radius: 12px;
+                   padding: 10px 14px; margin: 6px 0; }
+        .step-box .step-label { font-size: 0.73em; font-weight: 800; color: #3949AB; margin-bottom: 4px; }
+
+        /* Formula strip */
+        .formula-strip { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+        .formula-chip { padding: 7px 12px; border-radius: 10px; font-size: 0.8em; font-weight: 800;
+                       color: white; box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
+        .formula-chip.blue { background: linear-gradient(135deg, #1565C0, #42A5F5); }
+        .formula-chip.orange { background: linear-gradient(135deg, #E65100, #FF9800); }
+        .formula-chip.green { background: linear-gradient(135deg, #2E7D32, #66BB6A); }
+        .formula-chip.purple { background: linear-gradient(135deg, #6A1B9A, #AB47BC); }
+        .formula-chip.teal { background: linear-gradient(135deg, #00695C, #26C6DA); }
+
+        /* Ref strip */
+        .ref-strip { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+        .ref-strip .ref { flex: 1; min-width: 70px; text-align: center; padding: 8px 4px; border-radius: 12px; background: #F8FAFF; }
+        .ref-strip svg { display: block; margin: 0 auto 3px; }
+        .ref-strip .name { font-weight: 800; font-size: 0.78em; color: #1565C0; }
+        .ref-strip .rule { font-size: 0.66em; color: #aaa; }
+
+        /* Number line */
+        .number-line { margin: 10px 0; padding: 10px; background: #F9FAFB; border-radius: 12px; overflow-x: auto; }
+
+        /* Fun fact */
+        .fact { margin: 14px 0; padding: 14px 16px; border-radius: 14px;
+               background: #FFFDE7; border: 1.5px solid #FFE082; font-size: 0.85em; line-height: 1.5; }
+
+        /* Coordinate grid */
+        .coord-wrap { display: flex; gap: 14px; align-items: flex-start; flex-wrap: wrap; }
+        .coord-wrap svg { flex-shrink: 0; }
+        .coord-info { flex: 1; min-width: 180px; }
+
+        /* Submit */
+        .submit-wrap { text-align: center; padding: 20px; }
+        .submit-btn { background: linear-gradient(135deg, #4CAF50, #388E3C); color: white;
+                     border: none; padding: 14px 42px; border-radius: 14px; font-size: 1.1em;
+                     font-weight: 800; font-family: 'Nunito', sans-serif; cursor: pointer;
+                     box-shadow: 0 2px 8px rgba(76,175,80,0.3); }
+        .submit-btn:disabled { opacity: 0.5; }
+        #submitMsg { margin-top: 10px; font-weight: 700; }
+
+        /* Answer key */
+        .answer-key { background: #FFF9E6; padding: 18px; border-radius: 14px; margin: 0 14px 14px;
+                     border: 2px solid #F0C040; display: none; }
+        .answer-key-header { display: flex; justify-content: space-between; align-items: center;
+                            font-weight: 800; color: #8B6914; margin-bottom: 10px; padding-bottom: 8px;
+                            border-bottom: 2px solid rgba(240,192,64,0.25); }
+        .answer-key p { font-size: 0.87em; line-height: 1.9; }
+        .answer-btn { display: block; margin: 0 auto 16px; padding: 10px 24px;
+                     background: linear-gradient(135deg, #1565C0, #6A1B9A); color: white;
+                     border: none; border-radius: 10px; font-size: 0.9em; font-weight: 700;
+                     cursor: pointer; font-family: 'Nunito', sans-serif; }
+        .close-btn { background: none; border: 1px solid #ddd; padding: 4px 10px;
+                    border-radius: 6px; cursor: pointer; font-size: 0.8em; color: #888; }
+        .score-row { background: white; border-radius: 14px; margin: 12px 14px; padding: 18px;
+                    text-align: center; font-size: 1.1em; font-weight: 800;
+                    background: linear-gradient(135deg, #E3F2FD, #F3E5F5);
+                    box-shadow: 0 1px 6px rgba(0,0,0,0.05); }
+
+        @media (max-width: 500px) {
+            .classify-grid { grid-template-columns: 1fr; }
+            .shape-grid { grid-template-columns: 1fr 1fr; }
+            .scene { flex-direction: column; text-align: center; }
+            .coord-wrap { flex-direction: column; }
+        }
+    </style>
 </head>
 <body>
-    <div class="header">
-        <h1>📝 FINAL TEST: Comprehensive</h1>
-        <p>All 8 Weeks | 40 minutes | Show ALL work for full credit!</p>
-    </div>
-    <div class="section"><h2>Part 1: Geometry — Angles & Shapes (6 points)</h2><div class="problem">
-        <span class="problem-num">1</span>
-        <span class="problem-text">An angle measuring 172° is:</span>
-        <div class="mc-option" onclick="this.classList.toggle('selected')">A) Acute</div>
-<div class="mc-option" onclick="this.classList.toggle('selected')">B) Right</div>
-<div class="mc-option" onclick="this.classList.toggle('selected')">C) Obtuse</div>
-<div class="mc-option" onclick="this.classList.toggle('selected')">D) Straight</div>
-    </div><div class="problem">
-        <span class="problem-num">2</span>
-        <span class="problem-text">Find the supplement of a 63° angle.</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">3</span>
-        <span class="problem-text">Two lines intersect. One angle is 105°. Find the adjacent angle.</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">4</span>
-        <span class="problem-text">A triangle has angles of 35° and 90°. Find the third angle. Classify this triangle.</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">5</span>
-        <span class="problem-text">What is the interior angle sum of a heptagon (7 sides)?</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">6</span>
-        <span class="problem-text">Two complementary angles: one is 14° more than the other. Find both.</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div></div><div class="section"><h2>Part 2: Geometry — Area & Perimeter (7 points)</h2><div class="problem">
-        <span class="problem-num">7</span>
-        <span class="problem-text">Rectangle: 22 ft × 15 ft. Find BOTH perimeter and area.</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">8</span>
-        <span class="problem-text">Triangle: base = 18 cm, height = 11 cm. Area?</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">9</span>
-        <span class="problem-text">Trapezoid: bases 9 in and 15 in, height 8 in. Area?</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">10</span>
-        <span class="problem-text">Circle: radius = 7 m. Find circumference AND area.</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">11</span>
-        <span class="problem-text">🎨 A wall is 12 ft × 9 ft with a 3 ft × 5 ft window. Paintable area?</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">12</span>
-        <span class="problem-text">An L-shaped room: 20 ft × 14 ft with an 8 ft × 6 ft section removed. Area?</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">13</span>
-        <span class="problem-text">A rectangle 16 ft × 10 ft has a semicircle (diameter 10 ft) attached to one end. Total area?</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div></div><div class="section"><h2>Part 3: Geometry — Volume (3 points)</h2><div class="problem">
-        <span class="problem-num">14</span>
-        <span class="problem-text">Rectangular prism: 12 cm × 8 cm × 5 cm. Volume?</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">15</span>
-        <span class="problem-text">Cylinder: radius 4 in, height 10 in. Volume?</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">16</span>
-        <span class="problem-text">📦 A box is 2 ft × 1.5 ft × 1 ft. How many of these boxes fit in a storage space that's 8 ft × 6 ft × 4 ft?</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div></div><div class="section"><h2>Part 4: Algebra — Expressions (5 points)</h2><div class="problem">
-        <span class="problem-num">17</span>
-        <span class="problem-text">Translate: "5 times a number, decreased by 8" → ____</span>
-        
-        
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">18</span>
-        <span class="problem-text">Evaluate 3x² − 2x + 1 when x = 3</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">19</span>
-        <span class="problem-text">Simplify: 7a + 3b − 4a + 5b − 2 = ____</span>
-        
-        
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">20</span>
-        <span class="problem-text">Simplify: 2(3x + 4) − x = ____</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">21</span>
-        <span class="problem-text">🎮 Score = 4c + 8g + 15s. You get 6 coins, 5 gems, 2 stars. Total score?</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div></div><div class="section"><h2>Part 5: Algebra — Equations (6 points)</h2><div class="problem">
-        <span class="problem-num">22</span>
-        <span class="problem-text">Solve: x + 23 = 51</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">23</span>
-        <span class="problem-text">Solve: 7n = 84</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">24</span>
-        <span class="problem-text">Solve: 3x + 8 = 29</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">25</span>
-        <span class="problem-text">Solve: n/5 − 4 = 6</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">26</span>
-        <span class="problem-text">💰 A gym charges $35 to join plus $20/month. You've paid $175. How many months?</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">27</span>
-        <span class="problem-text">🍕 You sold lemonade at $2 per cup. After spending $15 on supplies, your profit was $37. How many cups did you sell?</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div></div><div class="section"><h2>Part 6: Algebra — Inequalities & Coordinate Plane (5 points)</h2><div class="problem">
-        <span class="problem-num">28</span>
-        <span class="problem-text">Solve: x − 5 > 12</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">29</span>
-        <span class="problem-text">Solve: 6n ≤ 48</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">30</span>
-        <span class="problem-text">The point (−2, 4) is in which quadrant?</span>
-        <div class="mc-option" onclick="this.classList.toggle('selected')">A) I</div>
-<div class="mc-option" onclick="this.classList.toggle('selected')">B) II</div>
-<div class="mc-option" onclick="this.classList.toggle('selected')">C) III</div>
-<div class="mc-option" onclick="this.classList.toggle('selected')">D) IV</div>
-    </div><div class="problem">
-        <span class="problem-num">31</span>
-        <span class="problem-text">Complete the table for y = 3x − 1: x = 0 → ____, x = 1 → ____, x = 2 → ____, x = 4 → ____</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">32</span>
-        <span class="problem-text">Find the rule: x: 1, 2, 3, 4 → y: 6, 9, 12, 15. y = ____</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div></div><div class="section"><h2>Part 7: Real-World Challenge (3 points)</h2><div class="problem">
-        <span class="problem-num">33</span>
-        <span class="problem-text">A circular pool (diameter 12 ft) is in the center of a 20 ft × 20 ft square patio. How much patio area surrounds the pool?</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">34</span>
-        <span class="problem-text">You want to save $500 for a trip. You have $125 and save $35/week. Write and solve an equation for how many weeks. Then write an inequality showing you want MORE than $500.</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">35</span>
-        <span class="problem-text">🚗 Car A goes 55 mph. Car B goes 65 mph. Both start at the same time. After how many hours will Car B be 40 miles ahead? Write and solve.</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div></div><div class="score-box">Total: ____ / 35 points</div>
-    
-    
-    <div style="text-align:center; margin: 30px 0;">
-        <button id="submitBtn" onclick="doSubmit()" style="background:linear-gradient(135deg,#E67E22,#D35400); color:white; border:none; padding:14px 40px; border-radius:12px; font-size:1.1em; font-weight:700; font-family:Nunito,sans-serif; cursor:pointer; box-shadow:0 4px 15px rgba(211,84,0,0.3);">📤 Submit Test</button>
-        <div id="submitMsg" style="margin-top:10px; font-weight:600;"></div>
-    </div>
-<div class="answer-key" style="display:none;" id="answerKey">
-        <h2>🔑 Answer Key</h2>
-        <p><strong>1.</strong> C) Obtuse | <strong>2.</strong> 117° | <strong>3.</strong> 75° | <strong>4.</strong> 55°, right triangle</p>
-<p><strong>5.</strong> (7−2)×180 = 900° | <strong>6.</strong> x + (x+14) = 90, x = 38° and 52°</p>
-<p><strong>7.</strong> P = 74 ft, A = 330 sq ft | <strong>8.</strong> 99 sq cm | <strong>9.</strong> 96 sq in</p>
-<p><strong>10.</strong> C = 43.96 m, A = 153.86 sq m | <strong>11.</strong> 108 − 15 = 93 sq ft</p>
-<p><strong>12.</strong> 280 − 48 = 232 sq ft | <strong>13.</strong> 160 + ½π(25) = 160 + 39.25 = 199.25 sq ft</p>
-<p><strong>14.</strong> 480 cu cm | <strong>15.</strong> π(16)(10) = 502.4 cu in</p>
-<p><strong>16.</strong> 8÷2=4, 6÷1.5=4, 4÷1=4 → 4×4×4 = 64 boxes</p>
-<p><strong>17.</strong> 5n − 8 | <strong>18.</strong> 27 − 6 + 1 = 22 | <strong>19.</strong> 3a + 8b − 2 | <strong>20.</strong> 5x + 8</p>
-<p><strong>21.</strong> 24 + 40 + 30 = 94</p>
-<p><strong>22.</strong> x = 28 | <strong>23.</strong> n = 12 | <strong>24.</strong> x = 7 | <strong>25.</strong> n = 50</p>
-<p><strong>26.</strong> 35 + 20m = 175, m = 7 months | <strong>27.</strong> 2c − 15 = 37, c = 26 cups</p>
-<p><strong>28.</strong> x > 17 | <strong>29.</strong> n ≤ 8 | <strong>30.</strong> B) II</p>
-<p><strong>31.</strong> −1, 2, 5, 11 | <strong>32.</strong> y = 3x + 3</p>
-<p><strong>33.</strong> 400 − π(36) = 400 − 113.04 = 286.96 sq ft</p>
-<p><strong>34.</strong> 125 + 35w = 500, w ≈ 10.7 → 11 weeks. Inequality: 125 + 35w > 500</p>
-<p><strong>35.</strong> 65t − 55t = 40, 10t = 40, t = 4 hours</p>
-    </div>
-    <div id="pinOverlay" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0;
-         background:rgba(0,0,0,0.7); z-index:1000; align-items:center; justify-content:center;">
-        <div style="background:white; padding:30px; border-radius:16px; text-align:center; max-width:320px; margin:20px;">
-            <div style="font-size:2em; margin-bottom:10px;">🔒</div>
-            <h3 style="color:#1F4E79; margin-bottom:15px;">Teacher Access</h3>
-            <p style="color:#666; font-size:0.9em; margin-bottom:15px;">Enter today's PIN to view answer key</p>
-            <input type="number" id="pinInput" placeholder="Enter PIN"
-                   style="width:120px; padding:12px; font-size:1.3em; text-align:center;
-                          border:2px solid #ddd; border-radius:8px; outline:none;"
-                   oninput="checkPin()" />
-            <p id="pinError" style="color:#E74C3C; font-size:0.85em; margin-top:8px; display:none;">Incorrect PIN</p>
-            <br><button onclick="closePinDialog()" style="margin-top:10px; padding:8px 20px;
-                   background:none; border:1px solid #ddd; border-radius:6px; cursor:pointer; color:#888;">Cancel</button>
+
+<div class="hero">
+    <div class="badge">📝 FINAL TEST</div>
+    <h1>🏆 Final Test: Comprehensive</h1>
+    <p>All 8 Weeks &nbsp;·&nbsp; 40 minutes &nbsp;·&nbsp; Show ALL work for full credit!</p>
+</div>
+<div class="progress-wrap">
+    <div class="progress-track"><div class="progress-fill" id="prog"></div></div>
+    <div class="progress-label" id="progLabel">0 / 35</div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════╗ -->
+<!-- ║  PART 1: GEOMETRY — ANGLES & SHAPES                 ║ -->
+<!-- ╚══════════════════════════════════════════════════════╝ -->
+<div class="section-divider sd-blue"><span>📐</span> Part 1: Geometry — Angles &amp; Shapes <span class="pts">6 pts</span></div>
+<div class="card">
+    <div class="card-body">
+
+        <div class="ref-strip">
+            <div class="ref">
+                <svg width="44" height="34"><line x1="4" y1="30" x2="40" y2="30" stroke="#42A5F5" stroke-width="2.5" stroke-linecap="round"/><line x1="4" y1="30" x2="22" y2="4" stroke="#42A5F5" stroke-width="2.5" stroke-linecap="round"/></svg>
+                <div class="name">Acute</div><div class="rule">&lt; 90°</div>
+            </div>
+            <div class="ref">
+                <svg width="44" height="34"><line x1="4" y1="30" x2="40" y2="30" stroke="#42A5F5" stroke-width="2.5" stroke-linecap="round"/><line x1="4" y1="30" x2="4" y2="4" stroke="#42A5F5" stroke-width="2.5" stroke-linecap="round"/><rect x="4" y="20" width="8" height="8" fill="none" stroke="#FF9800" stroke-width="1.5"/></svg>
+                <div class="name">Right</div><div class="rule">= 90°</div>
+            </div>
+            <div class="ref">
+                <svg width="44" height="34"><line x1="3" y1="30" x2="41" y2="30" stroke="#42A5F5" stroke-width="2.5" stroke-linecap="round"/><line x1="3" y1="30" x2="36" y2="5" stroke="#42A5F5" stroke-width="2.5" stroke-linecap="round"/></svg>
+                <div class="name">Obtuse</div><div class="rule">90°–180°</div>
+            </div>
+            <div class="ref">
+                <svg width="44" height="34"><line x1="3" y1="18" x2="41" y2="18" stroke="#42A5F5" stroke-width="2.5" stroke-linecap="round"/><circle cx="22" cy="18" r="3" fill="#FF9800"/></svg>
+                <div class="name">Straight</div><div class="rule">= 180°</div>
+            </div>
         </div>
+
+        <!-- Q1: MC angle type -->
+        <div class="q-inline">
+            <span class="q-num">1</span>
+            <div class="q-body">
+                <div class="text">An angle measuring <strong>172°</strong> is:</div>
+                <div class="mc-options" id="mc1">
+                    <button class="mc-btn" onclick="selMC('mc1',this,'mc1h')">A) Acute</button>
+                    <button class="mc-btn" onclick="selMC('mc1',this,'mc1h')">B) Right</button>
+                    <button class="mc-btn" onclick="selMC('mc1',this,'mc1h')">C) Obtuse</button>
+                    <button class="mc-btn" onclick="selMC('mc1',this,'mc1h')">D) Straight</button>
+                </div>
+                <input type="hidden" id="mc1h"/>
+            </div>
+        </div>
+
+        <!-- Q2: supplement -->
+        <div class="q-inline">
+            <span class="q-num">2</span>
+            <div class="q-body">
+                <div class="text">Find the supplement of a <strong>63°</strong> angle.</div>
+                <div class="eq-row">180° − 63° = <input class="eq-input" placeholder="?" oninput="updateProgress()"/>°</div>
+            </div>
+        </div>
+
+        <!-- Q3: intersecting lines -->
+        <div class="q-inline">
+            <span class="q-num">3</span>
+            <div class="q-body">
+                <div class="text">Two lines intersect. One angle is <strong>105°</strong>. Find the adjacent angle.</div>
+                <div class="eq-row">Adjacent = 180° − 105° = <input class="eq-input" placeholder="?" oninput="updateProgress()"/>°</div>
+            </div>
+        </div>
+
+        <!-- Q4: triangle + classify -->
+        <div class="q-inline">
+            <span class="q-num">4</span>
+            <div class="q-body">
+                <div class="text">Triangle has angles <strong>35°</strong> and <strong>90°</strong>. Find the third angle and classify this triangle.</div>
+                <div class="eq-row">Third angle = 180° − 35° − 90° = <input class="eq-input" placeholder="?" oninput="updateProgress()"/>°</div>
+                <div class="mc-options" id="mc4" style="margin-top:6px;">
+                    <button class="mc-btn" onclick="selMC('mc4',this,'mc4h')">Acute</button>
+                    <button class="mc-btn" onclick="selMC('mc4',this,'mc4h')">Right</button>
+                    <button class="mc-btn" onclick="selMC('mc4',this,'mc4h')">Obtuse</button>
+                    <button class="mc-btn" onclick="selMC('mc4',this,'mc4h')">Equilateral</button>
+                </div>
+                <input type="hidden" id="mc4h"/>
+            </div>
+        </div>
+
+        <!-- Q5: polygon sum -->
+        <div class="q-inline">
+            <span class="q-num">5</span>
+            <div class="q-body">
+                <div class="text">Interior angle sum of a <strong>heptagon</strong> (7 sides)?</div>
+                <div class="hint">Formula: (n − 2) × 180°</div>
+                <div class="eq-row">(7 − 2) × 180° = 5 × 180° = <input class="eq-input wide" placeholder="?" oninput="updateProgress()"/>°</div>
+            </div>
+        </div>
+
+        <!-- Q6: two complementary -->
+        <div class="q-inline">
+            <span class="q-num">6</span>
+            <div class="q-body">
+                <div class="text">Two complementary angles: one is <strong>14° more</strong> than the other. Find both.</div>
+                <div class="hint">x + (x + 14) = 90°</div>
+                <div class="eq-row">2x + 14 = 90 &nbsp; → &nbsp; x = <input class="eq-input" placeholder="?" oninput="updateProgress()"/>° and <input class="eq-input" placeholder="?" oninput="updateProgress()"/>°</div>
+            </div>
+        </div>
+
     </div>
-    <button class="toggle-btn" onclick="showPinDialog()" id="showAnswerBtn">🔒 Answer Key (Teacher Only)</button>
-    <script>
-        function showPinDialog() {
-            document.getElementById('pinOverlay').style.display = 'flex';
-            document.getElementById('pinInput').value = '';
-            document.getElementById('pinInput').focus();
-            document.getElementById('pinError').style.display = 'none';
-        }
-        function closePinDialog() {
-            document.getElementById('pinOverlay').style.display = 'none';
-        }
-        function checkPin() {
-            var pin = document.getElementById('pinInput').value;
-            var today = new Date().getDate().toString();
-            if (pin === today) {
-                document.getElementById('pinOverlay').style.display = 'none';
-                document.getElementById('answerKey').style.display = 'block';
-                document.getElementById('showAnswerBtn').style.display = 'none';
-                window.scrollTo(0, document.body.scrollHeight);
-            } else if (pin.length >= 2) {
-                document.getElementById('pinError').style.display = 'block';
-            }
-        }
-    </script>
-<script>
-// Drawing Canvas System
-(function() {
-    let canvasId = 0;
-    
-    // Replace all work-area textareas with hybrid draw+type areas
-    document.querySelectorAll('.work-area').forEach(ta => {
-        const id = 'canvas_' + (canvasId++);
-        const wrapper = document.createElement('div');
-        wrapper.className = 'work-wrapper';
-        wrapper.style.cssText = 'margin:8px 0 5px 42px; width:calc(100% - 42px);';
-        
-        wrapper.innerHTML = `
-            <div class="work-tabs">
-                <button class="work-tab active" onclick="switchWorkTab(this,'draw')">✏️ Draw</button>
-                <button class="work-tab" onclick="switchWorkTab(this,'type')">⌨️ Type</button>
-                <div class="draw-tools" id="tools_${id}">
-                    <button class="tool-btn active" onclick="setTool(this,'${id}','pen')" title="Pen">🖊️</button>
-                    <button class="tool-btn" onclick="setTool(this,'${id}','eraser')" title="Eraser">🧽</button>
-                    <input type="color" value="#333333" onchange="setColor('${id}',this.value)" 
-                           style="width:28px;height:28px;border:none;border-radius:4px;cursor:pointer;" title="Color"/>
-                    <select onchange="setSize('${id}',this.value)" style="padding:2px 4px;border-radius:4px;border:1px solid #ddd;font-size:0.8em;">
-                        <option value="2">Fine</option>
-                        <option value="3" selected>Medium</option>
-                        <option value="5">Thick</option>
-                    </select>
-                    <button class="tool-btn" onclick="undoDraw('${id}')" title="Undo">↩️</button>
-                    <button class="tool-btn" onclick="clearCanvas('${id}')" title="Clear All">🗑️</button>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════╗ -->
+<!-- ║  PART 2: AREA & PERIMETER                           ║ -->
+<!-- ╚══════════════════════════════════════════════════════╝ -->
+<div class="section-divider sd-orange"><span>📏</span> Part 2: Geometry — Area &amp; Perimeter <span class="pts">7 pts</span></div>
+<div class="card">
+    <div class="card-body">
+
+        <div class="formula-strip">
+            <div class="formula-chip orange">Rect: A = lw, P = 2(l+w)</div>
+            <div class="formula-chip orange">Triangle: A = ½bh</div>
+            <div class="formula-chip orange">Trapezoid: A = ½(b₁+b₂)h</div>
+            <div class="formula-chip orange">Circle: A = πr², C = πd</div>
+        </div>
+
+        <!-- Shape reference cards -->
+        <div class="shape-grid">
+            <div class="shape-card">
+                <svg width="100" height="60" viewBox="0 0 100 60">
+                    <rect x="5" y="5" width="90" height="50" fill="#FFF3E0" stroke="#E65100" stroke-width="2" rx="2"/>
+                    <text x="50" y="2" text-anchor="middle" fill="#E65100" font-size="9" font-weight="800">22 ft</text>
+                    <text x="98" y="34" text-anchor="end" fill="#E65100" font-size="9" font-weight="800">15 ft</text>
+                </svg>
+                <div class="shape-label">Rectangle (Q7)</div>
+            </div>
+            <div class="shape-card">
+                <svg width="100" height="60" viewBox="0 0 100 60">
+                    <polygon points="5,55 95,55 50,5" fill="#FFF3E0" stroke="#E65100" stroke-width="2"/>
+                    <line x1="50" y1="5" x2="50" y2="55" stroke="#E65100" stroke-width="1.5" stroke-dasharray="3,2"/>
+                    <text x="50" y="64" text-anchor="middle" fill="#E65100" font-size="9" font-weight="800">18 cm</text>
+                    <text x="56" y="32" fill="#E65100" font-size="8" font-weight="700">h=11</text>
+                </svg>
+                <div class="shape-label">Triangle (Q8)</div>
+            </div>
+            <div class="shape-card">
+                <svg width="100" height="60" viewBox="0 0 100 60">
+                    <polygon points="20,55 80,55 70,5 30,5" fill="#FFF3E0" stroke="#E65100" stroke-width="2"/>
+                    <line x1="30" y1="5" x2="30" y2="55" stroke="#E65100" stroke-width="1.5" stroke-dasharray="3,2"/>
+                    <text x="50" y="64" text-anchor="middle" fill="#E65100" font-size="8" font-weight="800">15 in</text>
+                    <text x="50" y="3" text-anchor="middle" fill="#E65100" font-size="8" font-weight="800">9 in</text>
+                    <text x="18" y="35" fill="#E65100" font-size="8" font-weight="700">h=8</text>
+                </svg>
+                <div class="shape-label">Trapezoid (Q9)</div>
+            </div>
+        </div>
+
+        <div class="q-inline">
+            <span class="q-num orange">7</span>
+            <div class="q-body">
+                <div class="text">Rectangle <strong>22 ft × 15 ft</strong>. Find BOTH perimeter and area.</div>
+                <div class="eq-row">P = 2(22+15) = <input class="eq-input orange" placeholder="?" oninput="updateProgress()"/> ft &nbsp; A = 22×15 = <input class="eq-input orange" placeholder="?" oninput="updateProgress()"/> ft²</div>
+            </div>
+        </div>
+
+        <div class="q-inline">
+            <span class="q-num orange">8</span>
+            <div class="q-body">
+                <div class="text">Triangle: base = <strong>18 cm</strong>, height = <strong>11 cm</strong>. Area?</div>
+                <div class="eq-row">A = ½ × 18 × 11 = <input class="eq-input orange" placeholder="?" oninput="updateProgress()"/> cm²</div>
+            </div>
+        </div>
+
+        <div class="q-inline">
+            <span class="q-num orange">9</span>
+            <div class="q-body">
+                <div class="text">Trapezoid: bases <strong>9 in</strong> and <strong>15 in</strong>, height <strong>8 in</strong>. Area?</div>
+                <div class="eq-row">A = ½(9+15)×8 = <input class="eq-input orange" placeholder="?" oninput="updateProgress()"/> in²</div>
+            </div>
+        </div>
+
+        <div class="q-inline">
+            <span class="q-num orange">10</span>
+            <div class="q-body">
+                <div class="text">Circle: radius = <strong>7 m</strong>. Find circumference AND area.</div>
+                <div class="eq-row">C = 2 × π × 7 = <input class="eq-input orange" placeholder="?" oninput="updateProgress()"/> m &nbsp; A = π × 7² = <input class="eq-input orange wide" placeholder="?" oninput="updateProgress()"/> m²</div>
+            </div>
+        </div>
+
+        <div class="q-inline">
+            <span class="q-num orange">11</span>
+            <div class="q-body">
+                <div class="text">Wall <strong>12 ft × 9 ft</strong> with a <strong>3 ft × 5 ft</strong> window. Paintable area?</div>
+                <div class="eq-row">(12×9) − (3×5) = <input class="eq-input orange" placeholder="?" oninput="updateProgress()"/> − <input class="eq-input orange" placeholder="?" oninput="updateProgress()"/> = <input class="eq-input orange" placeholder="?" oninput="updateProgress()"/> ft²</div>
+            </div>
+        </div>
+
+        <div class="q-inline">
+            <span class="q-num orange">12</span>
+            <div class="q-body">
+                <div class="text">L-shaped room: <strong>20 ft × 14 ft</strong> with an <strong>8 ft × 6 ft</strong> section removed. Area?</div>
+                <div class="eq-row">(20×14) − (8×6) = <input class="eq-input orange" placeholder="?" oninput="updateProgress()"/> − <input class="eq-input orange" placeholder="?" oninput="updateProgress()"/> = <input class="eq-input orange" placeholder="?" oninput="updateProgress()"/> ft²</div>
+            </div>
+        </div>
+
+        <div class="q-inline">
+            <span class="q-num orange">13</span>
+            <div class="q-body">
+                <div class="text">Rectangle <strong>16 ft × 10 ft</strong> + semicircle (diameter <strong>10 ft</strong>) on one end. Total area?</div>
+                <div class="hint">Semicircle area = ½ × π × r²  (r = 5 ft)</div>
+                <div class="eq-row">160 + ½π(5²) = 160 + <input class="eq-input orange" placeholder="?" oninput="updateProgress()"/> ≈ <input class="eq-input orange" placeholder="?" oninput="updateProgress()"/> ft²</div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════╗ -->
+<!-- ║  PART 3: VOLUME                                     ║ -->
+<!-- ╚══════════════════════════════════════════════════════╝ -->
+<div class="section-divider sd-green"><span>📦</span> Part 3: Geometry — Volume <span class="pts">3 pts</span></div>
+<div class="card">
+    <div class="card-body">
+
+        <div class="formula-strip">
+            <div class="formula-chip green">Rect. Prism: V = lwh</div>
+            <div class="formula-chip green">Cylinder: V = πr²h</div>
+        </div>
+
+        <div class="q-inline">
+            <span class="q-num green">14</span>
+            <div class="q-body">
+                <div class="text">Rectangular prism: <strong>12 cm × 8 cm × 5 cm</strong>. Volume?</div>
+                <div class="eq-row">V = 12 × 8 × 5 = <input class="eq-input green" placeholder="?" oninput="updateProgress()"/> cm³</div>
+            </div>
+        </div>
+
+        <div class="q-inline">
+            <span class="q-num green">15</span>
+            <div class="q-body">
+                <div class="text">Cylinder: radius <strong>4 in</strong>, height <strong>10 in</strong>. Volume?</div>
+                <div class="eq-row">V = π × 4² × 10 = π × <input class="eq-input green" placeholder="?" oninput="updateProgress()"/> ≈ <input class="eq-input green wide" placeholder="?" oninput="updateProgress()"/> in³</div>
+            </div>
+        </div>
+
+        <div class="q-inline">
+            <span class="q-num green">16</span>
+            <div class="q-body">
+                <div class="text">Box <strong>2 ft × 1.5 ft × 1 ft</strong>. How many fit in a storage space of <strong>8 ft × 6 ft × 4 ft</strong>?</div>
+                <div class="hint">Divide each dimension: 8÷2, 6÷1.5, 4÷1 — then multiply</div>
+                <div class="eq-row">Along length: <input class="eq-input green" placeholder="?" oninput="updateProgress()"/> × width: <input class="eq-input green" placeholder="?" oninput="updateProgress()"/> × height: <input class="eq-input green" placeholder="?" oninput="updateProgress()"/> = <input class="eq-input green" placeholder="?" oninput="updateProgress()"/> boxes</div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════╗ -->
+<!-- ║  PART 4: ALGEBRA — EXPRESSIONS                     ║ -->
+<!-- ╚══════════════════════════════════════════════════════╝ -->
+<div class="section-divider sd-purple"><span>🔤</span> Part 4: Algebra — Expressions <span class="pts">5 pts</span></div>
+<div class="card">
+    <div class="card-body">
+
+        <!-- Tap-to-classify: expression type -->
+        <p style="font-size:0.85em;color:#888;margin-bottom:10px;">What type of algebraic object is each? Tap to classify:</p>
+        <div class="classify-grid" id="classifyExpr"><!-- built by JS --></div>
+
+        <div style="margin:14px 0 6px;font-size:0.88em;font-weight:700;color:#555;">Translate, Evaluate, Simplify:</div>
+
+        <div class="q-inline">
+            <span class="q-num purple">17</span>
+            <div class="q-body">
+                <div class="text">Translate: <strong>"5 times a number, decreased by 8"</strong></div>
+                <input class="ans-input purple" placeholder="Expression: ___" oninput="updateProgress()"/>
+            </div>
+        </div>
+
+        <div class="q-inline">
+            <span class="q-num purple">18</span>
+            <div class="q-body">
+                <div class="text">Evaluate <strong>3x² − 2x + 1</strong> when x = 3</div>
+                <div class="eq-row">3(9) − 2(3) + 1 = <input class="eq-input purple" placeholder="?" oninput="updateProgress()"/> − <input class="eq-input purple" placeholder="?" oninput="updateProgress()"/> + 1 = <input class="eq-input purple" placeholder="?" oninput="updateProgress()"/></div>
+            </div>
+        </div>
+
+        <div class="q-inline">
+            <span class="q-num purple">19</span>
+            <div class="q-body">
+                <div class="text">Simplify: <strong>7a + 3b − 4a + 5b − 2</strong></div>
+                <input class="ans-input purple" placeholder="= ___" oninput="updateProgress()"/>
+            </div>
+        </div>
+
+        <div class="q-inline">
+            <span class="q-num purple">20</span>
+            <div class="q-body">
+                <div class="text">Simplify: <strong>2(3x + 4) − x</strong></div>
+                <div class="eq-row">Distribute: <input class="eq-input purple wide" placeholder="6x+8" oninput="updateProgress()"/> − x = <input class="eq-input purple wide" placeholder="?" oninput="updateProgress()"/></div>
+            </div>
+        </div>
+
+        <div class="q-inline">
+            <span class="q-num purple">21</span>
+            <div class="q-body">
+                <div class="text">Score = <strong>4c + 8g + 15s</strong>. You get <strong>6 coins, 5 gems, 2 stars</strong>. Total score?</div>
+                <div class="eq-row">4(6) + 8(5) + 15(2) = <input class="eq-input purple" placeholder="?" oninput="updateProgress()"/> + <input class="eq-input purple" placeholder="?" oninput="updateProgress()"/> + <input class="eq-input purple" placeholder="?" oninput="updateProgress()"/> = <input class="eq-input purple" placeholder="?" oninput="updateProgress()"/></div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════╗ -->
+<!-- ║  PART 5: ALGEBRA — EQUATIONS                       ║ -->
+<!-- ╚══════════════════════════════════════════════════════╝ -->
+<div class="section-divider sd-indigo"><span>⚖️</span> Part 5: Algebra — Equations <span class="pts">6 pts</span></div>
+<div class="card">
+    <div class="card-body">
+
+        <!-- Balance scale scene -->
+        <div class="scene">
+            <svg width="120" height="90" viewBox="0 0 120 90">
+                <line x1="60" y1="28" x2="60" y2="82" stroke="#78909C" stroke-width="4" stroke-linecap="round"/>
+                <ellipse cx="60" cy="84" rx="22" ry="5" fill="#90A4AE"/>
+                <line x1="14" y1="28" x2="106" y2="28" stroke="#546E7A" stroke-width="3.5" stroke-linecap="round"/>
+                <line x1="18" y1="28" x2="18" y2="46" stroke="#78909C" stroke-width="2"/>
+                <ellipse cx="18" cy="47" rx="13" ry="4" fill="#E8EAF6" stroke="#3949AB" stroke-width="1.5"/>
+                <text x="18" y="45" text-anchor="middle" fill="#3949AB" font-size="8" font-weight="800">ax+b</text>
+                <line x1="102" y1="28" x2="102" y2="46" stroke="#78909C" stroke-width="2"/>
+                <ellipse cx="102" cy="47" rx="13" ry="4" fill="#FFF3E0" stroke="#E65100" stroke-width="1.5"/>
+                <text x="102" y="45" text-anchor="middle" fill="#E65100" font-size="8" font-weight="800">=val</text>
+            </svg>
+            <div class="desc">
+                <h4>Two-Step Strategy</h4>
+                <p><strong>Step 1</strong>: Undo addition/subtraction<br/>
+                <strong>Step 2</strong>: Undo multiplication/division</p>
+            </div>
+        </div>
+
+        <div class="q-inline">
+            <span class="q-num indigo">22</span>
+            <div class="q-body">
+                <div class="text">Solve: <strong>x + 23 = 51</strong></div>
+                <div class="eq-row">x = 51 − 23 = <input class="eq-input" placeholder="?" oninput="updateProgress()"/></div>
+            </div>
+        </div>
+
+        <div class="q-inline">
+            <span class="q-num indigo">23</span>
+            <div class="q-body">
+                <div class="text">Solve: <strong>7n = 84</strong></div>
+                <div class="eq-row">n = 84 ÷ 7 = <input class="eq-input" placeholder="?" oninput="updateProgress()"/></div>
+            </div>
+        </div>
+
+        <div class="q-inline">
+            <span class="q-num indigo">24</span>
+            <div class="q-body">
+                <div class="text">Solve: <strong>3x + 8 = 29</strong></div>
+                <div class="step-box">
+                    <div class="step-label">Step 1 — Subtract 8:</div>
+                    <div class="eq-row">3x = 29 − 8 = <input class="eq-input" placeholder="?" oninput="updateProgress()"/></div>
+                    <div class="step-label" style="margin-top:4px;">Step 2 — Divide by 3:</div>
+                    <div class="eq-row">x = <input class="eq-input" placeholder="?" oninput="updateProgress()"/></div>
                 </div>
             </div>
-            <div class="draw-panel" id="drawPanel_${id}">
-                <canvas id="${id}" width="600" height="160" 
-                        style="width:100%;border:1.5px solid #e0e0e0;border-radius:8px;
-                               background:white;touch-action:none;cursor:crosshair;"></canvas>
+        </div>
+
+        <div class="q-inline">
+            <span class="q-num indigo">25</span>
+            <div class="q-body">
+                <div class="text">Solve: <strong>n/5 − 4 = 6</strong></div>
+                <div class="eq-row">n/5 = 6 + 4 = <input class="eq-input" placeholder="?" oninput="updateProgress()"/> &nbsp; → &nbsp; n = <input class="eq-input" placeholder="?" oninput="updateProgress()"/></div>
             </div>
-            <div class="type-panel" id="typePanel_${id}" style="display:none;">
-                <textarea class="work-area-text" placeholder="Type your work here..."
-                          style="width:100%;min-height:80px;border:1.5px solid #e0e0e0;border-radius:8px;
-                                 padding:10px;font-family:Nunito,sans-serif;font-size:0.9em;resize:vertical;
-                                 outline:none;color:#444;"></textarea>
+        </div>
+
+        <div class="q-inline">
+            <span class="q-num indigo">26</span>
+            <div class="q-body">
+                <div class="text">Gym charges <strong>$35 to join + $20/month</strong>. You've paid <strong>$175</strong>. How many months?</div>
+                <div class="eq-row">35 + 20m = 175 &nbsp; → &nbsp; 20m = <input class="eq-input" placeholder="?" oninput="updateProgress()"/> &nbsp; → &nbsp; m = <input class="eq-input" placeholder="?" oninput="updateProgress()"/> months</div>
             </div>
-        `;
-        
-        ta.parentNode.replaceChild(wrapper, ta);
-        
-        // Initialize canvas
-        setTimeout(() => initCanvas(id), 50);
-    });
-    
-    // Canvas state storage
-    window._canvasState = {};
-    
-    window.initCanvas = function(id) {
-        const canvas = document.getElementById(id);
-        if (!canvas) return;
-        const ctx = canvas.getContext('2d');
-        
-        // Set actual pixel size based on display size
-        const rect = canvas.getBoundingClientRect();
-        canvas.width = rect.width * 2;
-        canvas.height = rect.height * 2;
-        ctx.scale(2, 2);
-        
-        const state = {
-            drawing: false,
-            tool: 'pen',
-            color: '#333333',
-            size: 3,
-            history: [],
-            ctx: ctx,
-            canvas: canvas,
-            lastX: 0, lastY: 0
-        };
-        window._canvasState[id] = state;
-        
-        // Save initial blank state
-        saveHistory(id);
-        
-        // Pointer events (works with touch, pencil, and mouse)
-        canvas.addEventListener('pointerdown', e => startDraw(e, id));
-        canvas.addEventListener('pointermove', e => draw(e, id));
-        canvas.addEventListener('pointerup', e => endDraw(e, id));
-        canvas.addEventListener('pointerleave', e => endDraw(e, id));
-        
-        // Prevent scroll while drawing
-        canvas.addEventListener('touchstart', e => e.preventDefault(), {passive: false});
-        canvas.addEventListener('touchmove', e => e.preventDefault(), {passive: false});
-    };
-    
-    function getPos(e, canvas) {
-        const rect = canvas.getBoundingClientRect();
-        return {
-            x: (e.clientX - rect.left),
-            y: (e.clientY - rect.top)
-        };
-    }
-    
-    window.startDraw = function(e, id) {
-        const s = window._canvasState[id];
-        s.drawing = true;
-        const pos = getPos(e, s.canvas);
-        s.lastX = pos.x;
-        s.lastY = pos.y;
-        s.ctx.beginPath();
-        s.ctx.moveTo(pos.x, pos.y);
-    };
-    
-    window.draw = function(e, id) {
-        const s = window._canvasState[id];
-        if (!s.drawing) return;
-        const pos = getPos(e, s.canvas);
-        
-        s.ctx.lineWidth = s.tool === 'eraser' ? s.size * 4 : s.size;
-        s.ctx.lineCap = 'round';
-        s.ctx.lineJoin = 'round';
-        s.ctx.strokeStyle = s.tool === 'eraser' ? '#ffffff' : s.color;
-        s.ctx.globalCompositeOperation = s.tool === 'eraser' ? 'destination-out' : 'source-over';
-        
-        // Use pressure for Apple Pencil if available
-        if (e.pressure && e.pressure > 0 && e.pressure < 1) {
-            s.ctx.lineWidth *= (0.5 + e.pressure);
-        }
-        
-        s.ctx.lineTo(pos.x, pos.y);
-        s.ctx.stroke();
-        s.ctx.beginPath();
-        s.ctx.moveTo(pos.x, pos.y);
-        s.lastX = pos.x;
-        s.lastY = pos.y;
-    };
-    
-    window.endDraw = function(e, id) {
-        const s = window._canvasState[id];
-        if (s.drawing) {
-            s.drawing = false;
-            s.ctx.globalCompositeOperation = 'source-over';
-            saveHistory(id);
-        }
-    };
-    
-    function saveHistory(id) {
-        const s = window._canvasState[id];
-        const imgData = s.canvas.toDataURL();
-        s.history.push(imgData);
-        if (s.history.length > 20) s.history.shift(); // limit memory
-    }
-    
-    window.undoDraw = function(id) {
-        const s = window._canvasState[id];
-        if (s.history.length > 1) {
-            s.history.pop();
-            const img = new Image();
-            img.onload = () => {
-                s.ctx.clearRect(0, 0, s.canvas.width/2, s.canvas.height/2);
-                s.ctx.drawImage(img, 0, 0, s.canvas.width/2, s.canvas.height/2);
-            };
-            img.src = s.history[s.history.length - 1];
-        }
-    };
-    
-    window.clearCanvas = function(id) {
-        const s = window._canvasState[id];
-        s.ctx.clearRect(0, 0, s.canvas.width/2, s.canvas.height/2);
-        saveHistory(id);
-    };
-    
-    window.setTool = function(btn, id, tool) {
-        window._canvasState[id].tool = tool;
-        btn.parentElement.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const canvas = document.getElementById(id);
-        canvas.style.cursor = tool === 'eraser' ? 'cell' : 'crosshair';
-    };
-    
-    window.setColor = function(id, color) {
-        window._canvasState[id].color = color;
-    };
-    
-    window.setSize = function(id, size) {
-        window._canvasState[id].size = parseInt(size);
-    };
-    
-    window.switchWorkTab = function(btn, mode) {
-        const wrapper = btn.closest('.work-wrapper');
-        wrapper.querySelectorAll('.work-tab').forEach(t => t.classList.remove('active'));
-        btn.classList.add('active');
-        
-        const drawPanel = wrapper.querySelector('[id^="drawPanel_"]');
-        const typePanel = wrapper.querySelector('[id^="typePanel_"]');
-        const tools = wrapper.querySelector('[id^="tools_"]');
-        
-        if (mode === 'draw') {
-            drawPanel.style.display = 'block';
-            typePanel.style.display = 'none';
-            tools.style.display = 'flex';
-            // Resize canvas on show
-            const canvasEl = drawPanel.querySelector('canvas');
-            if (canvasEl && window._canvasState[canvasEl.id]) {
-                const rect = canvasEl.getBoundingClientRect();
-                if (rect.width > 0) {
-                    // Don't resize if already initialized properly
-                }
-            }
-        } else {
-            drawPanel.style.display = 'none';
-            typePanel.style.display = 'block';
-            tools.style.display = 'none';
-        }
-    };
-})();
+        </div>
+
+        <div class="q-inline">
+            <span class="q-num indigo">27</span>
+            <div class="q-body">
+                <div class="text">Sold lemonade at <strong>$2 per cup</strong>. After spending <strong>$15 on supplies</strong>, profit was <strong>$37</strong>. How many cups?</div>
+                <div class="eq-row">2c − 15 = 37 &nbsp; → &nbsp; 2c = <input class="eq-input" placeholder="?" oninput="updateProgress()"/> &nbsp; → &nbsp; c = <input class="eq-input" placeholder="?" oninput="updateProgress()"/> cups</div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════╗ -->
+<!-- ║  PART 6: INEQUALITIES & COORDINATE PLANE           ║ -->
+<!-- ╚══════════════════════════════════════════════════════╝ -->
+<div class="section-divider sd-teal"><span>📊</span> Part 6: Inequalities &amp; Coordinate Plane <span class="pts">5 pts</span></div>
+<div class="card">
+    <div class="card-body">
+
+        <!-- Number line -->
+        <div class="number-line">
+            <svg width="320" height="44" viewBox="0 0 320 44">
+                <line x1="5" y1="22" x2="315" y2="22" stroke="#E0E0E0" stroke-width="2"/>
+                <text x="5" y="38" fill="#888" font-size="9" text-anchor="middle">0</text>
+                <text x="37" y="38" fill="#888" font-size="9" text-anchor="middle">2</text>
+                <text x="69" y="38" fill="#888" font-size="9" text-anchor="middle">4</text>
+                <text x="101" y="38" fill="#888" font-size="9" text-anchor="middle">6</text>
+                <text x="133" y="38" fill="#888" font-size="9" text-anchor="middle">8</text>
+                <text x="165" y="38" fill="#888" font-size="9" text-anchor="middle">10</text>
+                <text x="197" y="38" fill="#888" font-size="9" text-anchor="middle">12</text>
+                <text x="229" y="38" fill="#888" font-size="9" text-anchor="middle">14</text>
+                <text x="261" y="38" fill="#888" font-size="9" text-anchor="middle">16</text>
+                <text x="293" y="38" fill="#888" font-size="9" text-anchor="middle">18</text>
+                <!-- x > 17 open arrow -->
+                <line x1="277" y1="22" x2="315" y2="22" stroke="#00695C" stroke-width="3"/>
+                <circle cx="277" cy="22" r="5" fill="white" stroke="#00695C" stroke-width="2.5"/>
+                <text x="245" y="16" fill="#00695C" font-size="9" font-weight="800">Q28: x &gt; 17</text>
+            </svg>
+            <p style="font-size:0.72em;color:#888;text-align:center;margin-top:2px;">Open circle = strict inequality (&lt; or &gt;). Closed circle = includes endpoint (≤ or ≥).</p>
+        </div>
+
+        <div class="q-inline">
+            <span class="q-num teal">28</span>
+            <div class="q-body">
+                <div class="text">Solve: <strong>x − 5 &gt; 12</strong></div>
+                <div class="eq-row">x &gt; 12 + 5 &nbsp; → &nbsp; x &gt; <input class="eq-input" placeholder="?" oninput="updateProgress()"/></div>
+            </div>
+        </div>
+
+        <div class="q-inline">
+            <span class="q-num teal">29</span>
+            <div class="q-body">
+                <div class="text">Solve: <strong>6n ≤ 48</strong></div>
+                <div class="eq-row">n ≤ 48 ÷ 6 &nbsp; → &nbsp; n ≤ <input class="eq-input" placeholder="?" oninput="updateProgress()"/></div>
+            </div>
+        </div>
+
+        <!-- Q30: Coordinate plane quadrant -->
+        <div class="q-inline">
+            <span class="q-num teal">30</span>
+            <div class="q-body">
+                <div class="text">The point <strong>(−2, 4)</strong> is in which quadrant?</div>
+                <!-- Mini coordinate plane -->
+                <div style="margin:8px 0;">
+                    <svg width="120" height="120" viewBox="0 0 120 120">
+                        <line x1="10" y1="60" x2="110" y2="60" stroke="#CCC" stroke-width="1.5"/>
+                        <line x1="60" y1="10" x2="60" y2="110" stroke="#CCC" stroke-width="1.5"/>
+                        <text x="108" y="56" fill="#888" font-size="8">x</text>
+                        <text x="57" y="10" fill="#888" font-size="8">y</text>
+                        <text x="80" y="32" fill="#42A5F5" font-size="8" font-weight="800">I</text>
+                        <text x="28" y="32" fill="#AB47BC" font-size="8" font-weight="800">II</text>
+                        <text x="26" y="88" fill="#E65100" font-size="8" font-weight="800">III</text>
+                        <text x="80" y="88" fill="#2E7D32" font-size="8" font-weight="800">IV</text>
+                        <!-- Point (-2, 4) -->
+                        <circle cx="40" cy="32" r="4" fill="#AB47BC"/>
+                        <text x="28" y="26" fill="#AB47BC" font-size="8" font-weight="800">(−2,4)</text>
+                    </svg>
+                </div>
+                <div class="mc-options" id="mc30">
+                    <button class="mc-btn" onclick="selMC('mc30',this,'mc30h')">A) I</button>
+                    <button class="mc-btn" onclick="selMC('mc30',this,'mc30h')">B) II</button>
+                    <button class="mc-btn" onclick="selMC('mc30',this,'mc30h')">C) III</button>
+                    <button class="mc-btn" onclick="selMC('mc30',this,'mc30h')">D) IV</button>
+                </div>
+                <input type="hidden" id="mc30h"/>
+            </div>
+        </div>
+
+        <!-- Q31: table for y = 3x-1 -->
+        <div class="q-inline">
+            <span class="q-num teal">31</span>
+            <div class="q-body">
+                <div class="text">Complete the table for <strong>y = 3x − 1</strong>:</div>
+                <div style="overflow-x:auto;margin-top:8px;">
+                    <table style="border-collapse:collapse;font-size:0.88em;font-weight:700;">
+                        <tr style="background:#E0F2F1;">
+                            <td style="padding:6px 12px;border:2px solid #B2DFDB;color:#00695C;">x</td>
+                            <td style="padding:6px 12px;border:2px solid #B2DFDB;text-align:center;">0</td>
+                            <td style="padding:6px 12px;border:2px solid #B2DFDB;text-align:center;">1</td>
+                            <td style="padding:6px 12px;border:2px solid #B2DFDB;text-align:center;">2</td>
+                            <td style="padding:6px 12px;border:2px solid #B2DFDB;text-align:center;">4</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:6px 12px;border:2px solid #B2DFDB;color:#00695C;">y</td>
+                            <td style="padding:6px 12px;border:2px solid #B2DFDB;"><input type="text" style="width:44px;padding:4px;border:2px solid #E0E0E0;border-radius:6px;font-family:Nunito;font-weight:700;text-align:center;outline:none;color:#00695C;" oninput="updateProgress()"/></td>
+                            <td style="padding:6px 12px;border:2px solid #B2DFDB;"><input type="text" style="width:44px;padding:4px;border:2px solid #E0E0E0;border-radius:6px;font-family:Nunito;font-weight:700;text-align:center;outline:none;color:#00695C;" oninput="updateProgress()"/></td>
+                            <td style="padding:6px 12px;border:2px solid #B2DFDB;"><input type="text" style="width:44px;padding:4px;border:2px solid #E0E0E0;border-radius:6px;font-family:Nunito;font-weight:700;text-align:center;outline:none;color:#00695C;" oninput="updateProgress()"/></td>
+                            <td style="padding:6px 12px;border:2px solid #B2DFDB;"><input type="text" style="width:44px;padding:4px;border:2px solid #E0E0E0;border-radius:6px;font-family:Nunito;font-weight:700;text-align:center;outline:none;color:#00695C;" oninput="updateProgress()"/></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Q32: find the rule -->
+        <div class="q-inline">
+            <span class="q-num teal">32</span>
+            <div class="q-body">
+                <div class="text">Find the rule: x: 1, 2, 3, 4 → y: 6, 9, 12, 15</div>
+                <div class="hint">Look at the pattern: how does y change when x increases by 1?</div>
+                <input class="ans-input" placeholder="y = ___" oninput="updateProgress()"/>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════╗ -->
+<!-- ║  PART 7: REAL-WORLD CHALLENGE                      ║ -->
+<!-- ╚══════════════════════════════════════════════════════╝ -->
+<div class="section-divider sd-gold"><span>🌍</span> Part 7: Real-World Challenge <span class="pts">3 pts</span></div>
+<div class="card">
+    <div class="card-body">
+
+        <div class="q-inline">
+            <span class="q-num gold">33</span>
+            <div class="q-body">
+                <div class="text">A circular pool (diameter <strong>12 ft</strong>) sits in the center of a <strong>20 ft × 20 ft</strong> square patio. How much patio area surrounds the pool?</div>
+                <div class="scene" style="margin-top:10px;">
+                    <svg width="120" height="120" viewBox="0 0 120 120">
+                        <rect x="5" y="5" width="110" height="110" fill="#E0F7FA" stroke="#00695C" stroke-width="2" rx="4"/>
+                        <circle cx="60" cy="60" r="30" fill="#B2EBF2" stroke="#00695C" stroke-width="2"/>
+                        <text x="60" y="64" text-anchor="middle" fill="#00695C" font-size="10" font-weight="800">pool</text>
+                        <text x="60" y="2" text-anchor="middle" fill="#00695C" font-size="8" font-weight="800">20 ft</text>
+                        <text x="60" y="56" text-anchor="middle" fill="#00695C" font-size="8">d=12</text>
+                    </svg>
+                    <div class="desc">
+                        <p>Find the area of the square minus the area of the circle (π × r²).</p>
+                    </div>
+                </div>
+                <div class="eq-row">Square: 20² = <input class="eq-input gold" style="color:#F57F17;" placeholder="?" oninput="updateProgress()"/> &nbsp; Pool: π×6² ≈ <input class="eq-input gold" style="color:#F57F17;" placeholder="?" oninput="updateProgress()"/> &nbsp; Patio = <input class="eq-input wide gold" style="color:#F57F17;" placeholder="?" oninput="updateProgress()"/> ft²</div>
+            </div>
+        </div>
+
+        <div class="q-inline">
+            <span class="q-num gold">34</span>
+            <div class="q-body">
+                <div class="text">Want to save <strong>$500</strong>. Have <strong>$125</strong>, saving <strong>$35/week</strong>. Write and solve an equation for weeks needed. Then write an inequality for MORE than $500.</div>
+                <div class="eq-row">Equation: 125 + 35w = 500 &nbsp; → &nbsp; w ≈ <input class="eq-input" placeholder="?" oninput="updateProgress()"/> weeks</div>
+                <input class="ans-input" placeholder="Inequality: ___ (more than $500)" oninput="updateProgress()" style="margin-top:6px;"/>
+            </div>
+        </div>
+
+        <div class="q-inline">
+            <span class="q-num gold">35</span>
+            <div class="q-body">
+                <div class="text">Car A: <strong>55 mph</strong>. Car B: <strong>65 mph</strong>. Both start at same time. After how many hours will Car B be <strong>40 miles ahead</strong>? Write and solve.</div>
+                <div class="hint">Distance gap = (65 − 55) × t = 40</div>
+                <div class="eq-row">10t = 40 &nbsp; → &nbsp; t = <input class="eq-input" placeholder="?" oninput="updateProgress()"/> hours</div>
+            </div>
+        </div>
+
+        <div class="fact">
+            <strong>You made it to the end!</strong> This final test covers ALL the skills from the year: geometry, measurement, circles, volume, expressions, equations, and inequalities. Great work!
+        </div>
+
+    </div>
+</div>
+
+<div class="score-row">Total: _____ / 35 points &nbsp; &nbsp; Grade: _____</div>
+
+<div class="submit-wrap">
+    <button class="submit-btn" id="submitBtn" onclick="doSubmit()">📤 Submit Final Test</button>
+    <div id="submitMsg"></div>
+</div>
+
+<!-- PIN Overlay -->
+<div id="pinOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:1000;align-items:center;justify-content:center;">
+    <div style="background:white;padding:28px;border-radius:16px;text-align:center;max-width:300px;margin:20px;">
+        <div style="font-size:2em;margin-bottom:8px;">🔒</div>
+        <h3 style="color:#283593;margin-bottom:12px;">Teacher Access</h3>
+        <input type="number" id="pinInput" placeholder="Today's PIN" style="width:100px;padding:10px;font-size:1.2em;text-align:center;border:2px solid #ddd;border-radius:8px;outline:none;" oninput="checkPin()"/>
+        <p id="pinError" style="color:#E74C3C;font-size:0.82em;margin-top:6px;display:none;">Wrong PIN</p>
+        <br><button onclick="closePinDialog()" style="margin-top:8px;padding:6px 18px;background:none;border:1px solid #ddd;border-radius:6px;cursor:pointer;color:#888;font-size:0.85em;">Cancel</button>
+    </div>
+</div>
+
+<!-- Answer Key -->
+<div class="answer-key" id="answerKey">
+    <div class="answer-key-header"><span>🔑 Answer Key</span><button onclick="hideAnswers()" class="close-btn">✕ Hide</button></div>
+    <p><strong>Part 1:</strong> <strong>1.</strong> C) Obtuse &nbsp;·&nbsp; <strong>2.</strong> 117° &nbsp;·&nbsp; <strong>3.</strong> 75° &nbsp;·&nbsp; <strong>4.</strong> 55°, Right triangle &nbsp;·&nbsp; <strong>5.</strong> 900° &nbsp;·&nbsp; <strong>6.</strong> 38° and 52°</p>
+    <p><strong>Part 2:</strong> <strong>7.</strong> P = 74 ft, A = 330 ft² &nbsp;·&nbsp; <strong>8.</strong> 99 cm² &nbsp;·&nbsp; <strong>9.</strong> 96 in²</p>
+    <p><strong>10.</strong> C ≈ 43.96 m, A ≈ 153.86 m² &nbsp;·&nbsp; <strong>11.</strong> 108 − 15 = 93 ft² &nbsp;·&nbsp; <strong>12.</strong> 280 − 48 = 232 ft²</p>
+    <p><strong>13.</strong> 160 + ½π(25) ≈ 160 + 39.25 = 199.25 ft²</p>
+    <p><strong>Part 3:</strong> <strong>14.</strong> 480 cm³ &nbsp;·&nbsp; <strong>15.</strong> π(16)(10) ≈ 502.4 in³ &nbsp;·&nbsp; <strong>16.</strong> 4 × 4 × 4 = 64 boxes</p>
+    <p><strong>Part 4:</strong> Classify: "3n" = Term, "−2" = Constant, "5x" = Term, "coefficient of 5x" = 5 (Coefficient)</p>
+    <p><strong>17.</strong> 5n − 8 &nbsp;·&nbsp; <strong>18.</strong> 27 − 6 + 1 = 22 &nbsp;·&nbsp; <strong>19.</strong> 3a + 8b − 2 &nbsp;·&nbsp; <strong>20.</strong> 5x + 8 &nbsp;·&nbsp; <strong>21.</strong> 24 + 40 + 30 = 94</p>
+    <p><strong>Part 5:</strong> <strong>22.</strong> x = 28 &nbsp;·&nbsp; <strong>23.</strong> n = 12 &nbsp;·&nbsp; <strong>24.</strong> x = 7 &nbsp;·&nbsp; <strong>25.</strong> n = 50</p>
+    <p><strong>26.</strong> 35 + 20m = 175, m = 7 months &nbsp;·&nbsp; <strong>27.</strong> 2c − 15 = 37, c = 26 cups</p>
+    <p><strong>Part 6:</strong> <strong>28.</strong> x > 17 &nbsp;·&nbsp; <strong>29.</strong> n ≤ 8 &nbsp;·&nbsp; <strong>30.</strong> B) II</p>
+    <p><strong>31.</strong> y: −1, 2, 5, 11 &nbsp;·&nbsp; <strong>32.</strong> y = 3x + 3</p>
+    <p><strong>Part 7:</strong> <strong>33.</strong> 400 − π(36) ≈ 400 − 113.04 = 286.96 ft²</p>
+    <p><strong>34.</strong> 125 + 35w = 500, w ≈ 10.7 → 11 weeks. Inequality: 125 + 35w > 500</p>
+    <p><strong>35.</strong> 65t − 55t = 40, 10t = 40, t = 4 hours</p>
+</div>
+<button class="answer-btn" id="showAnswerBtn" onclick="showPinDialog()">🔒 Answer Key (Teacher Only)</button>
+
+<script>
+// Build expression classify grid
+const exprs = [
+    { label: '3n', sublabel: 'in 3n + 7' },
+    { label: '−2', sublabel: 'in 5x − 2' },
+    { label: '5x', sublabel: 'in 5x + 1' },
+    { label: '7', sublabel: 'no variable' }
+];
+const exprTypes = ['Term', 'Coefficient', 'Variable', 'Constant'];
+const exprGrid = document.getElementById('classifyExpr');
+exprs.forEach((e, idx) => {
+    const div = document.createElement('div');
+    div.className = 'classify-item';
+    div.style.setProperty('--accent', '#6A1B9A');
+    div.innerHTML = `<div class="degree" style="color:#6A1B9A;">${e.label}</div>
+        <div class="sublabel">${e.sublabel}</div>
+        <div class="choices">${exprTypes.map(t =>
+            `<button class="ch" onclick="selectClassify(this,'ce${idx}')" style="--h:#6A1B9A;">${t}</button>`
+        ).join('')}</div>
+        <input type="hidden" class="classify-answer" id="ce${idx}"/>`;
+    exprGrid.appendChild(div);
+});
+
+function selectClassify(btn, hiddenId) {
+    const item = btn.closest('.classify-item');
+    item.querySelectorAll('.ch').forEach(b => { b.classList.remove('selected'); b.style.background=''; b.style.color=''; b.style.borderColor=''; });
+    btn.classList.add('selected');
+    btn.style.background = '#6A1B9A';
+    btn.style.color = 'white';
+    btn.style.borderColor = '#6A1B9A';
+    item.classList.add('answered');
+    document.getElementById(hiddenId).value = btn.textContent;
+    updateProgress();
+}
+
+function selMC(groupId, btn, hiddenId) {
+    document.getElementById(groupId).querySelectorAll('.mc-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    document.getElementById(hiddenId).value = btn.textContent;
+    updateProgress();
+}
+
+function updateProgress() {
+    const inputs = document.querySelectorAll('.eq-input, .ans-input, table input[type="text"]');
+    const mcHidden = document.querySelectorAll('#mc1h, #mc4h, #mc30h');
+    let filled = 0, total = 35;
+    inputs.forEach(i => { if (i.value && i.value.trim()) filled++; });
+    mcHidden.forEach(i => { if (i.value) filled++; });
+    const pct = Math.round((filled / total) * 100);
+    document.getElementById('prog').style.width = Math.min(pct, 100) + '%';
+    document.getElementById('progLabel').textContent = Math.min(filled, total) + ' / ' + total;
+}
+
+function showPinDialog() { document.getElementById('pinOverlay').style.display='flex'; document.getElementById('pinInput').value=''; document.getElementById('pinError').style.display='none'; document.getElementById('pinInput').focus(); }
+function closePinDialog() { document.getElementById('pinOverlay').style.display='none'; }
+function checkPin() {
+    const p = document.getElementById('pinInput').value;
+    if (p.length >= 1 && parseInt(p) === new Date().getDate()) {
+        document.getElementById('pinOverlay').style.display='none';
+        document.getElementById('answerKey').style.display='block';
+        document.getElementById('showAnswerBtn').style.display='none';
+    } else if (p.length >= 2) { document.getElementById('pinError').style.display='block'; }
+}
+function hideAnswers() { document.getElementById('answerKey').style.display='none'; document.getElementById('showAnswerBtn').style.display='block'; }
 </script>
 
-<!-- Firebase Auto-Submit -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <script src="../firebase-config.js?v=5"></script>
 <script src="../grade-sync.js?v=5"></script>
-
 <script>
-// Auto-submit score when student clicks any existing submit/check button
 (function() {
     const assessId = "final";
-    
-    // Find all number/text inputs that look like answer fields
     async function collectAndSubmit() {
-        const inputs = document.querySelectorAll('input[type="number"], input[type="text"], select, textarea');
+        const inputs = document.querySelectorAll('input[type="text"], .eq-input, .ans-input');
         let filled = 0, total = 0;
         inputs.forEach(inp => {
-            if (inp.closest('.answer-key') || inp.closest('[data-key]')) return; // skip answer key inputs
-            if (inp.className && (inp.className.includes('grade') || inp.className.includes('name'))) return;
+            if (inp.closest('.answer-key')) return;
             total++;
             if (inp.value && inp.value.trim()) filled++;
         });
-        
-        // Calculate completion percentage as a preliminary score
-        // Real grading happens when teacher reviews, but this tracks completion
-        const completion = total > 0 ? (filled / total) * 100 : 0;
-        
-        // Check if there's already a computed score from auto-grading
-        const scoreEl = document.querySelector('[data-score], #autoScore, .score-display');
-        let score = completion; // default to completion %
-        if (scoreEl && scoreEl.dataset.score) score = parseFloat(scoreEl.dataset.score);
-        
+        const score = total > 0 ? (filled / total) * 100 : 0;
         return await submitScore(assessId, score, { filled, total, type: 'completion' });
     }
-    
-    // doSubmit is called by the Submit button
     window.doSubmit = function() {
         const btn = document.getElementById('submitBtn');
         const msg = document.getElementById('submitMsg');
         btn.disabled = true; btn.textContent = '⏳ Submitting...';
         collectAndSubmit().then(ok => {
-            if (ok) {
-                msg.className = 'submit-msg ok';
-                msg.textContent = '✅ Submitted! Your teacher will see your score.';
-                btn.textContent = '✓ Submitted';
-            } else {
-                msg.className = 'submit-msg err';
-                msg.textContent = '⚠️ Could not submit — please make sure you are signed in on the Student Portal.';
-                btn.disabled = false; btn.textContent = '📤 Try Again';
-            }
+            if (ok) { msg.textContent = '✅ Submitted! Your teacher will see your score.'; msg.style.color = '#2E7D32'; btn.textContent = '✓ Submitted'; }
+            else { msg.textContent = '⚠️ Could not submit — please sign in on the Student Portal first.'; msg.style.color = '#E65100'; btn.disabled = false; btn.textContent = '📤 Submit Final Test'; }
         });
     };
-    
-    // Also submit on page unload if anything was filled in
-    window.addEventListener('beforeunload', function() {
-        const inputs = document.querySelectorAll('input[type="number"], input[type="text"]');
-        let filled = 0;
-        inputs.forEach(inp => { if (inp.value && inp.value.trim()) filled++; });
-        if (filled > 2) collectAndSubmit(); // only if they did some work
-    });
 })();
 </script>
-
-
-<script>
-// Hide answer key for students
-if (localStorage.getItem('math_current_user')) {
-    const akBtn = document.getElementById('showAnswerBtn');
-    if (akBtn) akBtn.style.display = 'none';
-}
-</script>
+<script>if(localStorage.getItem('math_current_user')){const b=document.getElementById('showAnswerBtn');if(b)b.style.display='none';}</script>
 </body>
 </html>

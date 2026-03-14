@@ -3,516 +3,466 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Worksheet 16: Balance It Out</title>
-    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
-<style>
+    <title>Balance It Out</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-               max-width: 800px; margin: 0 auto; padding: 20px; background: #f5f5f5; color: #333; }
-        .header { background: linear-gradient(135deg, #1F4E79, #2E75B6); color: white;
-                   padding: 20px; border-radius: 12px; margin-bottom: 20px; text-align: center; }
-        .header h1 { font-size: 1.5em; margin-bottom: 5px; }
-        .header p { font-size: 0.9em; opacity: 0.9; }
-        .student-info input { border: none; border-bottom: 2px solid #2E75B6; padding: 8px;
-                               font-size: 1em; flex: 1; min-width: 150px; outline: none; }
-        .section { background: white; padding: 20px; border-radius: 12px; margin-bottom: 15px;
-                   box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
-        .section h2 { color: #1F4E79; font-size: 1.2em; margin-bottom: 15px;
-                      border-bottom: 2px solid #D6E4F0; padding-bottom: 8px; }
-        .problem { padding: 12px 0; border-bottom: 1px solid #eee; }
-        .problem:last-child { border-bottom: none; }
-        .problem-num { display: inline-block; background: #2E75B6; color: white;
-                       width: 28px; height: 28px; border-radius: 50%; text-align: center;
-                       line-height: 28px; font-size: 0.85em; font-weight: bold; margin-right: 10px; }
-        .problem-text { display: inline; font-size: 1.05em; }
-        .answer-box { display: block; margin: 10px 0 5px 38px; border: 2px dashed #ccc;
-                      border-radius: 8px; padding: 12px; min-height: 45px;
-                      font-size: 1em; width: calc(100% - 38px); }
-        .answer-box:focus { border-color: #2E75B6; outline: none; background: #f8fbff; }
-        .work-area { display: block; margin: 8px 0 5px 38px; border: 1px solid #ddd;
-                     border-radius: 8px; padding: 10px; min-height: 80px;
-                     font-size: 0.9em; width: calc(100% - 38px); color: #666; }
-        .work-area:focus { border-color: #2E75B6; outline: none; }
-        .emoji { font-size: 1.3em; margin-right: 5px; }
-        .context { background: #f0f7ff; padding: 12px; border-radius: 8px;
-                   margin: 10px 0; border-left: 4px solid #2E75B6; font-size: 0.95em; }
-        .hint { color: #888; font-size: 0.85em; font-style: italic; margin-left: 38px; }
-        .mc-option { display: block; padding: 10px 15px; margin: 5px 0 5px 38px;
-                     background: #f8f8f8; border: 2px solid #e0e0e0; border-radius: 8px;
-                     cursor: pointer; transition: all 0.2s; font-size: 1em; }
-        .mc-option:hover { background: #e8f0fe; border-color: #2E75B6; }
-        .mc-option.selected { background: #d0e4ff; border-color: #2E75B6; font-weight: bold; }
-        .answer-key { background: #fff9e6; padding: 20px; border-radius: 12px;
-                      margin: 20px 0; border: 2px solid #f0c040; }
-        .answer-key h2 { color: #8B6914; }
-        .toggle-btn { display: block; margin: 15px auto; padding: 12px 30px;
-                      background: #1F4E79; color: white; border: none; border-radius: 8px;
-                      font-size: 1em; cursor: pointer; }
-        .toggle-btn:hover { background: #2E75B6; }
-        .score-box { background: #e2efda; padding: 15px; border-radius: 8px;
-                     text-align: center; font-size: 1.2em; margin-top: 15px; }
-        @media print {
-            .toggle-btn, .answer-key { display: none !important; }
-            .section { break-inside: avoid; }
+        body { font-family: 'Nunito', sans-serif; max-width: 820px; margin: 0 auto;
+               background: #F5F7FA; color: #333; -webkit-tap-highlight-color: transparent; }
+
+        .hero { background: linear-gradient(135deg, #4A148C, #7B1FA2, #9C27B0);
+                color: white; padding: 28px 22px; position: relative; overflow: hidden;
+                border-radius: 0 0 24px 24px; }
+        .hero::after { content: '⚖️'; position: absolute; font-size: 6em; opacity: 0.1;
+                      top: -10px; right: 10px; transform: rotate(12deg); }
+        .hero .badge { display: inline-block; background: rgba(255,255,255,0.2);
+                      padding: 4px 12px; border-radius: 16px; font-size: 0.75em; font-weight: 700; }
+        .hero h1 { font-size: 1.6em; font-weight: 900; margin: 6px 0 3px; }
+        .hero p { opacity: 0.85; font-size: 0.9em; }
+
+        .progress-wrap { padding: 10px 16px 0; display: flex; align-items: center; gap: 8px; }
+        .progress-track { flex: 1; height: 6px; background: #E0E4EA; border-radius: 6px; overflow: hidden; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #4CAF50, #81C784);
+                        border-radius: 6px; transition: width 0.3s; width: 0%; }
+        .progress-label { font-size: 0.75em; font-weight: 700; color: #999; }
+
+        .card { background: white; border-radius: 18px; margin: 12px 14px; overflow: hidden;
+                box-shadow: 0 1px 6px rgba(0,0,0,0.05); }
+        .card-head { padding: 14px 18px; font-weight: 800; font-size: 1em;
+                    display: flex; align-items: center; gap: 10px; }
+        .card-head .emoji { font-size: 1.3em; }
+        .card-head.blue  { color: #1565C0; border-bottom: 2px solid #E3F2FD; }
+        .card-head.orange{ color: #E65100; border-bottom: 2px solid #FFF3E0; }
+        .card-head.green { color: #2E7D32; border-bottom: 2px solid #E8F5E9; }
+        .card-head.purple{ color: #6A1B9A; border-bottom: 2px solid #F3E5F5; }
+        .card-body { padding: 16px; }
+
+        /* Balance scale grid */
+        .scale-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+        .scale-card { background: #FAFBFC; border: 2px solid #EEE; border-radius: 14px; padding: 14px; text-align: center; }
+        .scale-card svg { display: block; margin: 0 auto 8px; }
+        .scale-card .eq-label { font-size: 0.95em; font-weight: 800; color: #6A1B9A; margin-bottom: 6px; font-family: 'Courier New', monospace; }
+
+        /* Scene */
+        .scene { display: flex; gap: 14px; align-items: center; padding: 16px;
+                background: #F9FAFB; border-radius: 14px; margin-bottom: 14px; }
+        .scene svg { flex-shrink: 0; }
+        .scene .desc h4 { font-size: 0.95em; font-weight: 800; margin-bottom: 3px; }
+        .scene .desc p { font-size: 0.83em; color: #888; line-height: 1.4; }
+
+        /* Equation fill-in */
+        .eq-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+                 font-size: 1.05em; font-weight: 700; color: #555; padding: 10px 0; }
+        .eq-row .eq-input { width: 60px; padding: 6px 8px; border: 2px solid #E0E0E0;
+                          border-radius: 8px; font-size: 0.95em; font-weight: 700;
+                          font-family: 'Nunito', sans-serif; text-align: center;
+                          outline: none; color: #6A1B9A; }
+        .eq-row .eq-input:focus { border-color: #9C27B0; box-shadow: 0 0 0 3px rgba(156,39,176,0.12); }
+        .eq-row .eq-input.wide { width: 80px; }
+
+        /* MC buttons */
+        .mc-options { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+        .mc-btn { flex: 1; min-width: 80px; padding: 10px; border: 2px solid #E0E0E0; border-radius: 10px;
+                 background: white; font-weight: 700; font-size: 0.85em; cursor: pointer;
+                 text-align: center; transition: all 0.15s; font-family: 'Nunito', sans-serif; color: #666; }
+        .mc-btn:hover { border-color: #9C27B0; color: #6A1B9A; }
+        .mc-btn.selected { background: #6A1B9A; color: white; border-color: #6A1B9A; }
+
+        /* Question rows */
+        .q-inline { display: flex; align-items: flex-start; gap: 10px; padding: 12px 0;
+                   border-bottom: 1px solid #F0F0F0; }
+        .q-inline:last-child { border-bottom: none; }
+        .q-num { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center;
+                justify-content: center; font-weight: 800; font-size: 0.78em; color: white;
+                background: linear-gradient(135deg, #42A5F5, #1565C0); flex-shrink: 0; }
+        .q-num.orange { background: linear-gradient(135deg, #FF9800, #E65100); }
+        .q-num.green  { background: linear-gradient(135deg, #66BB6A, #2E7D32); }
+        .q-num.purple { background: linear-gradient(135deg, #AB47BC, #6A1B9A); }
+        .q-body { flex: 1; }
+        .q-body .text { font-size: 0.92em; line-height: 1.5; margin-bottom: 6px; }
+        .hint { font-size: 0.8em; color: #9C27B0; font-weight: 600; margin-bottom: 4px; }
+
+        /* Fun fact */
+        .fact { margin: 14px 0; padding: 14px 16px; border-radius: 14px;
+               background: #FFFDE7; border: 1.5px solid #FFE082; font-size: 0.85em; line-height: 1.5; }
+
+        /* Submit */
+        .submit-wrap { text-align: center; padding: 20px; }
+        .submit-btn { background: linear-gradient(135deg, #4CAF50, #388E3C); color: white;
+                     border: none; padding: 14px 42px; border-radius: 14px; font-size: 1.1em;
+                     font-weight: 800; font-family: 'Nunito', sans-serif; cursor: pointer;
+                     box-shadow: 0 2px 8px rgba(76,175,80,0.3); }
+        .submit-btn:disabled { opacity: 0.5; }
+        #submitMsg { margin-top: 10px; font-weight: 700; }
+
+        /* Answer key */
+        .answer-key { background: #FFF9E6; padding: 18px; border-radius: 14px; margin: 0 14px 14px;
+                     border: 2px solid #F0C040; display: none; }
+        .answer-key-header { display: flex; justify-content: space-between; align-items: center;
+                            font-weight: 800; color: #8B6914; margin-bottom: 10px; padding-bottom: 8px;
+                            border-bottom: 2px solid rgba(240,192,64,0.25); }
+        .answer-btn { display: block; margin: 0 auto 16px; padding: 10px 24px;
+                     background: linear-gradient(135deg, #1565C0, #42A5F5); color: white;
+                     border: none; border-radius: 10px; font-size: 0.9em; font-weight: 700;
+                     cursor: pointer; font-family: 'Nunito', sans-serif; }
+        .close-btn { background: none; border: 1px solid #ddd; padding: 4px 10px;
+                    border-radius: 6px; cursor: pointer; font-size: 0.8em; color: #888; }
+
+        @media (max-width: 500px) {
+            .scale-grid { grid-template-columns: 1fr; }
+            .scene { flex-direction: column; text-align: center; }
         }
-    
-.work-wrapper { position: relative; }
-.work-tabs { display: flex; align-items: center; gap: 4px; margin-bottom: 6px; }
-.work-tab { padding: 6px 14px; border: 1.5px solid #e0e0e0; border-radius: 8px 8px 0 0;
-            background: #f5f5f5; cursor: pointer; font-family: 'Nunito', sans-serif;
-            font-size: 0.85em; font-weight: 600; color: #888; transition: all 0.2s; border-bottom: none; }
-.work-tab.active { background: white; color: #2E75B6; border-color: #2E75B6; }
-.draw-tools { display: flex; align-items: center; gap: 6px; margin-left: auto;
-              padding: 3px 8px; background: #f8f9fa; border-radius: 8px; }
-.tool-btn { background: none; border: 1.5px solid transparent; padding: 3px 6px;
-            border-radius: 6px; cursor: pointer; font-size: 1em; transition: all 0.2s; }
-.tool-btn.active { border-color: #2E75B6; background: #e8f0fe; }
-.tool-btn:hover { background: #e8e8e8; }
-.draw-panel canvas { display: block; }
-@media (max-width: 600px) {
-    .draw-tools { flex-wrap: wrap; gap: 4px; }
-    .work-tabs { flex-wrap: wrap; }
-}
-</style>
+    </style>
 </head>
 <body>
-    <div class="header">
-        <h1>Worksheet 16: Balance It Out</h1>
-        <p>Session 16 — One-step equations with addition and subtraction</p>
+    <div class="hero">
+        <div class="badge">📄 WORKSHEET · SESSION 16</div>
+        <h1>⚖️ Balance It Out</h1>
+        <p>Keep both sides equal — solve one-step add &amp; subtract equations!</p>
     </div>
-    <div class="section"><h2>Part 1: Solve Addition Equations</h2><div class="problem">
-        <span class="problem-num">1</span>
-        <span class="problem-text">x + 8 = 15</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">2</span>
-        <span class="problem-text">n + 12 = 30</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">3</span>
-        <span class="problem-text">y + 3.5 = 10</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">4</span>
-        <span class="problem-text">a + 47 = 100</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div></div><div class="section"><h2>Part 2: Solve Subtraction Equations</h2><div class="problem">
-        <span class="problem-num">5</span>
-        <span class="problem-text">x − 6 = 14</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">6</span>
-        <span class="problem-text">m − 15 = 22</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">7</span>
-        <span class="problem-text">p − 8.5 = 3.5</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">8</span>
-        <span class="problem-text">k − 125 = 75</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div></div><div class="section"><h2>Part 3: 💰 Budget Balancing</h2><div class="context">Use equations to solve these money problems. Define your variable!</div><div class="problem">
-        <span class="problem-num">9</span>
-        <span class="problem-text">You earned some money babysitting. After spending $18 on lunch, you have $27 left. How much did you earn? Write and solve the equation.</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">10</span>
-        <span class="problem-text">Your savings account had some money. You deposited $150 and now have $425. How much was in the account before? Write and solve.</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">11</span>
-        <span class="problem-text">You bought a shirt and have $32 left from your $50. How much was the shirt?</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">12</span>
-        <span class="problem-text">A class collected donations. After adding $85 on Friday, they had $210 total. How much did they have before Friday?</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div></div><div class="section"><h2>Part 4: Mixed Practice</h2><div class="problem">
-        <span class="problem-num">13</span>
-        <span class="problem-text">w + 19 = 45</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">14</span>
-        <span class="problem-text">z − 33 = 67</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">15</span>
-        <span class="problem-text">t + 250 = 1,000</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">16</span>
-        <span class="problem-text">The temperature was some degrees in the morning. It rose 12°F and is now 68°F. What was the morning temperature?</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">17</span>
-        <span class="problem-text">A hiker climbed to a peak. On the way down, they descended 1,400 ft and are now at 3,200 ft elevation. How high was the peak?</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">18</span>
-        <span class="problem-text">You scored some points in the first half of a basketball game. In the second half, you scored 14 more points for a total of 31. First half score?</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">19</span>
-        <span class="problem-text">A book has some pages. You've read 147 pages and have 203 left. How many pages total?</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">20</span>
-        <span class="problem-text">Challenge: A store had a sale. The discounted price was $45, which was $28 less than the original. What was the original price? Write and solve.</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div></div>
-    
-    
-    <div style="text-align:center; margin: 30px 20px;">
-        <button id="submitBtn" onclick="doSubmit()" style="background:linear-gradient(135deg,#4CAF50,#388E3C); color:white; border:none; padding:14px 40px; border-radius:12px; font-size:1.1em; font-weight:700; font-family:Nunito,sans-serif; cursor:pointer; box-shadow:0 4px 15px rgba(76,175,80,0.3);">📤 Submit Worksheet</button>
-        <div id="submitMsg" style="margin-top:10px; font-weight:600;"></div>
+    <div class="progress-wrap">
+        <div class="progress-track"><div class="progress-fill" id="prog"></div></div>
+        <div class="progress-label" id="progLabel">0 / 14</div>
     </div>
-<div class="answer-key" style="display:none;" id="answerKey">
-        <h2>🔑 Answer Key</h2>
-        <p><strong>1.</strong> x = 7 | <strong>2.</strong> n = 18 | <strong>3.</strong> y = 6.5 | <strong>4.</strong> a = 53</p>
-<p><strong>5.</strong> x = 20 | <strong>6.</strong> m = 37 | <strong>7.</strong> p = 12 | <strong>8.</strong> k = 200</p>
-<p><strong>9.</strong> x − 18 = 27, x = $45 | <strong>10.</strong> x + 150 = 425, x = $275</p>
-<p><strong>11.</strong> 50 − x = 32, x = $18 | <strong>12.</strong> x + 85 = 210, x = $125</p>
-<p><strong>13.</strong> w = 26 | <strong>14.</strong> z = 100 | <strong>15.</strong> t = 750</p>
-<p><strong>16.</strong> t + 12 = 68, t = 56°F | <strong>17.</strong> p − 1400 = 3200, p = 4,600 ft</p>
-<p><strong>18.</strong> x + 14 = 31, x = 17 | <strong>19.</strong> x − 147 = 203 (or 147 + 203), x = 350 pages</p>
-<p><strong>20.</strong> x − 28 = 45, x = $73</p>
-    </div>
-    <div id="pinOverlay" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0;
-         background:rgba(0,0,0,0.7); z-index:1000; align-items:center; justify-content:center;">
-        <div style="background:white; padding:30px; border-radius:16px; text-align:center; max-width:320px; margin:20px;">
-            <div style="font-size:2em; margin-bottom:10px;">🔒</div>
-            <h3 style="color:#1F4E79; margin-bottom:15px;">Teacher Access</h3>
-            <p style="color:#666; font-size:0.9em; margin-bottom:15px;">Enter today's PIN to view answer key</p>
-            <input type="number" id="pinInput" placeholder="Enter PIN"
-                   style="width:120px; padding:12px; font-size:1.3em; text-align:center;
-                          border:2px solid #ddd; border-radius:8px; outline:none;"
-                   oninput="checkPin()" />
-            <p id="pinError" style="color:#E74C3C; font-size:0.85em; margin-top:8px; display:none;">Incorrect PIN</p>
-            <br><button onclick="closePinDialog()" style="margin-top:10px; padding:8px 20px;
-                   background:none; border:1px solid #ddd; border-radius:6px; cursor:pointer; color:#888;">Cancel</button>
-        </div>
-    </div>
-    <button class="toggle-btn" onclick="showPinDialog()" id="showAnswerBtn">🔒 Answer Key (Teacher Only)</button>
-    <script>
-        function showPinDialog() {
-            document.getElementById('pinOverlay').style.display = 'flex';
-            document.getElementById('pinInput').value = '';
-            document.getElementById('pinInput').focus();
-            document.getElementById('pinError').style.display = 'none';
-        }
-        function closePinDialog() {
-            document.getElementById('pinOverlay').style.display = 'none';
-        }
-        function checkPin() {
-            var pin = document.getElementById('pinInput').value;
-            var today = new Date().getDate().toString();
-            if (pin === today) {
-                document.getElementById('pinOverlay').style.display = 'none';
-                document.getElementById('answerKey').style.display = 'block';
-                document.getElementById('showAnswerBtn').style.display = 'none';
-                window.scrollTo(0, document.body.scrollHeight);
-            } else if (pin.length >= 2) {
-                document.getElementById('pinError').style.display = 'block';
-            }
-        }
-    </script>
-<script>
-// Drawing Canvas System
-(function() {
-    let canvasId = 0;
-    
-    // Replace all work-area textareas with hybrid draw+type areas
-    document.querySelectorAll('.work-area').forEach(ta => {
-        const id = 'canvas_' + (canvasId++);
-        const wrapper = document.createElement('div');
-        wrapper.className = 'work-wrapper';
-        wrapper.style.cssText = 'margin:8px 0 5px 42px; width:calc(100% - 42px);';
-        
-        wrapper.innerHTML = `
-            <div class="work-tabs">
-                <button class="work-tab active" onclick="switchWorkTab(this,'draw')">✏️ Draw</button>
-                <button class="work-tab" onclick="switchWorkTab(this,'type')">⌨️ Type</button>
-                <div class="draw-tools" id="tools_${id}">
-                    <button class="tool-btn active" onclick="setTool(this,'${id}','pen')" title="Pen">🖊️</button>
-                    <button class="tool-btn" onclick="setTool(this,'${id}','eraser')" title="Eraser">🧽</button>
-                    <input type="color" value="#333333" onchange="setColor('${id}',this.value)" 
-                           style="width:28px;height:28px;border:none;border-radius:4px;cursor:pointer;" title="Color"/>
-                    <select onchange="setSize('${id}',this.value)" style="padding:2px 4px;border-radius:4px;border:1px solid #ddd;font-size:0.8em;">
-                        <option value="2">Fine</option>
-                        <option value="3" selected>Medium</option>
-                        <option value="5">Thick</option>
-                    </select>
-                    <button class="tool-btn" onclick="undoDraw('${id}')" title="Undo">↩️</button>
-                    <button class="tool-btn" onclick="clearCanvas('${id}')" title="Clear All">🗑️</button>
+
+    <!-- PART 1: Balance scale visual -->
+    <div class="card">
+        <div class="card-head purple"><span class="emoji">⚖️</span> Part 1: The Balance Scale</div>
+        <div class="card-body">
+            <p style="font-size:0.85em;color:#888;margin-bottom:14px;">An equation is like a balance scale — both sides must be equal. To find x, do the <strong>opposite operation</strong> on both sides.</p>
+
+            <div class="scale-grid">
+                <!-- Scale 1: x + 5 = 12 -->
+                <div class="scale-card">
+                    <svg width="100" height="80" viewBox="0 0 100 80">
+                        <!-- Base -->
+                        <rect x="44" y="68" width="12" height="10" rx="2" fill="#7B1FA2"/>
+                        <polygon points="50,30 43,68 57,68" fill="#9C27B0"/>
+                        <!-- Beam -->
+                        <line x1="10" y1="32" x2="90" y2="32" stroke="#6A1B9A" stroke-width="3" stroke-linecap="round"/>
+                        <!-- Left pan -->
+                        <line x1="22" y1="32" x2="22" y2="44" stroke="#9C27B0" stroke-width="1.5"/>
+                        <rect x="8" y="44" width="28" height="14" rx="4" fill="#E3F2FD" stroke="#1565C0" stroke-width="1.5"/>
+                        <text x="22" y="55" text-anchor="middle" font-size="9" font-weight="800" fill="#1565C0">x+5</text>
+                        <!-- Right pan -->
+                        <line x1="78" y1="32" x2="78" y2="44" stroke="#9C27B0" stroke-width="1.5"/>
+                        <rect x="64" y="44" width="28" height="14" rx="4" fill="#F3E5F5" stroke="#6A1B9A" stroke-width="1.5"/>
+                        <text x="78" y="55" text-anchor="middle" font-size="9" font-weight="800" fill="#6A1B9A">12</text>
+                        <!-- Pivot dot -->
+                        <circle cx="50" cy="30" r="3.5" fill="#4A148C"/>
+                    </svg>
+                    <div class="eq-label">x + 5 = 12</div>
+                    <div class="eq-row" style="justify-content:center; font-size:0.95em;">
+                        x = 12 −
+                        <input type="text" class="eq-input" style="width:40px;" placeholder="?" oninput="updateProgress()"/>
+                        =
+                        <input type="text" class="eq-input" style="width:40px;" placeholder="?" oninput="updateProgress()"/>
+                    </div>
+                </div>
+                <!-- Scale 2: x - 3 = 9 -->
+                <div class="scale-card">
+                    <svg width="100" height="80" viewBox="0 0 100 80">
+                        <rect x="44" y="68" width="12" height="10" rx="2" fill="#7B1FA2"/>
+                        <polygon points="50,30 43,68 57,68" fill="#9C27B0"/>
+                        <line x1="10" y1="32" x2="90" y2="32" stroke="#6A1B9A" stroke-width="3" stroke-linecap="round"/>
+                        <line x1="22" y1="32" x2="22" y2="44" stroke="#9C27B0" stroke-width="1.5"/>
+                        <rect x="8" y="44" width="28" height="14" rx="4" fill="#E3F2FD" stroke="#1565C0" stroke-width="1.5"/>
+                        <text x="22" y="55" text-anchor="middle" font-size="9" font-weight="800" fill="#1565C0">x−3</text>
+                        <line x1="78" y1="32" x2="78" y2="44" stroke="#9C27B0" stroke-width="1.5"/>
+                        <rect x="64" y="44" width="28" height="14" rx="4" fill="#F3E5F5" stroke="#6A1B9A" stroke-width="1.5"/>
+                        <text x="78" y="55" text-anchor="middle" font-size="9" font-weight="800" fill="#6A1B9A">9</text>
+                        <circle cx="50" cy="30" r="3.5" fill="#4A148C"/>
+                    </svg>
+                    <div class="eq-label">x − 3 = 9</div>
+                    <div class="eq-row" style="justify-content:center; font-size:0.95em;">
+                        x = 9 +
+                        <input type="text" class="eq-input" style="width:40px;" placeholder="?" oninput="updateProgress()"/>
+                        =
+                        <input type="text" class="eq-input" style="width:40px;" placeholder="?" oninput="updateProgress()"/>
+                    </div>
+                </div>
+                <!-- Scale 3: x + 8 = 20 -->
+                <div class="scale-card">
+                    <svg width="100" height="80" viewBox="0 0 100 80">
+                        <rect x="44" y="68" width="12" height="10" rx="2" fill="#7B1FA2"/>
+                        <polygon points="50,30 43,68 57,68" fill="#9C27B0"/>
+                        <line x1="10" y1="32" x2="90" y2="32" stroke="#6A1B9A" stroke-width="3" stroke-linecap="round"/>
+                        <line x1="22" y1="32" x2="22" y2="44" stroke="#9C27B0" stroke-width="1.5"/>
+                        <rect x="8" y="44" width="28" height="14" rx="4" fill="#E3F2FD" stroke="#1565C0" stroke-width="1.5"/>
+                        <text x="22" y="55" text-anchor="middle" font-size="9" font-weight="800" fill="#1565C0">x+8</text>
+                        <line x1="78" y1="32" x2="78" y2="44" stroke="#9C27B0" stroke-width="1.5"/>
+                        <rect x="64" y="44" width="28" height="14" rx="4" fill="#F3E5F5" stroke="#6A1B9A" stroke-width="1.5"/>
+                        <text x="78" y="55" text-anchor="middle" font-size="9" font-weight="800" fill="#6A1B9A">20</text>
+                        <circle cx="50" cy="30" r="3.5" fill="#4A148C"/>
+                    </svg>
+                    <div class="eq-label">x + 8 = 20</div>
+                    <div class="eq-row" style="justify-content:center; font-size:0.95em;">
+                        x = 20 −
+                        <input type="text" class="eq-input" style="width:40px;" placeholder="?" oninput="updateProgress()"/>
+                        =
+                        <input type="text" class="eq-input" style="width:40px;" placeholder="?" oninput="updateProgress()"/>
+                    </div>
+                </div>
+                <!-- Scale 4: x - 7 = 4 -->
+                <div class="scale-card">
+                    <svg width="100" height="80" viewBox="0 0 100 80">
+                        <rect x="44" y="68" width="12" height="10" rx="2" fill="#7B1FA2"/>
+                        <polygon points="50,30 43,68 57,68" fill="#9C27B0"/>
+                        <line x1="10" y1="32" x2="90" y2="32" stroke="#6A1B9A" stroke-width="3" stroke-linecap="round"/>
+                        <line x1="22" y1="32" x2="22" y2="44" stroke="#9C27B0" stroke-width="1.5"/>
+                        <rect x="8" y="44" width="28" height="14" rx="4" fill="#E3F2FD" stroke="#1565C0" stroke-width="1.5"/>
+                        <text x="22" y="55" text-anchor="middle" font-size="9" font-weight="800" fill="#1565C0">x−7</text>
+                        <line x1="78" y1="32" x2="78" y2="44" stroke="#9C27B0" stroke-width="1.5"/>
+                        <rect x="64" y="44" width="28" height="14" rx="4" fill="#F3E5F5" stroke="#6A1B9A" stroke-width="1.5"/>
+                        <text x="78" y="55" text-anchor="middle" font-size="9" font-weight="800" fill="#6A1B9A">4</text>
+                        <circle cx="50" cy="30" r="3.5" fill="#4A148C"/>
+                    </svg>
+                    <div class="eq-label">x − 7 = 4</div>
+                    <div class="eq-row" style="justify-content:center; font-size:0.95em;">
+                        x = 4 +
+                        <input type="text" class="eq-input" style="width:40px;" placeholder="?" oninput="updateProgress()"/>
+                        =
+                        <input type="text" class="eq-input" style="width:40px;" placeholder="?" oninput="updateProgress()"/>
+                    </div>
                 </div>
             </div>
-            <div class="draw-panel" id="drawPanel_${id}">
-                <canvas id="${id}" width="600" height="160" 
-                        style="width:100%;border:1.5px solid #e0e0e0;border-radius:8px;
-                               background:white;touch-action:none;cursor:crosshair;"></canvas>
+
+            <div class="fact">
+                <strong>⚖️ Key Idea:</strong> Whatever you do to one side of the equation, do the <em>same thing</em> to the other side — the scale stays balanced!
             </div>
-            <div class="type-panel" id="typePanel_${id}" style="display:none;">
-                <textarea class="work-area-text" placeholder="Type your work here..."
-                          style="width:100%;min-height:80px;border:1.5px solid #e0e0e0;border-radius:8px;
-                                 padding:10px;font-family:Nunito,sans-serif;font-size:0.9em;resize:vertical;
-                                 outline:none;color:#444;"></textarea>
+        </div>
+    </div>
+
+    <!-- PART 2: Solve equations — inline fill-ins -->
+    <div class="card">
+        <div class="card-head blue"><span class="emoji">🔓</span> Part 2: Solve the Equation</div>
+        <div class="card-body">
+            <p style="font-size:0.85em;color:#888;margin-bottom:14px;">Show the inverse operation, then find x.</p>
+
+            <div class="q-inline">
+                <span class="q-num">5</span>
+                <div class="q-body">
+                    <div class="text"><strong>n + 14 = 30</strong></div>
+                    <div class="eq-row">n = 30 −
+                        <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/>
+                        =
+                        <input type="text" class="eq-input wide" placeholder="?" oninput="updateProgress()"/>
+                    </div>
+                </div>
             </div>
-        `;
-        
-        ta.parentNode.replaceChild(wrapper, ta);
-        
-        // Initialize canvas
-        setTimeout(() => initCanvas(id), 50);
-    });
-    
-    // Canvas state storage
-    window._canvasState = {};
-    
-    window.initCanvas = function(id) {
-        const canvas = document.getElementById(id);
-        if (!canvas) return;
-        const ctx = canvas.getContext('2d');
-        
-        // Set actual pixel size based on display size
-        const rect = canvas.getBoundingClientRect();
-        canvas.width = rect.width * 2;
-        canvas.height = rect.height * 2;
-        ctx.scale(2, 2);
-        
-        const state = {
-            drawing: false,
-            tool: 'pen',
-            color: '#333333',
-            size: 3,
-            history: [],
-            ctx: ctx,
-            canvas: canvas,
-            lastX: 0, lastY: 0
-        };
-        window._canvasState[id] = state;
-        
-        // Save initial blank state
-        saveHistory(id);
-        
-        // Pointer events (works with touch, pencil, and mouse)
-        canvas.addEventListener('pointerdown', e => startDraw(e, id));
-        canvas.addEventListener('pointermove', e => draw(e, id));
-        canvas.addEventListener('pointerup', e => endDraw(e, id));
-        canvas.addEventListener('pointerleave', e => endDraw(e, id));
-        
-        // Prevent scroll while drawing
-        canvas.addEventListener('touchstart', e => e.preventDefault(), {passive: false});
-        canvas.addEventListener('touchmove', e => e.preventDefault(), {passive: false});
-    };
-    
-    function getPos(e, canvas) {
-        const rect = canvas.getBoundingClientRect();
-        return {
-            x: (e.clientX - rect.left),
-            y: (e.clientY - rect.top)
-        };
-    }
-    
-    window.startDraw = function(e, id) {
-        const s = window._canvasState[id];
-        s.drawing = true;
-        const pos = getPos(e, s.canvas);
-        s.lastX = pos.x;
-        s.lastY = pos.y;
-        s.ctx.beginPath();
-        s.ctx.moveTo(pos.x, pos.y);
-    };
-    
-    window.draw = function(e, id) {
-        const s = window._canvasState[id];
-        if (!s.drawing) return;
-        const pos = getPos(e, s.canvas);
-        
-        s.ctx.lineWidth = s.tool === 'eraser' ? s.size * 4 : s.size;
-        s.ctx.lineCap = 'round';
-        s.ctx.lineJoin = 'round';
-        s.ctx.strokeStyle = s.tool === 'eraser' ? '#ffffff' : s.color;
-        s.ctx.globalCompositeOperation = s.tool === 'eraser' ? 'destination-out' : 'source-over';
-        
-        // Use pressure for Apple Pencil if available
-        if (e.pressure && e.pressure > 0 && e.pressure < 1) {
-            s.ctx.lineWidth *= (0.5 + e.pressure);
-        }
-        
-        s.ctx.lineTo(pos.x, pos.y);
-        s.ctx.stroke();
-        s.ctx.beginPath();
-        s.ctx.moveTo(pos.x, pos.y);
-        s.lastX = pos.x;
-        s.lastY = pos.y;
-    };
-    
-    window.endDraw = function(e, id) {
-        const s = window._canvasState[id];
-        if (s.drawing) {
-            s.drawing = false;
-            s.ctx.globalCompositeOperation = 'source-over';
-            saveHistory(id);
-        }
-    };
-    
-    function saveHistory(id) {
-        const s = window._canvasState[id];
-        const imgData = s.canvas.toDataURL();
-        s.history.push(imgData);
-        if (s.history.length > 20) s.history.shift(); // limit memory
-    }
-    
-    window.undoDraw = function(id) {
-        const s = window._canvasState[id];
-        if (s.history.length > 1) {
-            s.history.pop();
-            const img = new Image();
-            img.onload = () => {
-                s.ctx.clearRect(0, 0, s.canvas.width/2, s.canvas.height/2);
-                s.ctx.drawImage(img, 0, 0, s.canvas.width/2, s.canvas.height/2);
-            };
-            img.src = s.history[s.history.length - 1];
-        }
-    };
-    
-    window.clearCanvas = function(id) {
-        const s = window._canvasState[id];
-        s.ctx.clearRect(0, 0, s.canvas.width/2, s.canvas.height/2);
-        saveHistory(id);
-    };
-    
-    window.setTool = function(btn, id, tool) {
-        window._canvasState[id].tool = tool;
-        btn.parentElement.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const canvas = document.getElementById(id);
-        canvas.style.cursor = tool === 'eraser' ? 'cell' : 'crosshair';
-    };
-    
-    window.setColor = function(id, color) {
-        window._canvasState[id].color = color;
-    };
-    
-    window.setSize = function(id, size) {
-        window._canvasState[id].size = parseInt(size);
-    };
-    
-    window.switchWorkTab = function(btn, mode) {
-        const wrapper = btn.closest('.work-wrapper');
-        wrapper.querySelectorAll('.work-tab').forEach(t => t.classList.remove('active'));
-        btn.classList.add('active');
-        
-        const drawPanel = wrapper.querySelector('[id^="drawPanel_"]');
-        const typePanel = wrapper.querySelector('[id^="typePanel_"]');
-        const tools = wrapper.querySelector('[id^="tools_"]');
-        
-        if (mode === 'draw') {
-            drawPanel.style.display = 'block';
-            typePanel.style.display = 'none';
-            tools.style.display = 'flex';
-            // Resize canvas on show
-            const canvasEl = drawPanel.querySelector('canvas');
-            if (canvasEl && window._canvasState[canvasEl.id]) {
-                const rect = canvasEl.getBoundingClientRect();
-                if (rect.width > 0) {
-                    // Don't resize if already initialized properly
-                }
-            }
-        } else {
-            drawPanel.style.display = 'none';
-            typePanel.style.display = 'block';
-            tools.style.display = 'none';
-        }
-    };
-})();
-</script>
+            <div class="q-inline">
+                <span class="q-num">6</span>
+                <div class="q-body">
+                    <div class="text"><strong>y − 9 = 15</strong></div>
+                    <div class="eq-row">y = 15 +
+                        <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/>
+                        =
+                        <input type="text" class="eq-input wide" placeholder="?" oninput="updateProgress()"/>
+                    </div>
+                </div>
+            </div>
+            <div class="q-inline">
+                <span class="q-num">7</span>
+                <div class="q-body">
+                    <div class="text"><strong>z + 21 = 50</strong></div>
+                    <div class="eq-row">z = 50 −
+                        <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/>
+                        =
+                        <input type="text" class="eq-input wide" placeholder="?" oninput="updateProgress()"/>
+                    </div>
+                </div>
+            </div>
+            <div class="q-inline">
+                <span class="q-num">8</span>
+                <div class="q-body">
+                    <div class="text"><strong>k − 18 = 7</strong></div>
+                    <div class="eq-row">k = 7 +
+                        <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/>
+                        =
+                        <input type="text" class="eq-input wide" placeholder="?" oninput="updateProgress()"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<!-- Firebase SDK -->
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-<script src="../firebase-config.js?v=5"></script>
-<script src="../grade-sync.js?v=5"></script>
+    <!-- PART 3: Write and solve from word problems -->
+    <div class="card">
+        <div class="card-head orange"><span class="emoji">📖</span> Part 3: Write the Equation, Then Solve</div>
+        <div class="card-body">
+            <div class="scene">
+                <!-- Book/sticker scene -->
+                <svg width="110" height="110" viewBox="0 0 110 110">
+                    <!-- Bookshelf -->
+                    <rect x="5" y="80" width="100" height="8" rx="2" fill="#8D6E63"/>
+                    <!-- Books -->
+                    <rect x="10" y="40" width="16" height="40" rx="2" fill="#EF9A9A"/><text x="18" y="62" text-anchor="middle" font-size="8" fill="#B71C1C" font-weight="700" transform="rotate(-90,18,62)">MATH</text>
+                    <rect x="28" y="32" width="14" height="48" rx="2" fill="#90CAF9"/><text x="35" y="58" text-anchor="middle" font-size="8" fill="#1565C0" font-weight="700" transform="rotate(-90,35,58)">SCI</text>
+                    <rect x="44" y="45" width="13" height="35" rx="2" fill="#A5D6A7"/><text x="50" y="65" text-anchor="middle" font-size="7" fill="#2E7D32" font-weight="700" transform="rotate(-90,50,65)">ENG</text>
+                    <rect x="59" y="38" width="15" height="42" rx="2" fill="#FFE082"/><text x="66" y="62" text-anchor="middle" font-size="8" fill="#F57F17" font-weight="700" transform="rotate(-90,66,62)">HIST</text>
+                    <!-- Question mark book -->
+                    <rect x="76" y="50" width="14" height="30" rx="2" fill="#E1BEE7" stroke="#6A1B9A" stroke-width="1.5"/>
+                    <text x="83" y="68" text-anchor="middle" font-size="12" fill="#6A1B9A" font-weight="900">?</text>
+                    <!-- Arrow -->
+                    <text x="55" y="22" text-anchor="middle" font-size="9" fill="#888">Total: 23 books</text>
+                    <line x1="55" y1="26" x2="83" y2="48" stroke="#aaa" stroke-width="1.5" stroke-dasharray="3,2"/>
+                </svg>
+                <div class="desc">
+                    <h4>📚 The Library Shelf</h4>
+                    <p>A shelf has some books. After adding or removing some, the total changes. Write an equation to find the unknown quantity!</p>
+                </div>
+            </div>
 
-<script>
-async function doSubmit() {
-    const btn = document.getElementById('submitBtn');
-    const msg = document.getElementById('submitMsg');
-    btn.disabled = true; btn.textContent = '⏳ Submitting...';
-    
-    // Count filled inputs
-    const inputs = document.querySelectorAll('input[type="text"], textarea, select');
-    const filled = Array.from(inputs).filter(i => i.value.trim() !== '').length;
-    const total = inputs.length;
-    const score = total > 0 ? Math.round((filled / total) * 100 * 10) / 10 : 0;
-    
-    try {
-        const result = await submitScore('w16', score, { filled, total, type: 'completion' });
-        if (result) {
-            msg.textContent = '✅ Submitted! Your teacher will see your work.';
-            msg.style.color = '#5B8C5A';
-            btn.textContent = '✓ Submitted';
-        } else {
-            msg.textContent = '⚠️ Could not submit — make sure you are logged in.';
-            msg.style.color = '#D35400';
-            btn.disabled = false; btn.textContent = '📤 Submit Worksheet';
-        }
-    } catch(e) {
-        msg.textContent = '⚠️ Error submitting. Try again.';
-        msg.style.color = '#D35400';
-        btn.disabled = false; btn.textContent = '📤 Submit Worksheet';
+            <div class="q-inline">
+                <span class="q-num orange">9</span>
+                <div class="q-body">
+                    <div class="text">A shelf has <strong>x books</strong>. After adding <strong>7 more</strong>, there are <strong>23</strong>. Write and solve the equation.</div>
+                    <div class="hint">Equation: x + 7 = 23</div>
+                    <div class="eq-row">x = 23 −
+                        <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/>
+                        =
+                        <input type="text" class="eq-input wide" placeholder="?" oninput="updateProgress()"/>
+                    </div>
+                </div>
+            </div>
+            <div class="q-inline">
+                <span class="q-num orange">10</span>
+                <div class="q-body">
+                    <div class="text">Mia had some money. She spent <strong>$12</strong> and has <strong>$19</strong> left. How much did she start with?</div>
+                    <div class="hint">Write the equation first: m − 12 = 19</div>
+                    <div class="eq-row">m = 19 +
+                        <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/>
+                        =
+                        <input type="text" class="eq-input wide" placeholder="?" oninput="updateProgress()"/>
+                    </div>
+                </div>
+            </div>
+            <div class="q-inline">
+                <span class="q-num orange">11</span>
+                <div class="q-body">
+                    <div class="text">The temperature rose by <strong>8°</strong> and is now <strong>35°</strong>. What was the starting temperature?</div>
+                    <div class="eq-row">t + 8 = 35 → t =
+                        <input type="text" class="eq-input wide" placeholder="?" oninput="updateProgress()"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PART 4: Mixed MC + solve -->
+    <div class="card">
+        <div class="card-head green"><span class="emoji">🌟</span> Part 4: Challenge Problems</div>
+        <div class="card-body">
+            <div class="q-inline">
+                <span class="q-num green">12</span>
+                <div class="q-body">
+                    <div class="text">To solve <strong>x + 5 = 12</strong>, which operation do you use?</div>
+                    <div class="mc-options">
+                        <button class="mc-btn" onclick="selectMC(this)">Add 5</button>
+                        <button class="mc-btn" onclick="selectMC(this)">Subtract 5</button>
+                        <button class="mc-btn" onclick="selectMC(this)">Multiply by 5</button>
+                    </div>
+                    <input type="hidden" class="answer-hidden"/>
+                </div>
+            </div>
+            <div class="q-inline">
+                <span class="q-num green">13</span>
+                <div class="q-body">
+                    <div class="text">Solve: <strong>p + 33 = 60</strong></div>
+                    <div class="eq-row">p =
+                        <input type="text" class="eq-input wide" placeholder="?" oninput="updateProgress()"/>
+                    </div>
+                </div>
+            </div>
+            <div class="q-inline" style="border-bottom:none;">
+                <span class="q-num green">14</span>
+                <div class="q-body">
+                    <div class="text">Solve: <strong>q − 47 = 13</strong></div>
+                    <div class="eq-row">q =
+                        <input type="text" class="eq-input wide" placeholder="?" oninput="updateProgress()"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="submit-wrap">
+        <button class="submit-btn" id="submitBtn" onclick="doSubmit()">📤 Submit Worksheet</button>
+        <div id="submitMsg"></div>
+    </div>
+
+    <!-- PIN + Answer Key -->
+    <div id="pinOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:1000;align-items:center;justify-content:center;">
+        <div style="background:white;padding:28px;border-radius:16px;text-align:center;max-width:300px;margin:20px;">
+            <div style="font-size:2em;margin-bottom:8px;">🔒</div>
+            <h3 style="color:#1565C0;margin-bottom:12px;">Teacher Access</h3>
+            <input type="number" id="pinInput" placeholder="Today's PIN" style="width:100px;padding:10px;font-size:1.2em;text-align:center;border:2px solid #ddd;border-radius:8px;outline:none;" oninput="checkPin()"/>
+            <p id="pinError" style="color:#E74C3C;font-size:0.82em;margin-top:6px;display:none;">Wrong PIN</p>
+            <br><button onclick="closePinDialog()" style="margin-top:8px;padding:6px 18px;background:none;border:1px solid #ddd;border-radius:6px;cursor:pointer;color:#888;font-size:0.85em;">Cancel</button>
+        </div>
+    </div>
+    <div class="answer-key" id="answerKey">
+        <div class="answer-key-header"><span>🔑 Answer Key</span><button onclick="hideAnswers()" class="close-btn">✕</button></div>
+        <p><strong>1.</strong> x = 12−5 = 7 · <strong>2.</strong> x = 9+3 = 12 · <strong>3.</strong> x = 20−8 = 12 · <strong>4.</strong> x = 4+7 = 11</p>
+        <p><strong>5.</strong> n = 30−14 = 16 · <strong>6.</strong> y = 15+9 = 24 · <strong>7.</strong> z = 50−21 = 29 · <strong>8.</strong> k = 7+18 = 25</p>
+        <p><strong>9.</strong> x = 23−7 = 16 · <strong>10.</strong> m = 19+12 = 31 · <strong>11.</strong> t = 35−8 = 27</p>
+        <p><strong>12.</strong> Subtract 5 · <strong>13.</strong> p = 60−33 = 27 · <strong>14.</strong> q = 13+47 = 60</p>
+    </div>
+    <button class="answer-btn" id="showAnswerBtn" onclick="showPinDialog()">🔒 Answer Key (Teacher Only)</button>
+
+    <script>
+    function selectMC(btn) {
+        btn.parentElement.querySelectorAll('.mc-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        btn.parentElement.parentElement.querySelector('.answer-hidden').value = btn.textContent;
+        updateProgress();
     }
-}
-</script>
 
-<script>
-// Hide answer key for students
-if (localStorage.getItem('math_current_user')) {
-    const akBtn = document.getElementById('showAnswerBtn');
-    if (akBtn) akBtn.style.display = 'none';
-}
-</script>
+    function updateProgress() {
+        let filled = 0;
+        document.querySelectorAll('.eq-input').forEach(i => { if (i.value.trim()) filled++; });
+        document.querySelectorAll('.answer-hidden').forEach(i => { if (i.value) filled++; });
+
+        const total = 14;
+        const pct = Math.round((filled / total) * 100);
+        document.getElementById('prog').style.width = Math.min(pct, 100) + '%';
+        document.getElementById('progLabel').textContent = `${Math.min(filled, total)} / ${total}`;
+    }
+
+    function showPinDialog() { document.getElementById('pinOverlay').style.display='flex'; document.getElementById('pinInput').value=''; document.getElementById('pinError').style.display='none'; document.getElementById('pinInput').focus(); }
+    function closePinDialog() { document.getElementById('pinOverlay').style.display='none'; }
+    function checkPin() {
+        const p = document.getElementById('pinInput').value;
+        if (p.length >= 1 && parseInt(p) === new Date().getDate()) {
+            document.getElementById('pinOverlay').style.display='none';
+            document.getElementById('answerKey').style.display='block';
+            document.getElementById('showAnswerBtn').style.display='none';
+        } else if (p.length >= 2) { document.getElementById('pinError').style.display='block'; }
+    }
+    function hideAnswers() { document.getElementById('answerKey').style.display='none'; document.getElementById('showAnswerBtn').style.display='block'; }
+    </script>
+
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="../firebase-config.js?v=5"></script>
+    <script src="../grade-sync.js?v=5"></script>
+    <script>
+    async function doSubmit() {
+        const btn = document.getElementById('submitBtn');
+        const msg = document.getElementById('submitMsg');
+        btn.disabled = true; btn.textContent = '⏳ Submitting...';
+        try {
+            let filled = 0;
+            document.querySelectorAll('.answer-hidden').forEach(i => { if(i.value) filled++; });
+            document.querySelectorAll('.eq-input').forEach(i => { if(i.value.trim()) filled++; });
+            const score = Math.round((filled / 14) * 100 * 10) / 10;
+            const result = await submitScore('w16', score, { filled, total: 14, type: 'completion' });
+            if (result) { msg.textContent = '✅ Submitted!'; msg.style.color = '#2E7D32'; btn.textContent = '✓ Submitted'; }
+            else { msg.textContent = '⚠️ Log in on Student Portal first.'; msg.style.color = '#E65100'; btn.disabled = false; btn.textContent = '📤 Submit Worksheet'; }
+        } catch(e) { msg.textContent = '⚠️ Error — try again.'; msg.style.color = '#E65100'; btn.disabled = false; btn.textContent = '📤 Submit Worksheet'; }
+    }
+    </script>
+    <script>if(localStorage.getItem('math_current_user')){const b=document.getElementById('showAnswerBtn');if(b)b.style.display='none';}</script>
 </body>
 </html>

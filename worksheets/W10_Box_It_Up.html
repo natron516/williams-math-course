@@ -3,493 +3,477 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Worksheet 10: Box It Up</title>
-    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
-<style>
+    <title>Box It Up</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-               max-width: 800px; margin: 0 auto; padding: 20px; background: #f5f5f5; color: #333; }
-        .header { background: linear-gradient(135deg, #1F4E79, #2E75B6); color: white;
-                   padding: 20px; border-radius: 12px; margin-bottom: 20px; text-align: center; }
-        .header h1 { font-size: 1.5em; margin-bottom: 5px; }
-        .header p { font-size: 0.9em; opacity: 0.9; }
-        .student-info input { border: none; border-bottom: 2px solid #2E75B6; padding: 8px;
-                               font-size: 1em; flex: 1; min-width: 150px; outline: none; }
-        .section { background: white; padding: 20px; border-radius: 12px; margin-bottom: 15px;
-                   box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
-        .section h2 { color: #1F4E79; font-size: 1.2em; margin-bottom: 15px;
-                      border-bottom: 2px solid #D6E4F0; padding-bottom: 8px; }
-        .problem { padding: 12px 0; border-bottom: 1px solid #eee; }
-        .problem:last-child { border-bottom: none; }
-        .problem-num { display: inline-block; background: #2E75B6; color: white;
-                       width: 28px; height: 28px; border-radius: 50%; text-align: center;
-                       line-height: 28px; font-size: 0.85em; font-weight: bold; margin-right: 10px; }
-        .problem-text { display: inline; font-size: 1.05em; }
-        .answer-box { display: block; margin: 10px 0 5px 38px; border: 2px dashed #ccc;
-                      border-radius: 8px; padding: 12px; min-height: 45px;
-                      font-size: 1em; width: calc(100% - 38px); }
-        .answer-box:focus { border-color: #2E75B6; outline: none; background: #f8fbff; }
-        .work-area { display: block; margin: 8px 0 5px 38px; border: 1px solid #ddd;
-                     border-radius: 8px; padding: 10px; min-height: 80px;
-                     font-size: 0.9em; width: calc(100% - 38px); color: #666; }
-        .work-area:focus { border-color: #2E75B6; outline: none; }
-        .emoji { font-size: 1.3em; margin-right: 5px; }
-        .context { background: #f0f7ff; padding: 12px; border-radius: 8px;
-                   margin: 10px 0; border-left: 4px solid #2E75B6; font-size: 0.95em; }
-        .hint { color: #888; font-size: 0.85em; font-style: italic; margin-left: 38px; }
-        .mc-option { display: block; padding: 10px 15px; margin: 5px 0 5px 38px;
-                     background: #f8f8f8; border: 2px solid #e0e0e0; border-radius: 8px;
-                     cursor: pointer; transition: all 0.2s; font-size: 1em; }
-        .mc-option:hover { background: #e8f0fe; border-color: #2E75B6; }
-        .mc-option.selected { background: #d0e4ff; border-color: #2E75B6; font-weight: bold; }
-        .answer-key { background: #fff9e6; padding: 20px; border-radius: 12px;
-                      margin: 20px 0; border: 2px solid #f0c040; }
-        .answer-key h2 { color: #8B6914; }
-        .toggle-btn { display: block; margin: 15px auto; padding: 12px 30px;
-                      background: #1F4E79; color: white; border: none; border-radius: 8px;
-                      font-size: 1em; cursor: pointer; }
-        .toggle-btn:hover { background: #2E75B6; }
-        .score-box { background: #e2efda; padding: 15px; border-radius: 8px;
-                     text-align: center; font-size: 1.2em; margin-top: 15px; }
-        @media print {
-            .toggle-btn, .answer-key { display: none !important; }
-            .section { break-inside: avoid; }
+        body { font-family: 'Nunito', sans-serif; max-width: 820px; margin: 0 auto;
+               background: #F5F7FA; color: #333; -webkit-tap-highlight-color: transparent; }
+
+        .hero { background: linear-gradient(135deg, #1A237E, #3949AB, #5C6BC0);
+                color: white; padding: 28px 22px; position: relative; overflow: hidden;
+                border-radius: 0 0 24px 24px; }
+        .hero::after { content: '📐'; position: absolute; font-size: 6em; opacity: 0.1;
+                      top: -10px; right: 10px; transform: rotate(12deg); }
+        .hero .badge { display: inline-block; background: rgba(255,255,255,0.2);
+                      padding: 4px 12px; border-radius: 16px; font-size: 0.75em; font-weight: 700; }
+        .hero h1 { font-size: 1.6em; font-weight: 900; margin: 6px 0 3px; }
+        .hero p { opacity: 0.85; font-size: 0.9em; }
+
+        .progress-wrap { padding: 10px 16px 0; display: flex; align-items: center; gap: 8px; }
+        .progress-track { flex: 1; height: 6px; background: #E0E4EA; border-radius: 6px; overflow: hidden; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #4CAF50, #81C784);
+                        border-radius: 6px; transition: width 0.3s; width: 0%; }
+        .progress-label { font-size: 0.75em; font-weight: 700; color: #999; }
+
+        .card { background: white; border-radius: 18px; margin: 12px 14px; overflow: hidden;
+                box-shadow: 0 1px 6px rgba(0,0,0,0.05); }
+        .card-head { padding: 14px 18px; font-weight: 800; font-size: 1em;
+                    display: flex; align-items: center; gap: 10px; }
+        .card-head .emoji { font-size: 1.3em; }
+        .card-head.blue { color: #1565C0; border-bottom: 2px solid #E3F2FD; }
+        .card-head.orange { color: #E65100; border-bottom: 2px solid #FFF3E0; }
+        .card-head.green { color: #2E7D32; border-bottom: 2px solid #E8F5E9; }
+        .card-head.purple { color: #6A1B9A; border-bottom: 2px solid #F3E5F5; }
+        .card-head.indigo { color: #1A237E; border-bottom: 2px solid #E8EAF6; }
+        .card-body { padding: 16px; }
+
+        .ref-strip { display: flex; gap: 8px; margin-bottom: 16px; }
+        .ref-strip .ref { flex: 1; text-align: center; padding: 10px 4px; border-radius: 12px; background: #F5F5FF; }
+        .ref-strip svg { display: block; margin: 0 auto 4px; }
+        .ref-strip .name { font-weight: 800; font-size: 0.8em; color: #1A237E; }
+        .ref-strip .rule { font-size: 0.68em; color: #aaa; }
+
+        .classify-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .classify-item { background: #FAFBFC; border: 2px solid #EEE; border-radius: 14px;
+                        padding: 14px; transition: border-color 0.2s; }
+        .classify-item .degree { font-size: 0.95em; font-weight: 900; color: #1A237E; text-align: center; margin-top: 4px; }
+        .classify-item .choices { display: flex; gap: 5px; margin-top: 8px; flex-wrap: wrap; justify-content: center; }
+        .classify-item .ch { padding: 6px 10px; border-radius: 8px; border: 2px solid #E0E0E0;
+                           background: white; font-size: 0.75em; font-weight: 700; cursor: pointer;
+                           transition: all 0.15s; font-family: 'Nunito', sans-serif; color: #666; }
+        .classify-item .ch:hover { border-color: #3949AB; color: #1A237E; }
+        .classify-item .ch.selected { background: #1A237E; color: white; border-color: #1A237E; }
+        .classify-item.answered { border-color: #9FA8DA; }
+        .classify-item input[type="hidden"] { display: none; }
+
+        .scene { display: flex; gap: 14px; align-items: center; padding: 16px;
+                background: #F9FAFB; border-radius: 14px; margin-bottom: 14px; }
+        .scene svg { flex-shrink: 0; }
+        .scene .desc h4 { font-size: 0.95em; font-weight: 800; margin-bottom: 3px; }
+        .scene .desc p { font-size: 0.83em; color: #888; line-height: 1.4; }
+
+        .eq-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+                 font-size: 1.05em; font-weight: 700; color: #555; padding: 10px 0; }
+        .eq-row .eq-input { width: 60px; padding: 6px 8px; border: 2px solid #E0E0E0;
+                          border-radius: 8px; font-size: 0.95em; font-weight: 700;
+                          font-family: 'Nunito', sans-serif; text-align: center;
+                          outline: none; color: #1A237E; }
+        .eq-row .eq-input:focus { border-color: #3949AB; box-shadow: 0 0 0 3px rgba(57,73,171,0.12); }
+        .eq-row .eq-input.wide { width: 80px; }
+
+        .clock-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+        .clock-card { text-align: center; padding: 14px 8px; background: #F9FAFB;
+                     border-radius: 14px; border: 2px solid #EEE; }
+        .clock-card svg { display: block; margin: 0 auto 8px; }
+        .clock-card .time { font-weight: 800; font-size: 0.9em; color: #1A237E; margin-bottom: 6px; }
+        .clock-card input { width: 72px; padding: 6px; border: 2px solid #E0E0E0;
+                          border-radius: 8px; text-align: center; font-family: 'Nunito', sans-serif;
+                          font-weight: 700; font-size: 0.9em; outline: none; color: #1A237E; }
+        .clock-card input:focus { border-color: #3949AB; }
+
+        .work { display: block; width: 100%; min-height: 70px; padding: 10px; background: #FAFAFA;
+               border: 2px dashed #DDD; border-radius: 12px; font-family: 'Nunito', sans-serif;
+               font-size: 0.88em; color: #666; outline: none; resize: vertical; margin: 8px 0; }
+        .work:focus { border-color: #3949AB; background: white; }
+
+        .mc-options { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+        .mc-btn { flex: 1; padding: 10px; border: 2px solid #E0E0E0; border-radius: 10px;
+                 background: white; font-weight: 700; font-size: 0.85em; cursor: pointer;
+                 text-align: center; transition: all 0.15s; font-family: 'Nunito', sans-serif; color: #666; }
+        .mc-btn:hover { border-color: #3949AB; color: #1A237E; }
+        .mc-btn.selected { background: #1A237E; color: white; border-color: #1A237E; }
+
+        .q-inline { display: flex; align-items: flex-start; gap: 10px; padding: 12px 0;
+                   border-bottom: 1px solid #F0F0F0; }
+        .q-inline:last-child { border-bottom: none; }
+        .q-num { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center;
+                justify-content: center; font-weight: 800; font-size: 0.78em; color: white;
+                background: linear-gradient(135deg, #3949AB, #1A237E); flex-shrink: 0; }
+        .q-num.orange { background: linear-gradient(135deg, #FF9800, #E65100); }
+        .q-num.green { background: linear-gradient(135deg, #66BB6A, #2E7D32); }
+        .q-num.purple { background: linear-gradient(135deg, #AB47BC, #6A1B9A); }
+        .q-body { flex: 1; }
+        .q-body .text { font-size: 0.92em; line-height: 1.5; margin-bottom: 6px; }
+        .hint { font-size: 0.8em; color: #3949AB; font-weight: 600; margin-bottom: 4px; }
+
+        .fact { margin: 14px 0; padding: 14px 16px; border-radius: 14px;
+               background: #FFFDE7; border: 1.5px solid #FFE082; font-size: 0.85em; line-height: 1.5; }
+
+        .submit-wrap { text-align: center; padding: 20px; }
+        .submit-btn { background: linear-gradient(135deg, #4CAF50, #388E3C); color: white;
+                     border: none; padding: 14px 42px; border-radius: 14px; font-size: 1.1em;
+                     font-weight: 800; font-family: 'Nunito', sans-serif; cursor: pointer;
+                     box-shadow: 0 2px 8px rgba(76,175,80,0.3); }
+        .submit-btn:disabled { opacity: 0.5; }
+        #submitMsg { margin-top: 10px; font-weight: 700; }
+
+        .answer-key { background: #FFF9E6; padding: 18px; border-radius: 14px; margin: 0 14px 14px;
+                     border: 2px solid #F0C040; display: none; }
+        .answer-key-header { display: flex; justify-content: space-between; align-items: center;
+                            font-weight: 800; color: #8B6914; margin-bottom: 10px; padding-bottom: 8px;
+                            border-bottom: 2px solid rgba(240,192,64,0.25); }
+        .answer-btn { display: block; margin: 0 auto 16px; padding: 10px 24px;
+                     background: linear-gradient(135deg, #1A237E, #3949AB); color: white;
+                     border: none; border-radius: 10px; font-size: 0.9em; font-weight: 700;
+                     cursor: pointer; font-family: 'Nunito', sans-serif; }
+        .close-btn { background: none; border: 1px solid #ddd; padding: 4px 10px;
+                    border-radius: 6px; cursor: pointer; font-size: 0.8em; color: #888; }
+
+        @media (max-width: 500px) {
+            .classify-grid { grid-template-columns: 1fr; }
+            .clock-row { grid-template-columns: 1fr; }
+            .scene { flex-direction: column; text-align: center; }
         }
-    
-.work-wrapper { position: relative; }
-.work-tabs { display: flex; align-items: center; gap: 4px; margin-bottom: 6px; }
-.work-tab { padding: 6px 14px; border: 1.5px solid #e0e0e0; border-radius: 8px 8px 0 0;
-            background: #f5f5f5; cursor: pointer; font-family: 'Nunito', sans-serif;
-            font-size: 0.85em; font-weight: 600; color: #888; transition: all 0.2s; border-bottom: none; }
-.work-tab.active { background: white; color: #2E75B6; border-color: #2E75B6; }
-.draw-tools { display: flex; align-items: center; gap: 6px; margin-left: auto;
-              padding: 3px 8px; background: #f8f9fa; border-radius: 8px; }
-.tool-btn { background: none; border: 1.5px solid transparent; padding: 3px 6px;
-            border-radius: 6px; cursor: pointer; font-size: 1em; transition: all 0.2s; }
-.tool-btn.active { border-color: #2E75B6; background: #e8f0fe; }
-.tool-btn:hover { background: #e8e8e8; }
-.draw-panel canvas { display: block; }
-@media (max-width: 600px) {
-    .draw-tools { flex-wrap: wrap; gap: 4px; }
-    .work-tabs { flex-wrap: wrap; }
-}
-</style>
+    </style>
 </head>
 <body>
-    <div class="header">
-        <h1>Worksheet 10: Box It Up</h1>
-        <p>Session 10 — Volume of rectangular prisms</p>
+    <div class="hero">
+        <div class="badge">📄 WORKSHEET · SESSION 10</div>
+        <h1>📐 Box It Up</h1>
+        <p>Fill boxes, tanks, and containers — discover the power of volume!</p>
     </div>
-    <div class="section"><h2>Part 1: Volume of Rectangular Prisms</h2><div class="problem">
-        <span class="problem-num">1</span>
-        <span class="problem-text">Length = 8 cm, width = 5 cm, height = 3 cm. V = ____</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">2</span>
-        <span class="problem-text">Cube with sides of 6 in. V = ____</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">3</span>
-        <span class="problem-text">L = 12 ft, W = 10 ft, H = 8 ft. V = ____</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">4</span>
-        <span class="problem-text">A box has V = 240 cubic in, length = 10 in, width = 6 in. Find the height.</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div></div><div class="section"><h2>Part 2: 📦 Shipping & Storage</h2><div class="context">USPS and UPS charge by size AND weight. Knowing volume helps you pick the right box!</div><div class="problem">
-        <span class="problem-num">5</span>
-        <span class="problem-text">Box A: 12" × 10" × 8". Box B: 15" × 8" × 7". Which has more volume?</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">6</span>
-        <span class="problem-text">You're packing books that are each 9" × 6" × 1.5". How many fit in a box that's 18" × 12" × 12"?</span>
-        <div class="hint">Hint: figure out how many fit along each dimension</div>
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">7</span>
-        <span class="problem-text">A moving box is 2 ft × 1.5 ft × 1.5 ft. A storage unit is 10 ft × 10 ft × 8 ft. How many moving boxes fit?</span>
-        <div class="hint">Hint: think about stacking, not just dividing volumes</div>
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">8</span>
-        <span class="problem-text">A shipping container is 20 ft × 8 ft × 8 ft. How many cubic feet? How many 1-cubic-foot boxes could theoretically fit?</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div></div><div class="section"><h2>Part 3: Real-World Volume</h2><div class="context">🐟 A fish tank is 24" × 12" × 16". (1 gallon = 231 cubic inches)</div><div class="problem">
-        <span class="problem-num">9</span>
-        <span class="problem-text">What is the volume of the fish tank in cubic inches?</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">10</span>
-        <span class="problem-text">How many gallons does it hold?</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">11</span>
-        <span class="problem-text">Fish need about 1 gallon per inch of fish length. How many 3-inch fish can live in this tank?</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="context">A sandbox is 6 ft × 4 ft × 1 ft deep.</div><div class="problem">
-        <span class="problem-num">12</span>
-        <span class="problem-text">How many cubic feet of sand do you need to fill it?</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">13</span>
-        <span class="problem-text">Sand is sold in 0.5 cubic-foot bags for $4 each. How many bags and what's the cost?</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">14</span>
-        <span class="problem-text">A raised garden bed is 8 ft × 4 ft × 1.5 ft. How many cubic feet of soil?</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">15</span>
-        <span class="problem-text">Soil costs $3.50 per cubic foot. How much to fill the garden bed?</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">16</span>
-        <span class="problem-text">A refrigerator's interior is 30" × 28" × 55". What is the volume in cubic feet?</span>
-        <div class="hint">Hint: 1 cubic foot = 1,728 cubic inches</div>
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div></div>
-    
-    
-    <div style="text-align:center; margin: 30px 20px;">
-        <button id="submitBtn" onclick="doSubmit()" style="background:linear-gradient(135deg,#4CAF50,#388E3C); color:white; border:none; padding:14px 40px; border-radius:12px; font-size:1.1em; font-weight:700; font-family:Nunito,sans-serif; cursor:pointer; box-shadow:0 4px 15px rgba(76,175,80,0.3);">📤 Submit Worksheet</button>
-        <div id="submitMsg" style="margin-top:10px; font-weight:600;"></div>
+    <div class="progress-wrap">
+        <div class="progress-track"><div class="progress-fill" id="prog"></div></div>
+        <div class="progress-label" id="progLabel">0 / 14</div>
     </div>
-<div class="answer-key" style="display:none;" id="answerKey">
-        <h2>🔑 Answer Key</h2>
-        <p><strong>1.</strong> 8×5×3 = 120 cu cm | <strong>2.</strong> 6³ = 216 cu in | <strong>3.</strong> 960 cu ft | <strong>4.</strong> 240÷60 = 4 in</p>
-<p><strong>5.</strong> A: 960 cu in, B: 840 cu in — A is bigger</p>
-<p><strong>6.</strong> 18÷9=2, 12÷6=2, 12÷1.5=8 → 2×2×8 = 32 books</p>
-<p><strong>7.</strong> Floor: 10÷2=5, 10÷1.5=6, Stack: 8÷1.5=5 → 5×6×5 = 150 boxes (approximately)</p>
-<p><strong>8.</strong> 1,280 cu ft, 1,280 boxes</p>
-<p><strong>9.</strong> 24×12×16 = 4,608 cu in | <strong>10.</strong> 4,608÷231 ≈ 19.95 gallons</p>
-<p><strong>11.</strong> ~19 gal ÷ 3 = about 6 fish</p>
-<p><strong>12.</strong> 24 cu ft | <strong>13.</strong> 48 bags, $192</p>
-<p><strong>14.</strong> 48 cu ft | <strong>15.</strong> $168 | <strong>16.</strong> 46,200÷1,728 ≈ 26.74 cu ft</p>
-    </div>
-    <div id="pinOverlay" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0;
-         background:rgba(0,0,0,0.7); z-index:1000; align-items:center; justify-content:center;">
-        <div style="background:white; padding:30px; border-radius:16px; text-align:center; max-width:320px; margin:20px;">
-            <div style="font-size:2em; margin-bottom:10px;">🔒</div>
-            <h3 style="color:#1F4E79; margin-bottom:15px;">Teacher Access</h3>
-            <p style="color:#666; font-size:0.9em; margin-bottom:15px;">Enter today's PIN to view answer key</p>
-            <input type="number" id="pinInput" placeholder="Enter PIN"
-                   style="width:120px; padding:12px; font-size:1.3em; text-align:center;
-                          border:2px solid #ddd; border-radius:8px; outline:none;"
-                   oninput="checkPin()" />
-            <p id="pinError" style="color:#E74C3C; font-size:0.85em; margin-top:8px; display:none;">Incorrect PIN</p>
-            <br><button onclick="closePinDialog()" style="margin-top:10px; padding:8px 20px;
-                   background:none; border:1px solid #ddd; border-radius:6px; cursor:pointer; color:#888;">Cancel</button>
-        </div>
-    </div>
-    <button class="toggle-btn" onclick="showPinDialog()" id="showAnswerBtn">🔒 Answer Key (Teacher Only)</button>
-    <script>
-        function showPinDialog() {
-            document.getElementById('pinOverlay').style.display = 'flex';
-            document.getElementById('pinInput').value = '';
-            document.getElementById('pinInput').focus();
-            document.getElementById('pinError').style.display = 'none';
-        }
-        function closePinDialog() {
-            document.getElementById('pinOverlay').style.display = 'none';
-        }
-        function checkPin() {
-            var pin = document.getElementById('pinInput').value;
-            var today = new Date().getDate().toString();
-            if (pin === today) {
-                document.getElementById('pinOverlay').style.display = 'none';
-                document.getElementById('answerKey').style.display = 'block';
-                document.getElementById('showAnswerBtn').style.display = 'none';
-                window.scrollTo(0, document.body.scrollHeight);
-            } else if (pin.length >= 2) {
-                document.getElementById('pinError').style.display = 'block';
-            }
-        }
-    </script>
-<script>
-// Drawing Canvas System
-(function() {
-    let canvasId = 0;
-    
-    // Replace all work-area textareas with hybrid draw+type areas
-    document.querySelectorAll('.work-area').forEach(ta => {
-        const id = 'canvas_' + (canvasId++);
-        const wrapper = document.createElement('div');
-        wrapper.className = 'work-wrapper';
-        wrapper.style.cssText = 'margin:8px 0 5px 42px; width:calc(100% - 42px);';
-        
-        wrapper.innerHTML = `
-            <div class="work-tabs">
-                <button class="work-tab active" onclick="switchWorkTab(this,'draw')">✏️ Draw</button>
-                <button class="work-tab" onclick="switchWorkTab(this,'type')">⌨️ Type</button>
-                <div class="draw-tools" id="tools_${id}">
-                    <button class="tool-btn active" onclick="setTool(this,'${id}','pen')" title="Pen">🖊️</button>
-                    <button class="tool-btn" onclick="setTool(this,'${id}','eraser')" title="Eraser">🧽</button>
-                    <input type="color" value="#333333" onchange="setColor('${id}',this.value)" 
-                           style="width:28px;height:28px;border:none;border-radius:4px;cursor:pointer;" title="Color"/>
-                    <select onchange="setSize('${id}',this.value)" style="padding:2px 4px;border-radius:4px;border:1px solid #ddd;font-size:0.8em;">
-                        <option value="2">Fine</option>
-                        <option value="3" selected>Medium</option>
-                        <option value="5">Thick</option>
-                    </select>
-                    <button class="tool-btn" onclick="undoDraw('${id}')" title="Undo">↩️</button>
-                    <button class="tool-btn" onclick="clearCanvas('${id}')" title="Clear All">🗑️</button>
+
+    <!-- PART 1: FORMULA REFERENCE + TAP-TO-CLASSIFY -->
+    <div class="card">
+        <div class="card-head indigo"><span class="emoji">📦</span> Part 1: Volume Formula — V = l × w × h</div>
+        <div class="card-body">
+            <div class="ref-strip">
+                <div class="ref">
+                    <svg width="64" height="54" viewBox="0 0 64 54">
+                        <rect x="8" y="22" width="30" height="24" fill="#C5CAE9" stroke="#3949AB" stroke-width="1.5"/>
+                        <polygon points="8,22 22,10 52,10 38,22" fill="#9FA8DA" stroke="#3949AB" stroke-width="1.5"/>
+                        <polygon points="38,22 52,10 52,34 38,46" fill="#7986CB" stroke="#3949AB" stroke-width="1.5"/>
+                        <text x="12" y="37" fill="#1A237E" font-size="7" font-weight="bold">l × w × h</text>
+                    </svg>
+                    <div class="name">V = l × w × h</div>
+                    <div class="rule">length × width × height</div>
+                </div>
+                <div class="ref">
+                    <svg width="64" height="54" viewBox="0 0 64 54">
+                        <rect x="8" y="22" width="30" height="24" fill="#C5CAE9" stroke="#3949AB" stroke-width="1.5"/>
+                        <polygon points="8,22 22,10 52,10 38,22" fill="#9FA8DA" stroke="#3949AB" stroke-width="1.5"/>
+                        <polygon points="38,22 52,10 52,34 38,46" fill="#7986CB" stroke="#3949AB" stroke-width="1.5"/>
+                        <text x="10" y="37" fill="#1A237E" font-size="7" font-weight="bold">Base × h</text>
+                    </svg>
+                    <div class="name">V = B × h</div>
+                    <div class="rule">base area × height</div>
+                </div>
+                <div class="ref">
+                    <svg width="64" height="54" viewBox="0 0 64 54">
+                        <text x="10" y="24" fill="#1A237E" font-size="9" font-weight="bold">cubic</text>
+                        <text x="10" y="36" fill="#1A237E" font-size="9" font-weight="bold">units</text>
+                        <text x="10" y="48" fill="#999" font-size="7">cm³, m³, ft³</text>
+                    </svg>
+                    <div class="name">Units</div>
+                    <div class="rule">always cubed</div>
                 </div>
             </div>
-            <div class="draw-panel" id="drawPanel_${id}">
-                <canvas id="${id}" width="600" height="160" 
-                        style="width:100%;border:1.5px solid #e0e0e0;border-radius:8px;
-                               background:white;touch-action:none;cursor:crosshair;"></canvas>
+
+            <p style="font-size:0.85em;color:#888;margin-bottom:14px;">Tap to sort these boxes into <strong style="color:#1A237E;">Big</strong> (volume &gt; 100) or <strong style="color:#2E7D32;">Small</strong> (volume ≤ 100).</p>
+            <div class="classify-grid" id="classifyGrid"></div>
+        </div>
+    </div>
+
+    <!-- PART 2: BOX CARDS -->
+    <div class="card">
+        <div class="card-head orange"><span class="emoji">📏</span> Part 2: Box Volume Cards</div>
+        <div class="card-body">
+            <p style="font-size:0.85em;color:#888;margin-bottom:14px;">Use <strong style="color:#E65100;">V = l × w × h</strong>. Type the volume in cubic units.</p>
+            <div class="clock-row">
+                <div class="clock-card">
+                    <svg width="90" height="80" viewBox="0 0 90 80">
+                        <rect x="10" y="28" width="44" height="36" fill="#C5CAE9" stroke="#3949AB" stroke-width="1.5"/>
+                        <polygon points="10,28 24,14 68,14 54,28" fill="#9FA8DA" stroke="#3949AB" stroke-width="1.5"/>
+                        <polygon points="54,28 68,14 68,50 54,64" fill="#7986CB" stroke="#3949AB" stroke-width="1.5"/>
+                        <text x="20" y="50" fill="#1A237E" font-size="8" font-weight="bold">l=4</text>
+                        <text x="55" y="44" fill="#1A237E" font-size="8" font-weight="bold">h=3</text>
+                        <text x="28" y="21" fill="#1A237E" font-size="8" font-weight="bold">w=2</text>
+                    </svg>
+                    <div class="time">l=4, w=2, h=3</div>
+                    <input type="text" placeholder="V = ?" oninput="updateProgress()"/>
+                </div>
+                <div class="clock-card">
+                    <svg width="90" height="80" viewBox="0 0 90 80">
+                        <rect x="8" y="24" width="48" height="42" fill="#C8E6C9" stroke="#2E7D32" stroke-width="1.5"/>
+                        <polygon points="8,24 24,8 72,8 56,24" fill="#A5D6A7" stroke="#2E7D32" stroke-width="1.5"/>
+                        <polygon points="56,24 72,8 72,50 56,66" fill="#81C784" stroke="#2E7D32" stroke-width="1.5"/>
+                        <text x="18" y="48" fill="#2E7D32" font-size="8" font-weight="bold">l=6</text>
+                        <text x="57" y="44" fill="#2E7D32" font-size="8" font-weight="bold">h=5</text>
+                        <text x="30" y="16" fill="#2E7D32" font-size="8" font-weight="bold">w=4</text>
+                    </svg>
+                    <div class="time">l=6, w=4, h=5</div>
+                    <input type="text" placeholder="V = ?" oninput="updateProgress()"/>
+                </div>
+                <div class="clock-card">
+                    <svg width="90" height="80" viewBox="0 0 90 80">
+                        <rect x="12" y="26" width="40" height="40" fill="#FFF3E0" stroke="#E65100" stroke-width="1.5"/>
+                        <polygon points="12,26 26,12 66,12 52,26" fill="#FFE0B2" stroke="#E65100" stroke-width="1.5"/>
+                        <polygon points="52,26 66,12 66,52 52,66" fill="#FFCC80" stroke="#E65100" stroke-width="1.5"/>
+                        <text x="22" y="50" fill="#E65100" font-size="8" font-weight="bold">l=5</text>
+                        <text x="53" y="44" fill="#E65100" font-size="8" font-weight="bold">h=5</text>
+                        <text x="32" y="20" fill="#E65100" font-size="8" font-weight="bold">w=5</text>
+                    </svg>
+                    <div class="time">l=5, w=5, h=5</div>
+                    <input type="text" placeholder="V = ?" oninput="updateProgress()"/>
+                </div>
             </div>
-            <div class="type-panel" id="typePanel_${id}" style="display:none;">
-                <textarea class="work-area-text" placeholder="Type your work here..."
-                          style="width:100%;min-height:80px;border:1.5px solid #e0e0e0;border-radius:8px;
-                                 padding:10px;font-family:Nunito,sans-serif;font-size:0.9em;resize:vertical;
-                                 outline:none;color:#444;"></textarea>
+
+            <div class="q-inline" style="margin-top:14px;">
+                <span class="q-num orange">6</span>
+                <div class="q-body">
+                    <div class="text">A box has <strong>l = 8 cm, w = 3 cm, h = 5 cm</strong>. Fill in the equation:</div>
+                    <div class="eq-row">V = <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/> × <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/> × <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/> = <input type="text" class="eq-input wide" placeholder="?" oninput="updateProgress()"/> cm³</div>
+                </div>
             </div>
-        `;
-        
-        ta.parentNode.replaceChild(wrapper, ta);
-        
-        // Initialize canvas
-        setTimeout(() => initCanvas(id), 50);
+            <div class="q-inline">
+                <span class="q-num orange">7</span>
+                <div class="q-body">
+                    <div class="text">A box has <strong>base area = 20 cm²</strong> and <strong>height = 7 cm</strong>. Find volume.</div>
+                    <div class="hint">Hint: V = Base area × height</div>
+                    <div class="eq-row">V = <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/> × <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/> = <input type="text" class="eq-input wide" placeholder="?" oninput="updateProgress()"/> cm³</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PART 3: REAL-WORLD SCENES -->
+    <div class="card">
+        <div class="card-head green"><span class="emoji">🐟</span> Part 3: Real-World Volume</div>
+        <div class="card-body">
+
+            <div class="scene">
+                <svg width="120" height="100" viewBox="0 0 120 100">
+                    <!-- fish tank (rectangular prism) -->
+                    <rect x="8" y="30" width="80" height="58" fill="#B3E5FC" stroke="#0288D1" stroke-width="2.5"/>
+                    <!-- water surface shimmer -->
+                    <rect x="8" y="30" width="80" height="6" fill="#4FC3F7" opacity="0.6"/>
+                    <!-- fish -->
+                    <ellipse cx="40" cy="65" rx="12" ry="7" fill="#FF9800"/>
+                    <polygon points="52,65 62,58 62,72" fill="#FF9800"/>
+                    <circle cx="37" cy="63" r="2" fill="#333"/>
+                    <ellipse cx="80" cy="75" rx="9" ry="5" fill="#E91E63"/>
+                    <polygon points="89,75 97,70 97,80" fill="#E91E63"/>
+                    <!-- seaweed -->
+                    <path d="M 25 88 Q 22 78 27 68 Q 24 58 29 50" fill="none" stroke="#2E7D32" stroke-width="3" stroke-linecap="round"/>
+                    <!-- dimension labels -->
+                    <text x="90" y="64" fill="#0288D1" font-size="8" font-weight="bold">h=40</text>
+                    <text x="14" y="97" fill="#0288D1" font-size="8" font-weight="bold">l=60 cm</text>
+                    <text x="14" y="26" fill="#0288D1" font-size="8" font-weight="bold">w=30</text>
+                </svg>
+                <div class="desc">
+                    <h4>🐟 Fish Tank</h4>
+                    <p>An aquarium is <strong>60 cm long, 30 cm wide, and 40 cm tall</strong>. How much water does it hold?</p>
+                </div>
+            </div>
+
+            <div class="q-inline">
+                <span class="q-num green">10</span>
+                <div class="q-body">
+                    <div class="text">Find the <strong>volume</strong> of the fish tank.</div>
+                    <div class="eq-row">V = <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/> × <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/> × <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/> = <input type="text" class="eq-input wide" placeholder="?" oninput="updateProgress()"/> cm³</div>
+                </div>
+            </div>
+
+            <div class="scene" style="margin-top:4px;">
+                <svg width="120" height="100" viewBox="0 0 120 100">
+                    <!-- storage container (bigger box) -->
+                    <rect x="5" y="20" width="90" height="68" fill="#F3E5F5" stroke="#6A1B9A" stroke-width="2"/>
+                    <polygon points="5,20 22,5 112,5 95,20" fill="#E1BEE7" stroke="#6A1B9A" stroke-width="2"/>
+                    <polygon points="95,20 112,5 112,73 95,88" fill="#CE93D8" stroke="#6A1B9A" stroke-width="2"/>
+                    <!-- boxes inside -->
+                    <rect x="15" y="55" width="22" height="22" fill="#9C27B0" opacity="0.3"/>
+                    <rect x="40" y="55" width="22" height="22" fill="#9C27B0" opacity="0.3"/>
+                    <rect x="65" y="55" width="22" height="22" fill="#9C27B0" opacity="0.3"/>
+                    <!-- labels -->
+                    <text x="96" y="50" fill="#6A1B9A" font-size="8" font-weight="bold">h=2m</text>
+                    <text x="10" y="96" fill="#6A1B9A" font-size="8" font-weight="bold">l=3m</text>
+                    <text x="30" y="14" fill="#6A1B9A" font-size="8" font-weight="bold">w=2m</text>
+                </svg>
+                <div class="desc">
+                    <h4>📦 Storage Container</h4>
+                    <p>A storage unit is <strong>3 m × 2 m × 2 m</strong>. How many cubic meters of stuff can you store?</p>
+                </div>
+            </div>
+
+            <div class="q-inline" style="border-bottom:none;">
+                <span class="q-num green">12</span>
+                <div class="q-body">
+                    <div class="text">Find the <strong>volume</strong> of the storage container.</div>
+                    <div class="eq-row">V = <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/> × <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/> × <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/> = <input type="text" class="eq-input wide" placeholder="?" oninput="updateProgress()"/> m³</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PART 4: COMPARISON MC -->
+    <div class="card">
+        <div class="card-head purple"><span class="emoji">⚖️</span> Part 4: Which Holds More?</div>
+        <div class="card-body">
+            <div class="q-inline">
+                <span class="q-num purple">13</span>
+                <div class="q-body">
+                    <div class="text">Box A: <strong>l=10, w=2, h=3</strong> cm. Box B: <strong>l=5, w=4, h=3</strong> cm. Which holds more?</div>
+                    <div class="hint">Calculate both volumes first!</div>
+                    <div class="mc-options">
+                        <button class="mc-btn" onclick="selectMC(this)">Box A (10×2×3)</button>
+                        <button class="mc-btn" onclick="selectMC(this)">Box B (5×4×3)</button>
+                        <button class="mc-btn" onclick="selectMC(this)">They hold the same</button>
+                    </div>
+                    <input type="hidden" class="answer-hidden"/>
+                </div>
+            </div>
+            <div class="q-inline" style="border-bottom:none;">
+                <span class="q-num purple">14</span>
+                <div class="q-body">
+                    <div class="text">You double ALL three dimensions of a box. The new volume is _____ times larger?</div>
+                    <div class="mc-options">
+                        <button class="mc-btn" onclick="selectMC(this)">2× larger</button>
+                        <button class="mc-btn" onclick="selectMC(this)">4× larger</button>
+                        <button class="mc-btn" onclick="selectMC(this)">8× larger</button>
+                    </div>
+                    <input type="hidden" class="answer-hidden"/>
+                </div>
+            </div>
+
+            <div class="fact">
+                <strong>🤯 Volume Fact:</strong> When you double all three dimensions of a box, the volume multiplies by 2×2×2 = <strong>8 times!</strong> A shipping box that's twice as big in every direction holds 8× as much stuff. This is why small increases in box size can mean huge jumps in shipping costs.
+            </div>
+        </div>
+    </div>
+
+    <div class="submit-wrap">
+        <button class="submit-btn" id="submitBtn" onclick="doSubmit()">📤 Submit Worksheet</button>
+        <div id="submitMsg"></div>
+    </div>
+
+    <!-- PIN + Answer Key -->
+    <div id="pinOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:1000;align-items:center;justify-content:center;">
+        <div style="background:white;padding:28px;border-radius:16px;text-align:center;max-width:300px;margin:20px;">
+            <div style="font-size:2em;margin-bottom:8px;">🔒</div>
+            <h3 style="color:#1A237E;margin-bottom:12px;">Teacher Access</h3>
+            <input type="number" id="pinInput" placeholder="Today's PIN" style="width:100px;padding:10px;font-size:1.2em;text-align:center;border:2px solid #ddd;border-radius:8px;outline:none;" oninput="checkPin()"/>
+            <p id="pinError" style="color:#E74C3C;font-size:0.82em;margin-top:6px;display:none;">Wrong PIN</p>
+            <br><button onclick="closePinDialog()" style="margin-top:8px;padding:6px 18px;background:none;border:1px solid #ddd;border-radius:6px;cursor:pointer;color:#888;font-size:0.85em;">Cancel</button>
+        </div>
+    </div>
+    <div class="answer-key" id="answerKey">
+        <div class="answer-key-header"><span>🔑 Answer Key</span><button onclick="hideAnswers()" class="close-btn">✕</button></div>
+        <p><strong>Part 1 (classify, &gt;100 = Big):</strong> 1. Small (V=40) · 2. Big (V=120) · 3. Small (V=60) · 4. Big (V=210)</p>
+        <p><strong>Box cards:</strong> l=4,w=2,h=3 → V=24 cm³ · l=6,w=4,h=5 → V=120 cm³ · cube l=5 → V=125 cm³</p>
+        <p><strong>6.</strong> V = 8×3×5 = 120 cm³ · <strong>7.</strong> V = 20×7 = 140 cm³</p>
+        <p><strong>10.</strong> V = 60×30×40 = 72,000 cm³ · <strong>12.</strong> V = 3×2×2 = 12 m³</p>
+        <p><strong>13.</strong> They hold the same (both = 60 cm³) · <strong>14.</strong> 8× larger</p>
+    </div>
+    <button class="answer-btn" id="showAnswerBtn" onclick="showPinDialog()">🔒 Answer Key (Teacher Only)</button>
+
+    <script>
+    // Build classify grid — volume > 100 = Big, else Small
+    const boxData = [
+        { label: 'l=4, w=2, h=5', num: 1, vol: 40, answer: 'Small',
+          svg: '<svg width="80" height="68" viewBox="0 0 80 68"><rect x="8" y="24" width="38" height="32" fill="#C5CAE9" stroke="#3949AB" stroke-width="1.5"/><polygon points="8,24 20,12 58,12 46,24" fill="#9FA8DA" stroke="#3949AB" stroke-width="1.5"/><polygon points="46,24 58,12 58,44 46,56" fill="#7986CB" stroke="#3949AB" stroke-width="1.5"/><text x="14" y="44" fill="#1A237E" font-size="7.5" font-weight="bold">l=4,h=5</text></svg>' },
+        { label: 'l=5, w=4, h=6', num: 2, vol: 120, answer: 'Big',
+          svg: '<svg width="80" height="68" viewBox="0 0 80 68"><rect x="5" y="20" width="44" height="38" fill="#C8E6C9" stroke="#2E7D32" stroke-width="1.5"/><polygon points="5,20 20,6 64,6 49,20" fill="#A5D6A7" stroke="#2E7D32" stroke-width="1.5"/><polygon points="49,20 64,6 64,44 49,58" fill="#81C784" stroke="#2E7D32" stroke-width="1.5"/><text x="10" y="43" fill="#2E7D32" font-size="7.5" font-weight="bold">l=5,w=4</text></svg>' },
+        { label: 'l=3, w=4, h=5', num: 3, vol: 60, answer: 'Small',
+          svg: '<svg width="80" height="68" viewBox="0 0 80 68"><rect x="8" y="24" width="38" height="34" fill="#FFF3E0" stroke="#E65100" stroke-width="1.5"/><polygon points="8,24 22,10 60,10 46,24" fill="#FFE0B2" stroke="#E65100" stroke-width="1.5"/><polygon points="46,24 60,10 60,44 46,58" fill="#FFCC80" stroke="#E65100" stroke-width="1.5"/><text x="12" y="44" fill="#E65100" font-size="7.5" font-weight="bold">l=3,h=5</text></svg>' },
+        { label: 'l=7, w=5, h=6', num: 4, vol: 210, answer: 'Big',
+          svg: '<svg width="80" height="68" viewBox="0 0 80 68"><rect x="4" y="18" width="48" height="42" fill="#F3E5F5" stroke="#6A1B9A" stroke-width="1.5"/><polygon points="4,18 20,4 68,4 52,18" fill="#E1BEE7" stroke="#6A1B9A" stroke-width="1.5"/><polygon points="52,18 68,4 68,46 52,60" fill="#CE93D8" stroke="#6A1B9A" stroke-width="1.5"/><text x="10" y="42" fill="#6A1B9A" font-size="7.5" font-weight="bold">l=7,w=5</text></svg>' },
+    ];
+    const volTypes = ['Big (>100)', 'Small (≤100)'];
+    const grid = document.getElementById('classifyGrid');
+    boxData.forEach(b => {
+        const div = document.createElement('div');
+        div.className = 'classify-item';
+        div.innerHTML = `${b.svg}<div class="degree">${b.label}</div>
+            <div class="choices">${volTypes.map(t =>
+                `<button class="ch" onclick="selectClassify(this, ${b.num})">${t}</button>`
+            ).join('')}</div>
+            <input type="hidden" class="classify-answer" data-num="${b.num}"/>`;
+        grid.appendChild(div);
     });
-    
-    // Canvas state storage
-    window._canvasState = {};
-    
-    window.initCanvas = function(id) {
-        const canvas = document.getElementById(id);
-        if (!canvas) return;
-        const ctx = canvas.getContext('2d');
-        
-        // Set actual pixel size based on display size
-        const rect = canvas.getBoundingClientRect();
-        canvas.width = rect.width * 2;
-        canvas.height = rect.height * 2;
-        ctx.scale(2, 2);
-        
-        const state = {
-            drawing: false,
-            tool: 'pen',
-            color: '#333333',
-            size: 3,
-            history: [],
-            ctx: ctx,
-            canvas: canvas,
-            lastX: 0, lastY: 0
-        };
-        window._canvasState[id] = state;
-        
-        // Save initial blank state
-        saveHistory(id);
-        
-        // Pointer events (works with touch, pencil, and mouse)
-        canvas.addEventListener('pointerdown', e => startDraw(e, id));
-        canvas.addEventListener('pointermove', e => draw(e, id));
-        canvas.addEventListener('pointerup', e => endDraw(e, id));
-        canvas.addEventListener('pointerleave', e => endDraw(e, id));
-        
-        // Prevent scroll while drawing
-        canvas.addEventListener('touchstart', e => e.preventDefault(), {passive: false});
-        canvas.addEventListener('touchmove', e => e.preventDefault(), {passive: false});
-    };
-    
-    function getPos(e, canvas) {
-        const rect = canvas.getBoundingClientRect();
-        return {
-            x: (e.clientX - rect.left),
-            y: (e.clientY - rect.top)
-        };
-    }
-    
-    window.startDraw = function(e, id) {
-        const s = window._canvasState[id];
-        s.drawing = true;
-        const pos = getPos(e, s.canvas);
-        s.lastX = pos.x;
-        s.lastY = pos.y;
-        s.ctx.beginPath();
-        s.ctx.moveTo(pos.x, pos.y);
-    };
-    
-    window.draw = function(e, id) {
-        const s = window._canvasState[id];
-        if (!s.drawing) return;
-        const pos = getPos(e, s.canvas);
-        
-        s.ctx.lineWidth = s.tool === 'eraser' ? s.size * 4 : s.size;
-        s.ctx.lineCap = 'round';
-        s.ctx.lineJoin = 'round';
-        s.ctx.strokeStyle = s.tool === 'eraser' ? '#ffffff' : s.color;
-        s.ctx.globalCompositeOperation = s.tool === 'eraser' ? 'destination-out' : 'source-over';
-        
-        // Use pressure for Apple Pencil if available
-        if (e.pressure && e.pressure > 0 && e.pressure < 1) {
-            s.ctx.lineWidth *= (0.5 + e.pressure);
-        }
-        
-        s.ctx.lineTo(pos.x, pos.y);
-        s.ctx.stroke();
-        s.ctx.beginPath();
-        s.ctx.moveTo(pos.x, pos.y);
-        s.lastX = pos.x;
-        s.lastY = pos.y;
-    };
-    
-    window.endDraw = function(e, id) {
-        const s = window._canvasState[id];
-        if (s.drawing) {
-            s.drawing = false;
-            s.ctx.globalCompositeOperation = 'source-over';
-            saveHistory(id);
-        }
-    };
-    
-    function saveHistory(id) {
-        const s = window._canvasState[id];
-        const imgData = s.canvas.toDataURL();
-        s.history.push(imgData);
-        if (s.history.length > 20) s.history.shift(); // limit memory
-    }
-    
-    window.undoDraw = function(id) {
-        const s = window._canvasState[id];
-        if (s.history.length > 1) {
-            s.history.pop();
-            const img = new Image();
-            img.onload = () => {
-                s.ctx.clearRect(0, 0, s.canvas.width/2, s.canvas.height/2);
-                s.ctx.drawImage(img, 0, 0, s.canvas.width/2, s.canvas.height/2);
-            };
-            img.src = s.history[s.history.length - 1];
-        }
-    };
-    
-    window.clearCanvas = function(id) {
-        const s = window._canvasState[id];
-        s.ctx.clearRect(0, 0, s.canvas.width/2, s.canvas.height/2);
-        saveHistory(id);
-    };
-    
-    window.setTool = function(btn, id, tool) {
-        window._canvasState[id].tool = tool;
-        btn.parentElement.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const canvas = document.getElementById(id);
-        canvas.style.cursor = tool === 'eraser' ? 'cell' : 'crosshair';
-    };
-    
-    window.setColor = function(id, color) {
-        window._canvasState[id].color = color;
-    };
-    
-    window.setSize = function(id, size) {
-        window._canvasState[id].size = parseInt(size);
-    };
-    
-    window.switchWorkTab = function(btn, mode) {
-        const wrapper = btn.closest('.work-wrapper');
-        wrapper.querySelectorAll('.work-tab').forEach(t => t.classList.remove('active'));
-        btn.classList.add('active');
-        
-        const drawPanel = wrapper.querySelector('[id^="drawPanel_"]');
-        const typePanel = wrapper.querySelector('[id^="typePanel_"]');
-        const tools = wrapper.querySelector('[id^="tools_"]');
-        
-        if (mode === 'draw') {
-            drawPanel.style.display = 'block';
-            typePanel.style.display = 'none';
-            tools.style.display = 'flex';
-            // Resize canvas on show
-            const canvasEl = drawPanel.querySelector('canvas');
-            if (canvasEl && window._canvasState[canvasEl.id]) {
-                const rect = canvasEl.getBoundingClientRect();
-                if (rect.width > 0) {
-                    // Don't resize if already initialized properly
-                }
-            }
-        } else {
-            drawPanel.style.display = 'none';
-            typePanel.style.display = 'block';
-            tools.style.display = 'none';
-        }
-    };
-})();
-</script>
 
-<!-- Firebase SDK -->
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-<script src="../firebase-config.js?v=5"></script>
-<script src="../grade-sync.js?v=5"></script>
-
-<script>
-async function doSubmit() {
-    const btn = document.getElementById('submitBtn');
-    const msg = document.getElementById('submitMsg');
-    btn.disabled = true; btn.textContent = '⏳ Submitting...';
-    
-    // Count filled inputs
-    const inputs = document.querySelectorAll('input[type="text"], textarea, select');
-    const filled = Array.from(inputs).filter(i => i.value.trim() !== '').length;
-    const total = inputs.length;
-    const score = total > 0 ? Math.round((filled / total) * 100 * 10) / 10 : 0;
-    
-    try {
-        const result = await submitScore('w10', score, { filled, total, type: 'completion' });
-        if (result) {
-            msg.textContent = '✅ Submitted! Your teacher will see your work.';
-            msg.style.color = '#5B8C5A';
-            btn.textContent = '✓ Submitted';
-        } else {
-            msg.textContent = '⚠️ Could not submit — make sure you are logged in.';
-            msg.style.color = '#D35400';
-            btn.disabled = false; btn.textContent = '📤 Submit Worksheet';
-        }
-    } catch(e) {
-        msg.textContent = '⚠️ Error submitting. Try again.';
-        msg.style.color = '#D35400';
-        btn.disabled = false; btn.textContent = '📤 Submit Worksheet';
+    function selectClassify(btn, num) {
+        const item = btn.closest('.classify-item');
+        item.querySelectorAll('.ch').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        item.classList.add('answered');
+        item.querySelector('.classify-answer').value = btn.textContent;
+        updateProgress();
     }
-}
-</script>
 
-<script>
-// Hide answer key for students
-if (localStorage.getItem('math_current_user')) {
-    const akBtn = document.getElementById('showAnswerBtn');
-    if (akBtn) akBtn.style.display = 'none';
-}
-</script>
+    function selectMC(btn) {
+        btn.parentElement.querySelectorAll('.mc-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        btn.parentElement.parentElement.querySelector('.answer-hidden').value = btn.textContent;
+        updateProgress();
+    }
+
+    function updateProgress() {
+        const classifyAnswered = document.querySelectorAll('.classify-answer');
+        const eqInputs = document.querySelectorAll('.eq-input');
+        const boxInputs = document.querySelectorAll('.clock-card input');
+        const mcAnswers = document.querySelectorAll('.answer-hidden');
+
+        let filled = 0;
+        classifyAnswered.forEach(i => { if (i.value) filled++; });
+        eqInputs.forEach(i => { if (i.value.trim()) filled++; });
+        boxInputs.forEach(i => { if (i.value.trim()) filled++; });
+        mcAnswers.forEach(i => { if (i.value) filled++; });
+
+        const total = 14;
+        const pct = Math.round((filled / total) * 100);
+        document.getElementById('prog').style.width = Math.min(pct, 100) + '%';
+        document.getElementById('progLabel').textContent = `${Math.min(filled, total)} / ${total}`;
+    }
+
+    function showPinDialog() { document.getElementById('pinOverlay').style.display='flex'; document.getElementById('pinInput').value=''; document.getElementById('pinError').style.display='none'; document.getElementById('pinInput').focus(); }
+    function closePinDialog() { document.getElementById('pinOverlay').style.display='none'; }
+    function checkPin() {
+        const p = document.getElementById('pinInput').value;
+        if (p.length >= 1 && parseInt(p) === new Date().getDate()) {
+            document.getElementById('pinOverlay').style.display='none';
+            document.getElementById('answerKey').style.display='block';
+            document.getElementById('showAnswerBtn').style.display='none';
+        } else if (p.length >= 2) { document.getElementById('pinError').style.display='block'; }
+    }
+    function hideAnswers() { document.getElementById('answerKey').style.display='none'; document.getElementById('showAnswerBtn').style.display='block'; }
+    </script>
+
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="../firebase-config.js?v=5"></script>
+    <script src="../grade-sync.js?v=5"></script>
+    <script>
+    async function doSubmit() {
+        const btn = document.getElementById('submitBtn');
+        const msg = document.getElementById('submitMsg');
+        btn.disabled = true; btn.textContent = '⏳ Submitting...';
+        try {
+            let filled = 0;
+            document.querySelectorAll('.classify-answer, .answer-hidden').forEach(i => { if(i.value) filled++; });
+            document.querySelectorAll('.eq-input, .clock-card input').forEach(i => { if(i.value.trim()) filled++; });
+            const score = Math.round((filled / 14) * 100 * 10) / 10;
+            const result = await submitScore('w10', score, { filled, total: 14, type: 'completion' });
+            if (result) { msg.textContent = '✅ Submitted!'; msg.style.color = '#2E7D32'; btn.textContent = '✓ Submitted'; }
+            else { msg.textContent = '⚠️ Log in on Student Portal first.'; msg.style.color = '#E65100'; btn.disabled = false; btn.textContent = '📤 Submit Worksheet'; }
+        } catch(e) { msg.textContent = '⚠️ Error — try again.'; msg.style.color = '#E65100'; btn.disabled = false; btn.textContent = '📤 Submit Worksheet'; }
+    }
+    </script>
+    <script>if(localStorage.getItem('math_current_user')){const b=document.getElementById('showAnswerBtn');if(b)b.style.display='none';}</script>
 </body>
 </html>
