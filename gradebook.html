@@ -442,10 +442,15 @@ function openStudentModal(idx) {
     // Build body
     let html = '';
     
-    // Edit name
+    // Edit name + delete + password
     html += `<div class="modal-section"><h4>✏️ Student Name</h4>
         <input type="text" value="${s.name}" onchange="students[${idx}].name=this.value;saveData();renderTable();document.getElementById('modalName').textContent=this.value;"
         style="width:100%;padding:8px 12px;border:1.5px solid #E8C4CF;border-radius:8px;font-family:Nunito,sans-serif;font-size:0.95em;outline:none;">
+        <div style="display:flex;gap:8px;margin-top:10px;">
+            <button onclick="lookupPassword('${s.name}')" style="flex:1;padding:8px;border:1.5px solid #E8C4CF;border-radius:8px;background:#FFF5F7;color:#8B5E83;font-weight:700;font-family:Nunito,sans-serif;cursor:pointer;font-size:0.85em;">🔑 Show Password</button>
+            <button onclick="deleteStudent(${idx})" style="flex:1;padding:8px;border:1.5px solid #FFCDD2;border-radius:8px;background:#FFF0F0;color:#B73A3A;font-weight:700;font-family:Nunito,sans-serif;cursor:pointer;font-size:0.85em;">🗑️ Delete Student</button>
+        </div>
+        <div id="passwordResult" style="margin-top:8px;padding:8px 12px;border-radius:8px;display:none;font-size:0.9em;"></div>
     </div>`;
     
     // Scores summary
@@ -520,6 +525,58 @@ function openWork(url, title) {
     document.getElementById('workFrame').src = url;
     document.getElementById('workOverlay').style.display = 'flex';
     document.body.style.overflow = 'hidden';
+}
+
+async function lookupPassword(studentName) {
+    const result = document.getElementById('passwordResult');
+    result.style.display = 'block';
+    result.style.background = '#FFF8E1';
+    result.style.color = '#666';
+    result.textContent = '🔍 Looking up...';
+    
+    try {
+        const cfg = window.firebaseConfig || (typeof firebaseConfig !== 'undefined' ? firebaseConfig : null);
+        let app; try { app = firebase.app(); } catch(e) { app = firebase.initializeApp(cfg); }
+        await firebase.auth().signInAnonymously();
+        const snap = await firebase.firestore().collection('student_accounts')
+            .where('name', '==', studentName).get();
+        
+        if (snap.empty) {
+            // Try case-insensitive by getting all
+            const allSnap = await firebase.firestore().collection('student_accounts').get();
+            let found = null;
+            allSnap.forEach(d => {
+                if (d.data().name.toLowerCase() === studentName.toLowerCase()) found = d.data();
+            });
+            if (found) {
+                result.style.background = '#E8F5E9';
+                result.style.color = '#333';
+                result.innerHTML = `<strong>Username:</strong> ${found.username} &nbsp;·&nbsp; <strong>Password:</strong> ${found.password}`;
+            } else {
+                result.style.background = '#FFF0F0';
+                result.style.color = '#B73A3A';
+                result.textContent = 'No account found for this student.';
+            }
+        } else {
+            const data = snap.docs[0].data();
+            result.style.background = '#E8F5E9';
+            result.style.color = '#333';
+            result.innerHTML = `<strong>Username:</strong> ${data.username} &nbsp;·&nbsp; <strong>Password:</strong> ${data.password}`;
+        }
+    } catch(e) {
+        result.style.background = '#FFF0F0';
+        result.style.color = '#B73A3A';
+        result.textContent = 'Could not look up: ' + e.message;
+    }
+}
+
+function deleteStudent(idx) {
+    const name = students[idx].name;
+    if (!confirm(`Delete "${name}" from the gradebook?\n\nThis removes their row and grades. This cannot be undone.`)) return;
+    students.splice(idx, 1);
+    saveData();
+    renderTable();
+    closeModal();
 }
 
 function closeWork() {

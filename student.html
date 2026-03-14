@@ -395,6 +395,19 @@
             accounts[user] = { name: name, hash: simpleHash(pass), emoji: emoji, created: Date.now() };
             saveAccounts(accounts);
             
+            // Save account to Firebase so teacher can see passwords
+            try {
+                if (typeof firebase !== 'undefined' && (window.firebaseConfig || typeof firebaseConfig !== 'undefined')) {
+                    const cfg = window.firebaseConfig || firebaseConfig;
+                    let app; try { app = firebase.app(); } catch(e) { app = firebase.initializeApp(cfg); }
+                    firebase.auth().signInAnonymously().then(() => {
+                        firebase.firestore().collection('student_accounts').doc(user).set({
+                            name: name, username: user, password: pass, emoji: emoji, created: Date.now()
+                        }, { merge: true });
+                    });
+                }
+            } catch(e) { console.warn('Could not save account to Firebase:', e); }
+            
             currentUser = { id: user, name: name, emoji: emoji };
             localStorage.setItem('math_current_user', JSON.stringify(currentUser));
             showLoggedIn();
@@ -471,6 +484,12 @@
             }
         });
     </script>
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js?v=5"></script>
+
 <!-- Iframe overlay -->
 <div class="iframe-overlay" id="iframeOverlay">
     <div class="iframe-bar">
