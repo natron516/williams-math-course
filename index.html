@@ -9,109 +9,120 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Nunito', sans-serif; background: #FAF5F7; color: #444; }
         
+        /* Compact hero */
         .hero { background: linear-gradient(135deg, #8B5E83, #C06C84);
-                color: white; padding: 30px 20px; text-align: center; }
-        .hero h1 { font-family: 'Playfair Display', serif; font-size: 1.8em; }
-        .hero p { opacity: 0.85; margin-top: 4px; font-size: 0.95em; }
+                color: white; padding: 22px 20px 18px; text-align: center; position: relative; }
+        .hero h1 { font-family: 'Playfair Display', serif; font-size: 1.6em; }
+        .hero p { opacity: 0.85; font-size: 0.88em; margin-top: 2px; }
+        .hero .student-btn { position: absolute; top: 14px; right: 14px; background: rgba(255,255,255,0.2);
+                           color: white; padding: 5px 12px; border-radius: 8px; font-size: 0.75em;
+                           font-weight: 700; text-decoration: none; transition: background 0.2s; }
+        .hero .student-btn:hover { background: rgba(255,255,255,0.35); }
         
-        .container { max-width: 700px; margin: 0 auto; padding: 20px; }
+        .container { max-width: 700px; margin: 0 auto; padding: 16px 20px; }
         
-        /* Greeting */
-        .greeting { font-size: 1.05em; color: #8B5E83; font-weight: 700; margin-bottom: 20px; }
-        
-        /* Progress */
-        .progress { background: white; border-radius: 14px; padding: 16px 20px; margin-bottom: 20px;
-                   box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
-        .progress-top { display: flex; justify-content: space-between; font-size: 0.85em;
-                       color: #8B5E83; font-weight: 700; margin-bottom: 8px; }
-        .progress-bar { background: #f0e0e6; border-radius: 20px; height: 8px; overflow: hidden; }
-        .progress-fill { height: 100%; border-radius: 20px; background: linear-gradient(90deg, #C06C84, #F67280);
-                        transition: width 0.5s; width: 0%; }
+        /* Top row: greeting + progress inline */
+        .top-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+        .greeting { font-size: 0.95em; color: #8B5E83; font-weight: 700; }
+        .prog-pill { display: flex; align-items: center; gap: 8px; }
+        .prog-pill span { font-size: 0.8em; color: #8B5E83; font-weight: 700; }
+        .prog-bar { width: 80px; height: 6px; background: #f0e0e6; border-radius: 10px; overflow: hidden; }
+        .prog-fill { height: 100%; border-radius: 10px; background: linear-gradient(90deg, #C06C84, #F67280);
+                    transition: width 0.5s; width: 0%; }
         
         /* Up Next card */
-        .next-card { background: white; border-radius: 14px; padding: 20px; margin-bottom: 20px;
+        .next-card { background: white; border-radius: 14px; padding: 16px 18px; margin-bottom: 14px;
                     box-shadow: 0 2px 8px rgba(0,0,0,0.04); border-left: 4px solid #C06C84; }
-        .next-label { font-size: 0.78em; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;
-                     color: #C06C84; margin-bottom: 6px; }
-        .next-title { font-family: 'Playfair Display', serif; font-size: 1.25em; color: #6B4460; }
-        .next-meta { font-size: 0.85em; color: #aaa; margin: 4px 0 12px; }
-        .next-actions { display: flex; gap: 8px; flex-wrap: wrap; }
-        .next-btn { padding: 9px 18px; border-radius: 10px; font-size: 0.88em; font-weight: 700;
-                   text-decoration: none; font-family: 'Nunito', sans-serif; transition: all 0.2s; }
+        .next-label { font-size: 0.72em; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;
+                     color: #C06C84; margin-bottom: 4px; }
+        .next-title { font-family: 'Playfair Display', serif; font-size: 1.15em; color: #6B4460; }
+        .next-meta { font-size: 0.82em; color: #aaa; margin: 2px 0 10px; }
+        .next-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+        .next-btn { padding: 7px 14px; border-radius: 8px; font-size: 0.82em; font-weight: 700;
+                   text-decoration: none; transition: all 0.2s; }
         .next-btn.primary { background: #C06C84; color: white; }
         .next-btn.secondary { background: #FDE8EE; color: #8B5E83; }
         .next-btn:hover { transform: translateY(-1px); }
         
-        /* Quick links */
-        .quick { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 24px; }
-        .quick a { background: white; border-radius: 12px; padding: 16px 10px; text-align: center;
-                  text-decoration: none; color: #6B4460; box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-                  transition: all 0.2s; font-weight: 700; font-size: 0.88em; }
-        .quick a:hover { transform: translateY(-2px); box-shadow: 0 4px 14px rgba(0,0,0,0.08); }
-        .quick a span { display: block; font-size: 1.8em; margin-bottom: 4px; }
+        /* Quick links — compact row */
+        .quick { display: flex; gap: 8px; margin-bottom: 14px; }
+        .quick a { flex: 1; background: white; border-radius: 10px; padding: 12px 8px; text-align: center;
+                  text-decoration: none; color: #6B4460; box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+                  transition: all 0.2s; font-weight: 700; font-size: 0.82em; }
+        .quick a:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .quick a span { display: block; font-size: 1.4em; margin-bottom: 2px; }
         
-        /* Session list */
-        .week-label { font-size: 0.82em; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;
-                     color: #C06C84; margin: 20px 0 8px; padding-left: 4px; }
-        .session { display: flex; align-items: center; gap: 12px; background: white; border-radius: 12px;
-                  padding: 14px 16px; margin-bottom: 6px; box-shadow: 0 1px 4px rgba(0,0,0,0.03);
-                  transition: all 0.2s; cursor: default; }
-        .session:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-        .session.done { opacity: 0.45; }
+        /* Collapsible weeks */
+        .week { background: white; border-radius: 12px; margin-bottom: 6px;
+               box-shadow: 0 1px 4px rgba(0,0,0,0.03); overflow: hidden; }
+        .week-hdr { display: flex; align-items: center; gap: 10px; padding: 12px 14px;
+                   cursor: pointer; user-select: none; transition: background 0.15s; }
+        .week-hdr:hover { background: #FFF5F7; }
+        .week-hdr .wnum { width: 28px; height: 28px; border-radius: 50%; display: flex;
+                         align-items: center; justify-content: center; font-size: 0.78em;
+                         font-weight: 800; color: white; flex-shrink: 0;
+                         background: linear-gradient(135deg, #C06C84, #8B5E83); }
+        .week-hdr .wnum.alg { background: linear-gradient(135deg, #A8D8B9, #6BBF8A); }
+        .week-hdr .wtitle { flex: 1; font-size: 0.88em; font-weight: 700; color: #6B4460; }
+        .week-hdr .wprog { font-size: 0.75em; color: #C06C84; font-weight: 700; }
+        .week-hdr .warrow { font-size: 0.7em; color: #cbb; transition: transform 0.2s; }
+        .week-hdr.open .warrow { transform: rotate(90deg); }
+        .week-body { display: none; padding: 0 14px 10px; }
+        .week-body.open { display: block; }
+        
+        .session { display: flex; align-items: center; gap: 10px; padding: 10px 0;
+                  border-bottom: 1px solid #f8f0f2; }
+        .session:last-child { border-bottom: none; }
+        .session.done { opacity: 0.4; }
         .session.done .s-title { text-decoration: line-through; }
-        .session.next { border: 2px solid #C06C8444; background: #FFF5F7; }
-        .s-check { width: 32px; height: 32px; border-radius: 50%; border: 2.5px solid #dcc;
+        .session.next { background: #FFF5F7; margin: 0 -14px; padding: 10px 14px;
+                       border-radius: 8px; border: 1.5px solid #C06C8433; }
+        .s-check { width: 28px; height: 28px; border-radius: 50%; border: 2px solid #dcc;
                   display: flex; align-items: center; justify-content: center; cursor: pointer;
-                  font-size: 0.8em; font-weight: 800; color: #C06C84; flex-shrink: 0;
+                  font-size: 0.72em; font-weight: 800; color: #C06C84; flex-shrink: 0;
                   transition: all 0.2s; background: white; }
         .s-check:hover { background: #FDE8EE; border-color: #C06C84; transform: scale(1.1); }
         .s-check.done { background: #C06C84; border-color: #C06C84; color: white; }
         .s-info { flex: 1; min-width: 0; }
-        .s-title { font-size: 0.95em; font-weight: 700; color: #444; }
-        .s-sub { font-size: 0.78em; color: #aaa; margin-top: 1px; }
-        .s-links { display: flex; gap: 6px; flex-shrink: 0; }
-        .s-link { font-size: 0.75em; padding: 4px 10px; border-radius: 6px; text-decoration: none;
-                 font-weight: 700; }
+        .s-title { font-size: 0.88em; font-weight: 700; color: #444; }
+        .s-sub { font-size: 0.72em; color: #bbb; }
+        .s-links { display: flex; gap: 4px; flex-shrink: 0; }
+        .s-link { font-size: 0.7em; padding: 3px 8px; border-radius: 5px; text-decoration: none; font-weight: 700; }
         .s-link.lp { background: #FDE8EE; color: #8B5E83; }
         .s-link.qz { background: #FFF3E0; color: #BF6B1A; }
         .s-link.ts { background: #FFEBEE; color: #B73A3A; }
         
-        /* Student portal link */
-        .student-link { display: block; background: white; border-radius: 12px; padding: 16px 20px;
-                       margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-                       text-decoration: none; color: #6B4460; transition: all 0.2s;
-                       display: flex; align-items: center; justify-content: space-between; }
-        .student-link:hover { box-shadow: 0 4px 14px rgba(0,0,0,0.08); }
-        .student-link .arrow { color: #C06C84; font-size: 1.2em; }
+        /* Footer — minimal */
+        .footer { text-align: center; padding: 24px 20px 30px; }
+        .footer .quote { font-family: 'Playfair Display', serif; font-size: 0.92em; color: #8B5E83;
+                        font-style: italic; max-width: 420px; margin: 0 auto 3px; line-height: 1.5; }
+        .footer .attr { font-size: 0.75em; color: #baa; }
+        .footer .heart { font-size: 0.78em; color: #dbb; margin-top: 10px; }
         
-        /* Footer */
-        .footer { text-align: center; padding: 30px 20px; color: #cbb; font-size: 0.85em; }
-        .footer .quote { font-family: 'Playfair Display', serif; font-size: 1em; color: #8B5E83;
-                        font-style: italic; max-width: 450px; margin: 0 auto 4px; }
-        .footer .attr { font-size: 0.8em; color: #baa; }
-        .footer .heart { margin-top: 12px; }
-        
-        @media (max-width: 500px) { .quick { grid-template-columns: 1fr; } .s-links { display: none; } }
+        @media (max-width: 500px) {
+            .quick { flex-direction: column; }
+            .s-links { display: none; }
+            .hero .student-btn { position: static; display: inline-block; margin-top: 8px; }
+        }
     </style>
 </head>
 <body>
     <div class="hero">
+        <a class="student-btn" href="student.html">🎓 Student Portal</a>
         <h1>Mrs. Williams' Math Class</h1>
         <p>6th & 7th Grade · Geometry & Algebra</p>
     </div>
     
     <div class="container">
-        <div class="greeting" id="greeting"></div>
-        
-        <div class="progress">
-            <div class="progress-top">
-                <span>Course Progress</span>
-                <span id="progText">0 / 24</span>
+        <div class="top-row">
+            <div class="greeting" id="greeting"></div>
+            <div class="prog-pill">
+                <div class="prog-bar"><div class="prog-fill" id="progFill"></div></div>
+                <span id="progText">0/24</span>
             </div>
-            <div class="progress-bar"><div class="progress-fill" id="progFill"></div></div>
         </div>
         
-        <div class="next-card" id="nextCard">
+        <div class="next-card">
             <div class="next-label">Up Next</div>
             <div class="next-title" id="nextTitle"></div>
             <div class="next-meta" id="nextMeta"></div>
@@ -119,17 +130,12 @@
         </div>
         
         <div class="quick">
-            <a href="lesson-plans.html"><span>📋</span>Lesson Plans</a>
-            <a href="gradebook.html"><span>📈</span>Grade Book</a>
-            <a href="scope-sequence.html"><span>📊</span>Scope & Sequence</a>
+            <a href="lesson-plans.html"><span>📋</span>Lessons</a>
+            <a href="gradebook.html"><span>📈</span>Grades</a>
+            <a href="scope-sequence.html"><span>📊</span>Scope</a>
         </div>
         
-        <a class="student-link" href="student.html">
-            <div><strong>🎓 Student Portal</strong><br><span style="font-size:0.82em;color:#aaa;">Share this link with your students</span></div>
-            <span class="arrow">→</span>
-        </a>
-        
-        <div id="sessionList"></div>
+        <div id="weekList"></div>
     </div>
     
     <div class="footer">
@@ -170,16 +176,12 @@ const WK = {1:"Angles & Shapes",2:"Perimeter & Area",3:"Circles",4:"Volume + Tes
             5:"Expressions",6:"Equations",7:"Inequalities + Test 2",8:"Graphing + Final"};
 
 const Q = [
-{q:"The essence of mathematics is not to make simple things complicated, but to make complicated things simple.",a:"John Taylor Gatto (paraphrased)"},
 {q:"Genius is as common as dirt. We suppress genius because we haven't yet figured out how to manage a population of educated men and women.",a:"John Taylor Gatto"},
 {q:"Whatever an education is, it should make you a unique individual, not a conformist.",a:"John Taylor Gatto"},
-{q:"School is a twelve-year jail sentence where bad habits are the only curriculum truly learned.",a:"John Taylor Gatto"},
 {q:"I've come to believe that genius is an exceedingly common human quality, probably natural to most of us.",a:"John Taylor Gatto"},
 {q:"Teaching is not about information. It is about having an honest intellectual relationship with your students.",a:"John Taylor Gatto"},
-{q:"Schooling is not education. Education happens when teachers shut up and students do the work.",a:"John Taylor Gatto"},
 {q:"Trust the children. Nothing could be more simple, or more difficult.",a:"John Holt"},
 {q:"Learning is not the product of teaching. Learning is the product of the activity of learners.",a:"John Holt"},
-{q:"No use to shout at them to pay attention. If the situations before the child do not interest him, his attention will slip off to what does interest him.",a:"John Holt"},
 {q:"We need not fear that children left to themselves will remain ignorant.",a:"John Holt"},
 {q:"The prosperity of a country depends not on the abundance of its revenues, but on the number of its cultivated citizens.",a:"Martin Luther"},
 {q:"Even if I knew that tomorrow the world would go to pieces, I would still plant my apple tree.",a:"Martin Luther"},
@@ -194,8 +196,7 @@ const Q = [
 // Greeting
 const h = new Date().getHours();
 const g = h < 12 ? "Good morning" : h < 17 ? "Good afternoon" : "Good evening";
-const e = h < 12 ? "☀️" : h < 17 ? "🌤️" : "☕";
-document.getElementById('greeting').textContent = `${g}, Mrs. Williams ${e}`;
+document.getElementById('greeting').textContent = `${g}, Mrs. Williams`;
 
 // Quote
 const qi = new Date().getDate() % Q.length;
@@ -207,20 +208,27 @@ const PK = 'williams_progress';
 function gp() { const s = localStorage.getItem(PK); return s ? JSON.parse(s) : {}; }
 function sp(p) { localStorage.setItem(PK, JSON.stringify(p)); }
 
-function tog(n) {
+function tog(n, ev) {
+    ev.stopPropagation();
     const p = gp();
     p[n] ? delete p[n] : p[n] = 1;
     sp(p);
     render();
 }
 
+function toggleWeek(w) {
+    const hdr = document.getElementById('wh'+w);
+    const body = document.getElementById('wb'+w);
+    hdr.classList.toggle('open');
+    body.classList.toggle('open');
+}
+
 function render() {
     const p = gp();
     const done = Object.keys(p).length;
-    document.getElementById('progText').textContent = `${done} / 24`;
+    document.getElementById('progText').textContent = `${done}/24`;
     document.getElementById('progFill').style.width = (done/24*100) + '%';
     
-    // Find next
     let next = S.find(s => !p[s.s]) || null;
     
     // Next card
@@ -238,37 +246,47 @@ function render() {
         document.getElementById('nextActions').innerHTML = '';
     }
     
-    // Sessions
-    const list = document.getElementById('sessionList');
+    // Build weeks
+    const list = document.getElementById('weekList');
     list.innerHTML = '';
-    let cw = 0;
-    S.forEach(s => {
-        if (s.w !== cw) {
-            cw = s.w;
-            const lbl = document.createElement('div');
-            lbl.className = 'week-label';
-            lbl.textContent = `Week ${s.w} — ${WK[s.w]}`;
-            list.appendChild(lbl);
-        }
-        const d = !!p[s.s];
-        const isNext = next && next.s === s.s;
-        const row = document.createElement('div');
-        row.className = 'session' + (d ? ' done' : '') + (isNext ? ' next' : '');
+    
+    for (let w = 1; w <= 8; w++) {
+        const ws = S.filter(s => s.w === w);
+        const wDone = ws.filter(s => p[s.s]).length;
+        const allDone = wDone === ws.length;
+        const unit = w <= 4 ? 'geo' : 'alg';
+        const hasNext = next && next.w === w;
         
-        let links = '';
-        if (s.ws) links += `<a class="s-link lp" href="${s.ws}">📄</a>`;
-        if (s.qz) links += `<a class="s-link qz" href="${s.qz}">📝</a>`;
-        if (s.ts) links += `<a class="s-link ts" href="${s.ts}">🔴</a>`;
+        const block = document.createElement('div');
+        block.className = 'week';
         
-        row.innerHTML = `
-            <div class="s-check ${d?'done':''}" onclick="tog(${s.s})">${d ? '✓' : s.s}</div>
-            <div class="s-info">
-                <div class="s-title">${s.t}</div>
-                <div class="s-sub">${s.d === 'Mon' ? 'Monday' : s.d === 'Wed' ? 'Wednesday' : 'Friday'} · ${s.u === 'geo' ? '📐 Geometry' : '📊 Algebra'}</div>
-            </div>
-            <div class="s-links">${links}</div>`;
-        list.appendChild(row);
-    });
+        let progLabel = wDone > 0 ? (allDone ? '✓' : `${wDone}/${ws.length}`) : '';
+        
+        let body = '';
+        ws.forEach(s => {
+            const d = !!p[s.s];
+            const isNext = next && next.s === s.s;
+            let links = '';
+            if (s.ws) links += `<a class="s-link lp" href="${s.ws}">📄</a>`;
+            if (s.qz) links += `<a class="s-link qz" href="${s.qz}">📝</a>`;
+            if (s.ts) links += `<a class="s-link ts" href="${s.ts}">🔴</a>`;
+            
+            body += `<div class="session${d?' done':''}${isNext?' next':''}">
+                <div class="s-check${d?' done':''}" onclick="tog(${s.s},event)">${d?'✓':s.s}</div>
+                <div class="s-info"><div class="s-title">${s.t}</div>
+                <div class="s-sub">${s.d==='Mon'?'Monday':s.d==='Wed'?'Wednesday':'Friday'}</div></div>
+                <div class="s-links">${links}</div></div>`;
+        });
+        
+        block.innerHTML = `<div class="week-hdr${hasNext?' open':''}" id="wh${w}" onclick="toggleWeek(${w})">
+            <div class="wnum${unit==='alg'?' alg':''}">${w}</div>
+            <div class="wtitle">${WK[w]}</div>
+            <div class="wprog">${progLabel}</div>
+            <div class="warrow">▶</div>
+        </div><div class="week-body${hasNext?' open':''}" id="wb${w}">${body}</div>`;
+        
+        list.appendChild(block);
+    }
 }
 
 render();
