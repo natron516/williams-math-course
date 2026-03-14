@@ -461,5 +461,13 @@ async function doSubmit() {
     }
 }
 </script>
+
+<script>
+// Hide answer key for students
+if (localStorage.getItem('math_current_user')) {
+    const akBtn = document.getElementById('showAnswerBtn');
+    if (akBtn) akBtn.style.display = 'none';
+}
+</script>
 </body>
 </html>
