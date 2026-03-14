@@ -47,6 +47,21 @@
         .diff-label { font-weight: 700; font-size: 0.8em; text-transform: uppercase;
                      margin-bottom: 4px; }
         @media (max-width: 600px) { .diff-box { grid-template-columns: 1fr; } }
+        .video-section { margin-top: 10px; }
+        .video-card { display: flex; align-items: center; gap: 12px; padding: 10px 14px;
+                     margin: 8px 0; background: #FFF0F0; border-radius: 10px;
+                     border: 1px solid #FFCDD2; text-decoration: none; color: #333;
+                     transition: all 0.2s; cursor: pointer; }
+        .video-card:hover { background: #FFE0E0; transform: translateX(4px);
+                          box-shadow: 0 2px 8px rgba(244,67,54,0.15); }
+        .video-thumb { width: 80px; height: 45px; border-radius: 6px; background: #000;
+                      position: relative; overflow: hidden; flex-shrink: 0; }
+        .video-thumb img { width: 100%; height: 100%; object-fit: cover; }
+        .video-play { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+                     color: white; font-size: 1.4em; text-shadow: 0 1px 3px rgba(0,0,0,0.5); }
+        .video-info h4 { font-size: 0.95em; color: #C62828; }
+        .video-info p { font-size: 0.78em; color: #888; margin-top: 2px; }
+
     </style>
 </head>
 <body>
@@ -60,6 +75,30 @@
         <div id="lessonContainer"></div>
     </div>
     <script>
+
+const videoData = {1:[{t:"Acute, Right & Obtuse Angles",id:"4ZyTVTGVPgE",ch:"Khan Academy"},{t:"Math Antics — Angles & Degrees",id:"4r_j10jtavU",ch:"Math Antics"}],2:[{t:"Supplementary & Complementary Angles",id:"TzT_HtojVOU",ch:"Math Antics"},{t:"Vertical Angles",id:"WN2E-KMuXoE",ch:"Math Antics"}],3:[{t:"Triangles",id:"oQeK4LyKLHw",ch:"Math Antics"},{t:"Polygons",id:"ZJnKPl99fTs",ch:"Math Antics"}],4:[{t:"Perimeter",id:"AAY1bsazcgM",ch:"Math Antics"}],5:[{t:"Area (Rectangles & Triangles)",id:"xCdxURXMdFY",ch:"Math Antics"}],6:[{t:"Area (Parallelograms & Trapezoids)",id:"SEXLRQol970",ch:"Khan Academy"},{t:"Composite Shapes Area",id:"5UIbpphAz-U",ch:"FrysMath"}],7:[{t:"Circles: Circumference & Area",id:"5cbFN2wOUFY",ch:"Math Antics"}],8:[{t:"Circles: Circumference & Area",id:"5cbFN2wOUFY",ch:"Math Antics"}],9:[{t:"Area of Composite Shapes",id:"L8W3ch_Zrmk",ch:"Math Turtle"},{t:"Composite Shapes Review",id:"5UIbpphAz-U",ch:"FrysMath"}],10:[{t:"Volume",id:"-05rNRCHkhQ",ch:"Math Antics"}],11:[{t:"Volume (Cylinders)",id:"-05rNRCHkhQ",ch:"Math Antics"},{t:"Surface Area",id:"kSj_Wo5hdVU",ch:"Math Antics"}],13:[{t:"What Is Algebra?",id:"NybHckSEQBI",ch:"Math Antics"},{t:"Evaluating Expressions",id:"52tpYl2tTqk",ch:"Math Antics"}],14:[{t:"Combining Like Terms",id:"y7GwRJOIohM",ch:"Math Antics"}],15:[{t:"Order of Operations",id:"dAgfnK528RA",ch:"Math Antics"}],16:[{t:"Solving Equations Part 1 (+/−)",id:"l3XzepN03KQ",ch:"Math Antics"}],17:[{t:"Solving Equations Part 2 (×/÷)",id:"Qyd_v3DGzTM",ch:"Math Antics"}],18:[{t:"Solving Equations Part 1",id:"l3XzepN03KQ",ch:"Math Antics"},{t:"Solving Equations Part 2",id:"Qyd_v3DGzTM",ch:"Math Antics"}],19:[{t:"Solving 2-Step Equations",id:"LDIiYKYvvdA",ch:"Math Antics"}],20:[{t:"Basic Inequalities",id:"mgHO-bsCDrA",ch:"Math Antics"},{t:"Inequalities in Algebra",id:"RyesLifeUBw",ch:"Math Antics"}],22:[{t:"Graphing on the Coordinate Plane",id:"3JqndcNQPYs",ch:"Math Antics"}],23:[{t:"Basic Linear Functions",id:"MXV65i9g1Xg",ch:"Math Antics"},{t:"Graphing on Coordinate Plane",id:"3JqndcNQPYs",ch:"Math Antics"}]};
+
+function renderVideos(sessionNum) {
+    const vids = videoData[sessionNum];
+    if (!vids || vids.length === 0) return '';
+    let html = '<div class="lesson-section"><h3>🎬 Video Examples</h3><div class="video-section">';
+    html += '<p style="font-size:0.85em;color:#888;margin-bottom:8px;">Play these on the TV during direct instruction or as warm-up:</p>';
+    vids.forEach(v => {
+        html += `<a class="video-card" href="https://www.youtube.com/watch?v=${v.id}" target="_blank">
+            <div class="video-thumb">
+                <img src="https://img.youtube.com/vi/${v.id}/mqdefault.jpg" alt="" loading="lazy"/>
+                <span class="video-play">▶</span>
+            </div>
+            <div class="video-info">
+                <h4>${v.t}</h4>
+                <p>${v.ch} · YouTube</p>
+            </div>
+        </a>`;
+    });
+    html += '</div></div>';
+    return html;
+}
+
 const lessons = [
 {s:1,w:1,d:"Monday",t:"Intro to Geometry & Angles",u:"geo",
 obj:"• Identify types of angles (acute, right, obtuse, straight)\n• Measure angles with a protractor\n• Understand angle relationships",
@@ -348,6 +387,7 @@ lessons.forEach((l, i) => {
         <div class="lesson-section"><h3>🎯 Objectives</h3><div class="content">${l.obj}</div></div>
         <div class="lesson-section"><h3>📦 Materials</h3><div class="content">${l.mat}</div></div>
         <div class="lesson-section"><h3>🔥 Warm-Up</h3><div class="content">${l.warm}</div></div>
+        ${renderVideos(l.s)}
         <div class="lesson-section"><h3>📖 Direct Instruction</h3><div class="content">${l.direct}</div></div>
         <div class="lesson-section"><h3>👥 Guided Practice</h3><div class="content">${l.guided}</div></div>
         <div class="lesson-section"><h3>✏️ Independent Work</h3><div class="content">${l.indep}</div></div>
