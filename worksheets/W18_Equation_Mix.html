@@ -13,8 +13,6 @@
                    padding: 20px; border-radius: 12px; margin-bottom: 20px; text-align: center; }
         .header h1 { font-size: 1.5em; margin-bottom: 5px; }
         .header p { font-size: 0.9em; opacity: 0.9; }
-        .student-info { background: white; padding: 15px; border-radius: 8px; margin-bottom: 20px;
-                        display: flex; gap: 15px; flex-wrap: wrap; }
         .student-info input { border: none; border-bottom: 2px solid #2E75B6; padding: 8px;
                                font-size: 1em; flex: 1; min-width: 150px; outline: none; }
         .section { background: white; padding: 20px; border-radius: 12px; margin-bottom: 15px;
@@ -81,11 +79,6 @@
     <div class="header">
         <h1>Worksheet 18: Equation Mix</h1>
         <p>Session 18 — Mixed one-step equations and lemonade stand math</p>
-    </div>
-    <div class="student-info">
-        <input type="text" placeholder="Name" />
-        <input type="text" placeholder="Date" />
-        <input type="text" placeholder="Period" />
     </div>
     <div class="section"><h2>Part 1: Mixed One-Step Equations</h2><div class="problem">
         <span class="problem-num">1</span>
@@ -185,7 +178,12 @@
         <input type="text" class="answer-box" placeholder="Answer" />
     </div></div>
     
-    <div class="answer-key" style="display:none;" id="answerKey">
+    
+    <div style="text-align:center; margin: 30px 20px;">
+        <button id="submitBtn" onclick="doSubmit()" style="background:linear-gradient(135deg,#4CAF50,#388E3C); color:white; border:none; padding:14px 40px; border-radius:12px; font-size:1.1em; font-weight:700; font-family:Nunito,sans-serif; cursor:pointer; box-shadow:0 4px 15px rgba(76,175,80,0.3);">📤 Submit Worksheet</button>
+        <div id="submitMsg" style="margin-top:10px; font-weight:600;"></div>
+    </div>
+<div class="answer-key" style="display:none;" id="answerKey">
         <h2>🔑 Answer Key</h2>
         <p><strong>1.</strong> x = 25 | <strong>2.</strong> n = 9 | <strong>3.</strong> y = 64 | <strong>4.</strong> m = 63</p>
 <p><strong>5.</strong> x = 6 | <strong>6.</strong> p = 2.50 | <strong>7.</strong> k = 100 | <strong>8.</strong> n = 50</p>
@@ -443,6 +441,44 @@
         }
     };
 })();
+</script>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js?v=3"></script>
+<script src="grade-sync.js?v=3"></script>
+
+<script>
+async function doSubmit() {
+    const btn = document.getElementById('submitBtn');
+    const msg = document.getElementById('submitMsg');
+    btn.disabled = true; btn.textContent = '⏳ Submitting...';
+    
+    // Count filled inputs
+    const inputs = document.querySelectorAll('input[type="text"], textarea, select');
+    const filled = Array.from(inputs).filter(i => i.value.trim() !== '').length;
+    const total = inputs.length;
+    const score = total > 0 ? Math.round((filled / total) * 100 * 10) / 10 : 0;
+    
+    try {
+        const result = await submitScore('w18', score, { filled, total, type: 'completion' });
+        if (result) {
+            msg.textContent = '✅ Submitted! Your teacher will see your work.';
+            msg.style.color = '#5B8C5A';
+            btn.textContent = '✓ Submitted';
+        } else {
+            msg.textContent = '⚠️ Could not submit — make sure you are logged in.';
+            msg.style.color = '#D35400';
+            btn.disabled = false; btn.textContent = '📤 Submit Worksheet';
+        }
+    } catch(e) {
+        msg.textContent = '⚠️ Error submitting. Try again.';
+        msg.style.color = '#D35400';
+        btn.disabled = false; btn.textContent = '📤 Submit Worksheet';
+    }
+}
 </script>
 </body>
 </html>
