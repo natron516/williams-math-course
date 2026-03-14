@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz 7 — Equations Review</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Nunito', sans-serif; max-width: 820px; margin: 0 auto; background: #F5F7FA; color: #333; }
+        .hero { background: linear-gradient(135deg, #6A1B9A, #AB47BC); color: white; padding: 28px 22px;
+                border-radius: 0 0 24px 24px; position: relative; overflow: hidden; }
+        .hero::after { content: '✏️'; position: absolute; font-size: 5em; opacity: 0.12; top: -5px; right: 15px; }
+        .hero .badge { display: inline-block; background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 16px; font-size: 0.75em; font-weight: 700; }
+        .hero h1 { font-size: 1.5em; font-weight: 900; margin: 6px 0 3px; }
+        .hero p { opacity: 0.85; font-size: 0.88em; }
+        .card { background: white; border-radius: 18px; margin: 12px 14px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,0.05); }
+        .card-head { padding: 14px 18px; font-weight: 800; font-size: 1em; display: flex; align-items: center; gap: 10px; }
+        .card-head.purple { color: #6A1B9A; border-bottom: 2px solid #F3E5F5; }
+        .card-head.blue { color: #1565C0; border-bottom: 2px solid #E3F2FD; }
+        .card-head.green { color: #2E7D32; border-bottom: 2px solid #E8F5E9; }
+        .card-head .emoji { font-size: 1.3em; }
+        .card-body { padding: 18px; }
+        .q { margin-bottom: 18px; }
+        .q .qnum { font-size: 0.75em; font-weight: 800; color: #AB47BC; margin-bottom: 4px; }
+        .q .qtext { font-size: 0.92em; line-height: 1.5; margin-bottom: 8px; }
+        .q input[type="text"] { width: 100%; padding: 10px 12px; border: 2px solid #E0E0E0; border-radius: 10px;
+                               font-size: 0.95em; font-family: 'Nunito', sans-serif; outline: none; }
+        .q input:focus { border-color: #AB47BC; box-shadow: 0 0 0 3px rgba(171,71,188,0.1); }
+        .q .choices { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .q .ch { padding: 10px 14px; border: 2px solid #E0E0E0; border-radius: 10px; cursor: pointer; font-size: 0.88em;
+                font-weight: 700; text-align: center; transition: all 0.15s; background: white; font-family: 'Nunito', sans-serif; }
+        .q .ch:hover { border-color: #AB47BC; color: #6A1B9A; }
+        .q .ch.selected { background: #6A1B9A; color: white; border-color: #6A1B9A; }
+        .submit-bar { text-align: center; padding: 20px 14px 30px; }
+        .submit-bar button { padding: 14px 40px; border-radius: 12px; border: none; font-size: 1em; font-weight: 800;
+                           font-family: 'Nunito', sans-serif; cursor: pointer; color: white;
+                           background: linear-gradient(135deg, #6A1B9A, #AB47BC); transition: transform 0.1s; }
+        .submit-bar button:active { transform: scale(0.96); }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="badge">Quiz 7 · Week 8</div>
+        <h1>Equations Review</h1>
+        <p>Real-world problems + spreadsheet formulas</p>
+    </div>
+
+    <div class="card">
+        <div class="card-head purple"><span class="emoji">🛒</span> Word Problems → Equations</div>
+        <div class="card-body">
+            <div class="q">
+                <div class="qnum">Question 1</div>
+                <div class="qtext">T-shirts cost $12 each. You also pay $5 for shipping. Your total is $41. Which equation finds how many shirts you bought?</div>
+                <div class="choices">
+                    <button class="ch" onclick="sel(this)">12 + 5x = 41</button>
+                    <button class="ch" onclick="sel(this)">12x + 5 = 41</button>
+                    <button class="ch" onclick="sel(this)">12x − 5 = 41</button>
+                    <button class="ch" onclick="sel(this)">5x + 12 = 41</button>
+                </div>
+            </div>
+            <div class="q">
+                <div class="qnum">Question 2</div>
+                <div class="qtext">You have $50 saved and earn $8/hour. You need $106 for a gaming headset. Write an equation and solve for hours needed:</div>
+                <input type="text" placeholder="Equation: ... | Answer: x = ...">
+            </div>
+            <div class="q">
+                <div class="qnum">Question 3</div>
+                <div class="qtext">A gym charges $20/month plus a $35 sign-up fee. After paying $155 total, how many months have you been a member?</div>
+                <input type="text" placeholder="Show equation + solution">
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-head blue"><span class="emoji">📊</span> Spreadsheet Formulas</div>
+        <div class="card-body">
+            <div class="q">
+                <div class="qnum">Question 4</div>
+                <div class="qtext">In Google Sheets, cell A1 = 8 and A2 = 3. What does <code>=A1*A2 + 5</code> show?</div>
+                <div class="choices">
+                    <button class="ch" onclick="sel(this)">19</button>
+                    <button class="ch" onclick="sel(this)">29</button>
+                    <button class="ch" onclick="sel(this)">24</button>
+                    <button class="ch" onclick="sel(this)">35</button>
+                </div>
+            </div>
+            <div class="q">
+                <div class="qnum">Question 5</div>
+                <div class="qtext">You have items in B2 ($5), B3 ($12), B4 ($8). Write the Sheets formula to find the total:</div>
+                <input type="text" placeholder="=...">
+            </div>
+            <div class="q">
+                <div class="qnum">Question 6</div>
+                <div class="qtext">The math equation "Total = price × quantity + tax" uses price in B1, quantity in C1, and tax in D1. Write it as a Sheets formula:</div>
+                <input type="text" placeholder="=...">
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-head green"><span class="emoji">🧠</span> Challenge</div>
+        <div class="card-body">
+            <div class="q">
+                <div class="qnum">Question 7</div>
+                <div class="qtext">A store sells notebooks for $4 each and pens for $2 each. You buy some of each and spend $22 total. If you bought 3 notebooks, how many pens did you buy? Show your equation and steps:</div>
+                <input type="text" placeholder="Equation → Solution → Answer">
+            </div>
+        </div>
+    </div>
+
+    <div class="submit-bar"><button onclick="alert('Quiz submitted! ✅')">Submit Quiz</button></div>
+
+<script>
+function sel(el) {
+    el.parentElement.querySelectorAll('.ch').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+}
+</script>
+<script src="../scratchpad.js"></script>
+</body>
+</html>

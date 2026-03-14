@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-World Equations</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Nunito', sans-serif; max-width: 820px; margin: 0 auto; background: #F5F7FA; color: #333; }
+        .hero { background: linear-gradient(135deg, #6BBF8A, #2E7D32); color: white; padding: 28px 22px;
+                border-radius: 0 0 24px 24px; position: relative; overflow: hidden; }
+        .hero::after { content: '🛒'; position: absolute; font-size: 5em; opacity: 0.12; top: -5px; right: 15px; }
+        .hero .badge { display: inline-block; background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 16px; font-size: 0.75em; font-weight: 700; }
+        .hero h1 { font-size: 1.5em; font-weight: 900; margin: 6px 0 3px; }
+        .hero p { opacity: 0.85; font-size: 0.88em; }
+        .progress-wrap { padding: 10px 16px 0; display: flex; align-items: center; gap: 8px; }
+        .progress-track { flex: 1; height: 6px; background: #E0E4EA; border-radius: 6px; overflow: hidden; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #4CAF50, #81C784); border-radius: 6px; transition: width 0.3s; width: 0%; }
+        .progress-label { font-size: 0.75em; font-weight: 700; color: #999; }
+        .card { background: white; border-radius: 18px; margin: 12px 14px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,0.05); }
+        .card-head { padding: 14px 18px; font-weight: 800; font-size: 1em; display: flex; align-items: center; gap: 10px; }
+        .card-head.green { color: #2E7D32; border-bottom: 2px solid #E8F5E9; }
+        .card-head.blue { color: #1565C0; border-bottom: 2px solid #E3F2FD; }
+        .card-head.orange { color: #E65100; border-bottom: 2px solid #FFF3E0; }
+        .card-head.purple { color: #6A1B9A; border-bottom: 2px solid #F3E5F5; }
+        .card-head .emoji { font-size: 1.3em; }
+        .card-body { padding: 18px; }
+        .problem { background: #FAFBFC; border: 2px solid #EEE; border-radius: 14px; padding: 16px; margin-bottom: 14px; }
+        .problem .scenario { font-size: 0.92em; line-height: 1.6; color: #555; margin-bottom: 12px; }
+        .problem .scenario strong { color: #2E7D32; }
+        .problem .step { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+        .problem .step-num { width: 26px; height: 26px; border-radius: 50%; background: #E8F5E9; color: #2E7D32;
+                           display: flex; align-items: center; justify-content: center; font-size: 0.75em; font-weight: 800; flex-shrink: 0; }
+        .problem .step-content { flex: 1; }
+        .problem label { font-size: 0.82em; font-weight: 700; color: #666; display: block; margin-bottom: 4px; }
+        .problem input[type="text"] { width: 100%; padding: 10px 12px; border: 2px solid #E0E0E0; border-radius: 10px;
+                                     font-size: 0.95em; font-family: 'Nunito', sans-serif; outline: none; }
+        .problem input:focus { border-color: #4CAF50; box-shadow: 0 0 0 3px rgba(76,175,80,0.1); }
+        .keyword-ref { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+        .keyword-ref .kw { padding: 6px 12px; border-radius: 8px; font-size: 0.78em; font-weight: 700; }
+        .keyword-ref .kw.add { background: #E8F5E9; color: #2E7D32; }
+        .keyword-ref .kw.sub { background: #FFF3E0; color: #E65100; }
+        .keyword-ref .kw.mul { background: #E3F2FD; color: #1565C0; }
+        .keyword-ref .kw.div { background: #F3E5F5; color: #6A1B9A; }
+        .tip { background: #FFF8E1; border-left: 3px solid #FFC107; padding: 10px 14px; border-radius: 0 10px 10px 0;
+               font-size: 0.82em; color: #795548; margin: 12px 0; }
+        .submit-bar { text-align: center; padding: 20px 14px 30px; }
+        .submit-bar button { padding: 14px 40px; border-radius: 12px; border: none; font-size: 1em; font-weight: 800;
+                           font-family: 'Nunito', sans-serif; cursor: pointer; color: white;
+                           background: linear-gradient(135deg, #2E7D32, #4CAF50); transition: transform 0.1s; }
+        .submit-bar button:active { transform: scale(0.96); }
+        .nav { display: flex; justify-content: space-between; padding: 10px 16px; }
+        .nav a { color: #6BBF8A; font-weight: 700; font-size: 0.85em; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="badge">Session 22 · Week 8</div>
+        <h1>Real-World Equations</h1>
+        <p>Turn everyday problems into math you can solve</p>
+    </div>
+    <div class="progress-wrap">
+        <div class="progress-track"><div class="progress-fill" id="prog"></div></div>
+        <div class="progress-label" id="progLabel">0/4</div>
+    </div>
+
+    <div class="card">
+        <div class="card-head green"><span class="emoji">🔑</span> Keyword Cheat Sheet</div>
+        <div class="card-body">
+            <p style="font-size:0.85em;color:#888;margin-bottom:10px;">Look for these words to figure out which operation to use:</p>
+            <div class="keyword-ref">
+                <div class="kw add">total → +</div><div class="kw add">combined → +</div><div class="kw add">sum → +</div><div class="kw add">more than → +</div>
+                <div class="kw sub">left over → −</div><div class="kw sub">difference → −</div><div class="kw sub">less than → −</div><div class="kw sub">remaining → −</div>
+                <div class="kw mul">each → ×</div><div class="kw mul">per → ×</div><div class="kw mul">times → ×</div><div class="kw mul">every → ×</div>
+                <div class="kw div">split → ÷</div><div class="kw div">shared → ÷</div><div class="kw div">per person → ÷</div><div class="kw div">divided → ÷</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-head blue"><span class="emoji">🛒</span> Part 1: Shopping Problems</div>
+        <div class="card-body">
+            <div class="problem">
+                <div class="scenario">You're buying supplies for a craft project. Each pack of colored paper costs <strong>$3</strong>, and you also need a bottle of glue for <strong>$5</strong>. Your total bill is <strong>$20</strong>. How many packs of paper did you buy?</div>
+                <div class="step"><div class="step-num">1</div><div class="step-content"><label>Let x = what?</label><input type="text" placeholder="x = number of..."></div></div>
+                <div class="step"><div class="step-num">2</div><div class="step-content"><label>Write the equation:</label><input type="text" placeholder="e.g. 3x + 5 = 20"></div></div>
+                <div class="step"><div class="step-num">3</div><div class="step-content"><label>Solve (show steps):</label><input type="text" placeholder="3x = 15, x = ..."></div></div>
+                <div class="step"><div class="step-num">4</div><div class="step-content"><label>Answer in words:</label><input type="text" placeholder="I bought ___ packs of paper"></div></div>
+            </div>
+
+            <div class="problem">
+                <div class="scenario">A bakery sells cupcakes for <strong>$2 each</strong>. You have a <strong>$3 off coupon</strong>. You paid <strong>$15</strong>. How many cupcakes did you buy?</div>
+                <div class="step"><div class="step-num">1</div><div class="step-content"><label>Let x = what?</label><input type="text" placeholder="x = number of..."></div></div>
+                <div class="step"><div class="step-num">2</div><div class="step-content"><label>Write the equation:</label><input type="text" placeholder="Hint: price × qty − coupon = total"></div></div>
+                <div class="step"><div class="step-num">3</div><div class="step-content"><label>Solve:</label><input type="text" placeholder="Show your steps"></div></div>
+                <div class="step"><div class="step-num">4</div><div class="step-content"><label>Answer + check:</label><input type="text" placeholder="Does 2(?) − 3 = 15?"></div></div>
+            </div>
+
+            <div class="problem">
+                <div class="scenario">You and your friends order <strong>3 pizzas</strong> at the same price and a <strong>$6 delivery fee</strong>. The total is <strong>$42</strong>. How much does each pizza cost?</div>
+                <div class="step"><div class="step-num">1</div><div class="step-content"><label>Variable:</label><input type="text" placeholder="x = price of..."></div></div>
+                <div class="step"><div class="step-num">2</div><div class="step-content"><label>Equation:</label><input type="text" placeholder=""></div></div>
+                <div class="step"><div class="step-num">3</div><div class="step-content"><label>Solve:</label><input type="text" placeholder=""></div></div>
+                <div class="step"><div class="step-num">4</div><div class="step-content"><label>Answer + check:</label><input type="text" placeholder=""></div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-head orange"><span class="emoji">💼</span> Part 2: Earning & Saving</div>
+        <div class="card-body">
+            <div class="problem">
+                <div class="scenario">You're saving for a <strong>$75 skateboard</strong>. You already have <strong>$30</strong> and earn <strong>$9 per hour</strong> doing yard work. How many hours do you need to work?</div>
+                <div class="step"><div class="step-num">1</div><div class="step-content"><label>Variable:</label><input type="text" placeholder="x = hours of..."></div></div>
+                <div class="step"><div class="step-num">2</div><div class="step-content"><label>Equation:</label><input type="text" placeholder="savings + earnings = goal"></div></div>
+                <div class="step"><div class="step-num">3</div><div class="step-content"><label>Solve:</label><input type="text" placeholder=""></div></div>
+                <div class="step"><div class="step-num">4</div><div class="step-content"><label>Answer in a sentence:</label><input type="text" placeholder=""></div></div>
+            </div>
+
+            <div class="problem">
+                <div class="scenario">A movie theater charges <strong>$8 per ticket</strong> plus a <strong>$4 service fee</strong> per order. Your family spent <strong>$36</strong>. How many tickets did they buy?</div>
+                <div class="step"><div class="step-num">1</div><div class="step-content"><label>Variable:</label><input type="text" placeholder=""></div></div>
+                <div class="step"><div class="step-num">2</div><div class="step-content"><label>Equation:</label><input type="text" placeholder=""></div></div>
+                <div class="step"><div class="step-num">3</div><div class="step-content"><label>Solve:</label><input type="text" placeholder=""></div></div>
+                <div class="step"><div class="step-num">4</div><div class="step-content"><label>Answer + does it make sense?</label><input type="text" placeholder=""></div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-head purple"><span class="emoji">🏗</span> Part 3: Build Your Own</div>
+        <div class="card-body">
+            <div class="tip">💡 <strong>Challenge:</strong> Make up your OWN real-world problem that uses a two-step equation. Think about something from your life — shopping, cooking, sports, building.</div>
+            <div class="problem">
+                <div class="step"><div class="step-num">1</div><div class="step-content"><label>Write your word problem:</label><input type="text" placeholder="Make it realistic!" style="min-height:60px;"></div></div>
+                <div class="step"><div class="step-num">2</div><div class="step-content"><label>Your equation:</label><input type="text" placeholder=""></div></div>
+                <div class="step"><div class="step-num">3</div><div class="step-content"><label>Solution:</label><input type="text" placeholder=""></div></div>
+                <div class="step"><div class="step-num">4</div><div class="step-content"><label>Why does your answer make sense?</label><input type="text" placeholder=""></div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-head green"><span class="emoji">🔗</span> Part 4: Preview — Equations in Spreadsheets</div>
+        <div class="card-body">
+            <div class="tip">📊 Next class, we'll use <strong>Google Sheets</strong> to solve equations with formulas! Here's a sneak peek:</div>
+            <div style="background:#f5f5f5; border-radius:10px; padding:14px; font-family:monospace; font-size:0.88em; line-height:1.8; margin-top:10px;">
+                <div>In math class: <strong>3x + 5 = 20</strong></div>
+                <div>In Google Sheets: <strong>=3*A1 + 5</strong></div>
+                <div style="margin-top:8px; color:#888;">Cell A1 is your variable — type different numbers and watch the formula calculate!</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="submit-bar"><button onclick="alert('Great work! 🎉 Show your teacher.')">✅ I'm Done!</button></div>
+    <div class="nav"><a href="W20_More_or_Less.html">← Previous</a><a href="W23_Sheets_Equations.html">Next →</a></div>
+<script src="../scratchpad.js"></script>
+</body>
+</html>

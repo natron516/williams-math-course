@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equations in Google Sheets</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Nunito', sans-serif; max-width: 820px; margin: 0 auto; background: #F5F7FA; color: #333; }
+        .hero { background: linear-gradient(135deg, #1565C0, #42A5F5); color: white; padding: 28px 22px;
+                border-radius: 0 0 24px 24px; position: relative; overflow: hidden; }
+        .hero::after { content: '📊'; position: absolute; font-size: 5em; opacity: 0.12; top: -5px; right: 15px; }
+        .hero .badge { display: inline-block; background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 16px; font-size: 0.75em; font-weight: 700; }
+        .hero h1 { font-size: 1.5em; font-weight: 900; margin: 6px 0 3px; }
+        .hero p { opacity: 0.85; font-size: 0.88em; }
+        .progress-wrap { padding: 10px 16px 0; display: flex; align-items: center; gap: 8px; }
+        .progress-track { flex: 1; height: 6px; background: #E0E4EA; border-radius: 6px; overflow: hidden; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #4CAF50, #81C784); border-radius: 6px; transition: width 0.3s; width: 0%; }
+        .progress-label { font-size: 0.75em; font-weight: 700; color: #999; }
+        .card { background: white; border-radius: 18px; margin: 12px 14px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,0.05); }
+        .card-head { padding: 14px 18px; font-weight: 800; font-size: 1em; display: flex; align-items: center; gap: 10px; }
+        .card-head.green { color: #2E7D32; border-bottom: 2px solid #E8F5E9; }
+        .card-head.blue { color: #1565C0; border-bottom: 2px solid #E3F2FD; }
+        .card-head.orange { color: #E65100; border-bottom: 2px solid #FFF3E0; }
+        .card-head.purple { color: #6A1B9A; border-bottom: 2px solid #F3E5F5; }
+        .card-head .emoji { font-size: 1.3em; }
+        .card-body { padding: 18px; }
+        .tip { background: #FFF8E1; border-left: 3px solid #FFC107; padding: 10px 14px; border-radius: 0 10px 10px 0;
+               font-size: 0.82em; color: #795548; margin: 12px 0; }
+
+        /* Spreadsheet visual */
+        .sheet-visual { border-collapse: collapse; width: 100%; margin: 12px 0; border-radius: 10px; overflow: hidden;
+                       border: 2px solid #ddd; font-size: 0.88em; }
+        .sheet-visual th { background: #E8EAF6; padding: 8px 12px; font-weight: 700; color: #3949AB; text-align: center; border: 1px solid #ddd; }
+        .sheet-visual td { padding: 10px 12px; border: 1px solid #eee; text-align: center; }
+        .sheet-visual .header-col { background: #F5F5F5; font-weight: 700; color: #666; width: 40px; }
+        .sheet-visual .formula { font-family: monospace; color: #1565C0; font-weight: 700; background: #F0F7FF; }
+        .sheet-visual .result { color: #2E7D32; font-weight: 800; }
+        .sheet-visual .editable { background: #FFFDE7; }
+
+        .problem { background: #FAFBFC; border: 2px solid #EEE; border-radius: 14px; padding: 16px; margin-bottom: 14px; }
+        .problem label { font-size: 0.82em; font-weight: 700; color: #666; display: block; margin-bottom: 4px; margin-top: 10px; }
+        .problem input[type="text"] { width: 100%; padding: 10px 12px; border: 2px solid #E0E0E0; border-radius: 10px;
+                                     font-size: 0.95em; font-family: 'Nunito', sans-serif; outline: none; }
+        .problem input:focus { border-color: #42A5F5; box-shadow: 0 0 0 3px rgba(66,165,245,0.1); }
+        .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 14px 0; }
+        .compare-box { background: #FAFBFC; border-radius: 12px; padding: 14px; text-align: center; }
+        .compare-box .label { font-size: 0.72em; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; color: #999; margin-bottom: 6px; }
+        .compare-box code { font-size: 1.1em; font-weight: 700; display: block; padding: 8px; border-radius: 8px; }
+        .compare-box.math code { background: #E8F5E9; color: #2E7D32; }
+        .compare-box.sheets code { background: #E3F2FD; color: #1565C0; }
+
+        .submit-bar { text-align: center; padding: 20px 14px 30px; }
+        .submit-bar button { padding: 14px 40px; border-radius: 12px; border: none; font-size: 1em; font-weight: 800;
+                           font-family: 'Nunito', sans-serif; cursor: pointer; color: white;
+                           background: linear-gradient(135deg, #1565C0, #42A5F5); transition: transform 0.1s; }
+        .submit-bar button:active { transform: scale(0.96); }
+        .nav { display: flex; justify-content: space-between; padding: 10px 16px; }
+        .nav a { color: #42A5F5; font-weight: 700; font-size: 0.85em; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="badge">Session 23 · Week 8</div>
+        <h1>Equations in Google Sheets</h1>
+        <p>Spreadsheet formulas are algebra in disguise</p>
+    </div>
+    <div class="progress-wrap">
+        <div class="progress-track"><div class="progress-fill" id="prog"></div></div>
+        <div class="progress-label" id="progLabel">0/4</div>
+    </div>
+
+    <div class="card">
+        <div class="card-head blue"><span class="emoji">🔤</span> Math vs. Sheets — Side by Side</div>
+        <div class="card-body">
+            <p style="font-size:0.88em;color:#666;margin-bottom:12px;">Every Google Sheets formula is really an equation. Cells are your variables!</p>
+            <div class="compare">
+                <div class="compare-box math"><div class="label">✏️ Math Class</div><code>3x + 5</code></div>
+                <div class="compare-box sheets"><div class="label">📊 Google Sheets</div><code>=3*A1 + 5</code></div>
+            </div>
+            <div class="compare">
+                <div class="compare-box math"><div class="label">✏️ Math Class</div><code>Total = price × qty</code></div>
+                <div class="compare-box sheets"><div class="label">📊 Google Sheets</div><code>=B2*C2</code></div>
+            </div>
+            <div class="compare">
+                <div class="compare-box math"><div class="label">✏️ Math Class</div><code>Average = sum ÷ count</code></div>
+                <div class="compare-box sheets"><div class="label">📊 Google Sheets</div><code>=SUM(B2:B5)/4</code></div>
+            </div>
+            <div class="tip">💡 The <strong>=</strong> sign in Sheets means "calculate this" — just like in algebra where = means "these sides are equal."</div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-head green"><span class="emoji">🛒</span> Part 1: Lemonade Stand Budget</div>
+        <div class="card-body">
+            <p style="font-size:0.88em;color:#666;margin-bottom:10px;">You're planning a lemonade stand. Here's your spreadsheet:</p>
+            <table class="sheet-visual">
+                <tr><th></th><th>A</th><th>B</th><th>C</th><th>D</th></tr>
+                <tr><td class="header-col">1</td><td><strong>Item</strong></td><td><strong>Price Each</strong></td><td><strong>Quantity</strong></td><td><strong>Total</strong></td></tr>
+                <tr><td class="header-col">2</td><td>Lemons</td><td>$0.50</td><td class="editable">20</td><td class="formula">=B2*C2</td></tr>
+                <tr><td class="header-col">3</td><td>Sugar (bag)</td><td>$3.00</td><td class="editable">2</td><td class="formula">=B3*C3</td></tr>
+                <tr><td class="header-col">4</td><td>Cups (pack)</td><td>$4.00</td><td class="editable">1</td><td class="formula">=B4*C4</td></tr>
+                <tr><td class="header-col">5</td><td colspan="3" style="text-align:right;font-weight:700;">Grand Total →</td><td class="formula">=SUM(D2:D4)</td></tr>
+            </table>
+
+            <div class="problem">
+                <label>What does the formula =B2*C2 calculate?</label>
+                <input type="text" placeholder="It multiplies...">
+                <label>If D2 shows $10.00, D3 shows $6.00, D4 shows $4.00 — what will =SUM(D2:D4) show?</label>
+                <input type="text" placeholder="$">
+                <label>You sell each cup for $2. Write a formula to calculate revenue if you sell the number in cell E1:</label>
+                <input type="text" placeholder="=...">
+                <label>Write a formula for PROFIT (revenue minus total cost):</label>
+                <input type="text" placeholder="= revenue cell - cost cell">
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-head orange"><span class="emoji">📱</span> Part 2: Phone Plan Calculator</div>
+        <div class="card-body">
+            <p style="font-size:0.88em;color:#666;margin-bottom:10px;">Your phone plan: <strong>$25/month</strong> base + <strong>$0.10 per text</strong> over 500 texts.</p>
+            <table class="sheet-visual">
+                <tr><th></th><th>A</th><th>B</th></tr>
+                <tr><td class="header-col">1</td><td><strong>Monthly base</strong></td><td>$25.00</td></tr>
+                <tr><td class="header-col">2</td><td><strong>Cost per extra text</strong></td><td>$0.10</td></tr>
+                <tr><td class="header-col">3</td><td><strong>Free texts included</strong></td><td>500</td></tr>
+                <tr><td class="header-col">4</td><td><strong>Total texts this month</strong></td><td class="editable">650</td></tr>
+                <tr><td class="header-col">5</td><td><strong>Extra texts</strong></td><td class="formula">=B4-B3</td></tr>
+                <tr><td class="header-col">6</td><td><strong>Monthly bill</strong></td><td class="formula">=B1+B2*B5</td></tr>
+            </table>
+
+            <div class="problem">
+                <label>What equation does =B1+B2*B5 represent in math? (Use words or symbols)</label>
+                <input type="text" placeholder="Bill = base + cost per text × extra texts">
+                <label>If B4 = 650, what is B5 (extra texts)?</label>
+                <input type="text" placeholder="">
+                <label>What is B6 (the monthly bill)?</label>
+                <input type="text" placeholder="$">
+                <label>If you sent 800 texts total, what would the bill be? Show your work:</label>
+                <input type="text" placeholder="Extra texts = 800 - 500 = ..., Bill = ...">
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-head purple"><span class="emoji">🏗</span> Part 3: Design Your Own Spreadsheet</div>
+        <div class="card-body">
+            <div class="tip">💡 <strong>Your turn!</strong> Design a spreadsheet for something real — party budget, recipe scaling, sports stats, or anything you want. Plan it on paper first, then try building it in Google Sheets!</div>
+            <div class="problem">
+                <label>What is your spreadsheet about?</label>
+                <input type="text" placeholder="e.g., Birthday party budget, recipe ingredients...">
+                <label>List your columns (A, B, C...):</label>
+                <input type="text" placeholder="e.g., A=Item, B=Cost, C=Quantity, D=Total">
+                <label>Write at least 2 formulas you'd use:</label>
+                <input type="text" placeholder="e.g., =B2*C2 and =SUM(D2:D6)">
+                <label>What math equation does your main formula represent?</label>
+                <input type="text" placeholder="e.g., Total = price × quantity">
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-head blue"><span class="emoji">⚡</span> Quick Reference: Key Sheets Formulas</div>
+        <div class="card-body">
+            <table class="sheet-visual">
+                <tr><th>What You Want</th><th>Formula</th><th>Example</th></tr>
+                <tr><td>Multiply</td><td class="formula">=A1*B1</td><td>Price × Qty</td></tr>
+                <tr><td>Add a range</td><td class="formula">=SUM(A1:A10)</td><td>Add up all values</td></tr>
+                <tr><td>Average</td><td class="formula">=AVERAGE(A1:A10)</td><td>Mean of values</td></tr>
+                <tr><td>Count items</td><td class="formula">=COUNT(A1:A10)</td><td>How many numbers</td></tr>
+                <tr><td>Max / Min</td><td class="formula">=MAX(A1:A10)</td><td>Highest value</td></tr>
+                <tr><td>If/Then</td><td class="formula">=IF(A1>90,"A","B")</td><td>Grade calculator</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="submit-bar"><button onclick="alert('Awesome work! 📊 Now try building it in a real Google Sheet!')">✅ I'm Done!</button></div>
+    <div class="nav"><a href="W22_Real_World_Equations.html">← Previous</a><a href="../index.html">Home →</a></div>
+<script src="../scratchpad.js"></script>
+</body>
+</html>
