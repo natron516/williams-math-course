@@ -131,6 +131,7 @@
             <div class="next-title" id="nextTitle"></div>
             <div class="next-meta" id="nextMeta"></div>
             <div class="next-actions" id="nextActions"></div>
+            <div id="nextVideos"></div>
         </div>
         
         <div class="quick">
@@ -265,25 +266,24 @@ function render() {
         if (next.ws) btns += `<a class="next-btn secondary" href="${next.ws}">📄 Worksheet</a>`;
         if (next.ts) btns += `<a class="next-btn secondary" href="${next.ts}">🔴 Test</a>`;
         if (next.qz) btns += `<a class="next-btn secondary" href="${next.qz}">📝 Quiz</a>`;
+        document.getElementById('nextActions').innerHTML = btns;
         
-        // Add video previews
+        // Add video previews below buttons
         const vids = VIDS[next.s];
-        let vidHtml = '';
         if (vids && vids.length) {
-            vidHtml = '<div style="margin-top:10px;display:flex;gap:8px;overflow-x:auto;">';
+            let vidHtml = '<div style="margin-top:12px;padding-top:10px;border-top:1px solid #f0e4e8;"><div style="font-size:0.75em;font-weight:700;color:#C06C84;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">🎬 Preview Videos</div><div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;">';
             vids.forEach(v => {
-                vidHtml += `<a href="https://www.youtube.com/watch?v=${v.id}" target="_blank" style="flex-shrink:0;text-decoration:none;width:140px;">
+                vidHtml += `<a href="https://www.youtube.com/watch?v=${v.id}" target="_blank" style="flex-shrink:0;text-decoration:none;width:130px;">
                     <div style="position:relative;border-radius:8px;overflow:hidden;background:#000;">
-                        <img src="https://img.youtube.com/vi/${v.id}/mqdefault.jpg" style="width:140px;height:79px;object-fit:cover;display:block;opacity:0.85;">
-                        <span style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:white;font-size:1.5em;text-shadow:0 0 8px rgba(0,0,0,0.5);">▶</span>
+                        <img src="https://img.youtube.com/vi/${v.id}/mqdefault.jpg" style="width:130px;height:73px;object-fit:cover;display:block;opacity:0.85;">
+                        <span style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:white;font-size:1.4em;text-shadow:0 0 8px rgba(0,0,0,0.5);">▶</span>
                     </div>
-                    <div style="font-size:0.72em;color:#666;font-weight:600;margin-top:4px;line-height:1.2;">${v.t}</div>
+                    <div style="font-size:0.7em;color:#888;font-weight:600;margin-top:3px;line-height:1.2;">${v.t}</div>
                 </a>`;
             });
-            vidHtml += '</div>';
+            vidHtml += '</div></div>';
+            document.getElementById('nextVideos').innerHTML = vidHtml;
         }
-        
-        document.getElementById('nextActions').innerHTML = btns + vidHtml;
     } else {
         document.getElementById('nextTitle').textContent = '🎉 All done!';
         document.getElementById('nextMeta').textContent = 'Every session complete';
