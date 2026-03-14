@@ -457,6 +457,7 @@ function openStudentModal(idx) {
     // All work links grouped by week — show worksheet submission status from Firebase
     const allScores = JSON.parse(localStorage.getItem('williams_all_scores') || '{}');
     const studentScores = allScores[s.name] || {};
+    const studentUsername = s.name.toLowerCase().replace(/\s+/g, '_');
     
     html += '<div class="modal-section"><h4>📋 All Work</h4>';
     let curW = 0;
@@ -482,7 +483,9 @@ function openStudentModal(idx) {
                 scoreBadge = `<span class="score-badge none">Not submitted</span>`;
             }
         }
-        html += `<a class="work-link" href="${item.href}" target="_blank">
+        const assessKey = item.col || item.wsId || '';
+        const reviewHref = assessKey ? `${item.href}?student=${studentUsername}&assess=${assessKey}` : item.href;
+        html += `<a class="work-link" href="${reviewHref}" target="_blank">
             <span class="icon">${icon}</span>
             <span class="info"><span class="title">${item.label}</span><span class="sub">${typeLabel}</span></span>
             ${scoreBadge}

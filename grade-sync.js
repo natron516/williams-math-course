@@ -36,6 +36,23 @@ async function submitScore(assessmentId, score, details = {}) {
             updatedAt: new Date().toISOString()
         }, { merge: true });
         
+        // Also save student's answers for teacher review
+        const answers = {};
+        document.querySelectorAll('input[type="text"], textarea, select').forEach((el, i) => {
+            if (el.closest('.answer-key') || el.closest('[data-key]')) return;
+            const key = el.id || el.name || `field_${i}`;
+            answers[key] = el.value || '';
+        });
+        // Save canvas drawings too
+        document.querySelectorAll('canvas').forEach((c, i) => {
+            try { answers[`canvas_${i}`] = c.toDataURL('image/png', 0.5); } catch(e) {}
+        });
+        
+        await db.collection('student_work').doc(`${username}_${assessmentId}`).set({
+            student: studentName, username, assessment: assessmentId,
+            answers, timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        }, { merge: true });
+        
         console.log(`✅ Score submitted: ${studentName} → ${assessmentId} = ${score}`);
         return true;
     } catch (e) {
@@ -111,3 +128,60 @@ async function retryPendingScores() {
 
 // Retry pending on load
 firebase.auth().onAuthStateChanged(user => { if (user) retryPendingScores(); });
+
+/**
+ * Teacher review mode: load student's saved answers into the page.
+ * Triggered by URL params: ?student=username&assess=assessmentId
+ */
+(function teacherReview() {
+    const params = new URLSearchParams(window.location.search);
+    const studentUser = params.get('student');
+    const assessId = params.get('assess');
+    if (!studentUser || !assessId) return;
+    
+    // Wait for Firebase auth
+    firebase.auth().onAuthStateChanged(async user => {
+        if (!user) return;
+        try {
+            const doc = await db.collection('student_work').doc(`${studentUser}_${assessId}`).get();
+            if (!doc.exists) return;
+            const data = doc.data();
+            
+            // Show teacher review banner
+            const banner = document.createElement('div');
+            banner.style.cssText = 'background:linear-gradient(135deg,#8B5E83,#C06C84);color:white;padding:12px 20px;text-align:center;font-family:Nunito,sans-serif;font-weight:700;font-size:0.95em;position:sticky;top:0;z-index:999;';
+            banner.innerHTML = `👀 Viewing <strong>${data.student}</strong>'s submission · <a href="gradebook.html" style="color:#FDE8EE;">← Back to Gradebook</a>`;
+            document.body.insertBefore(banner, document.body.firstChild);
+            
+            // Fill in saved answers
+            const answers = data.answers || {};
+            document.querySelectorAll('input[type="text"], textarea, select').forEach((el, i) => {
+                if (el.closest('.answer-key') || el.closest('[data-key]')) return;
+                const key = el.id || el.name || `field_${i}`;
+                if (answers[key] !== undefined) {
+                    el.value = answers[key];
+                    el.style.background = '#FFF8E1';
+                    el.readOnly = true;
+                }
+            });
+            
+            // Restore canvas drawings
+            document.querySelectorAll('canvas').forEach((c, i) => {
+                const imgData = answers[`canvas_${i}`];
+                if (imgData) {
+                    const img = new Image();
+                    img.onload = () => { c.getContext('2d').drawImage(img, 0, 0); };
+                    img.src = imgData;
+                }
+            });
+            
+            // Hide submit button in review mode
+            const submitBtn = document.getElementById('submitBtn');
+            if (submitBtn) submitBtn.style.display = 'none';
+            
+            // Disable all inputs
+            document.querySelectorAll('input, textarea, select').forEach(el => { el.disabled = true; });
+            
+        } catch(e) { console.error('Teacher review load error:', e); }
+    });
+})();
