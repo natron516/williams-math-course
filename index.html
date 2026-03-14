@@ -173,6 +173,34 @@
     </div>
 
 <script>
+// Teaching bullets for each session
+const TIPS = {
+1: ["Define acute (<90°), right (90°), obtuse (>90°), straight (180°)", "Students classify angles by sight and measurement", "Use protractor demo — show how to read degrees"],
+2: ["Complementary angles add to 90°, supplementary add to 180°", "Vertical angles are always equal", "Practice finding missing angles in pairs"],
+3: ["Triangle angle sum = 180° (hands-on: tear corners to prove)", "Classify triangles by sides and angles", "Name polygons by number of sides (quad → oct)"],
+4: ["Perimeter = total distance around a shape", "Add all side lengths; find missing sides first", "Real-world: fencing a yard, framing a picture"],
+5: ["Area of rectangle = length × width", "Area of triangle = ½ × base × height", "Identify base and height (height is always perpendicular)"],
+6: ["Parallelogram area = base × height (not slant side!)", "Trapezoid area = ½ × (b₁ + b₂) × height", "Decompose complex shapes into simpler ones"],
+7: ["π ≈ 3.14 — ratio of circumference to diameter", "Circumference = π × d or 2πr", "Hands-on: measure round objects with string"],
+8: ["Area of circle = πr²", "Distinguish radius vs. diameter (r = d/2)", "Practice squaring the radius first, then multiply by π"],
+9: ["Break composite shapes into rectangles, triangles, circles", "Add areas of parts (or subtract cutouts)", "Label each sub-shape before calculating"],
+10: ["Volume = Base area × height for prisms", "Rectangular prism: V = l × w × h", "Triangular prism: V = (½ × b × h) × length"],
+11: ["Cylinder volume = πr² × h", "Surface area = 2πr² + 2πrh (two circles + rectangle)", "Real-world: cans, pipes, tanks"],
+12: ["GEOMETRY TEST — review all weeks 1–4", "Let students use reference sheet if allowed", "Encourage showing all work"],
+13: ["Variables represent unknown values", "Expression vs. equation (no = sign in expressions)", "Evaluate expressions by substituting values"],
+14: ["Like terms have same variable and exponent", "Combine coefficients: 3x + 5x = 8x", "Constants are like terms with each other"],
+15: ["PEMDAS: Parentheses, Exponents, Multiply/Divide, Add/Subtract", "Work left to right for same-level operations", "Common mistake: multiplying before dividing when ÷ comes first"],
+16: ["Inverse operations: undo addition with subtraction", "Undo subtraction with addition", "Goal: isolate the variable on one side"],
+17: ["Undo multiplication with division", "Undo division with multiplication", "Check answer by plugging back into original equation"],
+18: ["Mix of all one-step equation types", "Students choose which operation to undo", "Stress checking every answer"],
+19: ["Two-step: undo addition/subtraction first, then multiplication/division", "Reverse order of operations", "Write each step clearly"],
+20: ["Inequalities use <, >, ≤, ≥ instead of =", "Flip the sign when multiplying/dividing by negative", "Graph solutions on a number line"],
+21: ["ALGEBRA TEST — review weeks 5–7", "Two-step equations + inequalities", "Encourage showing steps for partial credit"],
+22: ["Coordinate plane: x-axis (horizontal), y-axis (vertical)", "Plot ordered pairs (x, y)", "Identify quadrants I–IV"],
+23: ["Linear relationship: constant rate of change", "Make a table → plot points → draw line", "Identify slope as rise/run from graph"],
+24: ["FINAL TEST — comprehensive", "Covers geometry AND algebra", "Review key formulas before starting"],
+};
+
 const VIDS = {1:[{t:"Acute, Right & Obtuse Angles",id:"4ZyTVTGVPgE"},{t:"Angles & Degrees",id:"4r_j10jtavU"}],2:[{t:"Supplementary & Complementary",id:"TzT_HtojVOU"},{t:"Vertical Angles",id:"WN2E-KMuXoE"}],3:[{t:"Triangles",id:"oQeK4LyKLHw"},{t:"Polygons",id:"ZJnKPl99fTs"}],4:[{t:"Perimeter",id:"AAY1bsazcgM"}],5:[{t:"Area: Rectangles & Triangles",id:"xCdxURXMdFY"}],6:[{t:"Area: Parallelograms",id:"SEXLRQol970"},{t:"Composite Area",id:"5UIbpphAz-U"}],7:[{t:"Circumference & Area",id:"5cbFN2wOUFY"}],8:[{t:"Circumference & Area",id:"5cbFN2wOUFY"}],9:[{t:"Composite Shapes",id:"L8W3ch_Zrmk"}],10:[{t:"Volume",id:"-05rNRCHkhQ"}],11:[{t:"Volume: Cylinders",id:"-05rNRCHkhQ"},{t:"Surface Area",id:"kSj_Wo5hdVU"}],13:[{t:"What Is Algebra?",id:"NybHckSEQBI"},{t:"Evaluating Expressions",id:"52tpYl2tTqk"}],14:[{t:"Combining Like Terms",id:"y7GwRJOIohM"}],15:[{t:"Order of Operations",id:"dAgfnK528RA"}],16:[{t:"Equations: +/−",id:"l3XzepN03KQ"}],17:[{t:"Equations: ×/÷",id:"Qyd_v3DGzTM"}],18:[{t:"Solving Equations",id:"l3XzepN03KQ"}],19:[{t:"2-Step Equations",id:"LDIiYKYvvdA"}],20:[{t:"Inequalities",id:"mgHO-bsCDrA"}],22:[{t:"Coordinate Plane",id:"3JqndcNQPYs"}],23:[{t:"Linear Functions",id:"MXV65i9g1Xg"}]};
 
 const S = [
@@ -277,6 +305,14 @@ function render() {
     if (next) {
         document.getElementById('nextTitle').textContent = `Session ${next.s}: ${next.t}`;
         document.getElementById('nextMeta').textContent = `${fmtDate(next.dt)} · ${next.tm} · ${next.u === 'geo' ? 'Geometry' : 'Algebra'}`;
+        // Teaching bullets
+        const tips = TIPS[next.s];
+        if (tips) {
+            let tipHtml = '<ul style="margin:8px 0 10px;padding-left:18px;font-size:0.82em;color:#6B4460;line-height:1.6;">';
+            tips.forEach(t => tipHtml += `<li style="margin-bottom:3px;">${t}</li>`);
+            tipHtml += '</ul>';
+            document.getElementById('nextMeta').insertAdjacentHTML('afterend', tipHtml);
+        }
         let btns = `<a class="next-btn primary" href="lesson-plans.html#session-${next.s}">📋 Lesson</a>`;
         if (next.ws) btns += `<a class="next-btn secondary" href="${next.ws}">📄 Worksheet</a>`;
         if (next.qz) btns += `<a class="next-btn secondary" href="${next.qz}">✏️ Quiz</a>`;
