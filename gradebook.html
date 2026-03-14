@@ -275,13 +275,12 @@ async function syncFromFirebase() {
             return;
         }
         
-        if (!window._fbApp) {
-            window._fbApp = firebase.initializeApp(firebaseConfig);
-            window._db = firebase.firestore();
-            await firebase.auth().signInAnonymously();
-        }
+        let fbApp;
+        try { fbApp = firebase.app(); } catch(e) { fbApp = firebase.initializeApp(firebaseConfig); }
+        const fbDb = firebase.firestore();
+        await firebase.auth().signInAnonymously();
         
-        const snap = await window._db.collection('scores').get();
+        const snap = await fbDb.collection('scores').get();
         if (snap.empty) {
             alert('No student scores submitted yet.');
             btn.textContent = '🔄 Sync Scores'; btn.disabled = false;
