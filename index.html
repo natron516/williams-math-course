@@ -125,13 +125,42 @@
         .week-body.open { display: block; }
         
         .session-row { display: flex; align-items: flex-start; gap: 14px; padding: 14px 0;
-                      border-bottom: 1px solid #f0f0f0; }
+                      border-bottom: 1px solid #f0f0f0; transition: opacity 0.3s; }
         .session-row:last-child { border-bottom: none; }
-        .session-num { width: 34px; height: 34px; border-radius: 50%; display: flex;
-                      align-items: center; justify-content: center; font-size: 0.85em;
-                      font-weight: 800; color: white; flex-shrink: 0; }
+        .session-row.completed { opacity: 0.5; }
+        .session-row.completed .session-content h4 { text-decoration: line-through; color: #aaa; }
+        .session-row.completed .session-num { background: #aaa !important; }
+        .session-row.next-up { background: #f0f7ff; margin: -2px -10px; padding: 14px 10px;
+                              border-radius: 10px; border: 2px solid #2E75B633; }
+        .check-btn { width: 34px; height: 34px; border-radius: 50%; display: flex;
+                    align-items: center; justify-content: center; font-size: 0.85em;
+                    font-weight: 800; color: white; flex-shrink: 0; cursor: pointer;
+                    border: none; transition: all 0.25s; position: relative; }
+        .check-btn.geo { background: linear-gradient(135deg, #2E75B6, #1F4E79); }
+        .check-btn.alg { background: linear-gradient(135deg, #27AE60, #1E8449); }
+        .check-btn.done { background: #aaa !important; }
+        .check-btn.done::after { content: '✓'; position: absolute; font-size: 1.1em; }
+        .check-btn:hover { transform: scale(1.15); box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
         .session-num.geo { background: linear-gradient(135deg, #2E75B6, #1F4E79); }
         .session-num.alg { background: linear-gradient(135deg, #27AE60, #1E8449); }
+        
+        /* Progress bar */
+        .progress-wrap { background: white; border-radius: 14px; padding: 16px 20px; margin-bottom: 14px;
+                        box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .progress-wrap h4 { font-size: 0.9em; color: #1F4E79; margin-bottom: 8px; display: flex;
+                           align-items: center; justify-content: space-between; }
+        .progress-track { background: #e8e8e8; border-radius: 20px; height: 10px; overflow: hidden; }
+        .progress-fill { height: 100%; border-radius: 20px; transition: width 0.5s ease;
+                        background: linear-gradient(90deg, #2E75B6, #27AE60, #F5A623); }
+        .progress-stats { display: flex; gap: 20px; margin-top: 8px; font-size: 0.8em; color: #888; }
+        .progress-stats span { display: flex; align-items: center; gap: 4px; }
+        .progress-stats .done-dot { width: 8px; height: 8px; border-radius: 50%; background: #27AE60; }
+        .progress-stats .left-dot { width: 8px; height: 8px; border-radius: 50%; background: #e0e0e0; }
+
+        /* Week completion badge */
+        .week-done-badge { background: #27AE60; color: white; padding: 3px 10px; border-radius: 12px;
+                          font-size: 0.75em; font-weight: 700; margin-left: 8px; }
+        .week-progress { font-size: 0.78em; color: #aaa; margin-left: auto; padding-right: 10px; }
         .session-content { flex: 1; }
         .session-content h4 { font-size: 0.95em; color: #333; margin-bottom: 4px; }
         .session-content h4 a { color: #1F4E79; text-decoration: none; }
@@ -250,6 +279,14 @@
         <!-- Week-by-Week -->
         <div class="section-title">📅 Teaching Plan</div>
         
+        <div class="progress-wrap">
+            <h4><span>📈 Course Progress</span><span id="progText">0 of 24 sessions completed</span></h4>
+            <div class="progress-track"><div class="progress-fill" id="progFill" style="width:0%"></div></div>
+            <div class="progress-stats">
+                <span><div class="done-dot"></div> <span id="progDone">0 done</span></span>
+                <span><div class="left-dot"></div> <span id="progLeft">24 remaining</span></span>
+            </div>
+        </div>
         <div id="weeksContainer"></div>
 
         <!-- Assessments -->
@@ -358,7 +395,7 @@
             
             const block = document.createElement('div');
             block.className = 'week-block';
-            block.innerHTML = `<div class="week-header ${unit}" onclick="toggle(this)"><div class="week-num ${unit}">${ses.w}</div><div class="week-info"><h3>${icon} ${weekNames[ses.w]}</h3><p>Sessions ${wSessions[0].s}-${wSessions[wSessions.length-1].s}${assessText ? ' · ' + assessText : ''}</p></div><span class="week-arrow">▶</span></div><div class="week-body" id="wb${ses.w}"></div>`;
+            block.innerHTML = `<div class="week-header ${unit}" onclick="toggle(this)"><div class="week-num ${unit}">${ses.w}</div><div class="week-info"><h3>${icon} ${weekNames[ses.w]}</h3><p>Sessions ${wSessions[0].s}-${wSessions[wSessions.length-1].s}${assessText ? ' · ' + assessText : ''}</p></div><span class="week-progress" id="wp${ses.w}"></span><span class="week-arrow">▶</span></div><div class="week-body" id="wb${ses.w}"></div>`;
             weeksEl.appendChild(block);
         }
         
@@ -370,7 +407,8 @@
         
         const row = document.createElement('div');
         row.className = 'session-row';
-        row.innerHTML = `<div class="session-num ${ses.u}">${ses.s}</div><div class="session-content"><h4>${ses.t}</h4><div class="session-topics">${ses.tags.join(' · ')}</div><div class="session-links">${links}</div></div>`;
+        row.dataset.session = ses.s;
+        row.innerHTML = `<button class="check-btn ${ses.u}" onclick="event.stopPropagation();toggleSession(${ses.s})" title="Mark complete">${ses.s}</button><div class="session-content"><h4>${ses.t}</h4><div class="session-topics">${ses.tags.join(' · ')}</div><div class="session-links">${links}</div></div>`;
         body.appendChild(row);
     });
 
@@ -397,9 +435,125 @@
         assessEl.appendChild(card);
     });
 
+    // ── Progress tracking ──
+    const PROGRESS_KEY = 'williams_teacher_progress';
+    
+    function getProgress() {
+        const saved = localStorage.getItem(PROGRESS_KEY);
+        return saved ? JSON.parse(saved) : {};
+    }
+    
+    function saveProgress(prog) {
+        localStorage.setItem(PROGRESS_KEY, JSON.stringify(prog));
+    }
+    
+    function toggleSession(sessionNum) {
+        const prog = getProgress();
+        if (prog[sessionNum]) {
+            delete prog[sessionNum];
+        } else {
+            prog[sessionNum] = Date.now();
+        }
+        saveProgress(prog);
+        updateUI();
+    }
+    
+    function updateUI() {
+        const prog = getProgress();
+        const completed = Object.keys(prog).length;
+        const total = 24;
+        const pct = (completed / total * 100).toFixed(0);
+        
+        // Update progress bar
+        document.getElementById('progFill').style.width = pct + '%';
+        document.getElementById('progText').textContent = `${completed} of ${total} sessions completed`;
+        document.getElementById('progDone').textContent = completed + ' done';
+        document.getElementById('progLeft').textContent = (total - completed) + ' remaining';
+        
+        // Update session rows
+        let nextFound = false;
+        document.querySelectorAll('.session-row').forEach(row => {
+            const sNum = parseInt(row.dataset.session);
+            const btn = row.querySelector('.check-btn');
+            
+            row.classList.remove('completed', 'next-up');
+            if (btn) btn.classList.remove('done');
+            
+            if (prog[sNum]) {
+                row.classList.add('completed');
+                if (btn) {
+                    btn.classList.add('done');
+                    btn.textContent = '';
+                }
+            } else {
+                if (btn) btn.textContent = sNum;
+                if (!nextFound) {
+                    row.classList.add('next-up');
+                    nextFound = true;
+                    // Update spotlight
+                    const ses = sessions.find(s => s.s === sNum);
+                    if (ses) {
+                        document.getElementById('spotTitle').textContent = `Session ${ses.s}: ${ses.t}`;
+                        document.getElementById('spotMeta').textContent = `Week ${ses.w} · ${ses.d === 'Mon' ? 'Monday' : ses.d === 'Wed' ? 'Wednesday' : 'Friday'} · ${ses.u === 'geo' ? '📐 Geometry' : '📊 Algebra'}`;
+                        document.getElementById('spotTopics').innerHTML = ses.tags.map(t => `<span class="topic-tag">${t}</span>`).join('');
+                        if (ses.ws) {
+                            document.getElementById('spotWorksheetLink').href = ses.ws;
+                            document.getElementById('spotWorksheetLink').style.display = '';
+                        } else if (ses.test) {
+                            document.getElementById('spotWorksheetLink').href = ses.test;
+                            document.getElementById('spotWorksheetLink').textContent = '🔴 Today\'s Test';
+                            document.getElementById('spotWorksheetLink').style.display = '';
+                        } else {
+                            document.getElementById('spotWorksheetLink').style.display = 'none';
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Update week headers with progress
+        for (let w = 1; w <= 8; w++) {
+            const weekSessions = sessions.filter(s => s.w === w);
+            const weekDone = weekSessions.filter(s => prog[s.s]).length;
+            const wpEl = document.getElementById('wp' + w);
+            if (wpEl) {
+                if (weekDone === weekSessions.length) {
+                    wpEl.innerHTML = '<span class="week-done-badge">✓ Complete</span>';
+                } else if (weekDone > 0) {
+                    wpEl.textContent = `${weekDone}/${weekSessions.length}`;
+                } else {
+                    wpEl.textContent = '';
+                }
+            }
+        }
+        
+        // Auto-open the week that has the next session
+        if (!nextFound) {
+            document.getElementById('spotTitle').textContent = '🎉 Course Complete!';
+            document.getElementById('spotMeta').textContent = 'All 24 sessions finished — amazing work!';
+            document.getElementById('spotTopics').innerHTML = '<span class="topic-tag">🏆 Well Done</span>';
+            document.getElementById('spotWorksheetLink').style.display = 'none';
+        }
+    }
+    
     function toggle(el) {
         el.classList.toggle('open');
         el.nextElementSibling.classList.toggle('open');
+    }
+    
+    // Initial UI update
+    updateUI();
+    
+    // Auto-open the week with the next incomplete session
+    const prog = getProgress();
+    for (let w = 1; w <= 8; w++) {
+        const weekSessions = sessions.filter(s => s.w === w);
+        const allDone = weekSessions.every(s => prog[s.s]);
+        if (!allDone) {
+            const header = document.querySelector(`#wb${w}`).previousElementSibling;
+            if (header) { header.classList.add('open'); document.getElementById('wb'+w).classList.add('open'); }
+            break;
+        }
     }
     </script>
 </body>
