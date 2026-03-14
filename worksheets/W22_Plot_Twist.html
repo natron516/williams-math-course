@@ -3,209 +3,368 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Worksheet 22: Plot Twist</title>
+    <title>Plot Twist</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-               max-width: 800px; margin: 0 auto; padding: 20px; background: #f5f5f5; color: #333; }
-        .header { background: linear-gradient(135deg, #1F4E79, #2E75B6); color: white;
-                   padding: 20px; border-radius: 12px; margin-bottom: 20px; text-align: center; }
-        .header h1 { font-size: 1.5em; margin-bottom: 5px; }
-        .header p { font-size: 0.9em; opacity: 0.9; }
-        .student-info { background: white; padding: 15px; border-radius: 8px; margin-bottom: 20px;
-                        display: flex; gap: 15px; flex-wrap: wrap; }
-        .student-info input { border: none; border-bottom: 2px solid #2E75B6; padding: 8px;
-                               font-size: 1em; flex: 1; min-width: 150px; outline: none; }
-        .section { background: white; padding: 20px; border-radius: 12px; margin-bottom: 15px;
-                   box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
-        .section h2 { color: #1F4E79; font-size: 1.2em; margin-bottom: 15px;
-                      border-bottom: 2px solid #D6E4F0; padding-bottom: 8px; }
-        .problem { padding: 12px 0; border-bottom: 1px solid #eee; }
+        body { font-family: 'Nunito', -apple-system, sans-serif;
+               max-width: 850px; margin: 0 auto; padding: 0; background: #f0f4f8; color: #333; }
+        
+        .hero { background: linear-gradient(135deg, #1F4E79 0%, #2E75B6 60%, #2E75B6cc 100%);
+                color: white; padding: 30px 25px 25px; position: relative; overflow: hidden; }
+        .hero::before { content: ''; position: absolute; top: -50px; right: -50px;
+                        width: 200px; height: 200px; border-radius: 50%;
+                        background: rgba(255,255,255,0.08); }
+        .hero::after { content: ''; position: absolute; bottom: -80px; left: -40px;
+                       width: 250px; height: 250px; border-radius: 50%;
+                       background: rgba(255,255,255,0.05); }
+        .hero h1 { font-size: 1.6em; font-weight: 800; position: relative; z-index: 1; }
+        .hero p { font-size: 0.95em; opacity: 0.9; margin-top: 5px; position: relative; z-index: 1; }
+        .hero .type-badge { display: inline-block; background: rgba(255,255,255,0.2);
+                           padding: 4px 12px; border-radius: 20px; font-size: 0.8em;
+                           font-weight: 700; margin-bottom: 8px; position: relative; z-index: 1; }
+        
+        .student-bar { background: white; padding: 12px 20px; display: flex; gap: 10px;
+                       flex-wrap: wrap; box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+                       border-bottom: 3px solid #2E75B622; }
+        .student-bar input { border: none; border-bottom: 2px solid #2E75B644; padding: 8px 4px;
+                            font-size: 1em; font-family: 'Nunito', sans-serif; flex: 1;
+                            min-width: 120px; outline: none; transition: border 0.2s; }
+        .student-bar input:focus { border-bottom-color: #2E75B6; }
+        
+        .content-area { padding: 15px; }
+        
+        .section { background: white; border-radius: 16px; margin-bottom: 15px;
+                   box-shadow: 0 2px 12px rgba(0,0,0,0.06); overflow: hidden;
+                   border: 1px solid rgba(0,0,0,0.04); }
+        .section-header { padding: 16px 20px; font-weight: 800; font-size: 1.1em;
+                         color: #1F4E79; display: flex; align-items: center; gap: 10px;
+                         border-bottom: 2px solid #2E75B615;
+                         background: linear-gradient(90deg, #2E75B608, transparent); }
+        .section-header .section-icon { font-size: 1.4em; }
+        .section-body { padding: 5px 15px 15px; }
+        
+        .problem { padding: 14px 5px; border-bottom: 1px solid #f0f0f0;
+                   transition: background 0.2s; border-radius: 8px; margin: 2px 0; }
+        .problem:hover { background: #f8fbff; }
         .problem:last-child { border-bottom: none; }
-        .problem-num { display: inline-block; background: #2E75B6; color: white;
-                       width: 28px; height: 28px; border-radius: 50%; text-align: center;
-                       line-height: 28px; font-size: 0.85em; font-weight: bold; margin-right: 10px; }
-        .problem-text { display: inline; font-size: 1.05em; }
-        .answer-box { display: block; margin: 10px 0 5px 38px; border: 2px dashed #ccc;
-                      border-radius: 8px; padding: 12px; min-height: 45px;
-                      font-size: 1em; width: calc(100% - 38px); }
-        .answer-box:focus { border-color: #2E75B6; outline: none; background: #f8fbff; }
-        .work-area { display: block; margin: 8px 0 5px 38px; border: 1px solid #ddd;
-                     border-radius: 8px; padding: 10px; min-height: 80px;
-                     font-size: 0.9em; width: calc(100% - 38px); color: #666; }
-        .work-area:focus { border-color: #2E75B6; outline: none; }
-        .emoji { font-size: 1.3em; margin-right: 5px; }
-        .context { background: #f0f7ff; padding: 12px; border-radius: 8px;
-                   margin: 10px 0; border-left: 4px solid #2E75B6; font-size: 0.95em; }
-        .hint { color: #888; font-size: 0.85em; font-style: italic; margin-left: 38px; }
-        .mc-option { display: block; padding: 10px 15px; margin: 5px 0 5px 38px;
-                     background: #f8f8f8; border: 2px solid #e0e0e0; border-radius: 8px;
-                     cursor: pointer; transition: all 0.2s; font-size: 1em; }
-        .mc-option:hover { background: #e8f0fe; border-color: #2E75B6; }
-        .mc-option.selected { background: #d0e4ff; border-color: #2E75B6; font-weight: bold; }
-        .answer-key { background: #fff9e6; padding: 20px; border-radius: 12px;
-                      margin: 20px 0; border: 2px solid #f0c040; }
-        .answer-key h2 { color: #8B6914; }
-        .toggle-btn { display: block; margin: 15px auto; padding: 12px 30px;
-                      background: #1F4E79; color: white; border: none; border-radius: 8px;
-                      font-size: 1em; cursor: pointer; }
-        .toggle-btn:hover { background: #2E75B6; }
-        .score-box { background: #e2efda; padding: 15px; border-radius: 8px;
-                     text-align: center; font-size: 1.2em; margin-top: 15px; }
-        @media print {
-            .toggle-btn, .answer-key { display: none !important; }
-            .section { break-inside: avoid; }
-        }
+        .problem-header { display: flex; align-items: flex-start; gap: 10px; }
+        .problem-num { display: flex; align-items: center; justify-content: center;
+                       background: linear-gradient(135deg, #2E75B6, #1F4E79);
+                       color: white; min-width: 32px; height: 32px; border-radius: 50%;
+                       font-size: 0.85em; font-weight: 800; flex-shrink: 0; }
+        .problem-text { font-size: 1em; line-height: 1.5; flex: 1; }
+        
+        .answer-input { display: block; margin: 10px 0 5px 42px; width: calc(100% - 42px);
+                        border: 2px solid #e8e8e8; border-radius: 10px; padding: 12px 14px;
+                        font-size: 1em; font-family: 'Nunito', sans-serif; outline: none;
+                        transition: all 0.2s; background: #fafafa; }
+        .answer-input:focus { border-color: #2E75B6; background: white;
+                             box-shadow: 0 0 0 3px #2E75B615; }
+        .work-area { display: block; margin: 8px 0 5px 42px; width: calc(100% - 42px);
+                     border: 1.5px dashed #ddd; border-radius: 10px; padding: 10px 14px;
+                     min-height: 80px; font-size: 0.9em; font-family: 'Nunito', sans-serif;
+                     outline: none; color: #666; resize: vertical; background: #fcfcfc; }
+        .work-area:focus { border-color: #2E75B6; border-style: solid; background: white; }
+        
+        .context-box { margin: 12px 0; padding: 14px 16px; background: linear-gradient(135deg, #2E75B608, #2E75B604);
+                       border-radius: 12px; border-left: 4px solid #2E75B6;
+                       font-size: 0.95em; line-height: 1.5; }
+        .context-box .context-emoji { font-size: 1.5em; margin-right: 8px; vertical-align: middle; }
+        
+        .hint { color: #999; font-size: 0.85em; font-style: italic; margin: 4px 0 0 42px;
+                padding: 4px 8px; background: #fff8e1; border-radius: 6px; display: inline-block; }
+        
+        .mc-option { display: block; padding: 12px 16px; margin: 6px 0 6px 42px;
+                     width: calc(100% - 42px); background: #f8f9fa; border: 2px solid #e8e8e8;
+                     border-radius: 10px; cursor: pointer; transition: all 0.2s;
+                     font-size: 1em; font-family: 'Nunito', sans-serif; }
+        .mc-option:hover { background: #2E75B608; border-color: #2E75B644; transform: translateX(3px); }
+        .mc-option.selected { background: #2E75B615; border-color: #2E75B6; font-weight: 700; }
+        
+        .illustration { text-align: center; padding: 15px; margin: 10px 0; }
+        .illustration svg { max-width: 100%; }
+        
+        .formula-card { display: inline-block; background: linear-gradient(135deg, #667eea, #764ba2);
+                        color: white; padding: 10px 18px; border-radius: 10px;
+                        font-size: 1.1em; font-weight: 700; margin: 8px 4px;
+                        box-shadow: 0 3px 10px rgba(102,126,234,0.3); }
+        
+        .fun-fact { background: linear-gradient(135deg, #ffecd2, #fcb69f44);
+                   padding: 14px 16px; border-radius: 12px; margin: 10px 0;
+                   border-left: 4px solid #f093fb; font-size: 0.9em; }
+        .fun-fact::before { content: '💡 '; font-size: 1.2em; }
+        
+        .progress-bar { background: #e0e0e0; border-radius: 20px; height: 8px;
+                        margin: 15px 20px; overflow: hidden; }
+        .progress-fill { background: linear-gradient(90deg, #2E75B6, #4CAF50);
+                         height: 100%; border-radius: 20px; transition: width 0.5s;
+                         width: 0%; }
+        
+        .score-box { background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+                    padding: 20px; border-radius: 16px; text-align: center;
+                    font-size: 1.2em; font-weight: 700; margin-top: 15px;
+                    color: #2E7D32; }
+        
+        .answer-key { background: #fff9e6; padding: 20px; border-radius: 16px;
+                     margin: 20px 15px; border: 2px solid #f0c040; }
+        .answer-key-header { display: flex; justify-content: space-between; align-items: center;
+                            font-size: 1.2em; font-weight: 800; color: #8B6914;
+                            margin-bottom: 15px; padding-bottom: 10px;
+                            border-bottom: 2px solid #f0c04044; }
+        .close-btn { background: none; border: 1px solid #ddd; padding: 5px 12px;
+                    border-radius: 6px; cursor: pointer; font-size: 0.8em; color: #888; }
+        .answer-btn { display: block; margin: 15px auto; padding: 14px 30px;
+                     background: linear-gradient(135deg, #1F4E79, #2E75B6);
+                     color: white; border: none; border-radius: 12px;
+                     font-size: 1em; font-weight: 700; cursor: pointer;
+                     font-family: 'Nunito', sans-serif;
+                     box-shadow: 0 3px 12px #2E75B644; transition: transform 0.2s; }
+        .answer-btn:hover { transform: translateY(-2px); }
+        
+        @media print { .answer-btn, .answer-key, .student-bar { display: none !important; } }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>Worksheet 22: Plot Twist</h1>
-        <p>Session 22 — The coordinate plane</p>
+    <div class="hero">
+        <div class="type-badge">📄 WORKSHEET</div>
+        <h1>Plot Twist</h1>
+        <p>Session 22 — Navigate the coordinate plane and find buried treasure! 🏴‍☠️</p>
     </div>
-    <div class="student-info">
-        <input type="text" placeholder="Name" />
-        <input type="text" placeholder="Date" />
-        <input type="text" placeholder="Period" />
+    <div class="student-bar">
+        <input type="text" placeholder="✏️ Your Name" id="studentName" />
+        <input type="text" placeholder="📅 Date" />
     </div>
-    <div class="section"><h2>Part 1: Name the Quadrant</h2><div class="problem">
-        <span class="problem-num">1</span>
-        <span class="problem-text">(3, 5) is in Quadrant ____</span>
+    <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
+    <div class="content-area">
+        <div class="section"><div class="section-header"><span class="section-icon">🗺️</span>Part 1: Name the Quadrant</div><div class="section-body"><div class="illustration"><svg width="200" height="200" viewBox="0 0 200 200">
+    <line x1="100" y1="10" x2="100" y2="190" stroke="#ccc" stroke-width="1.5"/>
+    <line x1="10" y1="100" x2="190" y2="100" stroke="#ccc" stroke-width="1.5"/>
+    <text x="103" y="18" fill="#888" font-size="11">y</text>
+    <text x="182" y="97" fill="#888" font-size="11">x</text>
+    <text x="115" y="55" fill="#888" font-size="10">I (+,+)</text>
+    <text x="35" y="55" fill="#888" font-size="10">II (−,+)</text>
+    <text x="30" y="145" fill="#888" font-size="10">III (−,−)</text>
+    <text x="115" y="145" fill="#888" font-size="10">IV (+,−)</text>
+    <circle cx="140" cy="60" r="5" fill="#E74C3C"/>
+    <text x="148" y="58" fill="#E74C3C" font-size="10" font-weight="bold">(3,4)</text>
+    <circle cx="60" cy="140" r="5" fill="#2E75B6"/>
+    <text x="36" y="158" fill="#2E75B6" font-size="10" font-weight="bold">(−2,−3)</text>
+    </svg></div><div class="problem">
+        <div class="problem-header">
+            <span class="problem-num">1</span>
+            <span class="problem-text">(3, 5) is in Quadrant ____</span>
+        </div>
         
-        
-        <input type="text" class="answer-box" placeholder="Answer" />
+        <input type="text" class="answer-input" placeholder="Your answer..." />
     </div><div class="problem">
-        <span class="problem-num">2</span>
-        <span class="problem-text">(−4, 2) is in Quadrant ____</span>
+        <div class="problem-header">
+            <span class="problem-num">2</span>
+            <span class="problem-text">(−4, 2) is in Quadrant ____</span>
+        </div>
         
-        
-        <input type="text" class="answer-box" placeholder="Answer" />
+        <input type="text" class="answer-input" placeholder="Your answer..." />
     </div><div class="problem">
-        <span class="problem-num">3</span>
-        <span class="problem-text">(−1, −6) is in Quadrant ____</span>
+        <div class="problem-header">
+            <span class="problem-num">3</span>
+            <span class="problem-text">(−1, −6) is in Quadrant ____</span>
+        </div>
         
-        
-        <input type="text" class="answer-box" placeholder="Answer" />
+        <input type="text" class="answer-input" placeholder="Your answer..." />
     </div><div class="problem">
-        <span class="problem-num">4</span>
-        <span class="problem-text">(7, −3) is in Quadrant ____</span>
+        <div class="problem-header">
+            <span class="problem-num">4</span>
+            <span class="problem-text">(7, −3) is in Quadrant ____</span>
+        </div>
         
-        
-        <input type="text" class="answer-box" placeholder="Answer" />
+        <input type="text" class="answer-input" placeholder="Your answer..." />
     </div><div class="problem">
-        <span class="problem-num">5</span>
-        <span class="problem-text">(0, 4) is on the ____ axis</span>
+        <div class="problem-header">
+            <span class="problem-num">5</span>
+            <span class="problem-text">(0, 4) is on the ____ axis</span>
+        </div>
         
-        
-        <input type="text" class="answer-box" placeholder="Answer" />
+        <input type="text" class="answer-input" placeholder="Your answer..." />
     </div><div class="problem">
-        <span class="problem-num">6</span>
-        <span class="problem-text">(−5, 0) is on the ____ axis</span>
+        <div class="problem-header">
+            <span class="problem-num">6</span>
+            <span class="problem-text">(−5, 0) is on the ____ axis</span>
+        </div>
         
+        <input type="text" class="answer-input" placeholder="Your answer..." />
+    </div></div></div><div class="section"><div class="section-header"><span class="section-icon">📍</span>Part 2: Plot These Points</div><div class="section-body"><div class="fun-fact">Remember: always go <strong>left/right first</strong> (x), then <strong>up/down</strong> (y). Think: "Run before you jump!"</div><div class="problem">
+        <div class="problem-header">
+            <span class="problem-num">7</span>
+            <span class="problem-text">Plot and label: A(2,4), B(5,1), C(−3,2), D(−4,−3), E(1,−5), F(0,3)</span>
+        </div>
         
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div></div><div class="section"><h2>Part 2: Plot These Points (on graph paper or iPad)</h2><div class="problem">
-        <span class="problem-num">7</span>
-        <span class="problem-text">Plot and label: A(2, 4), B(5, 1), C(−3, 2), D(−4, −3), E(1, −5), F(0, 3)</span>
-        
-        
-        <input type="text" class="answer-box" placeholder="Answer" />
+        <input type="text" class="answer-input" placeholder="Your answer..." />
     </div><div class="problem">
-        <span class="problem-num">8</span>
-        <span class="problem-text">Plot and connect in order: (1,1), (4,1), (4,4), (1,4), (1,1). What shape did you make?</span>
+        <div class="problem-header">
+            <span class="problem-num">8</span>
+            <span class="problem-text">Plot and connect in order: (1,1), (4,1), (4,4), (1,4), (1,1). What shape?</span>
+        </div>
         
-        
-        <input type="text" class="answer-box" placeholder="Answer" />
+        <input type="text" class="answer-input" placeholder="Your answer..." />
     </div><div class="problem">
-        <span class="problem-num">9</span>
-        <span class="problem-text">Plot and connect: (0,3), (3,0), (0,−3), (−3,0), (0,3). What shape?</span>
+        <div class="problem-header">
+            <span class="problem-num">9</span>
+            <span class="problem-text">Plot and connect: (0,3), (3,0), (0,−3), (−3,0), (0,3). What shape?</span>
+        </div>
         
+        <input type="text" class="answer-input" placeholder="Your answer..." />
+    </div></div></div><div class="section"><div class="section-header"><span class="section-icon">🏴‍☠️</span>Part 3: Treasure Map</div><div class="section-body"><div class="context-box"><span class="context-emoji">🗺️</span> A treasure map uses a coordinate grid. Each unit = 10 feet. North = +y, East = +x.</div><div class="problem">
+        <div class="problem-header">
+            <span class="problem-num">10</span>
+            <span class="problem-text">The old oak tree is at (2,5). The big rock is at (−3,1). How far apart east-west? North-south?</span>
+        </div>
         
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div></div><div class="section"><h2>Part 3: 🗺️ Treasure Map</h2><div class="context">A treasure map uses a coordinate grid. Each unit = 10 feet. North = +y, East = +x.</div><div class="problem">
-        <span class="problem-num">10</span>
-        <span class="problem-text">The old oak tree is at (2, 5). The big rock is at (−3, 1). How far apart are they east-west? North-south?</span>
-        
-        
-        <input type="text" class="answer-box" placeholder="Answer" />
+        <input type="text" class="answer-input" placeholder="Your answer..." />
     </div><div class="problem">
-        <span class="problem-num">11</span>
-        <span class="problem-text">You start at the origin (0,0). Walk 4 units east and 3 units north. What are your coordinates?</span>
+        <div class="problem-header">
+            <span class="problem-num">11</span>
+            <span class="problem-text">Start at origin (0,0). Walk 4 units east and 3 units north. Your coordinates?</span>
+        </div>
         
-        
-        <input type="text" class="answer-box" placeholder="Answer" />
+        <input type="text" class="answer-input" placeholder="Your answer..." />
     </div><div class="problem">
-        <span class="problem-num">12</span>
-        <span class="problem-text">From (4, 3), walk 6 units west and 5 units south. Where are you now?</span>
-        
+        <div class="problem-header">
+            <span class="problem-num">12</span>
+            <span class="problem-text">From (4,3), walk 6 units west and 5 units south. Where are you now?</span>
+        </div>
         <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
+        <input type="text" class="answer-input" placeholder="Your answer..." />
     </div><div class="problem">
-        <span class="problem-num">13</span>
-        <span class="problem-text">The treasure is buried at the point that's exactly between (2, 6) and (8, 2). What are the coordinates?</span>
-        <div class="hint">Hint: average the x's and average the y's</div>
+        <div class="problem-header">
+            <span class="problem-num">13</span>
+            <span class="problem-text">The treasure is at the midpoint of (2,6) and (8,2). Coordinates?</span>
+        </div>
+        <div class="hint">💡 Average the x's and average the y's</div><textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-input" placeholder="Your answer..." />
+    </div><div class="problem">
+        <div class="problem-header">
+            <span class="problem-num">14</span>
+            <span class="problem-text">Three clues at (1,1), (5,1), and (3,5). Connect them — what shape?</span>
+        </div>
+        
+        <input type="text" class="answer-input" placeholder="Your answer..." />
+    </div></div></div><div class="section"><div class="section-header"><span class="section-icon">⭐</span>Part 4: Mystery Picture</div><div class="section-body"><div class="context-box"><span class="context-emoji">🌟</span> Plot these points in order and connect them to reveal a picture!</div><div class="problem">
+        <div class="problem-header">
+            <span class="problem-num">15</span>
+            <span class="problem-text">Star: (0,3), (1,1), (3,1), (1.5,−0.5), (2,−3), (0,−1), (−2,−3), (−1.5,−0.5), (−3,1), (−1,1), (0,3)</span>
+        </div>
+        
+        <input type="text" class="answer-input" placeholder="Your answer..." />
+    </div><div class="problem">
+        <div class="problem-header">
+            <span class="problem-num">16</span>
+            <span class="problem-text">House: (−2,0), (2,0), (2,3), (0,5), (−2,3), (−2,0). Door: (−0.5,0), (−0.5,1.5), (0.5,1.5), (0.5,0)</span>
+        </div>
+        
+        <input type="text" class="answer-input" placeholder="Your answer..." />
+    </div><div class="problem">
+        <div class="problem-header">
+            <span class="problem-num">17</span>
+            <span class="problem-text">A point 3 units directly above (−2, 1) = ____</span>
+        </div>
+        
+        <input type="text" class="answer-input" placeholder="Your answer..." />
+    </div><div class="problem">
+        <div class="problem-header">
+            <span class="problem-num">18</span>
+            <span class="problem-text">A point 4 units to the left of (5, −2) = ____</span>
+        </div>
+        
+        <input type="text" class="answer-input" placeholder="Your answer..." />
+    </div><div class="problem">
+        <div class="problem-header">
+            <span class="problem-num">19</span>
+            <span class="problem-text">Reflect (3, 4) across the x-axis = ____</span>
+        </div>
         <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
+        <input type="text" class="answer-input" placeholder="Your answer..." />
     </div><div class="problem">
-        <span class="problem-num">14</span>
-        <span class="problem-text">Three clues are at (1,1), (5,1), and (3,5). If you connect them, what shape do they make?</span>
-        
-        
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div></div><div class="section"><h2>Part 4: Mystery Picture</h2><div class="context">Plot these points in order and connect them to reveal a picture!</div><div class="problem">
-        <span class="problem-num">15</span>
-        <span class="problem-text">Star outline: (0,3), (1,1), (3,1), (1.5,−0.5), (2,−3), (0,−1), (−2,−3), (−1.5,−0.5), (−3,1), (−1,1), (0,3). What did you draw?</span>
-        
-        
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">16</span>
-        <span class="problem-text">House: Start at (−2,0), go to (2,0), (2,3), (0,5), (−2,3), (−2,0). Then door: (−0.5,0), (−0.5,1.5), (0.5,1.5), (0.5,0).</span>
-        
-        
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">17</span>
-        <span class="problem-text">What are the coordinates of a point that's 3 units directly above (−2, 1)?</span>
-        
-        
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">18</span>
-        <span class="problem-text">What are the coordinates of a point that's 4 units to the left of (5, −2)?</span>
-        
-        
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">19</span>
-        <span class="problem-text">If you reflect (3, 4) across the x-axis, what are the new coordinates?</span>
-        
+        <div class="problem-header">
+            <span class="problem-num">20</span>
+            <span class="problem-text">Reflect (3, 4) across the y-axis = ____</span>
+        </div>
         <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="problem">
-        <span class="problem-num">20</span>
-        <span class="problem-text">If you reflect (3, 4) across the y-axis, what are the new coordinates?</span>
-        
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div></div>
+        <input type="text" class="answer-input" placeholder="Your answer..." />
+    </div></div></div>
+    </div>
     
+    <div id="pinOverlay" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0;
+         background:rgba(0,0,0,0.7); z-index:1000; display:none; align-items:center; justify-content:center;">
+        <div style="background:white; padding:30px; border-radius:16px; text-align:center; max-width:320px; margin:20px;">
+            <div style="font-size:2em; margin-bottom:10px;">🔒</div>
+            <h3 style="color:#1F4E79; margin-bottom:15px;">Teacher Access</h3>
+            <p style="color:#666; font-size:0.9em; margin-bottom:15px;">Enter today's PIN to view answer key</p>
+            <input type="number" id="pinInput" placeholder="Enter PIN"
+                   style="width:120px; padding:12px; font-size:1.3em; text-align:center;
+                          border:2px solid #ddd; border-radius:8px; outline:none;"
+                   oninput="checkPin()" />
+            <p id="pinError" style="color:#E74C3C; font-size:0.85em; margin-top:8px; display:none;">Incorrect PIN</p>
+            <br><button onclick="closePinDialog()" style="margin-top:10px; padding:8px 20px;
+                   background:none; border:1px solid #ddd; border-radius:6px; cursor:pointer; color:#888;">Cancel</button>
+        </div>
+    </div>
     <div class="answer-key" style="display:none;" id="answerKey">
-        <h2>🔑 Answer Key</h2>
+        <div class="answer-key-header">
+            <span>🔑 Answer Key</span>
+            <button onclick="hideAnswers()" class="close-btn">✕ Hide</button>
+        </div>
         <p><strong>1.</strong> I | <strong>2.</strong> II | <strong>3.</strong> III | <strong>4.</strong> IV | <strong>5.</strong> y-axis | <strong>6.</strong> x-axis</p>
 <p><strong>8.</strong> Square | <strong>9.</strong> Diamond/Rhombus</p>
-<p><strong>10.</strong> 5 units east-west, 4 units north-south | <strong>11.</strong> (4, 3)</p>
-<p><strong>12.</strong> (−2, −2) | <strong>13.</strong> (5, 4)</p>
-<p><strong>14.</strong> Triangle | <strong>15.</strong> A star!</p>
-<p><strong>17.</strong> (−2, 4) | <strong>18.</strong> (1, −2)</p>
-<p><strong>19.</strong> (3, −4) | <strong>20.</strong> (−3, 4)</p>
+<p><strong>10.</strong> 5 east-west, 4 north-south | <strong>11.</strong> (4,3) | <strong>12.</strong> (−2,−2) | <strong>13.</strong> (5,4) | <strong>14.</strong> Triangle</p>
+<p><strong>17.</strong> (−2,4) | <strong>18.</strong> (1,−2) | <strong>19.</strong> (3,−4) | <strong>20.</strong> (−3,4)</p>
     </div>
-    <button class="toggle-btn" onclick="toggleAnswers()">Show/Hide Answer Key</button>
+    <button class="answer-btn" id="showAnswerBtn" onclick="showPinDialog()">🔒 Answer Key (Teacher Only)</button>
     <script>
-        function toggleAnswers() {
-            var key = document.getElementById('answerKey');
-            key.style.display = key.style.display === 'none' ? 'block' : 'none';
+        function showPinDialog() {
+            document.getElementById('pinOverlay').style.display = 'flex';
+            document.getElementById('pinInput').value = '';
+            document.getElementById('pinInput').focus();
+            document.getElementById('pinError').style.display = 'none';
         }
+        function closePinDialog() {
+            document.getElementById('pinOverlay').style.display = 'none';
+        }
+        function checkPin() {
+            const pin = document.getElementById('pinInput').value;
+            const today = new Date().getDate().toString();
+            if (pin === today) {
+                document.getElementById('pinOverlay').style.display = 'none';
+                document.getElementById('answerKey').style.display = 'block';
+                document.getElementById('showAnswerBtn').style.display = 'none';
+                window.scrollTo(0, document.body.scrollHeight);
+            } else if (pin.length >= 2) {
+                document.getElementById('pinError').style.display = 'block';
+            }
+        }
+        function hideAnswers() {
+            document.getElementById('answerKey').style.display = 'none';
+            document.getElementById('showAnswerBtn').style.display = 'block';
+        }
+    </script>
+    <script>
+        // Track progress
+        const inputs = document.querySelectorAll('.answer-input, .mc-option.selected');
+        function updateProgress() {
+            const all = document.querySelectorAll('.answer-input');
+            const filled = Array.from(all).filter(i => i.value.trim() !== '').length;
+            const pct = all.length > 0 ? (filled / all.length * 100) : 0;
+            document.getElementById('progressBar').style.width = pct + '%';
+        }
+        document.querySelectorAll('.answer-input').forEach(i => i.addEventListener('input', updateProgress));
+        
+        // MC selection
+        document.querySelectorAll('.mc-option').forEach(opt => {
+            opt.addEventListener('click', function() {
+                this.parentElement.querySelectorAll('.mc-option').forEach(o => o.classList.remove('selected'));
+                this.classList.add('selected');
+                updateProgress();
+            });
+        });
     </script>
 </body>
 </html>

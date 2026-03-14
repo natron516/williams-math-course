@@ -3,177 +3,332 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Worksheet 1: Angle Explorer</title>
+    <title>Angle Explorer</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-               max-width: 800px; margin: 0 auto; padding: 20px; background: #f5f5f5; color: #333; }
-        .header { background: linear-gradient(135deg, #1F4E79, #2E75B6); color: white;
-                   padding: 20px; border-radius: 12px; margin-bottom: 20px; text-align: center; }
-        .header h1 { font-size: 1.5em; margin-bottom: 5px; }
-        .header p { font-size: 0.9em; opacity: 0.9; }
-        .student-info { background: white; padding: 15px; border-radius: 8px; margin-bottom: 20px;
-                        display: flex; gap: 15px; flex-wrap: wrap; }
-        .student-info input { border: none; border-bottom: 2px solid #2E75B6; padding: 8px;
-                               font-size: 1em; flex: 1; min-width: 150px; outline: none; }
-        .section { background: white; padding: 20px; border-radius: 12px; margin-bottom: 15px;
-                   box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
-        .section h2 { color: #1F4E79; font-size: 1.2em; margin-bottom: 15px;
-                      border-bottom: 2px solid #D6E4F0; padding-bottom: 8px; }
-        .problem { padding: 12px 0; border-bottom: 1px solid #eee; }
+        body { font-family: 'Nunito', -apple-system, sans-serif;
+               max-width: 850px; margin: 0 auto; padding: 0; background: #f0f4f8; color: #333; }
+        
+        .hero { background: linear-gradient(135deg, #1F4E79 0%, #2E75B6 60%, #2E75B6cc 100%);
+                color: white; padding: 30px 25px 25px; position: relative; overflow: hidden; }
+        .hero::before { content: ''; position: absolute; top: -50px; right: -50px;
+                        width: 200px; height: 200px; border-radius: 50%;
+                        background: rgba(255,255,255,0.08); }
+        .hero::after { content: ''; position: absolute; bottom: -80px; left: -40px;
+                       width: 250px; height: 250px; border-radius: 50%;
+                       background: rgba(255,255,255,0.05); }
+        .hero h1 { font-size: 1.6em; font-weight: 800; position: relative; z-index: 1; }
+        .hero p { font-size: 0.95em; opacity: 0.9; margin-top: 5px; position: relative; z-index: 1; }
+        .hero .type-badge { display: inline-block; background: rgba(255,255,255,0.2);
+                           padding: 4px 12px; border-radius: 20px; font-size: 0.8em;
+                           font-weight: 700; margin-bottom: 8px; position: relative; z-index: 1; }
+        
+        .student-bar { background: white; padding: 12px 20px; display: flex; gap: 10px;
+                       flex-wrap: wrap; box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+                       border-bottom: 3px solid #2E75B622; }
+        .student-bar input { border: none; border-bottom: 2px solid #2E75B644; padding: 8px 4px;
+                            font-size: 1em; font-family: 'Nunito', sans-serif; flex: 1;
+                            min-width: 120px; outline: none; transition: border 0.2s; }
+        .student-bar input:focus { border-bottom-color: #2E75B6; }
+        
+        .content-area { padding: 15px; }
+        
+        .section { background: white; border-radius: 16px; margin-bottom: 15px;
+                   box-shadow: 0 2px 12px rgba(0,0,0,0.06); overflow: hidden;
+                   border: 1px solid rgba(0,0,0,0.04); }
+        .section-header { padding: 16px 20px; font-weight: 800; font-size: 1.1em;
+                         color: #1F4E79; display: flex; align-items: center; gap: 10px;
+                         border-bottom: 2px solid #2E75B615;
+                         background: linear-gradient(90deg, #2E75B608, transparent); }
+        .section-header .section-icon { font-size: 1.4em; }
+        .section-body { padding: 5px 15px 15px; }
+        
+        .problem { padding: 14px 5px; border-bottom: 1px solid #f0f0f0;
+                   transition: background 0.2s; border-radius: 8px; margin: 2px 0; }
+        .problem:hover { background: #f8fbff; }
         .problem:last-child { border-bottom: none; }
-        .problem-num { display: inline-block; background: #2E75B6; color: white;
-                       width: 28px; height: 28px; border-radius: 50%; text-align: center;
-                       line-height: 28px; font-size: 0.85em; font-weight: bold; margin-right: 10px; }
-        .problem-text { display: inline; font-size: 1.05em; }
-        .answer-box { display: block; margin: 10px 0 5px 38px; border: 2px dashed #ccc;
-                      border-radius: 8px; padding: 12px; min-height: 45px;
-                      font-size: 1em; width: calc(100% - 38px); }
-        .answer-box:focus { border-color: #2E75B6; outline: none; background: #f8fbff; }
-        .work-area { display: block; margin: 8px 0 5px 38px; border: 1px solid #ddd;
-                     border-radius: 8px; padding: 10px; min-height: 80px;
-                     font-size: 0.9em; width: calc(100% - 38px); color: #666; }
-        .work-area:focus { border-color: #2E75B6; outline: none; }
-        .emoji { font-size: 1.3em; margin-right: 5px; }
-        .context { background: #f0f7ff; padding: 12px; border-radius: 8px;
-                   margin: 10px 0; border-left: 4px solid #2E75B6; font-size: 0.95em; }
-        .hint { color: #888; font-size: 0.85em; font-style: italic; margin-left: 38px; }
-        .mc-option { display: block; padding: 10px 15px; margin: 5px 0 5px 38px;
-                     background: #f8f8f8; border: 2px solid #e0e0e0; border-radius: 8px;
-                     cursor: pointer; transition: all 0.2s; font-size: 1em; }
-        .mc-option:hover { background: #e8f0fe; border-color: #2E75B6; }
-        .mc-option.selected { background: #d0e4ff; border-color: #2E75B6; font-weight: bold; }
-        .answer-key { background: #fff9e6; padding: 20px; border-radius: 12px;
-                      margin: 20px 0; border: 2px solid #f0c040; }
-        .answer-key h2 { color: #8B6914; }
-        .toggle-btn { display: block; margin: 15px auto; padding: 12px 30px;
-                      background: #1F4E79; color: white; border: none; border-radius: 8px;
-                      font-size: 1em; cursor: pointer; }
-        .toggle-btn:hover { background: #2E75B6; }
-        .score-box { background: #e2efda; padding: 15px; border-radius: 8px;
-                     text-align: center; font-size: 1.2em; margin-top: 15px; }
-        @media print {
-            .toggle-btn, .answer-key { display: none !important; }
-            .section { break-inside: avoid; }
-        }
+        .problem-header { display: flex; align-items: flex-start; gap: 10px; }
+        .problem-num { display: flex; align-items: center; justify-content: center;
+                       background: linear-gradient(135deg, #2E75B6, #1F4E79);
+                       color: white; min-width: 32px; height: 32px; border-radius: 50%;
+                       font-size: 0.85em; font-weight: 800; flex-shrink: 0; }
+        .problem-text { font-size: 1em; line-height: 1.5; flex: 1; }
+        
+        .answer-input { display: block; margin: 10px 0 5px 42px; width: calc(100% - 42px);
+                        border: 2px solid #e8e8e8; border-radius: 10px; padding: 12px 14px;
+                        font-size: 1em; font-family: 'Nunito', sans-serif; outline: none;
+                        transition: all 0.2s; background: #fafafa; }
+        .answer-input:focus { border-color: #2E75B6; background: white;
+                             box-shadow: 0 0 0 3px #2E75B615; }
+        .work-area { display: block; margin: 8px 0 5px 42px; width: calc(100% - 42px);
+                     border: 1.5px dashed #ddd; border-radius: 10px; padding: 10px 14px;
+                     min-height: 80px; font-size: 0.9em; font-family: 'Nunito', sans-serif;
+                     outline: none; color: #666; resize: vertical; background: #fcfcfc; }
+        .work-area:focus { border-color: #2E75B6; border-style: solid; background: white; }
+        
+        .context-box { margin: 12px 0; padding: 14px 16px; background: linear-gradient(135deg, #2E75B608, #2E75B604);
+                       border-radius: 12px; border-left: 4px solid #2E75B6;
+                       font-size: 0.95em; line-height: 1.5; }
+        .context-box .context-emoji { font-size: 1.5em; margin-right: 8px; vertical-align: middle; }
+        
+        .hint { color: #999; font-size: 0.85em; font-style: italic; margin: 4px 0 0 42px;
+                padding: 4px 8px; background: #fff8e1; border-radius: 6px; display: inline-block; }
+        
+        .mc-option { display: block; padding: 12px 16px; margin: 6px 0 6px 42px;
+                     width: calc(100% - 42px); background: #f8f9fa; border: 2px solid #e8e8e8;
+                     border-radius: 10px; cursor: pointer; transition: all 0.2s;
+                     font-size: 1em; font-family: 'Nunito', sans-serif; }
+        .mc-option:hover { background: #2E75B608; border-color: #2E75B644; transform: translateX(3px); }
+        .mc-option.selected { background: #2E75B615; border-color: #2E75B6; font-weight: 700; }
+        
+        .illustration { text-align: center; padding: 15px; margin: 10px 0; }
+        .illustration svg { max-width: 100%; }
+        
+        .formula-card { display: inline-block; background: linear-gradient(135deg, #667eea, #764ba2);
+                        color: white; padding: 10px 18px; border-radius: 10px;
+                        font-size: 1.1em; font-weight: 700; margin: 8px 4px;
+                        box-shadow: 0 3px 10px rgba(102,126,234,0.3); }
+        
+        .fun-fact { background: linear-gradient(135deg, #ffecd2, #fcb69f44);
+                   padding: 14px 16px; border-radius: 12px; margin: 10px 0;
+                   border-left: 4px solid #f093fb; font-size: 0.9em; }
+        .fun-fact::before { content: '💡 '; font-size: 1.2em; }
+        
+        .progress-bar { background: #e0e0e0; border-radius: 20px; height: 8px;
+                        margin: 15px 20px; overflow: hidden; }
+        .progress-fill { background: linear-gradient(90deg, #2E75B6, #4CAF50);
+                         height: 100%; border-radius: 20px; transition: width 0.5s;
+                         width: 0%; }
+        
+        .score-box { background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+                    padding: 20px; border-radius: 16px; text-align: center;
+                    font-size: 1.2em; font-weight: 700; margin-top: 15px;
+                    color: #2E7D32; }
+        
+        .answer-key { background: #fff9e6; padding: 20px; border-radius: 16px;
+                     margin: 20px 15px; border: 2px solid #f0c040; }
+        .answer-key-header { display: flex; justify-content: space-between; align-items: center;
+                            font-size: 1.2em; font-weight: 800; color: #8B6914;
+                            margin-bottom: 15px; padding-bottom: 10px;
+                            border-bottom: 2px solid #f0c04044; }
+        .close-btn { background: none; border: 1px solid #ddd; padding: 5px 12px;
+                    border-radius: 6px; cursor: pointer; font-size: 0.8em; color: #888; }
+        .answer-btn { display: block; margin: 15px auto; padding: 14px 30px;
+                     background: linear-gradient(135deg, #1F4E79, #2E75B6);
+                     color: white; border: none; border-radius: 12px;
+                     font-size: 1em; font-weight: 700; cursor: pointer;
+                     font-family: 'Nunito', sans-serif;
+                     box-shadow: 0 3px 12px #2E75B644; transition: transform 0.2s; }
+        .answer-btn:hover { transform: translateY(-2px); }
+        
+        @media print { .answer-btn, .answer-key, .student-bar { display: none !important; } }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>Worksheet 1: Angle Explorer</h1>
+    <div class="hero">
+        <div class="type-badge">📄 WORKSHEET</div>
+        <h1>Angle Explorer</h1>
         <p>Session 1 — Identify and measure angles in the real world</p>
     </div>
-    <div class="student-info">
-        <input type="text" placeholder="Name" />
-        <input type="text" placeholder="Date" />
-        <input type="text" placeholder="Period" />
+    <div class="student-bar">
+        <input type="text" placeholder="✏️ Your Name" id="studentName" />
+        <input type="text" placeholder="📅 Date" />
     </div>
-    <div class="section"><h2>Part 1: Classify These Angles</h2><div class="problem">
-        <span class="problem-num">1</span>
-        <span class="problem-text">An angle that measures 45°. Type: ____</span>
+    <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
+    <div class="content-area">
+        <div class="section"><div class="section-header"><span class="section-icon">📐</span>Part 1: Classify These Angles</div><div class="section-body"><div class="illustration"><svg width="300" height="150" viewBox="0 0 300 150">
+    <line x1="20" y1="120" x2="140" y2="120" stroke="#2E75B6" stroke-width="3"/>
+    <line x1="20" y1="120" x2="80" y2="30" stroke="#2E75B6" stroke-width="3"/>
+    <path d="M 50 120 A 30 30 0 0 1 38 95" fill="none" stroke="#E67E22" stroke-width="2.5"/>
+    <text x="52" y="108" fill="#E67E22" font-size="14" font-weight="bold">45°</text>
+    <text x="10" y="140" fill="#888" font-size="11">Acute Angle</text>
+    <line x1="170" y1="120" x2="280" y2="120" stroke="#2E75B6" stroke-width="3"/>
+    <line x1="170" y1="120" x2="170" y2="30" stroke="#2E75B6" stroke-width="3"/>
+    <rect x="170" y="100" width="18" height="18" fill="none" stroke="#E67E22" stroke-width="2"/>
+    <text x="195" y="108" fill="#E67E22" font-size="14" font-weight="bold">90°</text>
+    <text x="170" y="140" fill="#888" font-size="11">Right Angle</text>
+    </svg></div><div style="text-align:center; margin:10px 0;"><span class="formula-card">Acute: &lt; 90°</span><span class="formula-card">Right: = 90°</span><span class="formula-card">Obtuse: &gt; 90°</span><span class="formula-card">Straight: = 180°</span></div><div class="problem">
+        <div class="problem-header">
+            <span class="problem-num">1</span>
+            <span class="problem-text">An angle that measures 45°. Type: ____</span>
+        </div>
         
-        
-        <input type="text" class="answer-box" placeholder="Answer" />
+        <input type="text" class="answer-input" placeholder="Your answer..." />
     </div><div class="problem">
-        <span class="problem-num">2</span>
-        <span class="problem-text">An angle that measures 90°. Type: ____</span>
+        <div class="problem-header">
+            <span class="problem-num">2</span>
+            <span class="problem-text">An angle that measures 90°. Type: ____</span>
+        </div>
         
-        
-        <input type="text" class="answer-box" placeholder="Answer" />
+        <input type="text" class="answer-input" placeholder="Your answer..." />
     </div><div class="problem">
-        <span class="problem-num">3</span>
-        <span class="problem-text">An angle that measures 120°. Type: ____</span>
+        <div class="problem-header">
+            <span class="problem-num">3</span>
+            <span class="problem-text">An angle that measures 120°. Type: ____</span>
+        </div>
         
-        
-        <input type="text" class="answer-box" placeholder="Answer" />
+        <input type="text" class="answer-input" placeholder="Your answer..." />
     </div><div class="problem">
-        <span class="problem-num">4</span>
-        <span class="problem-text">An angle that measures 180°. Type: ____</span>
+        <div class="problem-header">
+            <span class="problem-num">4</span>
+            <span class="problem-text">An angle that measures 180°. Type: ____</span>
+        </div>
         
-        
-        <input type="text" class="answer-box" placeholder="Answer" />
+        <input type="text" class="answer-input" placeholder="Your answer..." />
     </div><div class="problem">
-        <span class="problem-num">5</span>
-        <span class="problem-text">An angle that measures 15°. Type: ____</span>
+        <div class="problem-header">
+            <span class="problem-num">5</span>
+            <span class="problem-text">An angle that measures 15°. Type: ____</span>
+        </div>
         
-        
-        <input type="text" class="answer-box" placeholder="Answer" />
+        <input type="text" class="answer-input" placeholder="Your answer..." />
     </div><div class="problem">
-        <span class="problem-num">6</span>
-        <span class="problem-text">An angle that measures 89°. Type: ____</span>
+        <div class="problem-header">
+            <span class="problem-num">6</span>
+            <span class="problem-text">An angle that measures 89°. Type: ____</span>
+        </div>
         
-        
-        <input type="text" class="answer-box" placeholder="Answer" />
+        <input type="text" class="answer-input" placeholder="Your answer..." />
     </div><div class="problem">
-        <span class="problem-num">7</span>
-        <span class="problem-text">An angle that measures 91°. Type: ____</span>
+        <div class="problem-header">
+            <span class="problem-num">7</span>
+            <span class="problem-text">An angle that measures 91°. Type: ____</span>
+        </div>
         
-        
-        <input type="text" class="answer-box" placeholder="Answer" />
+        <input type="text" class="answer-input" placeholder="Your answer..." />
     </div><div class="problem">
-        <span class="problem-num">8</span>
-        <span class="problem-text">An angle that measures 175°. Type: ____</span>
+        <div class="problem-header">
+            <span class="problem-num">8</span>
+            <span class="problem-text">An angle that measures 175°. Type: ____</span>
+        </div>
         
-        
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div></div><div class="section"><h2>Part 2: Real-World Angle Estimation</h2><div class="context">🍕 A whole pizza is cut into 8 equal slices.</div><div class="problem">
-        <span class="problem-num">9</span>
-        <span class="problem-text">What is the angle of each pizza slice?</span>
-        
+        <input type="text" class="answer-input" placeholder="Your answer..." />
+    </div></div></div><div class="section"><div class="section-header"><span class="section-icon">🍕</span>Part 2: Real-World Angles</div><div class="section-body"><div class="context-box"><span class="context-emoji">🍕</span> A whole pizza is cut into 8 equal slices. Think about the angle each slice makes!</div><div class="problem">
+        <div class="problem-header">
+            <span class="problem-num">9</span>
+            <span class="problem-text">What is the angle of each pizza slice?</span>
+        </div>
         <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
+        <input type="text" class="answer-input" placeholder="Your answer..." />
     </div><div class="problem">
-        <span class="problem-num">10</span>
-        <span class="problem-text">If you eat 3 slices, what angle does the remaining pizza form?</span>
-        
+        <div class="problem-header">
+            <span class="problem-num">10</span>
+            <span class="problem-text">If you eat 3 slices, what angle does the remaining pizza form?</span>
+        </div>
         <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="context">🕐 Think about a clock face.</div><div class="problem">
-        <span class="problem-num">11</span>
-        <span class="problem-text">What angle do the hands make at 3:00?</span>
+        <input type="text" class="answer-input" placeholder="Your answer..." />
+    </div><div class="context-box"><span class="context-emoji">🕐</span> Think about a clock face. The hands move in angles!</div><div class="problem">
+        <div class="problem-header">
+            <span class="problem-num">11</span>
+            <span class="problem-text">What angle do the hands make at 3:00?</span>
+        </div>
         
-        
-        <input type="text" class="answer-box" placeholder="Answer" />
+        <input type="text" class="answer-input" placeholder="Your answer..." />
     </div><div class="problem">
-        <span class="problem-num">12</span>
-        <span class="problem-text">What angle do the hands make at 6:00?</span>
+        <div class="problem-header">
+            <span class="problem-num">12</span>
+            <span class="problem-text">What angle do the hands make at 6:00?</span>
+        </div>
         
-        
-        <input type="text" class="answer-box" placeholder="Answer" />
+        <input type="text" class="answer-input" placeholder="Your answer..." />
     </div><div class="problem">
-        <span class="problem-num">13</span>
-        <span class="problem-text">What angle do the hands make at 1:00? (Hint: each hour = 30°)</span>
+        <div class="problem-header">
+            <span class="problem-num">13</span>
+            <span class="problem-text">What angle do the hands make at 1:00?</span>
+        </div>
+        <div class="hint">💡 Each hour mark = 30°</div><textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-input" placeholder="Your answer..." />
+    </div><div class="fun-fact">A full rotation is 360° — that's why a circle has 360 degrees! Ancient Babylonians chose 360 because it has lots of factors.</div><div class="context-box"><span class="context-emoji">✂️</span> A pair of scissors opens to different widths, creating different angles.</div><div class="problem">
+        <div class="problem-header">
+            <span class="problem-num">14</span>
+            <span class="problem-text">If scissors are open to a 40° angle, is this acute, right, or obtuse?</span>
+        </div>
         
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div><div class="context">✂️ A pair of scissors is open to different widths.</div><div class="problem">
-        <span class="problem-num">14</span>
-        <span class="problem-text">If scissors are open to a 40° angle, is this acute, right, or obtuse?</span>
-        
-        
-        <input type="text" class="answer-box" placeholder="Answer" />
+        <input type="text" class="answer-input" placeholder="Your answer..." />
     </div><div class="problem">
-        <span class="problem-num">15</span>
-        <span class="problem-text">If scissors are fully open at 170°, what type of angle is this?</span>
+        <div class="problem-header">
+            <span class="problem-num">15</span>
+            <span class="problem-text">If scissors are fully open at 170°, what type of angle is this?</span>
+        </div>
         
-        
-        <input type="text" class="answer-box" placeholder="Answer" />
-    </div></div>
+        <input type="text" class="answer-input" placeholder="Your answer..." />
+    </div></div></div>
+    </div>
     
+    <div id="pinOverlay" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0;
+         background:rgba(0,0,0,0.7); z-index:1000; display:none; align-items:center; justify-content:center;">
+        <div style="background:white; padding:30px; border-radius:16px; text-align:center; max-width:320px; margin:20px;">
+            <div style="font-size:2em; margin-bottom:10px;">🔒</div>
+            <h3 style="color:#1F4E79; margin-bottom:15px;">Teacher Access</h3>
+            <p style="color:#666; font-size:0.9em; margin-bottom:15px;">Enter today's PIN to view answer key</p>
+            <input type="number" id="pinInput" placeholder="Enter PIN"
+                   style="width:120px; padding:12px; font-size:1.3em; text-align:center;
+                          border:2px solid #ddd; border-radius:8px; outline:none;"
+                   oninput="checkPin()" />
+            <p id="pinError" style="color:#E74C3C; font-size:0.85em; margin-top:8px; display:none;">Incorrect PIN</p>
+            <br><button onclick="closePinDialog()" style="margin-top:10px; padding:8px 20px;
+                   background:none; border:1px solid #ddd; border-radius:6px; cursor:pointer; color:#888;">Cancel</button>
+        </div>
+    </div>
     <div class="answer-key" style="display:none;" id="answerKey">
-        <h2>🔑 Answer Key</h2>
+        <div class="answer-key-header">
+            <span>🔑 Answer Key</span>
+            <button onclick="hideAnswers()" class="close-btn">✕ Hide</button>
+        </div>
         <p><strong>1.</strong> Acute | <strong>2.</strong> Right | <strong>3.</strong> Obtuse | <strong>4.</strong> Straight | 
 <strong>5.</strong> Acute | <strong>6.</strong> Acute | <strong>7.</strong> Obtuse | <strong>8.</strong> Obtuse</p>
-<p><strong>9.</strong> 360° ÷ 8 = 45° | <strong>10.</strong> 360° − 3(45°) = 360° − 135° = 225° (or the remaining portion = 5 × 45° = 225°)</p>
+<p><strong>9.</strong> 360° ÷ 8 = 45° | <strong>10.</strong> 5 × 45° = 225°</p>
 <p><strong>11.</strong> 90° | <strong>12.</strong> 180° | <strong>13.</strong> 30°</p>
 <p><strong>14.</strong> Acute | <strong>15.</strong> Obtuse</p>
     </div>
-    <button class="toggle-btn" onclick="toggleAnswers()">Show/Hide Answer Key</button>
+    <button class="answer-btn" id="showAnswerBtn" onclick="showPinDialog()">🔒 Answer Key (Teacher Only)</button>
     <script>
-        function toggleAnswers() {
-            var key = document.getElementById('answerKey');
-            key.style.display = key.style.display === 'none' ? 'block' : 'none';
+        function showPinDialog() {
+            document.getElementById('pinOverlay').style.display = 'flex';
+            document.getElementById('pinInput').value = '';
+            document.getElementById('pinInput').focus();
+            document.getElementById('pinError').style.display = 'none';
         }
+        function closePinDialog() {
+            document.getElementById('pinOverlay').style.display = 'none';
+        }
+        function checkPin() {
+            const pin = document.getElementById('pinInput').value;
+            const today = new Date().getDate().toString();
+            if (pin === today) {
+                document.getElementById('pinOverlay').style.display = 'none';
+                document.getElementById('answerKey').style.display = 'block';
+                document.getElementById('showAnswerBtn').style.display = 'none';
+                window.scrollTo(0, document.body.scrollHeight);
+            } else if (pin.length >= 2) {
+                document.getElementById('pinError').style.display = 'block';
+            }
+        }
+        function hideAnswers() {
+            document.getElementById('answerKey').style.display = 'none';
+            document.getElementById('showAnswerBtn').style.display = 'block';
+        }
+    </script>
+    <script>
+        // Track progress
+        const inputs = document.querySelectorAll('.answer-input, .mc-option.selected');
+        function updateProgress() {
+            const all = document.querySelectorAll('.answer-input');
+            const filled = Array.from(all).filter(i => i.value.trim() !== '').length;
+            const pct = all.length > 0 ? (filled / all.length * 100) : 0;
+            document.getElementById('progressBar').style.width = pct + '%';
+        }
+        document.querySelectorAll('.answer-input').forEach(i => i.addEventListener('input', updateProgress));
+        
+        // MC selection
+        document.querySelectorAll('.mc-option').forEach(opt => {
+            opt.addEventListener('click', function() {
+                this.parentElement.querySelectorAll('.mc-option').forEach(o => o.classList.remove('selected'));
+                this.classList.add('selected');
+                updateProgress();
+            });
+        });
     </script>
 </body>
 </html>

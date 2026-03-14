@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>📝 Quiz 7: Coordinate Plane & Linear Relationships</title>
-    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
+<style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        body { font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
                max-width: 800px; margin: 0 auto; padding: 20px; background: #f5f5f5; color: #333; }
         .header { background: linear-gradient(135deg, #1F4E79, #2E75B6); color: white;
                    padding: 20px; border-radius: 12px; margin-bottom: 20px; text-align: center; }
@@ -139,11 +140,43 @@
 <p><strong>7.</strong> d = 55t, d = 165 miles | <strong>8.</strong> S = 40 + 10h, S = $120</p>
 <p><strong>9.</strong> h = 5 + 3w, 5 + 3w = 29, w = 8 weeks | <strong>10.</strong> (2, −7)</p>
     </div>
-    <button class="toggle-btn" onclick="toggleAnswers()">Show/Hide Answer Key</button>
+    <div id="pinOverlay" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0;
+         background:rgba(0,0,0,0.7); z-index:1000; align-items:center; justify-content:center;">
+        <div style="background:white; padding:30px; border-radius:16px; text-align:center; max-width:320px; margin:20px;">
+            <div style="font-size:2em; margin-bottom:10px;">🔒</div>
+            <h3 style="color:#1F4E79; margin-bottom:15px;">Teacher Access</h3>
+            <p style="color:#666; font-size:0.9em; margin-bottom:15px;">Enter today's PIN to view answer key</p>
+            <input type="number" id="pinInput" placeholder="Enter PIN"
+                   style="width:120px; padding:12px; font-size:1.3em; text-align:center;
+                          border:2px solid #ddd; border-radius:8px; outline:none;"
+                   oninput="checkPin()" />
+            <p id="pinError" style="color:#E74C3C; font-size:0.85em; margin-top:8px; display:none;">Incorrect PIN</p>
+            <br><button onclick="closePinDialog()" style="margin-top:10px; padding:8px 20px;
+                   background:none; border:1px solid #ddd; border-radius:6px; cursor:pointer; color:#888;">Cancel</button>
+        </div>
+    </div>
+    <button class="toggle-btn" onclick="showPinDialog()" id="showAnswerBtn">🔒 Answer Key (Teacher Only)</button>
     <script>
-        function toggleAnswers() {
-            var key = document.getElementById('answerKey');
-            key.style.display = key.style.display === 'none' ? 'block' : 'none';
+        function showPinDialog() {
+            document.getElementById('pinOverlay').style.display = 'flex';
+            document.getElementById('pinInput').value = '';
+            document.getElementById('pinInput').focus();
+            document.getElementById('pinError').style.display = 'none';
+        }
+        function closePinDialog() {
+            document.getElementById('pinOverlay').style.display = 'none';
+        }
+        function checkPin() {
+            var pin = document.getElementById('pinInput').value;
+            var today = new Date().getDate().toString();
+            if (pin === today) {
+                document.getElementById('pinOverlay').style.display = 'none';
+                document.getElementById('answerKey').style.display = 'block';
+                document.getElementById('showAnswerBtn').style.display = 'none';
+                window.scrollTo(0, document.body.scrollHeight);
+            } else if (pin.length >= 2) {
+                document.getElementById('pinError').style.display = 'block';
+            }
         }
     </script>
 </body>
