@@ -3,127 +3,224 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teacher Portal — 6th/7th Grade Math</title>
+    <title>Mrs. Williams' Math Class</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Playfair+Display:wght@700;800&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Nunito', sans-serif; background: #f0f4f8; color: #333; }
         
-        .hero { background: linear-gradient(135deg, #1F4E79 0%, #2E75B6 50%, #4A90D9 100%);
-                color: white; padding: 30px 20px; text-align: center; position: relative; overflow: hidden; }
-        .hero::before { content: ''; position: absolute; top: -60px; right: -60px; width: 200px; height: 200px;
-                       border-radius: 50%; background: rgba(255,255,255,0.06); }
-        .hero h1 { font-size: 1.8em; font-weight: 800; }
-        .hero p { opacity: 0.9; margin-top: 4px; }
-        .hero .badge { display: inline-block; background: rgba(255,255,255,0.2); padding: 4px 14px;
-                      border-radius: 20px; font-size: 0.8em; font-weight: 700; margin-top: 10px; }
+        /* Hero with animated gradient */
+        .hero { background: linear-gradient(-45deg, #1a3a5c, #2E75B6, #1F4E79, #3d8fd4);
+                background-size: 400% 400%; animation: gradientShift 12s ease infinite;
+                color: white; padding: 35px 20px 30px; text-align: center;
+                position: relative; overflow: hidden; }
+        @keyframes gradientShift { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+        .hero::before { content: ''; position: absolute; top: -80px; right: -60px; width: 250px; height: 250px;
+                       border-radius: 50%; background: rgba(255,255,255,0.05); }
+        .hero::after { content: ''; position: absolute; bottom: -100px; left: -40px; width: 300px; height: 300px;
+                      border-radius: 50%; background: rgba(255,255,255,0.03); }
+        .hero .welcome { font-family: 'Playfair Display', serif; font-size: 2.2em; font-weight: 800;
+                        position: relative; z-index: 1; line-height: 1.2; }
+        .hero .subtitle { font-size: 1.05em; opacity: 0.9; margin-top: 6px; position: relative; z-index: 1; }
+        .hero .class-info { display: inline-flex; align-items: center; gap: 20px; margin-top: 14px;
+                          background: rgba(255,255,255,0.12); padding: 10px 22px; border-radius: 30px;
+                          position: relative; z-index: 1; flex-wrap: wrap; justify-content: center; }
+        .hero .class-info span { font-size: 0.88em; font-weight: 600; }
+        .hero .class-info .dot { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,0.5); }
+        
+        /* Greeting bar with time awareness */
+        .greeting-bar { background: white; padding: 14px 20px; display: flex; align-items: center;
+                       gap: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+                       border-bottom: 3px solid #2E75B622; flex-wrap: wrap; }
+        .greeting-bar .greet { font-weight: 700; color: #1F4E79; font-size: 1.05em; }
+        .greeting-bar .today { font-size: 0.88em; color: #888; margin-left: auto; }
+        .greeting-bar .week-badge { background: linear-gradient(135deg, #2E75B6, #1F4E79);
+                                   color: white; padding: 5px 14px; border-radius: 20px;
+                                   font-size: 0.82em; font-weight: 700; }
         
         .container { max-width: 950px; margin: 0 auto; padding: 20px; }
         
+        /* Today's lesson spotlight */
+        .spotlight { background: white; border-radius: 18px; padding: 0; margin-bottom: 22px;
+                    box-shadow: 0 4px 20px rgba(0,0,0,0.08); overflow: hidden;
+                    border: 1px solid rgba(46,117,182,0.1); }
+        .spotlight-header { background: linear-gradient(135deg, #1F4E79, #2E75B6);
+                          color: white; padding: 18px 22px; display: flex; align-items: center; gap: 14px; }
+        .spotlight-header .pulse { width: 12px; height: 12px; border-radius: 50%; background: #4CAF50;
+                                 animation: pulse 2s ease infinite; }
+        @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.6;transform:scale(1.3)} }
+        .spotlight-header h2 { font-size: 1.15em; font-weight: 800; }
+        .spotlight-body { padding: 22px; }
+        .spotlight-body .session-title { font-family: 'Playfair Display', serif; font-size: 1.4em;
+                                        color: #1F4E79; margin-bottom: 8px; }
+        .spotlight-body .session-meta { font-size: 0.88em; color: #888; margin-bottom: 14px; }
+        .spotlight-body .topics { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+        .spotlight-body .topic-tag { padding: 5px 12px; border-radius: 20px; font-size: 0.82em;
+                                   font-weight: 600; background: #E8F0FE; color: #1F4E79;
+                                   border: 1px solid #C2D6F2; }
+        .spotlight-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+        .spot-btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 18px;
+                   border-radius: 10px; text-decoration: none; font-weight: 700; font-size: 0.9em;
+                   transition: all 0.2s; }
+        .spot-btn:hover { transform: translateY(-2px); }
+        .spot-btn.primary { background: linear-gradient(135deg, #1F4E79, #2E75B6); color: white;
+                          box-shadow: 0 3px 12px rgba(31,78,121,0.3); }
+        .spot-btn.secondary { background: #f0f4f8; color: #1F4E79; border: 1px solid #C2D6F2; }
+        
         /* Student portal banner */
-        .student-banner { background: linear-gradient(135deg, #667eea22, #764ba222);
-                        border: 2px solid #667eea44; border-radius: 14px; padding: 18px 22px;
-                        margin-bottom: 20px; display: flex; align-items: center; gap: 15px; flex-wrap: wrap; }
+        .student-banner { background: linear-gradient(135deg, #667eea11, #764ba211);
+                        border: 2px dashed #667eea44; border-radius: 14px; padding: 16px 20px;
+                        margin-bottom: 22px; display: flex; align-items: center; gap: 15px; flex-wrap: wrap; }
         .student-banner .text { flex: 1; min-width: 200px; }
-        .student-banner h3 { color: #764ba2; font-size: 1em; }
-        .student-banner p { color: #666; font-size: 0.85em; margin-top: 3px; }
+        .student-banner h3 { color: #764ba2; font-size: 0.95em; }
+        .student-banner p { color: #888; font-size: 0.82em; margin-top: 2px; }
         .student-banner a { display: inline-block; background: linear-gradient(135deg, #667eea, #764ba2);
-                          color: white; padding: 10px 22px; border-radius: 10px; text-decoration: none;
-                          font-weight: 700; font-size: 0.9em; white-space: nowrap;
-                          box-shadow: 0 3px 10px rgba(102,126,234,0.3); transition: transform 0.2s; }
-        .student-banner a:hover { transform: translateY(-2px); }
+                          color: white; padding: 9px 20px; border-radius: 10px; text-decoration: none;
+                          font-weight: 700; font-size: 0.85em; white-space: nowrap;
+                          box-shadow: 0 3px 10px rgba(102,126,234,0.2); }
         
-        /* Quick access cards */
-        .quick-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-bottom: 25px; }
-        .quick-card { background: white; border-radius: 14px; padding: 22px 18px; text-align: center;
-                     box-shadow: 0 2px 10px rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.04);
-                     text-decoration: none; color: #333; transition: all 0.2s; cursor: pointer; }
-        .quick-card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
-        .quick-card .icon { font-size: 2.2em; margin-bottom: 8px; }
-        .quick-card h3 { font-size: 1em; color: #1F4E79; margin-bottom: 4px; }
-        .quick-card p { font-size: 0.82em; color: #888; }
+        /* Quick access */
+        .quick-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 22px; }
+        .quick-card { background: white; border-radius: 16px; padding: 20px 16px; text-align: center;
+                     box-shadow: 0 3px 12px rgba(0,0,0,0.05); text-decoration: none; color: #333;
+                     transition: all 0.25s; position: relative; overflow: hidden; }
+        .quick-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; }
+        .quick-card:nth-child(1)::before { background: linear-gradient(90deg, #2E75B6, #4A90D9); }
+        .quick-card:nth-child(2)::before { background: linear-gradient(90deg, #27AE60, #6FCF97); }
+        .quick-card:nth-child(3)::before { background: linear-gradient(90deg, #E67E22, #F5A623); }
+        .quick-card:hover { transform: translateY(-4px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
+        .quick-card .icon { font-size: 2em; margin-bottom: 6px; }
+        .quick-card h3 { font-size: 0.95em; color: #1F4E79; }
+        .quick-card p { font-size: 0.78em; color: #999; margin-top: 3px; }
         
-        /* Week-by-week teaching plan */
-        .week-block { background: white; border-radius: 14px; margin-bottom: 14px;
-                     box-shadow: 0 2px 10px rgba(0,0,0,0.06); overflow: hidden; }
+        .info-box { background: linear-gradient(135deg, #f0f7ff, #e8f0fe); border-left: 4px solid #2E75B6;
+                   padding: 14px 16px; border-radius: 0 12px 12px 0; margin: 15px 0;
+                   font-size: 0.9em; line-height: 1.6; }
+        
+        /* Section titles */
+        .section-title { font-family: 'Playfair Display', serif; font-size: 1.3em; font-weight: 800;
+                        color: #1F4E79; margin: 28px 0 14px; display: flex; align-items: center; gap: 10px; }
+        .section-title::after { content: ''; flex: 1; height: 2px;
+                              background: linear-gradient(90deg, #2E75B644, transparent); }
+        
+        /* Week blocks */
+        .week-block { background: white; border-radius: 16px; margin-bottom: 12px;
+                     box-shadow: 0 2px 10px rgba(0,0,0,0.05); overflow: hidden; }
         .week-header { display: flex; align-items: center; gap: 14px; padding: 16px 20px;
                       cursor: pointer; transition: background 0.2s; user-select: none; }
         .week-header:hover { background: #f8f9fa; }
         .week-header.geo { border-left: 5px solid #2E75B6; }
         .week-header.alg { border-left: 5px solid #27AE60; }
-        .week-num { width: 44px; height: 44px; border-radius: 12px; display: flex;
-                   align-items: center; justify-content: center; font-size: 1.2em;
-                   font-weight: 800; color: white; flex-shrink: 0; }
+        .week-num { width: 46px; height: 46px; border-radius: 13px; display: flex;
+                   align-items: center; justify-content: center; font-size: 1.25em;
+                   font-weight: 900; color: white; flex-shrink: 0; }
         .week-num.geo { background: linear-gradient(135deg, #2E75B6, #1F4E79); }
         .week-num.alg { background: linear-gradient(135deg, #27AE60, #1E8449); }
         .week-info { flex: 1; }
         .week-info h3 { font-size: 1.05em; color: #1F4E79; }
         .week-info p { font-size: 0.82em; color: #888; margin-top: 2px; }
-        .week-arrow { font-size: 1em; color: #ccc; transition: transform 0.2s; }
+        .week-arrow { font-size: 1em; color: #ccc; transition: transform 0.3s; }
         .week-header.open .week-arrow { transform: rotate(90deg); color: #2E75B6; }
-        
         .week-body { display: none; padding: 0 20px 18px; }
         .week-body.open { display: block; }
         
         .session-row { display: flex; align-items: flex-start; gap: 14px; padding: 14px 0;
                       border-bottom: 1px solid #f0f0f0; }
         .session-row:last-child { border-bottom: none; }
-        .session-num { width: 32px; height: 32px; border-radius: 50%; display: flex;
+        .session-num { width: 34px; height: 34px; border-radius: 50%; display: flex;
                       align-items: center; justify-content: center; font-size: 0.85em;
-                      font-weight: 800; color: white; flex-shrink: 0;
-                      background: linear-gradient(135deg, #2E75B6, #1F4E79); }
+                      font-weight: 800; color: white; flex-shrink: 0; }
+        .session-num.geo { background: linear-gradient(135deg, #2E75B6, #1F4E79); }
+        .session-num.alg { background: linear-gradient(135deg, #27AE60, #1E8449); }
         .session-content { flex: 1; }
-        .session-content h4 { font-size: 0.95em; color: #333; margin-bottom: 6px; }
+        .session-content h4 { font-size: 0.95em; color: #333; margin-bottom: 4px; }
         .session-content h4 a { color: #1F4E79; text-decoration: none; }
         .session-content h4 a:hover { text-decoration: underline; }
-        .session-links { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
-        .session-link { display: inline-flex; align-items: center; gap: 5px; padding: 5px 12px;
-                       border-radius: 8px; font-size: 0.82em; font-weight: 600;
-                       text-decoration: none; transition: all 0.2s; }
-        .session-link.lesson { background: #E8F0FE; color: #1F4E79; border: 1px solid #C2D6F2; }
-        .session-link.lesson:hover { background: #D6E4F0; }
-        .session-link.quiz { background: #FFF3E0; color: #E65100; border: 1px solid #FFE0B2; }
-        .session-link.quiz:hover { background: #FFE8CC; }
-        .session-link.test { background: #FFEBEE; color: #C62828; border: 1px solid #FFCDD2; }
-        .session-link.test:hover { background: #FFD6D6; }
-        .session-topics { font-size: 0.85em; color: #666; }
+        .session-topics { font-size: 0.83em; color: #777; margin-bottom: 8px; }
+        .session-links { display: flex; flex-wrap: wrap; gap: 6px; }
+        .slink { display: inline-flex; align-items: center; gap: 4px; padding: 4px 11px;
+                border-radius: 7px; font-size: 0.8em; font-weight: 700; text-decoration: none; transition: all 0.2s; }
+        .slink.lp { background: #E8F0FE; color: #1F4E79; border: 1px solid #C2D6F2; }
+        .slink.lp:hover { background: #D6E4F0; }
+        .slink.qz { background: #FFF3E0; color: #E65100; border: 1px solid #FFE0B2; }
+        .slink.qz:hover { background: #FFE8CC; }
+        .slink.ts { background: #FFEBEE; color: #C62828; border: 1px solid #FFCDD2; }
+        .slink.ts:hover { background: #FFD6D6; }
         
-        /* Assessment summary */
-        .assess-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
-        .assess-card { background: white; border-radius: 12px; padding: 16px;
-                      box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+        /* Assessment cards */
+        .assess-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; }
+        .assess-card { background: white; border-radius: 12px; padding: 14px 16px;
+                      box-shadow: 0 2px 8px rgba(0,0,0,0.05); text-decoration: none; color: #333;
+                      transition: all 0.2s; display: block; }
+        .assess-card:hover { transform: translateY(-2px); box-shadow: 0 4px 14px rgba(0,0,0,0.1); }
         .assess-card.quiz { border-left: 4px solid #E67E22; }
         .assess-card.test { border-left: 4px solid #E74C3C; }
-        .assess-card h4 { font-size: 0.95em; margin-bottom: 4px; }
-        .assess-card h4 a { text-decoration: none; color: #1F4E79; }
-        .assess-card h4 a:hover { text-decoration: underline; }
-        .assess-card p { font-size: 0.82em; color: #888; }
-        .assess-card .weight { font-size: 0.78em; font-weight: 700; color: #2E75B6; margin-top: 4px; }
+        .assess-card h4 { font-size: 0.93em; color: #1F4E79; }
+        .assess-card p { font-size: 0.8em; color: #888; margin-top: 2px; }
+        .assess-card .weight { font-size: 0.76em; font-weight: 700; color: #2E75B6; margin-top: 4px; }
         
-        .info-box { background: #f0f7ff; border-left: 4px solid #2E75B6; padding: 14px 16px;
-                   border-radius: 0 10px 10px 0; margin: 15px 0; font-size: 0.92em; line-height: 1.6; }
+        /* Motivational footer */
+        .footer { text-align: center; padding: 30px 20px; margin-top: 20px; }
+        .footer .quote { font-family: 'Playfair Display', serif; font-size: 1.15em;
+                        color: #1F4E79; font-style: italic; max-width: 500px; margin: 0 auto; }
+        .footer .attr { font-size: 0.82em; color: #aaa; margin-top: 6px; }
+        .footer .heart { font-size: 0.85em; color: #ccc; margin-top: 15px; }
         
-        .section-title { font-size: 1.2em; font-weight: 800; color: #1F4E79; margin: 25px 0 12px;
-                        display: flex; align-items: center; gap: 8px; }
-        
-        @media (max-width: 600px) { .quick-grid { grid-template-columns: 1fr 1fr; } .assess-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 600px) {
+            .quick-grid { grid-template-columns: 1fr; }
+            .hero .welcome { font-size: 1.6em; }
+            .assess-grid { grid-template-columns: 1fr; }
+            .hero .class-info { gap: 10px; }
+        }
     </style>
 </head>
 <body>
     <div class="hero">
-        <div class="badge">👩‍🏫 TEACHER PORTAL</div>
-        <h1>📐 6th/7th Grade Math</h1>
-        <p>Semester 2 — Geometry & Intro to Algebra</p>
+        <div class="welcome">Mrs. Williams' Math Class</div>
+        <div class="subtitle">6th & 7th Grade · Semester 2</div>
+        <div class="class-info">
+            <span>📐 Geometry</span><div class="dot"></div>
+            <span>📊 Algebra</span><div class="dot"></div>
+            <span>👨‍👩‍👧‍👦 24 Students</span><div class="dot"></div>
+            <span>📅 8 Weeks</span>
+        </div>
+    </div>
+    
+    <div class="greeting-bar" id="greetingBar">
+        <span class="greet" id="greeting">Good evening, Mrs. Williams! ☕</span>
+        <span class="today" id="todayDate"></span>
     </div>
     
     <div class="container">
-        <!-- Student portal link -->
+        <!-- Today's Lesson Spotlight -->
+        <div class="spotlight" id="spotlight">
+            <div class="spotlight-header">
+                <div class="pulse"></div>
+                <h2 id="spotlightLabel">Up Next</h2>
+            </div>
+            <div class="spotlight-body">
+                <div class="session-title" id="spotTitle">Session 1: Intro to Geometry & Angles</div>
+                <div class="session-meta" id="spotMeta">Week 1 · Monday · Geometry</div>
+                <div class="topics" id="spotTopics">
+                    <span class="topic-tag">Acute Angles</span>
+                    <span class="topic-tag">Right Angles</span>
+                    <span class="topic-tag">Obtuse Angles</span>
+                    <span class="topic-tag">Protractors</span>
+                </div>
+                <div class="spotlight-actions">
+                    <a class="spot-btn primary" id="spotLessonLink" href="lesson-plans.html">📋 Open Lesson Plan</a>
+                    <a class="spot-btn secondary" id="spotWorksheetLink" href="#">📄 Today's Worksheet</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Student Portal -->
         <div class="student-banner">
             <div class="text">
-                <h3>🎓 Student Portal</h3>
-                <p>Share this link with students — they create an account and track their own progress</p>
+                <h3>🎓 Share with Students</h3>
+                <p>Students create their own account and track progress</p>
             </div>
-            <a href="student.html">Open Student Portal →</a>
+            <a href="student.html">Student Portal →</a>
         </div>
         
         <!-- Quick Access -->
@@ -131,108 +228,179 @@
             <a class="quick-card" href="lesson-plans.html">
                 <div class="icon">📋</div>
                 <h3>Lesson Plans</h3>
-                <p>All 24 sessions with teaching guides, videos, worked examples</p>
+                <p>Teaching guides, videos, worked examples, whiteboard scripts</p>
             </a>
             <a class="quick-card" href="gradebook.html">
                 <div class="icon">📈</div>
                 <h3>Grade Book</h3>
-                <p>Enter grades, auto-calculates weighted averages & letter grades</p>
+                <p>Auto-weighted averages, letter grades, export to Google Sheets</p>
             </a>
             <a class="quick-card" href="scope-sequence.html">
                 <div class="icon">📊</div>
                 <h3>Scope & Sequence</h3>
-                <p>Full 8-week plan with objectives & assessments</p>
+                <p>8-week overview with objectives & assessments</p>
             </a>
         </div>
 
         <div class="info-box">
-            <strong>🔒 Answer Keys:</strong> PIN-protected on all materials. PIN = <strong>today's day of the month</strong> (changes daily). Example: on March 15th, PIN is <strong>15</strong>.<br>
-            <strong>💾 Grade Book:</strong> Auto-saves in your browser. Use "Open in Google Sheets" to export to the cloud.
+            🔒 <strong>Answer Key PIN:</strong> Enter <strong>today's date number</strong> to unlock any answer key. Today it's <strong id="todayPin"></strong>. Changes daily!<br>
+            💾 <strong>Grade Book</strong> auto-saves in your browser + one-click export to Google Sheets.
         </div>
         
-        <!-- Week-by-Week Teaching Plan -->
-        <div class="section-title">📅 Week-by-Week Teaching Plan</div>
+        <!-- Week-by-Week -->
+        <div class="section-title">📅 Teaching Plan</div>
         
-        <div class="week-block"><div class="week-header geo" onclick="toggle(this)"><div class="week-num geo">1</div><div class="week-info"><h3>Angles & Shapes</h3><p>Sessions 1-3 · Quiz 1</p></div><span class="week-arrow">▶</span></div>
-        <div class="week-body">
-            <div class="session-row"><div class="session-num">1</div><div class="session-content"><h4><a href="lesson-plans.html#s1">Intro to Geometry & Angles</a></h4><div class="session-topics">Acute, right, obtuse, straight angles · Protractor use · Real-world angles</div><div class="session-links"><a class="session-link lesson" href="lesson-plans.html">📋 Lesson Plan</a></div></div></div>
-            <div class="session-row"><div class="session-num">2</div><div class="session-content"><h4><a href="lesson-plans.html#s2">Angle Relationships</a></h4><div class="session-topics">Complementary & supplementary · Vertical angles · Solving for unknowns</div><div class="session-links"><a class="session-link lesson" href="lesson-plans.html">📋 Lesson Plan</a></div></div></div>
-            <div class="session-row"><div class="session-num">3</div><div class="session-content"><h4><a href="lesson-plans.html#s3">Classifying Triangles & Polygons</a></h4><div class="session-topics">By sides & angles · Polygon angle sums · Interior angles formula</div><div class="session-links"><a class="session-link lesson" href="lesson-plans.html">📋 Lesson Plan</a><a class="session-link quiz" href="quizzes/Quiz_1_Angles_Shapes.html">📝 Quiz 1</a></div></div></div>
-        </div></div>
+        <div id="weeksContainer"></div>
 
-        <div class="week-block"><div class="week-header geo" onclick="toggle(this)"><div class="week-num geo">2</div><div class="week-info"><h3>Perimeter & Area</h3><p>Sessions 4-6 · Quiz 2</p></div><span class="week-arrow">▶</span></div>
-        <div class="week-body">
-            <div class="session-row"><div class="session-num">4</div><div class="session-content"><h4><a href="lesson-plans.html#s4">Perimeter of Polygons</a></h4><div class="session-topics">Rectangle, triangle, irregular shapes · Fencing & baseboard problems</div><div class="session-links"><a class="session-link lesson" href="lesson-plans.html">📋 Lesson Plan</a></div></div></div>
-            <div class="session-row"><div class="session-num">5</div><div class="session-content"><h4><a href="lesson-plans.html#s5">Area: Rectangles & Triangles</a></h4><div class="session-topics">A = lw, A = ½bh · Room painting · L-shaped rooms · Carpet costs</div><div class="session-links"><a class="session-link lesson" href="lesson-plans.html">📋 Lesson Plan</a></div></div></div>
-            <div class="session-row"><div class="session-num">6</div><div class="session-content"><h4><a href="lesson-plans.html#s6">Area: Parallelograms & Trapezoids</a></h4><div class="session-topics">A = bh, A = ½(b₁+b₂)h · Composite shapes · Baking pan math</div><div class="session-links"><a class="session-link lesson" href="lesson-plans.html">📋 Lesson Plan</a><a class="session-link quiz" href="quizzes/Quiz_2_Perimeter_Area.html">📝 Quiz 2</a></div></div></div>
-        </div></div>
-
-        <div class="week-block"><div class="week-header geo" onclick="toggle(this)"><div class="week-num geo">3</div><div class="week-info"><h3>Circles & Composite Shapes</h3><p>Sessions 7-9 · Quiz 3</p></div><span class="week-arrow">▶</span></div>
-        <div class="week-body">
-            <div class="session-row"><div class="session-num">7</div><div class="session-content"><h4><a href="lesson-plans.html#s7">Circles: Circumference</a></h4><div class="session-topics">π, C = πd, C = 2πr · Bike wheels · Running tracks</div><div class="session-links"><a class="session-link lesson" href="lesson-plans.html">📋 Lesson Plan</a></div></div></div>
-            <div class="session-row"><div class="session-num">8</div><div class="session-content"><h4><a href="lesson-plans.html#s8">Circles: Area</a></h4><div class="session-topics">A = πr² · The Great Pizza Debate · Sprinkler coverage · Pool comparisons</div><div class="session-links"><a class="session-link lesson" href="lesson-plans.html">📋 Lesson Plan</a></div></div></div>
-            <div class="session-row"><div class="session-num">9</div><div class="session-content"><h4><a href="lesson-plans.html#s9">Composite Shapes</a></h4><div class="session-topics">Decompose & subtract strategies · Floor plans · Semicircle pools</div><div class="session-links"><a class="session-link lesson" href="lesson-plans.html">📋 Lesson Plan</a><a class="session-link quiz" href="quizzes/Quiz_3_Circles_Composite.html">📝 Quiz 3</a></div></div></div>
-        </div></div>
-
-        <div class="week-block"><div class="week-header geo" onclick="toggle(this)"><div class="week-num geo">4</div><div class="week-info"><h3>Volume & Surface Area + TEST 1</h3><p>Sessions 10-12 · Geometry Test</p></div><span class="week-arrow">▶</span></div>
-        <div class="week-body">
-            <div class="session-row"><div class="session-num">10</div><div class="session-content"><h4><a href="lesson-plans.html#s10">3D Shapes & Volume of Prisms</a></h4><div class="session-topics">V = lwh · Shipping boxes · Fish tanks · USPS dimensions</div><div class="session-links"><a class="session-link lesson" href="lesson-plans.html">📋 Lesson Plan</a></div></div></div>
-            <div class="session-row"><div class="session-num">11</div><div class="session-content"><h4><a href="lesson-plans.html#s11">Cylinders & Surface Area</a></h4><div class="session-topics">V = πr²h · Tall vs wide cup · Surface area intro · Container design</div><div class="session-links"><a class="session-link lesson" href="lesson-plans.html">📋 Lesson Plan</a></div></div></div>
-            <div class="session-row"><div class="session-num">12</div><div class="session-content"><h4><a href="lesson-plans.html#s12">Geometry Review & Test 1</a></h4><div class="session-topics">15 min review + 35 min test · All Weeks 1-4 content</div><div class="session-links"><a class="session-link lesson" href="lesson-plans.html">📋 Lesson Plan</a><a class="session-link test" href="tests/Test_1_Geometry.html">🔴 Test 1</a></div></div></div>
-        </div></div>
-
-        <div class="week-block"><div class="week-header alg" onclick="toggle(this)"><div class="week-num alg">5</div><div class="week-info"><h3>Variables & Expressions</h3><p>Sessions 13-15 · Quiz 4</p></div><span class="week-arrow">▶</span></div>
-        <div class="week-body">
-            <div class="session-row"><div class="session-num">13</div><div class="session-content"><h4><a href="lesson-plans.html#s13">Intro to Variables & Expressions</a></h4><div class="session-topics">Variables · Translating words → algebra · Evaluating · Game score math</div><div class="session-links"><a class="session-link lesson" href="lesson-plans.html">📋 Lesson Plan</a></div></div></div>
-            <div class="session-row"><div class="session-num">14</div><div class="session-content"><h4><a href="lesson-plans.html#s14">Combining Like Terms</a></h4><div class="session-topics">Identify like terms · Simplify expressions · Shopping cart analogy</div><div class="session-links"><a class="session-link lesson" href="lesson-plans.html">📋 Lesson Plan</a></div></div></div>
-            <div class="session-row"><div class="session-num">15</div><div class="session-content"><h4><a href="lesson-plans.html#s15">Order of Operations</a></h4><div class="session-topics">PEMDAS with variables · 2x² vs (2x)² · Recipe scaling · Distributive property</div><div class="session-links"><a class="session-link lesson" href="lesson-plans.html">📋 Lesson Plan</a><a class="session-link quiz" href="quizzes/Quiz_4_Expressions.html">📝 Quiz 4</a></div></div></div>
-        </div></div>
-
-        <div class="week-block"><div class="week-header alg" onclick="toggle(this)"><div class="week-num alg">6</div><div class="week-info"><h3>One-Step Equations</h3><p>Sessions 16-18 · Quiz 5</p></div><span class="week-arrow">▶</span></div>
-        <div class="week-body">
-            <div class="session-row"><div class="session-num">16</div><div class="session-content"><h4><a href="lesson-plans.html#s16">Solving One-Step Equations (+/−)</a></h4><div class="session-topics">Inverse operations · Balance analogy · Budget problems</div><div class="session-links"><a class="session-link lesson" href="lesson-plans.html">📋 Lesson Plan</a></div></div></div>
-            <div class="session-row"><div class="session-num">17</div><div class="session-content"><h4><a href="lesson-plans.html#s17">Solving One-Step Equations (×/÷)</a></h4><div class="session-topics">Multiply/divide inverse · Fair shares · Unit prices · Better deals</div><div class="session-links"><a class="session-link lesson" href="lesson-plans.html">📋 Lesson Plan</a></div></div></div>
-            <div class="session-row"><div class="session-num">18</div><div class="session-content"><h4><a href="lesson-plans.html#s18">Mixed One-Step Equations</a></h4><div class="session-topics">All operations · Word problems → equations · Lemonade stand math</div><div class="session-links"><a class="session-link lesson" href="lesson-plans.html">📋 Lesson Plan</a><a class="session-link quiz" href="quizzes/Quiz_5_One_Step_Equations.html">📝 Quiz 5</a></div></div></div>
-        </div></div>
-
-        <div class="week-block"><div class="week-header alg" onclick="toggle(this)"><div class="week-num alg">7</div><div class="week-info"><h3>Two-Step Equations & Inequalities + TEST 2</h3><p>Sessions 19-21 · Quiz 6 + Algebra Test</p></div><span class="week-arrow">▶</span></div>
-        <div class="week-body">
-            <div class="session-row"><div class="session-num">19</div><div class="session-content"><h4><a href="lesson-plans.html#s19">Two-Step Equations</a></h4><div class="session-topics">Reverse order of operations · Socks-and-shoes analogy · Phone plan math</div><div class="session-links"><a class="session-link lesson" href="lesson-plans.html">📋 Lesson Plan</a></div></div></div>
-            <div class="session-row"><div class="session-num">20</div><div class="session-content"><h4><a href="lesson-plans.html#s20">Intro to Inequalities</a></h4><div class="session-topics">< > ≤ ≥ · Open vs closed circles · Number line graphing · Flip rule</div><div class="session-links"><a class="session-link lesson" href="lesson-plans.html">📋 Lesson Plan</a></div></div></div>
-            <div class="session-row"><div class="session-num">21</div><div class="session-content"><h4><a href="lesson-plans.html#s21">Review + Test 2</a></h4><div class="session-topics">Quiz 6 (10 min) + Test 2 (25 min) · Weeks 5-7 content</div><div class="session-links"><a class="session-link lesson" href="lesson-plans.html">📋 Lesson Plan</a><a class="session-link quiz" href="quizzes/Quiz_6_TwoStep_Inequalities.html">📝 Quiz 6</a><a class="session-link test" href="tests/Test_2_Algebra.html">🔴 Test 2</a></div></div></div>
-        </div></div>
-
-        <div class="week-block"><div class="week-header alg" onclick="toggle(this)"><div class="week-num alg">8</div><div class="week-info"><h3>Coordinate Plane & Review + FINAL</h3><p>Sessions 22-24 · Quiz 7 + Final Test</p></div><span class="week-arrow">▶</span></div>
-        <div class="week-body">
-            <div class="session-row"><div class="session-num">22</div><div class="session-content"><h4><a href="lesson-plans.html#s22">The Coordinate Plane</a></h4><div class="session-topics">x/y axes · Ordered pairs · Four quadrants · Treasure map · Mystery pictures</div><div class="session-links"><a class="session-link lesson" href="lesson-plans.html">📋 Lesson Plan</a></div></div></div>
-            <div class="session-row"><div class="session-num">23</div><div class="session-content"><h4><a href="lesson-plans.html#s23">Intro to Linear Relationships</a></h4><div class="session-topics">Input/output tables · Plotting from tables · Finding rules · Road trip math</div><div class="session-links"><a class="session-link lesson" href="lesson-plans.html">📋 Lesson Plan</a><a class="session-link quiz" href="quizzes/Quiz_7_Coordinate_Linear.html">📝 Quiz 7</a></div></div></div>
-            <div class="session-row"><div class="session-num">24</div><div class="session-content"><h4><a href="lesson-plans.html#s24">Course Review & Final Test</a></h4><div class="session-topics">15 min lightning review + 40 min comprehensive test · All 8 weeks</div><div class="session-links"><a class="session-link lesson" href="lesson-plans.html">📋 Lesson Plan</a><a class="session-link test" href="tests/Test_Final_Comprehensive.html">🔴 Final Test</a></div></div></div>
-        </div></div>
-
-        <!-- Grading Overview -->
-        <div class="section-title">📝 Assessment & Grading</div>
-        <div class="info-box">
-            <strong>Grading Weights:</strong> Quizzes 35% (Q1-Q7 at 5% each) · Tests 50% (T1 15% + T2 15% + Final 20%) · Participation 15%
+        <!-- Assessments -->
+        <div class="section-title">📝 Assessments & Grading</div>
+        <div class="info-box" style="margin-top:0;">
+            <strong>Weights:</strong> Quizzes 35% (5% each) · Test 1 15% · Test 2 15% · Final 20% · Participation 15%
         </div>
-        <div class="assess-grid" style="margin-top:12px;">
-            <a class="assess-card quiz" href="quizzes/Quiz_1_Angles_Shapes.html" style="text-decoration:none;"><h4>📝 Quiz 1 — Angles & Shapes</h4><p>Week 1 · Session 3</p><div class="weight">5%</div></a>
-            <a class="assess-card quiz" href="quizzes/Quiz_2_Perimeter_Area.html" style="text-decoration:none;"><h4>📝 Quiz 2 — Perimeter & Area</h4><p>Week 2 · Session 6</p><div class="weight">5%</div></a>
-            <a class="assess-card quiz" href="quizzes/Quiz_3_Circles_Composite.html" style="text-decoration:none;"><h4>📝 Quiz 3 — Circles & Composite</h4><p>Week 3 · Session 9</p><div class="weight">5%</div></a>
-            <a class="assess-card test" href="tests/Test_1_Geometry.html" style="text-decoration:none;"><h4>🔴 TEST 1 — Geometry</h4><p>Week 4 · Session 12</p><div class="weight">15%</div></a>
-            <a class="assess-card quiz" href="quizzes/Quiz_4_Expressions.html" style="text-decoration:none;"><h4>📝 Quiz 4 — Expressions & PEMDAS</h4><p>Week 5 · Session 15</p><div class="weight">5%</div></a>
-            <a class="assess-card quiz" href="quizzes/Quiz_5_One_Step_Equations.html" style="text-decoration:none;"><h4>📝 Quiz 5 — One-Step Equations</h4><p>Week 6 · Session 18</p><div class="weight">5%</div></a>
-            <a class="assess-card quiz" href="quizzes/Quiz_6_TwoStep_Inequalities.html" style="text-decoration:none;"><h4>📝 Quiz 6 — Two-Step & Inequalities</h4><p>Week 7 · Session 21</p><div class="weight">5%</div></a>
-            <a class="assess-card test" href="tests/Test_2_Algebra.html" style="text-decoration:none;"><h4>🔴 TEST 2 — Algebra Part 1</h4><p>Week 7 · Session 21</p><div class="weight">15%</div></a>
-            <a class="assess-card quiz" href="quizzes/Quiz_7_Coordinate_Linear.html" style="text-decoration:none;"><h4>📝 Quiz 7 — Coordinate & Linear</h4><p>Week 8 · Session 23</p><div class="weight">5%</div></a>
-            <a class="assess-card test" href="tests/Test_Final_Comprehensive.html" style="text-decoration:none;"><h4>🔴 FINAL TEST — Comprehensive</h4><p>Week 8 · Session 24</p><div class="weight">20%</div></a>
-        </div>
+        <div class="assess-grid" style="margin-top:12px;" id="assessContainer"></div>
     </div>
     
+    <div class="footer">
+        <div class="quote" id="dailyQuote">"The essence of mathematics is not to make simple things complicated, but to make complicated things simple."</div>
+        <div class="attr" id="quoteAttr">— Stan Gudder</div>
+        <div class="heart">Made with ❤️ for Mrs. Williams' class</div>
+    </div>
+
     <script>
-        function toggle(el) {
-            el.classList.toggle('open');
-            el.nextElementSibling.classList.toggle('open');
+    // ── Session Data ──
+    const sessions = [
+        {s:1,w:1,d:"Mon",t:"Intro to Geometry & Angles",u:"geo",tags:["Acute","Right","Obtuse","Straight","Protractors"],ws:"worksheets/W01_Angle_Explorer.html"},
+        {s:2,w:1,d:"Wed",t:"Angle Relationships",u:"geo",tags:["Complementary","Supplementary","Vertical Angles"],ws:"worksheets/W02_Angle_Relationships.html"},
+        {s:3,w:1,d:"Fri",t:"Classifying Triangles & Polygons",u:"geo",tags:["Equilateral","Isosceles","Scalene","Polygons"],ws:"worksheets/W03_Shape_Detective.html",quiz:"quizzes/Quiz_1_Angles_Shapes.html",qn:1},
+        {s:4,w:2,d:"Mon",t:"Perimeter of Polygons",u:"geo",tags:["P = 2l + 2w","Fencing","Baseboards"],ws:"worksheets/W04_Perimeter_Pro.html"},
+        {s:5,w:2,d:"Wed",t:"Area: Rectangles & Triangles",u:"geo",tags:["A = lw","A = ½bh","Room Painting","L-shapes"],ws:"worksheets/W05_Area_Architect.html"},
+        {s:6,w:2,d:"Fri",t:"Area: Parallelograms & Trapezoids",u:"geo",tags:["A = bh","A = ½(b₁+b₂)h","Baking Pan Math"],ws:"worksheets/W06_Shape_Shifter.html",quiz:"quizzes/Quiz_2_Perimeter_Area.html",qn:2},
+        {s:7,w:3,d:"Mon",t:"Circles: Circumference",u:"geo",tags:["Pi","C = πd","C = 2πr","Bike Wheels"],ws:"worksheets/W07_Going_in_Circles.html"},
+        {s:8,w:3,d:"Wed",t:"Circles: Area",u:"geo",tags:["A = πr²","Pizza Debate","Sprinklers"],ws:"worksheets/W08_Area_of_the_Round.html"},
+        {s:9,w:3,d:"Fri",t:"Composite Shapes",u:"geo",tags:["Decompose","Subtract","Floor Plans","Semicircles"],ws:"worksheets/W09_Blueprint_Builder.html",quiz:"quizzes/Quiz_3_Circles_Composite.html",qn:3},
+        {s:10,w:4,d:"Mon",t:"3D Shapes & Volume",u:"geo",tags:["V = lwh","Shipping Boxes","Fish Tanks"],ws:"worksheets/W10_Box_It_Up.html"},
+        {s:11,w:4,d:"Wed",t:"Cylinders & Surface Area",u:"geo",tags:["V = πr²h","Tall vs Wide Cup","Surface Area"],ws:"worksheets/W11_Container_Challenge.html"},
+        {s:12,w:4,d:"Fri",t:"Geometry Review & Test 1",u:"geo",tags:["All Geometry","Weeks 1-4"],test:"tests/Test_1_Geometry.html"},
+        {s:13,w:5,d:"Mon",t:"Intro to Variables & Expressions",u:"alg",tags:["Variables","Word→Algebra","Game Scores"],ws:"worksheets/W13_Expression_Station.html"},
+        {s:14,w:5,d:"Wed",t:"Combining Like Terms",u:"alg",tags:["Like Terms","Simplify","Shopping Cart"],ws:"worksheets/W14_Like_Terms_Lineup.html"},
+        {s:15,w:5,d:"Fri",t:"Order of Operations",u:"alg",tags:["PEMDAS","2x² vs (2x)²","Recipe Scaling"],ws:"worksheets/W15_Order_Up.html",quiz:"quizzes/Quiz_4_Expressions.html",qn:4},
+        {s:16,w:6,d:"Mon",t:"One-Step Equations (+/−)",u:"alg",tags:["Inverse Operations","Balance","Budgets"],ws:"worksheets/W16_Balance_It_Out.html"},
+        {s:17,w:6,d:"Wed",t:"One-Step Equations (×/÷)",u:"alg",tags:["Fair Shares","Unit Prices","Deals"],ws:"worksheets/W17_Fair_and_Square.html"},
+        {s:18,w:6,d:"Fri",t:"Mixed One-Step Equations",u:"alg",tags:["All Operations","Word Problems","Lemonade Stand"],ws:"worksheets/W18_Equation_Mix.html",quiz:"quizzes/Quiz_5_One_Step_Equations.html",qn:5},
+        {s:19,w:7,d:"Mon",t:"Two-Step Equations",u:"alg",tags:["Reverse Order","Phone Plans","Gym Fees"],ws:"worksheets/W19_Two_Steps_to_Go.html"},
+        {s:20,w:7,d:"Wed",t:"Intro to Inequalities",u:"alg",tags:["< > ≤ ≥","Number Lines","Flip Rule"],ws:"worksheets/W20_More_or_Less.html"},
+        {s:21,w:7,d:"Fri",t:"Review + Test 2",u:"alg",tags:["Weeks 5-7","Quiz 6 + Test"],quiz:"quizzes/Quiz_6_TwoStep_Inequalities.html",qn:6,test:"tests/Test_2_Algebra.html"},
+        {s:22,w:8,d:"Mon",t:"The Coordinate Plane",u:"alg",tags:["Ordered Pairs","Quadrants","Treasure Map"],ws:"worksheets/W22_Plot_Twist.html"},
+        {s:23,w:8,d:"Wed",t:"Intro to Linear Relationships",u:"alg",tags:["Tables","Plotting","Finding Rules"],ws:"worksheets/W23_Connect_the_Data.html",quiz:"quizzes/Quiz_7_Coordinate_Linear.html",qn:7},
+        {s:24,w:8,d:"Fri",t:"Course Review & Final Test",u:"alg",tags:["All 8 Weeks","Comprehensive"],test:"tests/Test_Final_Comprehensive.html"},
+    ];
+
+    const weekNames = {
+        1:"Angles & Shapes", 2:"Perimeter & Area", 3:"Circles & Composite Shapes",
+        4:"Volume & Surface Area + TEST 1", 5:"Variables & Expressions", 6:"One-Step Equations",
+        7:"Two-Step Equations & Inequalities + TEST 2", 8:"Coordinate Plane & Review + FINAL"
+    };
+
+    const quotes = [
+        {q:"The essence of mathematics is not to make simple things complicated, but to make complicated things simple.",a:"Stan Gudder"},
+        {q:"Pure mathematics is, in its way, the poetry of logical ideas.",a:"Albert Einstein"},
+        {q:"Mathematics is not about numbers, equations, or algorithms: it is about understanding.",a:"William Paul Thurston"},
+        {q:"The only way to learn mathematics is to do mathematics.",a:"Paul Halmos"},
+        {q:"Do not worry about your difficulties in mathematics. I can assure you mine are still greater.",a:"Albert Einstein"},
+        {q:"Mathematics is the music of reason.",a:"James Joseph Sylvester"},
+        {q:"Without mathematics, there's nothing you can do. Everything around you is mathematics.",a:"Shakuntala Devi"},
+    ];
+
+    // ── Time-aware greeting ──
+    const now = new Date();
+    const hour = now.getHours();
+    let greet = hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening";
+    const emoji = hour < 12 ? "☀️" : hour < 17 ? "🌤️" : "☕";
+    document.getElementById('greeting').textContent = `${greet}, Mrs. Williams! ${emoji}`;
+    
+    const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    document.getElementById('todayDate').textContent = `${days[now.getDay()]}, ${months[now.getMonth()]} ${now.getDate()}`;
+    document.getElementById('todayPin').textContent = now.getDate().toString();
+
+    // ── Daily quote ──
+    const qIdx = now.getDate() % quotes.length;
+    document.getElementById('dailyQuote').textContent = `"${quotes[qIdx].q}"`;
+    document.getElementById('quoteAttr').textContent = `— ${quotes[qIdx].a}`;
+
+    // ── Spotlight: show current/next session ──
+    // For now, default to session 1. In a real deployment this would track the actual course date.
+    const spotSession = sessions[0];
+    document.getElementById('spotTitle').textContent = `Session ${spotSession.s}: ${spotSession.t}`;
+    document.getElementById('spotMeta').textContent = `Week ${spotSession.w} · ${spotSession.d === 'Mon' ? 'Monday' : spotSession.d === 'Wed' ? 'Wednesday' : 'Friday'} · ${spotSession.u === 'geo' ? '📐 Geometry' : '📊 Algebra'}`;
+    document.getElementById('spotTopics').innerHTML = spotSession.tags.map(t => `<span class="topic-tag">${t}</span>`).join('');
+    if (spotSession.ws) {
+        document.getElementById('spotWorksheetLink').href = spotSession.ws;
+        document.getElementById('spotWorksheetLink').style.display = '';
+    } else {
+        document.getElementById('spotWorksheetLink').style.display = 'none';
+    }
+
+    // ── Build weeks ──
+    const weeksEl = document.getElementById('weeksContainer');
+    let currentWeek = 0;
+    sessions.forEach(ses => {
+        if (ses.w !== currentWeek) {
+            currentWeek = ses.w;
+            const unit = ses.u === 'geo' || ses.w <= 4 ? 'geo' : 'alg';
+            const icon = unit === 'geo' ? '📐' : '📊';
+            const wSessions = sessions.filter(s => s.w === currentWeek);
+            const quizCount = wSessions.filter(s => s.quiz).length;
+            const testCount = wSessions.filter(s => s.test).length;
+            let assessText = '';
+            if (quizCount) assessText += `Quiz ${wSessions.find(s=>s.quiz)?.qn || ''}`;
+            if (testCount) assessText += (assessText ? ' + ' : '') + 'Test';
+            
+            const block = document.createElement('div');
+            block.className = 'week-block';
+            block.innerHTML = `<div class="week-header ${unit}" onclick="toggle(this)"><div class="week-num ${unit}">${ses.w}</div><div class="week-info"><h3>${icon} ${weekNames[ses.w]}</h3><p>Sessions ${wSessions[0].s}-${wSessions[wSessions.length-1].s}${assessText ? ' · ' + assessText : ''}</p></div><span class="week-arrow">▶</span></div><div class="week-body" id="wb${ses.w}"></div>`;
+            weeksEl.appendChild(block);
         }
+        
+        const body = document.getElementById('wb' + ses.w);
+        let links = `<a class="slink lp" href="lesson-plans.html">📋 Lesson Plan</a>`;
+        if (ses.ws) links += `<a class="slink lp" href="${ses.ws}">📄 Worksheet</a>`;
+        if (ses.quiz) links += `<a class="slink qz" href="${ses.quiz}">📝 Quiz ${ses.qn}</a>`;
+        if (ses.test) links += `<a class="slink ts" href="${ses.test}">🔴 Test</a>`;
+        
+        const row = document.createElement('div');
+        row.className = 'session-row';
+        row.innerHTML = `<div class="session-num ${ses.u}">${ses.s}</div><div class="session-content"><h4>${ses.t}</h4><div class="session-topics">${ses.tags.join(' · ')}</div><div class="session-links">${links}</div></div>`;
+        body.appendChild(row);
+    });
+
+    // ── Build assessments ──
+    const assessEl = document.getElementById('assessContainer');
+    const assessments = [
+        {type:'quiz',n:'Quiz 1',topic:'Angles & Shapes',w:'Week 1',wt:'5%',href:'quizzes/Quiz_1_Angles_Shapes.html'},
+        {type:'quiz',n:'Quiz 2',topic:'Perimeter & Area',w:'Week 2',wt:'5%',href:'quizzes/Quiz_2_Perimeter_Area.html'},
+        {type:'quiz',n:'Quiz 3',topic:'Circles & Composite',w:'Week 3',wt:'5%',href:'quizzes/Quiz_3_Circles_Composite.html'},
+        {type:'test',n:'TEST 1',topic:'All Geometry',w:'Week 4',wt:'15%',href:'tests/Test_1_Geometry.html'},
+        {type:'quiz',n:'Quiz 4',topic:'Expressions & PEMDAS',w:'Week 5',wt:'5%',href:'quizzes/Quiz_4_Expressions.html'},
+        {type:'quiz',n:'Quiz 5',topic:'One-Step Equations',w:'Week 6',wt:'5%',href:'quizzes/Quiz_5_One_Step_Equations.html'},
+        {type:'quiz',n:'Quiz 6',topic:'Two-Step & Inequalities',w:'Week 7',wt:'5%',href:'quizzes/Quiz_6_TwoStep_Inequalities.html'},
+        {type:'test',n:'TEST 2',topic:'Algebra Part 1',w:'Week 7',wt:'15%',href:'tests/Test_2_Algebra.html'},
+        {type:'quiz',n:'Quiz 7',topic:'Coordinate & Linear',w:'Week 8',wt:'5%',href:'quizzes/Quiz_7_Coordinate_Linear.html'},
+        {type:'test',n:'FINAL',topic:'Comprehensive',w:'Week 8',wt:'20%',href:'tests/Test_Final_Comprehensive.html'},
+    ];
+    assessments.forEach(a => {
+        const icon = a.type === 'test' ? '🔴' : '📝';
+        const card = document.createElement('a');
+        card.className = `assess-card ${a.type}`;
+        card.href = a.href;
+        card.innerHTML = `<h4>${icon} ${a.n} — ${a.topic}</h4><p>${a.w}</p><div class="weight">${a.wt} of final grade</div>`;
+        assessEl.appendChild(card);
+    });
+
+    function toggle(el) {
+        el.classList.toggle('open');
+        el.nextElementSibling.classList.toggle('open');
+    }
     </script>
 </body>
 </html>
