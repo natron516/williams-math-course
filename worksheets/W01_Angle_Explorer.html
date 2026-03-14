@@ -8,7 +8,7 @@
         @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Nunito', sans-serif; max-width: 820px; margin: 0 auto;
-               background: #E8F0FE; color: #333; -webkit-tap-highlight-color: transparent; }
+               background: #F5F7FA; color: #333; -webkit-tap-highlight-color: transparent; }
         
         /* Hero */
         .hero { background: linear-gradient(135deg, #1565C0, #42A5F5, #64B5F6);
@@ -31,7 +31,7 @@
         
         /* Cards */
         .card { background: white; border-radius: 20px; margin: 14px; overflow: hidden;
-                box-shadow: 0 2px 16px rgba(0,0,0,0.06); }
+                box-shadow: 0 1px 8px rgba(0,0,0,0.05); }
         .card-head { padding: 16px 20px; font-weight: 800; font-size: 1.05em;
                     display: flex; align-items: center; gap: 10px; }
         .card-head .emoji { font-size: 1.5em; width: 40px; height: 40px; border-radius: 12px;
@@ -66,7 +66,7 @@
         
         /* Scene — big visual context block */
         .scene { display: flex; gap: 16px; align-items: center; padding: 18px;
-                background: linear-gradient(135deg, #FAFAFA, #F5F5F5); border-radius: 18px;
+                background: #F9FAFB; border-radius: 18px;
                 margin: 16px 0; }
         .scene svg { flex-shrink: 0; }
         .scene .desc h4 { font-size: 1em; font-weight: 800; color: #333; margin-bottom: 4px; }
@@ -79,27 +79,26 @@
         .q-num { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center;
                 justify-content: center; font-weight: 800; font-size: 0.82em; color: white;
                 background: linear-gradient(135deg, #42A5F5, #1565C0); flex-shrink: 0;
-                box-shadow: 0 3px 0 #0D47A1; }
+                 }
         .q-text { flex: 1; font-size: 0.95em; line-height: 1.55; padding-top: 5px; }
         .q-text strong { color: #1565C0; }
         
         /* Answer bubble — NOT a plain form field */
         .answer { display: block; margin: 10px 0 4px 46px; width: calc(100% - 46px);
-                 padding: 12px 16px; background: #F0F7FF; border: 2.5px solid #BBDEFB;
+                 padding: 12px 16px; background: white; border: 2px solid #E0E0E0;
                  border-radius: 14px; font-family: 'Nunito', sans-serif; font-size: 0.95em;
-                 font-weight: 600; color: #1565C0; outline: none; transition: all 0.2s;
+                 font-weight: 600; color: #333; outline: none; transition: all 0.2s;
                  -webkit-appearance: none; }
-        .answer::placeholder { color: #90CAF9; font-weight: 600; }
-        .answer:focus { border-color: #42A5F5; background: white;
-                       box-shadow: 0 0 0 4px rgba(66,165,245,0.15); }
+        .answer::placeholder { color: #bbb; font-weight: 500; }
+        .answer:focus { border-color: #42A5F5; box-shadow: 0 0 0 3px rgba(66,165,245,0.1); }
         
         /* Work area */
         .work { display: block; margin: 8px 0 4px 46px; width: calc(100% - 46px);
-               min-height: 80px; padding: 12px; background: #FFFDE7; border: 2.5px dashed #FFD54F;
+               min-height: 80px; padding: 12px; background: #FAFAFA; border: 2px dashed #DDD;
                border-radius: 14px; font-family: 'Nunito', sans-serif; font-size: 0.9em;
-               color: #F57F17; outline: none; resize: vertical; }
-        .work::placeholder { color: #FFE082; }
-        .work:focus { border-color: #FFB300; background: #FFFEF5; }
+               color: #666; outline: none; resize: vertical; }
+        .work::placeholder { color: #ccc; }
+        .work:focus { border-color: #42A5F5; background: white; }
         
         /* Hint */
         .hint { margin: 6px 0 2px 46px; font-size: 0.82em; color: #42A5F5; font-weight: 700; }
@@ -118,9 +117,9 @@
         .submit-btn { background: linear-gradient(135deg, #4CAF50, #388E3C); color: white;
                      border: none; padding: 16px 48px; border-radius: 16px; font-size: 1.15em;
                      font-weight: 800; font-family: 'Nunito', sans-serif; cursor: pointer;
-                     box-shadow: 0 5px 0 #2E7D32; transition: all 0.15s;
+                     box-shadow: 0 2px 8px rgba(76,175,80,0.3); transition: all 0.15s;
                      -webkit-tap-highlight-color: transparent; }
-        .submit-btn:active { transform: translateY(3px); box-shadow: 0 2px 0 #2E7D32; }
+        .submit-btn:active { transform: translateY(1px); box-shadow: none; }
         .submit-btn:disabled { opacity: 0.5; }
         #submitMsg { margin-top: 10px; font-weight: 700; }
         
@@ -134,7 +133,7 @@
                      background: linear-gradient(135deg, #1565C0, #42A5F5); color: white;
                      border: none; border-radius: 12px; font-size: 0.95em; font-weight: 700;
                      cursor: pointer; font-family: 'Nunito', sans-serif;
-                     box-shadow: 0 3px 0 #0D47A1; }
+                      }
         .close-btn { background: none; border: 1px solid #ddd; padding: 5px 12px;
                     border-radius: 6px; cursor: pointer; font-size: 0.8em; color: #888; }
         
@@ -201,14 +200,7 @@
                     </div>
                 </div>
                 
-                <div class="pills">
-                    <span class="pill a">🟢 Acute: &lt; 90°</span>
-                    <span class="pill r">🔵 Right: = 90°</span>
-                    <span class="pill o">🟠 Obtuse: &gt; 90°</span>
-                    <span class="pill s">🔴 Straight: = 180°</span>
-                </div>
                 
-                <div class="cheer">👆 Use these to classify each angle below!</div>
                 
                 <div class="q"><div class="q-row"><span class="q-num">1</span><span class="q-text">An angle that measures <strong>45°</strong>. Type: ____</span></div>
                     <input type="text" class="answer" placeholder="acute, right, obtuse, or straight?" oninput="updateProgress()"/></div>
@@ -227,7 +219,7 @@
                 <div class="q"><div class="q-row"><span class="q-num">8</span><span class="q-text">An angle that measures <strong>175°</strong>. Type: ____</span></div>
                     <input type="text" class="answer" placeholder="acute, right, obtuse, or straight?" oninput="updateProgress()"/></div>
                 
-                <div class="cheer">🎯 Nice work! Now let's find angles in the real world →</div>
+                
             </div>
         </div>
         
