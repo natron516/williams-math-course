@@ -1207,6 +1207,7 @@ lessons.forEach((l, i) => {
     // Lesson content
     const div = document.createElement('div');
     div.className = 'lesson';
+    div.id = `session-${l.s}`;
     div.innerHTML = `
         <div class="lesson-title">${l.t}</div>
         <div class="lesson-meta">Session ${l.s} · Week ${l.w} · ${l.d} · ${l.u === 'geo' ? '📐 Geometry' : '📊 Algebra'}</div>
@@ -1236,7 +1237,15 @@ function showLesson(idx) {
     nav.children[idx].classList.add('active');
     container.children[idx].classList.add('active');
 }
-showLesson(0);
+// Check for hash-based navigation (e.g., #session-5)
+const hash = window.location.hash;
+if (hash && hash.startsWith('#session-')) {
+    const sNum = parseInt(hash.replace('#session-', ''));
+    const idx = lessons.findIndex(l => l.s === sNum);
+    showLesson(idx >= 0 ? idx : 0);
+} else {
+    showLesson(0);
+}
     </script>
 </body>
 </html>
