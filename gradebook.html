@@ -324,18 +324,25 @@ async function syncFromFirebase() {
         
         // Group scores by student
         const byStudent = {};
+        const allScores = {};  // includes worksheets
         snap.forEach(doc => {
             const d = doc.data();
             const name = d.student || d.username;
             if (!byStudent[name]) byStudent[name] = {};
+            if (!allScores[name]) allScores[name] = {};
             const col = ASSESS_MAP[d.assessment] || d.assessment;
+            // Store all scores (worksheets + quizzes + tests)
+            if (!allScores[name][col] || d.score > allScores[name][col]) {
+                allScores[name][col] = d.score;
+            }
             if (COLS.includes(col)) {
-                // Keep highest score if multiple attempts
                 if (!byStudent[name][col] || d.score > byStudent[name][col]) {
                     byStudent[name][col] = d.score;
                 }
             }
         });
+        // Cache all scores for student detail modal
+        localStorage.setItem('williams_all_scores', JSON.stringify(allScores));
         
         // Match to gradebook students by name, or add new rows
         let synced = 0;
@@ -376,35 +383,35 @@ async function syncFromFirebase() {
 
 // ── Student Detail Modal ──
 const WORK_ITEMS = [
-    {w:1, type:'ws', label:'Intro to Angles', href:'worksheets/W01_Angle_Explorer.html'},
-    {w:1, type:'ws', label:'Angle Relationships', href:'worksheets/W02_Angle_Relationships.html'},
-    {w:1, type:'ws', label:'Triangles & Polygons', href:'worksheets/W03_Shape_Detective.html'},
+    {w:1, type:'ws', label:'Intro to Angles', href:'worksheets/W01_Angle_Explorer.html', wsId:'w01'},
+    {w:1, type:'ws', label:'Angle Relationships', href:'worksheets/W02_Angle_Relationships.html', wsId:'w02'},
+    {w:1, type:'ws', label:'Triangles & Polygons', href:'worksheets/W03_Shape_Detective.html', wsId:'w03'},
     {w:1, type:'qz', label:'Quiz 1: Angles & Shapes', href:'quizzes/Quiz_1_Angles_Shapes.html', col:'q1'},
-    {w:2, type:'ws', label:'Perimeter', href:'worksheets/W04_Perimeter_Pro.html'},
-    {w:2, type:'ws', label:'Area: Rectangles & Triangles', href:'worksheets/W05_Area_Architect.html'},
-    {w:2, type:'ws', label:'Area: Parallelograms & Trapezoids', href:'worksheets/W06_Shape_Shifter.html'},
+    {w:2, type:'ws', label:'Perimeter', href:'worksheets/W04_Perimeter_Pro.html', wsId:'w04'},
+    {w:2, type:'ws', label:'Area: Rectangles & Triangles', href:'worksheets/W05_Area_Architect.html', wsId:'w05'},
+    {w:2, type:'ws', label:'Area: Parallelograms & Trapezoids', href:'worksheets/W06_Shape_Shifter.html', wsId:'w06'},
     {w:2, type:'qz', label:'Quiz 2: Perimeter & Area', href:'quizzes/Quiz_2_Perimeter_Area.html', col:'q2'},
-    {w:3, type:'ws', label:'Circumference', href:'worksheets/W07_Going_in_Circles.html'},
-    {w:3, type:'ws', label:'Circle Area', href:'worksheets/W08_Area_of_the_Round.html'},
-    {w:3, type:'ws', label:'Composite Shapes', href:'worksheets/W09_Blueprint_Builder.html'},
+    {w:3, type:'ws', label:'Circumference', href:'worksheets/W07_Going_in_Circles.html', wsId:'w07'},
+    {w:3, type:'ws', label:'Circle Area', href:'worksheets/W08_Area_of_the_Round.html', wsId:'w08'},
+    {w:3, type:'ws', label:'Composite Shapes', href:'worksheets/W09_Blueprint_Builder.html', wsId:'w09'},
     {w:3, type:'qz', label:'Quiz 3: Circles & Composite', href:'quizzes/Quiz_3_Circles_Composite.html', col:'q3'},
-    {w:4, type:'ws', label:'Volume of Prisms', href:'worksheets/W10_Box_It_Up.html'},
-    {w:4, type:'ws', label:'Cylinders & Surface Area', href:'worksheets/W11_Container_Challenge.html'},
+    {w:4, type:'ws', label:'Volume of Prisms', href:'worksheets/W10_Box_It_Up.html', wsId:'w10'},
+    {w:4, type:'ws', label:'Cylinders & Surface Area', href:'worksheets/W11_Container_Challenge.html', wsId:'w11'},
     {w:4, type:'ts', label:'Test 1: Geometry', href:'tests/Test_1_Geometry.html', col:'t1'},
-    {w:5, type:'ws', label:'Variables & Expressions', href:'worksheets/W13_Expression_Station.html'},
-    {w:5, type:'ws', label:'Combining Like Terms', href:'worksheets/W14_Like_Terms_Lineup.html'},
-    {w:5, type:'ws', label:'Order of Operations', href:'worksheets/W15_Order_Up.html'},
+    {w:5, type:'ws', label:'Variables & Expressions', href:'worksheets/W13_Expression_Station.html', wsId:'w13'},
+    {w:5, type:'ws', label:'Combining Like Terms', href:'worksheets/W14_Like_Terms_Lineup.html', wsId:'w14'},
+    {w:5, type:'ws', label:'Order of Operations', href:'worksheets/W15_Order_Up.html', wsId:'w15'},
     {w:5, type:'qz', label:'Quiz 4: Expressions', href:'quizzes/Quiz_4_Expressions.html', col:'q4'},
-    {w:6, type:'ws', label:'One-Step Equations (+/−)', href:'worksheets/W16_Balance_It_Out.html'},
-    {w:6, type:'ws', label:'One-Step Equations (×/÷)', href:'worksheets/W17_Fair_and_Square.html'},
-    {w:6, type:'ws', label:'Mixed Equations', href:'worksheets/W18_Equation_Mix.html'},
+    {w:6, type:'ws', label:'One-Step Equations (+/−)', href:'worksheets/W16_Balance_It_Out.html', wsId:'w16'},
+    {w:6, type:'ws', label:'One-Step Equations (×/÷)', href:'worksheets/W17_Fair_and_Square.html', wsId:'w17'},
+    {w:6, type:'ws', label:'Mixed Equations', href:'worksheets/W18_Equation_Mix.html', wsId:'w18'},
     {w:6, type:'qz', label:'Quiz 5: One-Step Equations', href:'quizzes/Quiz_5_One_Step_Equations.html', col:'q5'},
-    {w:7, type:'ws', label:'Two-Step Equations', href:'worksheets/W19_Two_Steps_to_Go.html'},
-    {w:7, type:'ws', label:'Inequalities', href:'worksheets/W20_More_or_Less.html'},
+    {w:7, type:'ws', label:'Two-Step Equations', href:'worksheets/W19_Two_Steps_to_Go.html', wsId:'w19'},
+    {w:7, type:'ws', label:'Inequalities', href:'worksheets/W20_More_or_Less.html', wsId:'w20'},
     {w:7, type:'qz', label:'Quiz 6: Two-Step & Inequalities', href:'quizzes/Quiz_6_TwoStep_Inequalities.html', col:'q6'},
     {w:7, type:'ts', label:'Test 2: Algebra', href:'tests/Test_2_Algebra.html', col:'t2'},
-    {w:8, type:'ws', label:'Coordinate Plane', href:'worksheets/W22_Plot_Twist.html'},
-    {w:8, type:'ws', label:'Linear Relationships', href:'worksheets/W23_Connect_the_Data.html'},
+    {w:8, type:'ws', label:'Coordinate Plane', href:'worksheets/W22_Plot_Twist.html', wsId:'w22'},
+    {w:8, type:'ws', label:'Linear Relationships', href:'worksheets/W23_Connect_the_Data.html', wsId:'w23'},
     {w:8, type:'qz', label:'Quiz 7: Coordinate & Linear', href:'quizzes/Quiz_7_Coordinate_Linear.html', col:'q7'},
     {w:8, type:'ts', label:'Final Test', href:'tests/Test_Final_Comprehensive.html', col:'final'},
 ];
@@ -447,7 +454,10 @@ function openStudentModal(idx) {
     });
     html += '</div></div>';
     
-    // All work links grouped by week
+    // All work links grouped by week — show worksheet submission status from Firebase
+    const allScores = JSON.parse(localStorage.getItem('williams_all_scores') || '{}');
+    const studentScores = allScores[s.name] || {};
+    
     html += '<div class="modal-section"><h4>📋 All Work</h4>';
     let curW = 0;
     WORK_ITEMS.forEach(item => {
@@ -459,9 +469,18 @@ function openStudentModal(idx) {
         const typeLabel = item.type === 'ws' ? 'Worksheet' : item.type === 'qz' ? 'Quiz' : 'Test';
         let scoreBadge = '';
         if (item.col) {
+            // Quiz/test — use gradebook score
             const v = s[item.col];
             const has = v !== '' && v !== null && v !== undefined;
             scoreBadge = `<span class="score-badge ${has?'has':'none'}">${has ? v+'%' : 'Not graded'}</span>`;
+        } else if (item.wsId) {
+            // Worksheet — check Firebase scores
+            const wsScore = studentScores[item.wsId];
+            if (wsScore !== undefined) {
+                scoreBadge = `<span class="score-badge has">✅ Submitted</span>`;
+            } else {
+                scoreBadge = `<span class="score-badge none">Not submitted</span>`;
+            }
         }
         html += `<a class="work-link" href="${item.href}" target="_blank">
             <span class="icon">${icon}</span>
