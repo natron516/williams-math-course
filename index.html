@@ -110,7 +110,7 @@
     <div class="hero">
         <a class="student-btn" href="student.html">🎓 Student Portal</a>
         <h1>Mrs. Williams' Math Class</h1>
-        <p>6th & 7th Grade · Geometry & Algebra</p>
+        <p>6th & 7th Grade · Mon/Wed/Thu · Mar 16 – May 21</p>
     </div>
     
     <div class="container">
@@ -145,35 +145,46 @@
     </div>
 
 <script>
+// Schedule: Mon 9:30-10:30, Wed 9:30-10:30, Thu 10:30-11:30
+// Starts Mon Mar 16. Easter break Apr 6-17 (2 weeks off).
 const S = [
-{s:1,w:1,t:"Intro to Angles",d:"Mon",u:"geo",ws:"worksheets/W01_Angle_Explorer.html"},
-{s:2,w:1,t:"Angle Relationships",d:"Wed",u:"geo",ws:"worksheets/W02_Angle_Relationships.html"},
-{s:3,w:1,t:"Triangles & Polygons",d:"Fri",u:"geo",ws:"worksheets/W03_Shape_Detective.html",qz:"quizzes/Quiz_1_Angles_Shapes.html"},
-{s:4,w:2,t:"Perimeter",d:"Mon",u:"geo",ws:"worksheets/W04_Perimeter_Pro.html"},
-{s:5,w:2,t:"Area: Rectangles & Triangles",d:"Wed",u:"geo",ws:"worksheets/W05_Area_Architect.html"},
-{s:6,w:2,t:"Area: Parallelograms & Trapezoids",d:"Fri",u:"geo",ws:"worksheets/W06_Shape_Shifter.html",qz:"quizzes/Quiz_2_Perimeter_Area.html"},
-{s:7,w:3,t:"Circumference",d:"Mon",u:"geo",ws:"worksheets/W07_Going_in_Circles.html"},
-{s:8,w:3,t:"Circle Area",d:"Wed",u:"geo",ws:"worksheets/W08_Area_of_the_Round.html"},
-{s:9,w:3,t:"Composite Shapes",d:"Fri",u:"geo",ws:"worksheets/W09_Blueprint_Builder.html",qz:"quizzes/Quiz_3_Circles_Composite.html"},
-{s:10,w:4,t:"Volume of Prisms",d:"Mon",u:"geo",ws:"worksheets/W10_Box_It_Up.html"},
-{s:11,w:4,t:"Cylinders & Surface Area",d:"Wed",u:"geo",ws:"worksheets/W11_Container_Challenge.html"},
-{s:12,w:4,t:"Geometry Test",d:"Fri",u:"geo",ts:"tests/Test_1_Geometry.html"},
-{s:13,w:5,t:"Variables & Expressions",d:"Mon",u:"alg",ws:"worksheets/W13_Expression_Station.html"},
-{s:14,w:5,t:"Combining Like Terms",d:"Wed",u:"alg",ws:"worksheets/W14_Like_Terms_Lineup.html"},
-{s:15,w:5,t:"Order of Operations",d:"Fri",u:"alg",ws:"worksheets/W15_Order_Up.html",qz:"quizzes/Quiz_4_Expressions.html"},
-{s:16,w:6,t:"One-Step Equations (+/−)",d:"Mon",u:"alg",ws:"worksheets/W16_Balance_It_Out.html"},
-{s:17,w:6,t:"One-Step Equations (×/÷)",d:"Wed",u:"alg",ws:"worksheets/W17_Fair_and_Square.html"},
-{s:18,w:6,t:"Mixed Equations",d:"Fri",u:"alg",ws:"worksheets/W18_Equation_Mix.html",qz:"quizzes/Quiz_5_One_Step_Equations.html"},
-{s:19,w:7,t:"Two-Step Equations",d:"Mon",u:"alg",ws:"worksheets/W19_Two_Steps_to_Go.html"},
-{s:20,w:7,t:"Inequalities",d:"Wed",u:"alg",ws:"worksheets/W20_More_or_Less.html"},
-{s:21,w:7,t:"Review + Algebra Test",d:"Fri",u:"alg",qz:"quizzes/Quiz_6_TwoStep_Inequalities.html",ts:"tests/Test_2_Algebra.html"},
-{s:22,w:8,t:"Coordinate Plane",d:"Mon",u:"alg",ws:"worksheets/W22_Plot_Twist.html"},
-{s:23,w:8,t:"Linear Relationships",d:"Wed",u:"alg",ws:"worksheets/W23_Connect_the_Data.html",qz:"quizzes/Quiz_7_Coordinate_Linear.html"},
-{s:24,w:8,t:"Final Test",d:"Fri",u:"alg",ts:"tests/Test_Final_Comprehensive.html"},
+{s:1, w:1,t:"Intro to Angles",       d:"Mon",dt:"2026-03-16",tm:"9:30–10:30",  u:"geo",ws:"worksheets/W01_Angle_Explorer.html"},
+{s:2, w:1,t:"Angle Relationships",    d:"Wed",dt:"2026-03-18",tm:"9:30–10:30",  u:"geo",ws:"worksheets/W02_Angle_Relationships.html"},
+{s:3, w:1,t:"Triangles & Polygons",   d:"Thu",dt:"2026-03-19",tm:"10:30–11:30", u:"geo",ws:"worksheets/W03_Shape_Detective.html",qz:"quizzes/Quiz_1_Angles_Shapes.html"},
+{s:4, w:2,t:"Perimeter",              d:"Mon",dt:"2026-03-23",tm:"9:30–10:30",  u:"geo",ws:"worksheets/W04_Perimeter_Pro.html"},
+{s:5, w:2,t:"Area: Rectangles & Triangles",d:"Wed",dt:"2026-03-25",tm:"9:30–10:30",u:"geo",ws:"worksheets/W05_Area_Architect.html"},
+{s:6, w:2,t:"Area: Parallelograms & Trapezoids",d:"Thu",dt:"2026-03-26",tm:"10:30–11:30",u:"geo",ws:"worksheets/W06_Shape_Shifter.html",qz:"quizzes/Quiz_2_Perimeter_Area.html"},
+{s:7, w:3,t:"Circumference",          d:"Mon",dt:"2026-03-30",tm:"9:30–10:30",  u:"geo",ws:"worksheets/W07_Going_in_Circles.html"},
+{s:8, w:3,t:"Circle Area",            d:"Wed",dt:"2026-04-01",tm:"9:30–10:30",  u:"geo",ws:"worksheets/W08_Area_of_the_Round.html"},
+{s:9, w:3,t:"Composite Shapes",       d:"Thu",dt:"2026-04-02",tm:"10:30–11:30", u:"geo",ws:"worksheets/W09_Blueprint_Builder.html",qz:"quizzes/Quiz_3_Circles_Composite.html"},
+// ── Easter break: Apr 6–17 ──
+{s:10,w:4,t:"Volume of Prisms",       d:"Mon",dt:"2026-04-20",tm:"9:30–10:30",  u:"geo",ws:"worksheets/W10_Box_It_Up.html"},
+{s:11,w:4,t:"Cylinders & Surface Area",d:"Wed",dt:"2026-04-22",tm:"9:30–10:30", u:"geo",ws:"worksheets/W11_Container_Challenge.html"},
+{s:12,w:4,t:"Geometry Test",           d:"Thu",dt:"2026-04-23",tm:"10:30–11:30", u:"geo",ts:"tests/Test_1_Geometry.html"},
+{s:13,w:5,t:"Variables & Expressions", d:"Mon",dt:"2026-04-27",tm:"9:30–10:30",  u:"alg",ws:"worksheets/W13_Expression_Station.html"},
+{s:14,w:5,t:"Combining Like Terms",    d:"Wed",dt:"2026-04-29",tm:"9:30–10:30",  u:"alg",ws:"worksheets/W14_Like_Terms_Lineup.html"},
+{s:15,w:5,t:"Order of Operations",     d:"Thu",dt:"2026-04-30",tm:"10:30–11:30", u:"alg",ws:"worksheets/W15_Order_Up.html",qz:"quizzes/Quiz_4_Expressions.html"},
+{s:16,w:6,t:"One-Step Equations (+/−)",d:"Mon",dt:"2026-05-04",tm:"9:30–10:30",  u:"alg",ws:"worksheets/W16_Balance_It_Out.html"},
+{s:17,w:6,t:"One-Step Equations (×/÷)",d:"Wed",dt:"2026-05-06",tm:"9:30–10:30",  u:"alg",ws:"worksheets/W17_Fair_and_Square.html"},
+{s:18,w:6,t:"Mixed Equations",         d:"Thu",dt:"2026-05-07",tm:"10:30–11:30", u:"alg",ws:"worksheets/W18_Equation_Mix.html",qz:"quizzes/Quiz_5_One_Step_Equations.html"},
+{s:19,w:7,t:"Two-Step Equations",      d:"Mon",dt:"2026-05-11",tm:"9:30–10:30",  u:"alg",ws:"worksheets/W19_Two_Steps_to_Go.html"},
+{s:20,w:7,t:"Inequalities",           d:"Wed",dt:"2026-05-13",tm:"9:30–10:30",  u:"alg",ws:"worksheets/W20_More_or_Less.html"},
+{s:21,w:7,t:"Review + Algebra Test",   d:"Thu",dt:"2026-05-14",tm:"10:30–11:30", u:"alg",qz:"quizzes/Quiz_6_TwoStep_Inequalities.html",ts:"tests/Test_2_Algebra.html"},
+{s:22,w:8,t:"Coordinate Plane",        d:"Mon",dt:"2026-05-18",tm:"9:30–10:30",  u:"alg",ws:"worksheets/W22_Plot_Twist.html"},
+{s:23,w:8,t:"Linear Relationships",    d:"Wed",dt:"2026-05-20",tm:"9:30–10:30",  u:"alg",ws:"worksheets/W23_Connect_the_Data.html",qz:"quizzes/Quiz_7_Coordinate_Linear.html"},
+{s:24,w:8,t:"Final Test",              d:"Thu",dt:"2026-05-21",tm:"10:30–11:30", u:"alg",ts:"tests/Test_Final_Comprehensive.html"},
 ];
 
-const WK = {1:"Angles & Shapes",2:"Perimeter & Area",3:"Circles",4:"Volume + Test 1",
-            5:"Expressions",6:"Equations",7:"Inequalities + Test 2",8:"Graphing + Final"};
+const WK = {
+    1:{n:"Angles & Shapes",r:"Mar 16–19"},
+    2:{n:"Perimeter & Area",r:"Mar 23–26"},
+    3:{n:"Circles",r:"Mar 30 – Apr 2"},
+    4:{n:"Volume + Test 1",r:"Apr 20–23"},
+    5:{n:"Expressions",r:"Apr 27–30"},
+    6:{n:"Equations",r:"May 4–7"},
+    7:{n:"Inequalities + Test 2",r:"May 11–14"},
+    8:{n:"Graphing + Final",r:"May 18–21"},
+};
 
 const Q = [
 {q:"Genius is as common as dirt. We suppress genius because we haven't yet figured out how to manage a population of educated men and women.",a:"John Taylor Gatto"},
@@ -229,12 +240,21 @@ function render() {
     document.getElementById('progText').textContent = `${done}/24`;
     document.getElementById('progFill').style.width = (done/24*100) + '%';
     
-    let next = S.find(s => !p[s.s]) || null;
+    // Find next: first unchecked session whose date hasn't passed, or first unchecked overall
+    const today = new Date().toISOString().slice(0,10);
+    let next = S.find(s => !p[s.s] && s.dt >= today) || S.find(s => !p[s.s]) || null;
+    
+    function fmtDate(dt) {
+        const d = new Date(dt + 'T12:00:00');
+        const m = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+        return `${days[d.getDay()]}, ${m[d.getMonth()]} ${d.getDate()}`;
+    }
     
     // Next card
     if (next) {
         document.getElementById('nextTitle').textContent = `Session ${next.s}: ${next.t}`;
-        document.getElementById('nextMeta').textContent = `Week ${next.w} · ${next.d === 'Mon' ? 'Monday' : next.d === 'Wed' ? 'Wednesday' : 'Friday'} · ${next.u === 'geo' ? 'Geometry' : 'Algebra'}`;
+        document.getElementById('nextMeta').textContent = `${fmtDate(next.dt)} · ${next.tm} · ${next.u === 'geo' ? 'Geometry' : 'Algebra'}`;
         let btns = `<a class="next-btn primary" href="lesson-plans.html">📋 Lesson Plan</a>`;
         if (next.ws) btns += `<a class="next-btn secondary" href="${next.ws}">📄 Worksheet</a>`;
         if (next.ts) btns += `<a class="next-btn secondary" href="${next.ts}">🔴 Test</a>`;
@@ -274,13 +294,13 @@ function render() {
             body += `<div class="session${d?' done':''}${isNext?' next':''}">
                 <div class="s-check${d?' done':''}" onclick="tog(${s.s},event)">${d?'✓':s.s}</div>
                 <div class="s-info"><div class="s-title">${s.t}</div>
-                <div class="s-sub">${s.d==='Mon'?'Monday':s.d==='Wed'?'Wednesday':'Friday'}</div></div>
+                <div class="s-sub">${fmtDate(s.dt)} · ${s.tm}</div></div>
                 <div class="s-links">${links}</div></div>`;
         });
         
         block.innerHTML = `<div class="week-hdr${hasNext?' open':''}" id="wh${w}" onclick="toggleWeek(${w})">
             <div class="wnum${unit==='alg'?' alg':''}">${w}</div>
-            <div class="wtitle">${WK[w]}</div>
+            <div class="wtitle">${WK[w].n} <span style="font-weight:400;font-size:0.85em;color:#baa;">· ${WK[w].r}</span></div>
             <div class="wprog">${progLabel}</div>
             <div class="warrow">▶</div>
         </div><div class="week-body${hasNext?' open':''}" id="wb${w}">${body}</div>`;
