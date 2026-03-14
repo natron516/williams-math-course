@@ -31,7 +31,7 @@
                     transition: width 0.5s; width: 0%; }
         
         /* Up Next card */
-        .next-card { background: white; border-radius: 14px; padding: 16px 18px; margin-bottom: 14px;
+        .next-card { background: white; border-radius: 14px; padding: 16px 18px; margin-bottom: 14px; display:flex; gap:16px;
                     box-shadow: 0 2px 8px rgba(0,0,0,0.04); border-left: 4px solid #C06C84; }
         .next-label { font-size: 0.72em; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;
                      color: #C06C84; margin-bottom: 4px; }
@@ -127,11 +127,13 @@
         </div>
         
         <div class="next-card">
-            <div class="next-label">Up Next</div>
-            <div class="next-title" id="nextTitle"></div>
-            <div class="next-meta" id="nextMeta"></div>
-            <div class="next-actions" id="nextActions"></div>
-            <div id="nextVideos"></div>
+            <div style="flex:1;min-width:0;">
+                <div class="next-label">Up Next</div>
+                <div class="next-title" id="nextTitle"></div>
+                <div class="next-meta" id="nextMeta"></div>
+                <div class="next-actions" id="nextActions"></div>
+            </div>
+            <div id="nextVideos" style="flex-shrink:0;"></div>
         </div>
         
         <div class="quick">
@@ -271,17 +273,16 @@ function render() {
         // Add video previews below buttons
         const vids = VIDS[next.s];
         if (vids && vids.length) {
-            let vidHtml = '<div style="margin-top:12px;padding-top:10px;border-top:1px solid #f0e4e8;"><div style="font-size:0.75em;font-weight:700;color:#C06C84;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">🎬 Preview Videos</div><div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;">';
-            vids.forEach(v => {
-                vidHtml += `<a href="https://www.youtube.com/watch?v=${v.id}" target="_blank" style="flex-shrink:0;text-decoration:none;width:130px;">
+            let vidHtml = '<div style="display:flex;flex-direction:column;gap:6px;">';
+            vids.slice(0,2).forEach(v => {
+                vidHtml += `<a href="https://www.youtube.com/watch?v=${v.id}" target="_blank" style="text-decoration:none;display:block;width:120px;">
                     <div style="position:relative;border-radius:8px;overflow:hidden;background:#000;">
-                        <img src="https://img.youtube.com/vi/${v.id}/mqdefault.jpg" style="width:130px;height:73px;object-fit:cover;display:block;opacity:0.85;">
-                        <span style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:white;font-size:1.4em;text-shadow:0 0 8px rgba(0,0,0,0.5);">▶</span>
+                        <img src="https://img.youtube.com/vi/${v.id}/mqdefault.jpg" style="width:120px;height:68px;object-fit:cover;display:block;opacity:0.85;">
+                        <span style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:white;font-size:1.3em;text-shadow:0 0 8px rgba(0,0,0,0.5);">▶</span>
                     </div>
-                    <div style="font-size:0.7em;color:#888;font-weight:600;margin-top:3px;line-height:1.2;">${v.t}</div>
                 </a>`;
             });
-            vidHtml += '</div></div>';
+            vidHtml += '</div>';
             document.getElementById('nextVideos').innerHTML = vidHtml;
         }
     } else {
