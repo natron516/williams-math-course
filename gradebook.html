@@ -197,16 +197,67 @@ const SK = 'williams_math_gradebook';
 let students = [];
 
 function loadData() {
+    // Load from localStorage first for instant render
     const saved = localStorage.getItem(SK);
     if (saved) { students = JSON.parse(saved); }
     else { students = []; for (let i=1;i<=24;i++) { const s={name:`Student ${i}`}; COLS.forEach(c=>s[c]=''); students.push(s); } }
     renderTable();
+    
+    // Then try to load from Firebase (cloud takes priority)
+    loadFromCloud();
+}
+
+async function loadFromCloud() {
+    try {
+        const cfg = window.firebaseConfig || (typeof firebaseConfig !== 'undefined' ? firebaseConfig : null);
+        if (!cfg || cfg.apiKey === 'PASTE_HERE') return;
+        let app; try { app = firebase.app(); } catch(e) { app = firebase.initializeApp(cfg); }
+        await firebase.auth().signInAnonymously();
+        const doc = await firebase.firestore().collection('gradebook').doc('main').get();
+        if (doc.exists && doc.data().students) {
+            const cloudData = doc.data().students;
+            const cloudTime = doc.data().updatedAt || 0;
+            const localTime = parseInt(localStorage.getItem('williams_gradebook_time') || '0');
+            // Use whichever is newer
+            if (cloudTime > localTime) {
+                students = cloudData;
+                localStorage.setItem(SK, JSON.stringify(students));
+                localStorage.setItem('williams_gradebook_time', String(cloudTime));
+                renderTable();
+                console.log('📥 Loaded gradebook from cloud');
+            }
+        }
+    } catch(e) { console.warn('Cloud load failed:', e); }
 }
 
 function saveData() {
     localStorage.setItem(SK, JSON.stringify(students));
+    const now = Date.now();
+    localStorage.setItem('williams_gradebook_time', String(now));
     document.getElementById('saveStatus').textContent = '✓ Saved';
     setTimeout(()=>document.getElementById('saveStatus').textContent='', 2000);
+    
+    // Save to Firebase cloud
+    saveToCloud(now);
+}
+
+let _cloudSaveTimer = null;
+function saveToCloud(timestamp) {
+    // Debounce cloud saves (wait 2s after last edit)
+    clearTimeout(_cloudSaveTimer);
+    _cloudSaveTimer = setTimeout(async () => {
+        try {
+            const cfg = window.firebaseConfig || (typeof firebaseConfig !== 'undefined' ? firebaseConfig : null);
+            if (!cfg || cfg.apiKey === 'PASTE_HERE') return;
+            let app; try { app = firebase.app(); } catch(e) { app = firebase.initializeApp(cfg); }
+            await firebase.auth().signInAnonymously();
+            await firebase.firestore().collection('gradebook').doc('main').set({
+                students: students,
+                updatedAt: timestamp
+            });
+            console.log('☁️ Gradebook saved to cloud');
+        } catch(e) { console.warn('Cloud save failed:', e); }
+    }, 2000);
 }
 
 function renderTable() {
