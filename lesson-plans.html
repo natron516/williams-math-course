@@ -24,7 +24,12 @@
                       cursor: pointer; font-weight: 700; font-size: 0.9em; background: white;
                       transition: all 0.2s; }
         .session-btn:hover { border-color: #C06C84; background: #FFF5F7; }
-        .session-btn.active { background: #8B5E83; color: white; border-color: #8B5E83; }
+        .session-btn.active { background: #FDE8EE; color: #8B5E83; border-color: #8B5E83; border-width: 3px; font-weight: 800; }
+        .session-btn.active.done { background: #E8F5E9; color: #5B8C5A; border-color: #5B8C5A; }
+        .session-btn.done { background: #E8F5E9; border-color: #A5D6A7; color: #5B8C5A; }
+        .session-btn.done::after { content: ''; position: absolute; bottom: 2px; right: 2px; width: 10px; height: 10px;
+            background: #5B8C5A; border-radius: 50%; border: 1.5px solid white; }
+        .session-btn { position: relative; }
         .session-btn.geo { color: #8B5E83; }
         .session-btn.alg { color: #5B8C5A; }
         .lesson { display: none; background: white; border-radius: 12px; padding: 25px;
@@ -1195,12 +1200,14 @@ diff_s:"Extended time available",diff_a:"Test progresses from fundamental to cha
 
 const nav = document.getElementById('sessionNav');
 const container = document.getElementById('lessonContainer');
+const progress = JSON.parse(localStorage.getItem('williams_progress') || '{}');
 
 lessons.forEach((l, i) => {
     // Nav button
     const btn = document.createElement('div');
-    btn.className = `session-btn ${l.u}`;
-    btn.textContent = l.s;
+    const isDone = !!progress[l.s];
+    btn.className = `session-btn ${l.u}${isDone ? ' done' : ''}`;
+    btn.textContent = isDone ? '✓' : l.s;
     btn.onclick = () => showLesson(i);
     nav.appendChild(btn);
 
