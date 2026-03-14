@@ -570,5 +570,61 @@
     };
 })();
 </script>
+
+<!-- Firebase Auto-Submit -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="../firebase-config.js"></script>
+<script src="../grade-sync.js"></script>
+
+<script>
+// Auto-submit score when student clicks any existing submit/check button
+(function() {
+    const assessId = "final";
+    
+    // Find all number/text inputs that look like answer fields
+    function collectAndSubmit() {
+        const inputs = document.querySelectorAll('input[type="number"], input[type="text"], select, textarea');
+        let filled = 0, total = 0;
+        inputs.forEach(inp => {
+            if (inp.closest('.answer-key') || inp.closest('[data-key]')) return; // skip answer key inputs
+            if (inp.className && (inp.className.includes('grade') || inp.className.includes('name'))) return;
+            total++;
+            if (inp.value && inp.value.trim()) filled++;
+        });
+        
+        // Calculate completion percentage as a preliminary score
+        // Real grading happens when teacher reviews, but this tracks completion
+        const completion = total > 0 ? (filled / total) * 100 : 0;
+        
+        // Check if there's already a computed score from auto-grading
+        const scoreEl = document.querySelector('[data-score], #autoScore, .score-display');
+        let score = completion; // default to completion %
+        if (scoreEl && scoreEl.dataset.score) score = parseFloat(scoreEl.dataset.score);
+        
+        submitScore(assessId, score, { filled, total, type: 'completion' });
+    }
+    
+    // Hook into any existing submit/check buttons
+    document.addEventListener('click', function(e) {
+        const btn = e.target.closest('button, .btn, [onclick]');
+        if (!btn) return;
+        const text = (btn.textContent || '').toLowerCase();
+        if (text.includes('submit') || text.includes('check') || text.includes('done') || text.includes('finish')) {
+            setTimeout(collectAndSubmit, 500); // delay to let any existing scoring run first
+        }
+    });
+    
+    // Also submit on page unload if anything was filled in
+    window.addEventListener('beforeunload', function() {
+        const inputs = document.querySelectorAll('input[type="number"], input[type="text"]');
+        let filled = 0;
+        inputs.forEach(inp => { if (inp.value && inp.value.trim()) filled++; });
+        if (filled > 2) collectAndSubmit(); // only if they did some work
+    });
+})();
+</script>
+
 </body>
 </html>

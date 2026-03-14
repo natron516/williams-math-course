@@ -92,6 +92,7 @@
         <button onclick="addStudent()">➕ Student</button>
         <button onclick="exportCSV()">📤 CSV</button>
         <button onclick="exportToSheets()">📊 Google Sheets</button>
+        <button onclick="syncFromFirebase()" id="syncBtn">🔄 Sync Scores</button>
         <button class="danger" onclick="if(confirm('Clear ALL grades?'))clearAll()">🗑️ Clear</button>
         <span class="save-status" id="saveStatus"></span>
     </div>
@@ -141,6 +142,11 @@
     </div>
     <div class="footer">Made with 🌸 for Mrs. Williams' class</div>
 
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
 <script>
 document.getElementById('todayPin').textContent = new Date().getDate();
 
@@ -253,6 +259,86 @@ function exportToSheets() {
 }
 
 loadData();
+
+// ── Firebase Sync ──
+const ASSESS_MAP = {q1:'q1',q2:'q2',q3:'q3',q4:'q4',q5:'q5',q6:'q6',q7:'q7',
+                    t1:'t1',t2:'t2',final:'final',test1:'t1',test2:'t2',test_final:'final'};
+
+async function syncFromFirebase() {
+    const btn = document.getElementById('syncBtn');
+    btn.textContent = '⏳ Syncing...'; btn.disabled = true;
+    
+    try {
+        if (!window.firebaseConfig || firebaseConfig.apiKey === 'PASTE_HERE') {
+            alert('Firebase not configured yet.\\n\\nTo enable auto-sync:\\n1. Go to console.firebase.google.com\\n2. Create a project\\n3. Enable Firestore + Anonymous Auth\\n4. Copy web app config into firebase-config.js');
+            btn.textContent = '🔄 Sync Scores'; btn.disabled = false;
+            return;
+        }
+        
+        if (!window._fbApp) {
+            window._fbApp = firebase.initializeApp(firebaseConfig);
+            window._db = firebase.firestore();
+            await firebase.auth().signInAnonymously();
+        }
+        
+        const snap = await window._db.collection('scores').get();
+        if (snap.empty) {
+            alert('No student scores submitted yet.');
+            btn.textContent = '🔄 Sync Scores'; btn.disabled = false;
+            return;
+        }
+        
+        // Group scores by student
+        const byStudent = {};
+        snap.forEach(doc => {
+            const d = doc.data();
+            const name = d.student || d.username;
+            if (!byStudent[name]) byStudent[name] = {};
+            const col = ASSESS_MAP[d.assessment] || d.assessment;
+            if (COLS.includes(col)) {
+                // Keep highest score if multiple attempts
+                if (!byStudent[name][col] || d.score > byStudent[name][col]) {
+                    byStudent[name][col] = d.score;
+                }
+            }
+        });
+        
+        // Match to gradebook students by name, or add new rows
+        let synced = 0;
+        for (const [name, scores] of Object.entries(byStudent)) {
+            // Find matching student (case-insensitive)
+            let idx = students.findIndex(s => s.name.toLowerCase() === name.toLowerCase());
+            // Or find an empty "Student N" slot
+            if (idx === -1) {
+                idx = students.findIndex(s => s.name.match(/^Student \d+$/) && 
+                    COLS.every(c => s[c] === '' || s[c] === null));
+                if (idx !== -1) students[idx].name = name;
+            }
+            // Or add new
+            if (idx === -1) {
+                const s = { name }; COLS.forEach(c => s[c] = ''); students.push(s); idx = students.length - 1;
+            }
+            
+            for (const [col, score] of Object.entries(scores)) {
+                // Only overwrite if the synced score is different and the cell is empty or lower
+                const current = students[idx][col];
+                if (current === '' || current === null || current === undefined || score > current) {
+                    students[idx][col] = Math.round(score * 10) / 10;
+                    synced++;
+                }
+            }
+        }
+        
+        saveData();
+        renderTable();
+        alert(`✅ Synced ${synced} scores from ${Object.keys(byStudent).length} students!`);
+    } catch (e) {
+        console.error('Sync error:', e);
+        alert('Sync failed: ' + e.message);
+    }
+    
+    btn.textContent = '🔄 Sync Scores'; btn.disabled = false;
+}
 </script>
 </body>
 </html>
