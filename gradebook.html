@@ -178,7 +178,7 @@
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-<script src="firebase-config.js?v=2"></script>
+<script src="firebase-config.js?v=3"></script>
 <script>
 document.getElementById('todayPin').textContent = new Date().getDate();
 
@@ -303,14 +303,15 @@ async function syncFromFirebase() {
     btn.textContent = '⏳ Syncing...'; btn.disabled = true;
     
     try {
-        if (!window.firebaseConfig || firebaseConfig.apiKey === 'PASTE_HERE') {
-            alert('Firebase not configured yet.\\n\\nTo enable auto-sync:\\n1. Go to console.firebase.google.com\\n2. Create a project\\n3. Enable Firestore + Anonymous Auth\\n4. Copy web app config into firebase-config.js?v=2');
+        const cfg = window.firebaseConfig || (typeof firebaseConfig !== 'undefined' ? firebaseConfig : null);
+        if (!cfg || cfg.apiKey === 'PASTE_HERE') {
+            alert('Firebase not configured yet.\\n\\nTo enable auto-sync:\\n1. Go to console.firebase.google.com\\n2. Create a project\\n3. Enable Firestore + Anonymous Auth\\n4. Copy web app config into firebase-config.js?v=3');
             btn.textContent = '🔄 Sync Scores'; btn.disabled = false;
             return;
         }
         
         let fbApp;
-        try { fbApp = firebase.app(); } catch(e) { fbApp = firebase.initializeApp(firebaseConfig); }
+        try { fbApp = firebase.app(); } catch(e) { fbApp = firebase.initializeApp(cfg); }
         const fbDb = firebase.firestore();
         await firebase.auth().signInAnonymously();
         
