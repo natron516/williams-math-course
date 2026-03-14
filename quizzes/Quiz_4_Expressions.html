@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📝 Quiz 4: Expressions & Order of Operations</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+               max-width: 800px; margin: 0 auto; padding: 20px; background: #f5f5f5; color: #333; }
+        .header { background: linear-gradient(135deg, #1F4E79, #2E75B6); color: white;
+                   padding: 20px; border-radius: 12px; margin-bottom: 20px; text-align: center; }
+        .header h1 { font-size: 1.5em; margin-bottom: 5px; }
+        .header p { font-size: 0.9em; opacity: 0.9; }
+        .student-info { background: white; padding: 15px; border-radius: 8px; margin-bottom: 20px;
+                        display: flex; gap: 15px; flex-wrap: wrap; }
+        .student-info input { border: none; border-bottom: 2px solid #2E75B6; padding: 8px;
+                               font-size: 1em; flex: 1; min-width: 150px; outline: none; }
+        .section { background: white; padding: 20px; border-radius: 12px; margin-bottom: 15px;
+                   box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .section h2 { color: #1F4E79; font-size: 1.2em; margin-bottom: 15px;
+                      border-bottom: 2px solid #D6E4F0; padding-bottom: 8px; }
+        .problem { padding: 12px 0; border-bottom: 1px solid #eee; }
+        .problem:last-child { border-bottom: none; }
+        .problem-num { display: inline-block; background: #2E75B6; color: white;
+                       width: 28px; height: 28px; border-radius: 50%; text-align: center;
+                       line-height: 28px; font-size: 0.85em; font-weight: bold; margin-right: 10px; }
+        .problem-text { display: inline; font-size: 1.05em; }
+        .answer-box { display: block; margin: 10px 0 5px 38px; border: 2px dashed #ccc;
+                      border-radius: 8px; padding: 12px; min-height: 45px;
+                      font-size: 1em; width: calc(100% - 38px); }
+        .answer-box:focus { border-color: #2E75B6; outline: none; background: #f8fbff; }
+        .work-area { display: block; margin: 8px 0 5px 38px; border: 1px solid #ddd;
+                     border-radius: 8px; padding: 10px; min-height: 80px;
+                     font-size: 0.9em; width: calc(100% - 38px); color: #666; }
+        .work-area:focus { border-color: #2E75B6; outline: none; }
+        .emoji { font-size: 1.3em; margin-right: 5px; }
+        .context { background: #f0f7ff; padding: 12px; border-radius: 8px;
+                   margin: 10px 0; border-left: 4px solid #2E75B6; font-size: 0.95em; }
+        .hint { color: #888; font-size: 0.85em; font-style: italic; margin-left: 38px; }
+        .mc-option { display: block; padding: 10px 15px; margin: 5px 0 5px 38px;
+                     background: #f8f8f8; border: 2px solid #e0e0e0; border-radius: 8px;
+                     cursor: pointer; transition: all 0.2s; font-size: 1em; }
+        .mc-option:hover { background: #e8f0fe; border-color: #2E75B6; }
+        .mc-option.selected { background: #d0e4ff; border-color: #2E75B6; font-weight: bold; }
+        .answer-key { background: #fff9e6; padding: 20px; border-radius: 12px;
+                      margin: 20px 0; border: 2px solid #f0c040; }
+        .answer-key h2 { color: #8B6914; }
+        .toggle-btn { display: block; margin: 15px auto; padding: 12px 30px;
+                      background: #1F4E79; color: white; border: none; border-radius: 8px;
+                      font-size: 1em; cursor: pointer; }
+        .toggle-btn:hover { background: #2E75B6; }
+        .score-box { background: #e2efda; padding: 15px; border-radius: 8px;
+                     text-align: center; font-size: 1.2em; margin-top: 15px; }
+        @media print {
+            .toggle-btn, .answer-key { display: none !important; }
+            .section { break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📝 Quiz 4: Expressions & Order of Operations</h1>
+        <p>Week 5 | 15 minutes | Show your work!</p>
+    </div>
+    <div class="student-info">
+        <input type="text" placeholder="Name" />
+        <input type="text" placeholder="Date" />
+        <input type="text" placeholder="Period" />
+    </div>
+    <div class="section"><h2>Quiz 4: Expressions & Order of Operations (12 questions)</h2><div class="problem">
+        <span class="problem-num">1</span>
+        <span class="problem-text">Translate: "8 more than twice a number" → ____</span>
+        
+        
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">2</span>
+        <span class="problem-text">Translate: "a number divided by 5, minus 3" → ____</span>
+        
+        
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">3</span>
+        <span class="problem-text">Evaluate 4x + 7 when x = 6</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">4</span>
+        <span class="problem-text">Evaluate 3(n − 4) when n = 10</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">5</span>
+        <span class="problem-text">Simplify: 5a + 3b + 2a − b = ____</span>
+        
+        
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">6</span>
+        <span class="problem-text">Simplify: 8x + 4 − 3x + 7 = ____</span>
+        
+        
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">7</span>
+        <span class="problem-text">Which is a correct simplification of 3x + 2y + 4x?</span>
+        <div class="mc-option" onclick="this.classList.toggle('selected')">A) 9xy</div>
+<div class="mc-option" onclick="this.classList.toggle('selected')">B) 7x + 2y</div>
+<div class="mc-option" onclick="this.classList.toggle('selected')">C) 7xy + 2</div>
+<div class="mc-option" onclick="this.classList.toggle('selected')">D) 3x + 6y</div>
+    </div><div class="problem">
+        <span class="problem-num">8</span>
+        <span class="problem-text">Evaluate 2x² + 1 when x = 3</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">9</span>
+        <span class="problem-text">Evaluate 5 + 3(x − 2) when x = 8</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">10</span>
+        <span class="problem-text">🍳 A recipe uses 2c cups of flour per batch. How much flour for 4 batches? Evaluate when c = 1.5 cups.</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">11</span>
+        <span class="problem-text">🎮 Score = 5c + 10s (c = coins, s = stars). You got 8 coins and 3 stars. Total?</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">12</span>
+        <span class="problem-text">Simplify first, then evaluate for x = 3: 2(x + 4) + 3x</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div></div><div class="score-box">Score: ____ / 12</div>
+    
+    <div class="answer-key" style="display:none;" id="answerKey">
+        <h2>🔑 Answer Key</h2>
+        <p><strong>1.</strong> 2n + 8 | <strong>2.</strong> n/5 − 3 | <strong>3.</strong> 31 | <strong>4.</strong> 18</p>
+<p><strong>5.</strong> 7a + 2b | <strong>6.</strong> 5x + 11 | <strong>7.</strong> B) 7x + 2y | <strong>8.</strong> 19</p>
+<p><strong>9.</strong> 5 + 18 = 23 | <strong>10.</strong> 8c = 2(4)(1.5) = 12 cups</p>
+<p><strong>11.</strong> 40 + 30 = 70 | <strong>12.</strong> 5x + 8, then 5(3) + 8 = 23</p>
+    </div>
+    <button class="toggle-btn" onclick="toggleAnswers()">Show/Hide Answer Key</button>
+    <script>
+        function toggleAnswers() {
+            var key = document.getElementById('answerKey');
+            key.style.display = key.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+</body>
+</html>

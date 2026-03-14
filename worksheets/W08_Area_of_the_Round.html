@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Worksheet 8: Area of the Round</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+               max-width: 800px; margin: 0 auto; padding: 20px; background: #f5f5f5; color: #333; }
+        .header { background: linear-gradient(135deg, #1F4E79, #2E75B6); color: white;
+                   padding: 20px; border-radius: 12px; margin-bottom: 20px; text-align: center; }
+        .header h1 { font-size: 1.5em; margin-bottom: 5px; }
+        .header p { font-size: 0.9em; opacity: 0.9; }
+        .student-info { background: white; padding: 15px; border-radius: 8px; margin-bottom: 20px;
+                        display: flex; gap: 15px; flex-wrap: wrap; }
+        .student-info input { border: none; border-bottom: 2px solid #2E75B6; padding: 8px;
+                               font-size: 1em; flex: 1; min-width: 150px; outline: none; }
+        .section { background: white; padding: 20px; border-radius: 12px; margin-bottom: 15px;
+                   box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .section h2 { color: #1F4E79; font-size: 1.2em; margin-bottom: 15px;
+                      border-bottom: 2px solid #D6E4F0; padding-bottom: 8px; }
+        .problem { padding: 12px 0; border-bottom: 1px solid #eee; }
+        .problem:last-child { border-bottom: none; }
+        .problem-num { display: inline-block; background: #2E75B6; color: white;
+                       width: 28px; height: 28px; border-radius: 50%; text-align: center;
+                       line-height: 28px; font-size: 0.85em; font-weight: bold; margin-right: 10px; }
+        .problem-text { display: inline; font-size: 1.05em; }
+        .answer-box { display: block; margin: 10px 0 5px 38px; border: 2px dashed #ccc;
+                      border-radius: 8px; padding: 12px; min-height: 45px;
+                      font-size: 1em; width: calc(100% - 38px); }
+        .answer-box:focus { border-color: #2E75B6; outline: none; background: #f8fbff; }
+        .work-area { display: block; margin: 8px 0 5px 38px; border: 1px solid #ddd;
+                     border-radius: 8px; padding: 10px; min-height: 80px;
+                     font-size: 0.9em; width: calc(100% - 38px); color: #666; }
+        .work-area:focus { border-color: #2E75B6; outline: none; }
+        .emoji { font-size: 1.3em; margin-right: 5px; }
+        .context { background: #f0f7ff; padding: 12px; border-radius: 8px;
+                   margin: 10px 0; border-left: 4px solid #2E75B6; font-size: 0.95em; }
+        .hint { color: #888; font-size: 0.85em; font-style: italic; margin-left: 38px; }
+        .mc-option { display: block; padding: 10px 15px; margin: 5px 0 5px 38px;
+                     background: #f8f8f8; border: 2px solid #e0e0e0; border-radius: 8px;
+                     cursor: pointer; transition: all 0.2s; font-size: 1em; }
+        .mc-option:hover { background: #e8f0fe; border-color: #2E75B6; }
+        .mc-option.selected { background: #d0e4ff; border-color: #2E75B6; font-weight: bold; }
+        .answer-key { background: #fff9e6; padding: 20px; border-radius: 12px;
+                      margin: 20px 0; border: 2px solid #f0c040; }
+        .answer-key h2 { color: #8B6914; }
+        .toggle-btn { display: block; margin: 15px auto; padding: 12px 30px;
+                      background: #1F4E79; color: white; border: none; border-radius: 8px;
+                      font-size: 1em; cursor: pointer; }
+        .toggle-btn:hover { background: #2E75B6; }
+        .score-box { background: #e2efda; padding: 15px; border-radius: 8px;
+                     text-align: center; font-size: 1.2em; margin-top: 15px; }
+        @media print {
+            .toggle-btn, .answer-key { display: none !important; }
+            .section { break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Worksheet 8: Area of the Round</h1>
+        <p>Session 8 — Area of circles and pizza math</p>
+    </div>
+    <div class="student-info">
+        <input type="text" placeholder="Name" />
+        <input type="text" placeholder="Date" />
+        <input type="text" placeholder="Period" />
+    </div>
+    <div class="section"><h2>Part 1: Basic Circle Area (use π ≈ 3.14)</h2><div class="problem">
+        <span class="problem-num">1</span>
+        <span class="problem-text">Radius = 5 cm. A = ____</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">2</span>
+        <span class="problem-text">Radius = 10 in. A = ____</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">3</span>
+        <span class="problem-text">Diameter = 8 ft. A = ____ (find radius first!)</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">4</span>
+        <span class="problem-text">Diameter = 14 m. A = ____</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">5</span>
+        <span class="problem-text">A = 153.86 sq cm. Find the radius.</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div></div><div class="section"><h2>Part 2: 🍕 Pizza Math!</h2><div class="context">Pizza sizes are listed by diameter. Which deals are actually good?</div><div class="problem">
+        <span class="problem-num">6</span>
+        <span class="problem-text">A 12" pizza costs $10. What is its area? Price per square inch?</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">7</span>
+        <span class="problem-text">A 16" pizza costs $14. What is its area? Price per square inch?</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">8</span>
+        <span class="problem-text">Which is the better deal — one 16" pizza for $14, or two 12" pizzas for $10 each?</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">9</span>
+        <span class="problem-text">A pizzeria offers: Small (10") $8, Medium (14") $12, Large (18") $16. Rank them by price per square inch (best deal first).</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">10</span>
+        <span class="problem-text">You're ordering for a party of 12 people. Each person eats about 25 sq inches of pizza. What's the cheapest option from problem 9?</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div></div><div class="section"><h2>Part 3: More Circle Area</h2><div class="context">🏊 Circular pool vs. rectangular pool comparison.</div><div class="problem">
+        <span class="problem-num">11</span>
+        <span class="problem-text">A circular pool has a diameter of 15 ft. What's the area?</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">12</span>
+        <span class="problem-text">A rectangular pool is 12 ft × 14 ft. What's the area?</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">13</span>
+        <span class="problem-text">Which pool has more surface area? By how much?</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">14</span>
+        <span class="problem-text">A sprinkler waters a circular area with radius 20 ft. How many square feet does it cover?</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">15</span>
+        <span class="problem-text">You need to cover a circular table (diameter 5 ft) with a tablecloth. The tablecloth is square, 6 ft × 6 ft. How much tablecloth hangs over? (Find the extra area.)</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">16</span>
+        <span class="problem-text">A manhole cover has a diameter of 24 inches. What is its area in square feet?</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div></div>
+    
+    <div class="answer-key" style="display:none;" id="answerKey">
+        <h2>🔑 Answer Key</h2>
+        <p><strong>1.</strong> π(25) = 78.5 sq cm | <strong>2.</strong> π(100) = 314 sq in | <strong>3.</strong> r=4, π(16) = 50.24 sq ft</p>
+<p><strong>4.</strong> r=7, π(49) = 153.86 sq m | <strong>5.</strong> 153.86 ÷ π = 49, √49 = 7 cm</p>
+<p><strong>6.</strong> r=6, A = 113.04 sq in, $10÷113.04 = $0.088/sq in</p>
+<p><strong>7.</strong> r=8, A = 200.96 sq in, $14÷200.96 = $0.070/sq in</p>
+<p><strong>8.</strong> Two 12" = 226.08 sq in for $20 ($0.088/sq in) vs one 16" = 200.96 for $14 ($0.070/sq in). The 16" is better per sq in!</p>
+<p><strong>9.</strong> Large: $0.063, Medium: $0.078, Small: $0.102 — Large is best deal</p>
+<p><strong>10.</strong> Need 300 sq in. Large = 254.34 (not enough). Two Larges = $32, or Large + Medium = $28 (408.2 sq in). Large + Medium = cheapest that works.</p>
+<p><strong>11.</strong> r=7.5, π(56.25) = 176.63 sq ft | <strong>12.</strong> 168 sq ft | <strong>13.</strong> Circular by 8.63 sq ft</p>
+<p><strong>14.</strong> π(400) = 1,256 sq ft | <strong>15.</strong> 36 − 19.63 = 16.37 sq ft extra</p>
+<p><strong>16.</strong> r=12 in, A = 452.16 sq in ÷ 144 = 3.14 sq ft</p>
+    </div>
+    <button class="toggle-btn" onclick="toggleAnswers()">Show/Hide Answer Key</button>
+    <script>
+        function toggleAnswers() {
+            var key = document.getElementById('answerKey');
+            key.style.display = key.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+</body>
+</html>

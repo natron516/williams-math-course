@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Worksheet 23: Connect the Data</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+               max-width: 800px; margin: 0 auto; padding: 20px; background: #f5f5f5; color: #333; }
+        .header { background: linear-gradient(135deg, #1F4E79, #2E75B6); color: white;
+                   padding: 20px; border-radius: 12px; margin-bottom: 20px; text-align: center; }
+        .header h1 { font-size: 1.5em; margin-bottom: 5px; }
+        .header p { font-size: 0.9em; opacity: 0.9; }
+        .student-info { background: white; padding: 15px; border-radius: 8px; margin-bottom: 20px;
+                        display: flex; gap: 15px; flex-wrap: wrap; }
+        .student-info input { border: none; border-bottom: 2px solid #2E75B6; padding: 8px;
+                               font-size: 1em; flex: 1; min-width: 150px; outline: none; }
+        .section { background: white; padding: 20px; border-radius: 12px; margin-bottom: 15px;
+                   box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .section h2 { color: #1F4E79; font-size: 1.2em; margin-bottom: 15px;
+                      border-bottom: 2px solid #D6E4F0; padding-bottom: 8px; }
+        .problem { padding: 12px 0; border-bottom: 1px solid #eee; }
+        .problem:last-child { border-bottom: none; }
+        .problem-num { display: inline-block; background: #2E75B6; color: white;
+                       width: 28px; height: 28px; border-radius: 50%; text-align: center;
+                       line-height: 28px; font-size: 0.85em; font-weight: bold; margin-right: 10px; }
+        .problem-text { display: inline; font-size: 1.05em; }
+        .answer-box { display: block; margin: 10px 0 5px 38px; border: 2px dashed #ccc;
+                      border-radius: 8px; padding: 12px; min-height: 45px;
+                      font-size: 1em; width: calc(100% - 38px); }
+        .answer-box:focus { border-color: #2E75B6; outline: none; background: #f8fbff; }
+        .work-area { display: block; margin: 8px 0 5px 38px; border: 1px solid #ddd;
+                     border-radius: 8px; padding: 10px; min-height: 80px;
+                     font-size: 0.9em; width: calc(100% - 38px); color: #666; }
+        .work-area:focus { border-color: #2E75B6; outline: none; }
+        .emoji { font-size: 1.3em; margin-right: 5px; }
+        .context { background: #f0f7ff; padding: 12px; border-radius: 8px;
+                   margin: 10px 0; border-left: 4px solid #2E75B6; font-size: 0.95em; }
+        .hint { color: #888; font-size: 0.85em; font-style: italic; margin-left: 38px; }
+        .mc-option { display: block; padding: 10px 15px; margin: 5px 0 5px 38px;
+                     background: #f8f8f8; border: 2px solid #e0e0e0; border-radius: 8px;
+                     cursor: pointer; transition: all 0.2s; font-size: 1em; }
+        .mc-option:hover { background: #e8f0fe; border-color: #2E75B6; }
+        .mc-option.selected { background: #d0e4ff; border-color: #2E75B6; font-weight: bold; }
+        .answer-key { background: #fff9e6; padding: 20px; border-radius: 12px;
+                      margin: 20px 0; border: 2px solid #f0c040; }
+        .answer-key h2 { color: #8B6914; }
+        .toggle-btn { display: block; margin: 15px auto; padding: 12px 30px;
+                      background: #1F4E79; color: white; border: none; border-radius: 8px;
+                      font-size: 1em; cursor: pointer; }
+        .toggle-btn:hover { background: #2E75B6; }
+        .score-box { background: #e2efda; padding: 15px; border-radius: 8px;
+                     text-align: center; font-size: 1.2em; margin-top: 15px; }
+        @media print {
+            .toggle-btn, .answer-key { display: none !important; }
+            .section { break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Worksheet 23: Connect the Data</h1>
+        <p>Session 23 — Linear relationships and road trip math</p>
+    </div>
+    <div class="student-info">
+        <input type="text" placeholder="Name" />
+        <input type="text" placeholder="Date" />
+        <input type="text" placeholder="Period" />
+    </div>
+    <div class="section"><h2>Part 1: Complete Tables from Rules</h2><div class="context">Fill in the missing values using the rule given.</div><div class="problem">
+        <span class="problem-num">1</span>
+        <span class="problem-text">Rule: y = 2x + 1. Complete: x = 0 → y = ____, x = 1 → y = ____, x = 2 → y = ____, x = 3 → y = ____, x = 5 → y = ____</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">2</span>
+        <span class="problem-text">Rule: y = 3x − 2. Complete: x = 1 → ____, x = 2 → ____, x = 3 → ____, x = 4 → ____, x = 10 → ____</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">3</span>
+        <span class="problem-text">Rule: y = x/2 + 4. Complete: x = 0 → ____, x = 2 → ____, x = 4 → ____, x = 6 → ____, x = 10 → ____</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div></div><div class="section"><h2>Part 2: Find the Rule from Tables</h2><div class="problem">
+        <span class="problem-num">4</span>
+        <span class="problem-text">x: 1, 2, 3, 4, 5 → y: 5, 8, 11, 14, 17. What's the rule? y = ____</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">5</span>
+        <span class="problem-text">x: 0, 1, 2, 3, 4 → y: 3, 5, 7, 9, 11. Rule: y = ____</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">6</span>
+        <span class="problem-text">x: 1, 2, 3, 4, 5 → y: 4, 7, 10, 13, 16. Rule: y = ____</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div></div><div class="section"><h2>Part 3: 🚗 Road Trip Math</h2><div class="context">Car A travels at 60 mph. Car B travels at 45 mph. Both leave at the same time.</div><div class="problem">
+        <span class="problem-num">7</span>
+        <span class="problem-text">Complete the table for Car A (d = 60t):<br>t = 0 → d = ____, t = 1 → ____, t = 2 → ____, t = 3 → ____, t = 4 → ____</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">8</span>
+        <span class="problem-text">Complete the table for Car B (d = 45t):<br>t = 0 → d = ____, t = 1 → ____, t = 2 → ____, t = 3 → ____, t = 4 → ____</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">9</span>
+        <span class="problem-text">After 3 hours, how much farther has Car A traveled than Car B?</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">10</span>
+        <span class="problem-text">How long until Car A is 60 miles ahead of Car B?</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">11</span>
+        <span class="problem-text">Car A needs to travel 300 miles. How many hours will it take?</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div></div><div class="section"><h2>Part 4: More Linear Relationships</h2><div class="context">💰 Earning Money: You earn $12/hour at your job.</div><div class="problem">
+        <span class="problem-num">12</span>
+        <span class="problem-text">Write the rule for total earnings (e) based on hours worked (h).</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">13</span>
+        <span class="problem-text">Complete: h = 0 → e = ____, h = 5 → ____, h = 10 → ____, h = 20 → ____, h = 40 → ____</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">14</span>
+        <span class="problem-text">You want to earn $360. How many hours do you need to work?</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="context">🌱 Plant Growth: A plant is 3 cm tall and grows 2 cm per week.</div><div class="problem">
+        <span class="problem-num">15</span>
+        <span class="problem-text">Write the rule for height (h) based on weeks (w): h = ____</span>
+        
+        
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">16</span>
+        <span class="problem-text">How tall after 6 weeks?</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">17</span>
+        <span class="problem-text">When will the plant reach 25 cm?</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div></div>
+    
+    <div class="answer-key" style="display:none;" id="answerKey">
+        <h2>🔑 Answer Key</h2>
+        <p><strong>1.</strong> 1, 3, 5, 7, 11 | <strong>2.</strong> 1, 4, 7, 10, 28 | <strong>3.</strong> 4, 5, 6, 7, 9</p>
+<p><strong>4.</strong> y = 3x + 2 | <strong>5.</strong> y = 2x + 3 | <strong>6.</strong> y = 3x + 1</p>
+<p><strong>7.</strong> 0, 60, 120, 180, 240 | <strong>8.</strong> 0, 45, 90, 135, 180</p>
+<p><strong>9.</strong> 180 − 135 = 45 miles | <strong>10.</strong> 60t − 45t = 60 → 15t = 60 → t = 4 hours</p>
+<p><strong>11.</strong> 300/60 = 5 hours</p>
+<p><strong>12.</strong> e = 12h | <strong>13.</strong> 0, 60, 120, 240, 480 | <strong>14.</strong> 360/12 = 30 hours</p>
+<p><strong>15.</strong> h = 2w + 3 | <strong>16.</strong> 2(6) + 3 = 15 cm | <strong>17.</strong> 2w + 3 = 25, w = 11 weeks</p>
+    </div>
+    <button class="toggle-btn" onclick="toggleAnswers()">Show/Hide Answer Key</button>
+    <script>
+        function toggleAnswers() {
+            var key = document.getElementById('answerKey');
+            key.style.display = key.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Worksheet 15: Order Up!</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+               max-width: 800px; margin: 0 auto; padding: 20px; background: #f5f5f5; color: #333; }
+        .header { background: linear-gradient(135deg, #1F4E79, #2E75B6); color: white;
+                   padding: 20px; border-radius: 12px; margin-bottom: 20px; text-align: center; }
+        .header h1 { font-size: 1.5em; margin-bottom: 5px; }
+        .header p { font-size: 0.9em; opacity: 0.9; }
+        .student-info { background: white; padding: 15px; border-radius: 8px; margin-bottom: 20px;
+                        display: flex; gap: 15px; flex-wrap: wrap; }
+        .student-info input { border: none; border-bottom: 2px solid #2E75B6; padding: 8px;
+                               font-size: 1em; flex: 1; min-width: 150px; outline: none; }
+        .section { background: white; padding: 20px; border-radius: 12px; margin-bottom: 15px;
+                   box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .section h2 { color: #1F4E79; font-size: 1.2em; margin-bottom: 15px;
+                      border-bottom: 2px solid #D6E4F0; padding-bottom: 8px; }
+        .problem { padding: 12px 0; border-bottom: 1px solid #eee; }
+        .problem:last-child { border-bottom: none; }
+        .problem-num { display: inline-block; background: #2E75B6; color: white;
+                       width: 28px; height: 28px; border-radius: 50%; text-align: center;
+                       line-height: 28px; font-size: 0.85em; font-weight: bold; margin-right: 10px; }
+        .problem-text { display: inline; font-size: 1.05em; }
+        .answer-box { display: block; margin: 10px 0 5px 38px; border: 2px dashed #ccc;
+                      border-radius: 8px; padding: 12px; min-height: 45px;
+                      font-size: 1em; width: calc(100% - 38px); }
+        .answer-box:focus { border-color: #2E75B6; outline: none; background: #f8fbff; }
+        .work-area { display: block; margin: 8px 0 5px 38px; border: 1px solid #ddd;
+                     border-radius: 8px; padding: 10px; min-height: 80px;
+                     font-size: 0.9em; width: calc(100% - 38px); color: #666; }
+        .work-area:focus { border-color: #2E75B6; outline: none; }
+        .emoji { font-size: 1.3em; margin-right: 5px; }
+        .context { background: #f0f7ff; padding: 12px; border-radius: 8px;
+                   margin: 10px 0; border-left: 4px solid #2E75B6; font-size: 0.95em; }
+        .hint { color: #888; font-size: 0.85em; font-style: italic; margin-left: 38px; }
+        .mc-option { display: block; padding: 10px 15px; margin: 5px 0 5px 38px;
+                     background: #f8f8f8; border: 2px solid #e0e0e0; border-radius: 8px;
+                     cursor: pointer; transition: all 0.2s; font-size: 1em; }
+        .mc-option:hover { background: #e8f0fe; border-color: #2E75B6; }
+        .mc-option.selected { background: #d0e4ff; border-color: #2E75B6; font-weight: bold; }
+        .answer-key { background: #fff9e6; padding: 20px; border-radius: 12px;
+                      margin: 20px 0; border: 2px solid #f0c040; }
+        .answer-key h2 { color: #8B6914; }
+        .toggle-btn { display: block; margin: 15px auto; padding: 12px 30px;
+                      background: #1F4E79; color: white; border: none; border-radius: 8px;
+                      font-size: 1em; cursor: pointer; }
+        .toggle-btn:hover { background: #2E75B6; }
+        .score-box { background: #e2efda; padding: 15px; border-radius: 8px;
+                     text-align: center; font-size: 1.2em; margin-top: 15px; }
+        @media print {
+            .toggle-btn, .answer-key { display: none !important; }
+            .section { break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Worksheet 15: Order Up!</h1>
+        <p>Session 15 — Order of operations with variables and recipe scaling</p>
+    </div>
+    <div class="student-info">
+        <input type="text" placeholder="Name" />
+        <input type="text" placeholder="Date" />
+        <input type="text" placeholder="Period" />
+    </div>
+    <div class="section"><h2>Part 1: PEMDAS with Variables</h2><div class="problem">
+        <span class="problem-num">1</span>
+        <span class="problem-text">Evaluate 2x + 3 when x = 5</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">2</span>
+        <span class="problem-text">Evaluate 4(n − 2) when n = 7</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">3</span>
+        <span class="problem-text">Evaluate 3x² when x = 4</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">4</span>
+        <span class="problem-text">Evaluate (2x)² when x = 3</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">5</span>
+        <span class="problem-text">Evaluate 5 + 2(x + 1) when x = 6</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">6</span>
+        <span class="problem-text">Evaluate x² − 2x + 1 when x = 5</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">7</span>
+        <span class="problem-text">What's different about #3 and #4? Explain why they give different answers.</span>
+        
+        
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div></div><div class="section"><h2>Part 2: 🍳 Recipe Scaling</h2><div class="context">A cookie recipe for 1 batch (24 cookies):<br>• 2 cups flour (f)<br>• 1 cup sugar (s)<br>• ½ cup butter (b)<br>• 3 eggs (e)<br><br>Expression for n batches: 2n cups flour, 1n cups sugar, 0.5n cups butter, 3n eggs</div><div class="problem">
+        <span class="problem-num">8</span>
+        <span class="problem-text">How much of each ingredient for 2 batches?</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">9</span>
+        <span class="problem-text">How much of each ingredient for 3 batches?</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">10</span>
+        <span class="problem-text">You want to make 60 cookies. That's how many batches? How much flour?</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">11</span>
+        <span class="problem-text">You only have 5 cups of flour. How many full batches can you make? How many cookies is that?</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">12</span>
+        <span class="problem-text">A brownie recipe calls for (1.5f + 0.75s + 0.25b) per batch. Evaluate for 4 batches.</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div></div><div class="section"><h2>Part 3: Multi-Step Expressions</h2><div class="problem">
+        <span class="problem-num">13</span>
+        <span class="problem-text">Evaluate: 3(2x + 4) − 2x when x = 3</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">14</span>
+        <span class="problem-text">Evaluate: (x + y)² when x = 3, y = 2</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">15</span>
+        <span class="problem-text">Evaluate: 2x² + 3x − 5 when x = 4</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">16</span>
+        <span class="problem-text">Evaluate: (a + b)(a − b) when a = 7, b = 3</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">17</span>
+        <span class="problem-text">Simplify first, then evaluate for x = 2: 4x + 3(x − 1) + 5</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">18</span>
+        <span class="problem-text">A taxi charges $3.50 base + $2.25 per mile. Write the expression and evaluate for a 7-mile ride.</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div></div>
+    
+    <div class="answer-key" style="display:none;" id="answerKey">
+        <h2>🔑 Answer Key</h2>
+        <p><strong>1.</strong> 13 | <strong>2.</strong> 20 | <strong>3.</strong> 3(16) = 48 | <strong>4.</strong> (6)² = 36</p>
+<p><strong>5.</strong> 5 + 14 = 19 | <strong>6.</strong> 25 − 10 + 1 = 16</p>
+<p><strong>7.</strong> 3x² = 3 × (x²) but (2x)² = (2x)(2x) — the 2 gets squared too!</p>
+<p><strong>8.</strong> 4 flour, 2 sugar, 1 butter, 6 eggs</p>
+<p><strong>9.</strong> 6 flour, 3 sugar, 1.5 butter, 9 eggs</p>
+<p><strong>10.</strong> 60÷24 = 2.5 batches, 2.5(2) = 5 cups flour</p>
+<p><strong>11.</strong> 5÷2 = 2.5 → 2 full batches = 48 cookies</p>
+<p><strong>12.</strong> 6f + 3s + 1b (6 cups flour, 3 cups sugar, 1 cup butter)</p>
+<p><strong>13.</strong> 3(10) − 6 = 24 | <strong>14.</strong> 5² = 25 | <strong>15.</strong> 32 + 12 − 5 = 39</p>
+<p><strong>16.</strong> (10)(4) = 40 | <strong>17.</strong> 7x + 2, 7(2) + 2 = 16</p>
+<p><strong>18.</strong> C = 3.50 + 2.25m, C = 3.50 + 15.75 = $19.25</p>
+    </div>
+    <button class="toggle-btn" onclick="toggleAnswers()">Show/Hide Answer Key</button>
+    <script>
+        function toggleAnswers() {
+            var key = document.getElementById('answerKey');
+            key.style.display = key.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+</body>
+</html>

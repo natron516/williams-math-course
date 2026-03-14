@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Worksheet 7: Going in Circles</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+               max-width: 800px; margin: 0 auto; padding: 20px; background: #f5f5f5; color: #333; }
+        .header { background: linear-gradient(135deg, #1F4E79, #2E75B6); color: white;
+                   padding: 20px; border-radius: 12px; margin-bottom: 20px; text-align: center; }
+        .header h1 { font-size: 1.5em; margin-bottom: 5px; }
+        .header p { font-size: 0.9em; opacity: 0.9; }
+        .student-info { background: white; padding: 15px; border-radius: 8px; margin-bottom: 20px;
+                        display: flex; gap: 15px; flex-wrap: wrap; }
+        .student-info input { border: none; border-bottom: 2px solid #2E75B6; padding: 8px;
+                               font-size: 1em; flex: 1; min-width: 150px; outline: none; }
+        .section { background: white; padding: 20px; border-radius: 12px; margin-bottom: 15px;
+                   box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .section h2 { color: #1F4E79; font-size: 1.2em; margin-bottom: 15px;
+                      border-bottom: 2px solid #D6E4F0; padding-bottom: 8px; }
+        .problem { padding: 12px 0; border-bottom: 1px solid #eee; }
+        .problem:last-child { border-bottom: none; }
+        .problem-num { display: inline-block; background: #2E75B6; color: white;
+                       width: 28px; height: 28px; border-radius: 50%; text-align: center;
+                       line-height: 28px; font-size: 0.85em; font-weight: bold; margin-right: 10px; }
+        .problem-text { display: inline; font-size: 1.05em; }
+        .answer-box { display: block; margin: 10px 0 5px 38px; border: 2px dashed #ccc;
+                      border-radius: 8px; padding: 12px; min-height: 45px;
+                      font-size: 1em; width: calc(100% - 38px); }
+        .answer-box:focus { border-color: #2E75B6; outline: none; background: #f8fbff; }
+        .work-area { display: block; margin: 8px 0 5px 38px; border: 1px solid #ddd;
+                     border-radius: 8px; padding: 10px; min-height: 80px;
+                     font-size: 0.9em; width: calc(100% - 38px); color: #666; }
+        .work-area:focus { border-color: #2E75B6; outline: none; }
+        .emoji { font-size: 1.3em; margin-right: 5px; }
+        .context { background: #f0f7ff; padding: 12px; border-radius: 8px;
+                   margin: 10px 0; border-left: 4px solid #2E75B6; font-size: 0.95em; }
+        .hint { color: #888; font-size: 0.85em; font-style: italic; margin-left: 38px; }
+        .mc-option { display: block; padding: 10px 15px; margin: 5px 0 5px 38px;
+                     background: #f8f8f8; border: 2px solid #e0e0e0; border-radius: 8px;
+                     cursor: pointer; transition: all 0.2s; font-size: 1em; }
+        .mc-option:hover { background: #e8f0fe; border-color: #2E75B6; }
+        .mc-option.selected { background: #d0e4ff; border-color: #2E75B6; font-weight: bold; }
+        .answer-key { background: #fff9e6; padding: 20px; border-radius: 12px;
+                      margin: 20px 0; border: 2px solid #f0c040; }
+        .answer-key h2 { color: #8B6914; }
+        .toggle-btn { display: block; margin: 15px auto; padding: 12px 30px;
+                      background: #1F4E79; color: white; border: none; border-radius: 8px;
+                      font-size: 1em; cursor: pointer; }
+        .toggle-btn:hover { background: #2E75B6; }
+        .score-box { background: #e2efda; padding: 15px; border-radius: 8px;
+                     text-align: center; font-size: 1.2em; margin-top: 15px; }
+        @media print {
+            .toggle-btn, .answer-key { display: none !important; }
+            .section { break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Worksheet 7: Going in Circles</h1>
+        <p>Session 7 — Circumference of circles</p>
+    </div>
+    <div class="student-info">
+        <input type="text" placeholder="Name" />
+        <input type="text" placeholder="Date" />
+        <input type="text" placeholder="Period" />
+    </div>
+    <div class="section"><h2>Part 1: Basic Circumference (use π ≈ 3.14)</h2><div class="problem">
+        <span class="problem-num">1</span>
+        <span class="problem-text">Diameter = 10 cm. C = ____</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">2</span>
+        <span class="problem-text">Radius = 7 in. C = ____</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">3</span>
+        <span class="problem-text">Diameter = 25 ft. C = ____</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">4</span>
+        <span class="problem-text">Radius = 3.5 m. C = ____</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">5</span>
+        <span class="problem-text">C = 62.8 cm. Find the diameter.</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">6</span>
+        <span class="problem-text">C = 44 in. Find the radius.</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div></div><div class="section"><h2>Part 2: 🚲 Bike Wheel Math</h2><div class="context">A bicycle wheel's circumference tells you how far the bike moves in one full rotation.</div><div class="problem">
+        <span class="problem-num">7</span>
+        <span class="problem-text">A mountain bike has wheels with a 26-inch diameter. How far does the bike travel in one wheel rotation?</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">8</span>
+        <span class="problem-text">A kid's bike has wheels with a 20-inch diameter. How far per rotation?</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">9</span>
+        <span class="problem-text">How much farther does the mountain bike go per rotation compared to the kid's bike?</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">10</span>
+        <span class="problem-text">The mountain bike rider pedals 500 rotations. How far have they traveled? Convert to feet.</span>
+        <div class="hint">Hint: 12 inches = 1 foot</div>
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">11</span>
+        <span class="problem-text">How many rotations of the 20" wheel does it take to travel 1 mile? (1 mile = 5,280 ft = 63,360 in)</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div></div><div class="section"><h2>Part 3: More Circumference Problems</h2><div class="context">🎡 A Ferris wheel has a diameter of 60 feet.</div><div class="problem">
+        <span class="problem-num">12</span>
+        <span class="problem-text">How far do you travel in one full revolution?</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">13</span>
+        <span class="problem-text">The ride does 5 revolutions. Total distance?</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="context">🌳 A tree trunk has a circumference of 94.2 inches.</div><div class="problem">
+        <span class="problem-num">14</span>
+        <span class="problem-text">What is the diameter of the tree trunk?</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">15</span>
+        <span class="problem-text">A circular garden has a radius of 8 feet. You want to put a stone border around the edge. How many feet of stone border do you need?</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div><div class="problem">
+        <span class="problem-num">16</span>
+        <span class="problem-text">A clock face has a diameter of 12 inches. How far does the tip of the minute hand travel in one hour?</span>
+        
+        <textarea class="work-area" placeholder="Show your work here..."></textarea>
+        <input type="text" class="answer-box" placeholder="Answer" />
+    </div></div>
+    
+    <div class="answer-key" style="display:none;" id="answerKey">
+        <h2>🔑 Answer Key</h2>
+        <p><strong>1.</strong> π(10) = 31.4 cm | <strong>2.</strong> 2π(7) = 43.96 in | <strong>3.</strong> π(25) = 78.5 ft</p>
+<p><strong>4.</strong> 2π(3.5) = 21.98 m | <strong>5.</strong> 62.8 ÷ π = 20 cm | <strong>6.</strong> 44 ÷ (2π) = 7 in</p>
+<p><strong>7.</strong> π(26) = 81.64 in | <strong>8.</strong> π(20) = 62.8 in | <strong>9.</strong> 81.64 − 62.8 = 18.84 in</p>
+<p><strong>10.</strong> 500 × 81.64 = 40,820 in ÷ 12 = 3,401.67 ft</p>
+<p><strong>11.</strong> 63,360 ÷ 62.8 ≈ 1,009 rotations</p>
+<p><strong>12.</strong> π(60) = 188.4 ft | <strong>13.</strong> 5 × 188.4 = 942 ft</p>
+<p><strong>14.</strong> 94.2 ÷ π = 30 in | <strong>15.</strong> 2π(8) = 50.24 ft | <strong>16.</strong> π(12) = 37.68 in</p>
+    </div>
+    <button class="toggle-btn" onclick="toggleAnswers()">Show/Hide Answer Key</button>
+    <script>
+        function toggleAnswers() {
+            var key = document.getElementById('answerKey');
+            key.style.display = key.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+</body>
+</html>

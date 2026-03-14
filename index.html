@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>6th/7th Grade Math — Course Portal</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+               background: #f0f4f8; color: #333; }
+        
+        .hero { background: linear-gradient(135deg, #1F4E79 0%, #2E75B6 50%, #4A90D9 100%);
+                color: white; padding: 40px 20px; text-align: center; }
+        .hero h1 { font-size: 2em; margin-bottom: 8px; }
+        .hero p { font-size: 1.1em; opacity: 0.9; }
+        .hero .stats { display: flex; justify-content: center; gap: 30px; margin-top: 20px; flex-wrap: wrap; }
+        .hero .stat { text-align: center; }
+        .hero .stat-num { font-size: 2em; font-weight: bold; }
+        .hero .stat-label { font-size: 0.85em; opacity: 0.8; }
+        
+        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+        
+        .nav-tabs { display: flex; gap: 5px; margin: 20px 0 0; flex-wrap: wrap; }
+        .nav-tab { padding: 12px 20px; background: white; border: 2px solid #ddd; border-bottom: none;
+                   border-radius: 8px 8px 0 0; cursor: pointer; font-weight: 600; color: #666;
+                   transition: all 0.2s; font-size: 0.95em; }
+        .nav-tab:hover { background: #f0f7ff; color: #1F4E79; }
+        .nav-tab.active { background: white; color: #1F4E79; border-color: #2E75B6; border-bottom-color: white;
+                         position: relative; z-index: 2; }
+        
+        .tab-content { display: none; background: white; border: 2px solid #2E75B6; border-radius: 0 8px 8px 8px;
+                      padding: 25px; margin-bottom: 30px; position: relative; z-index: 1; margin-top: -2px; }
+        .tab-content.active { display: block; }
+        
+        .week-section { margin-bottom: 25px; }
+        .week-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px;
+                      padding: 10px 15px; border-radius: 8px; cursor: pointer; }
+        .week-header.geo { background: linear-gradient(90deg, #D6E4F0, #E8F0FA); }
+        .week-header.alg { background: linear-gradient(90deg, #E2EFDA, #F0F7EC); }
+        .week-header h3 { flex: 1; font-size: 1.15em; color: #1F4E79; }
+        .week-header .badge { background: #1F4E79; color: white; padding: 3px 10px; border-radius: 12px;
+                             font-size: 0.8em; }
+        
+        .materials-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                         gap: 10px; padding-left: 15px; }
+        .material-card { display: flex; align-items: center; gap: 12px; padding: 12px 15px;
+                        background: #f8f9fa; border-radius: 8px; border: 1px solid #e0e0e0;
+                        text-decoration: none; color: #333; transition: all 0.2s; }
+        .material-card:hover { background: #e8f0fe; border-color: #2E75B6; transform: translateY(-1px);
+                              box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .material-card .icon { font-size: 1.5em; min-width: 35px; text-align: center; }
+        .material-card .info h4 { font-size: 0.95em; color: #1F4E79; margin-bottom: 2px; }
+        .material-card .info p { font-size: 0.8em; color: #888; }
+        
+        .teacher-badge { display: inline-block; background: #FF6B35; color: white; padding: 2px 8px;
+                        border-radius: 4px; font-size: 0.7em; font-weight: bold; margin-left: 5px; }
+        .student-badge { display: inline-block; background: #2E75B6; color: white; padding: 2px 8px;
+                        border-radius: 4px; font-size: 0.7em; font-weight: bold; margin-left: 5px; }
+        
+        .overview-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; }
+        .overview-card { padding: 20px; border-radius: 12px; text-align: center; }
+        .overview-card.geo { background: linear-gradient(135deg, #D6E4F0, #B8D4E8); }
+        .overview-card.alg { background: linear-gradient(135deg, #E2EFDA, #C5DEB5); }
+        .overview-card.assess { background: linear-gradient(135deg, #FFF2CC, #FFE08A); }
+        .overview-card.tools { background: linear-gradient(135deg, #F0E6FF, #DCC8FF); }
+        .overview-card h3 { font-size: 1.8em; margin-bottom: 5px; }
+        .overview-card p { font-size: 0.9em; color: #555; }
+        
+        .assessment-table { width: 100%; border-collapse: collapse; }
+        .assessment-table th { background: #1F4E79; color: white; padding: 10px; text-align: left; }
+        .assessment-table td { padding: 10px; border-bottom: 1px solid #eee; }
+        .assessment-table tr:hover { background: #f5f8ff; }
+        .quiz-row td { font-weight: normal; }
+        .test-row td { font-weight: bold; background: #fff9e6; }
+        
+        .info-box { background: #f0f7ff; border-left: 4px solid #2E75B6; padding: 15px;
+                   border-radius: 0 8px 8px 0; margin: 15px 0; }
+        
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 1.4em; }
+            .materials-grid { grid-template-columns: 1fr; }
+            .nav-tab { padding: 8px 12px; font-size: 0.85em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <h1>📐 6th/7th Grade Math</h1>
+        <p>Semester 2 — Geometry & Intro to Algebra</p>
+        <div class="stats">
+            <div class="stat"><div class="stat-num">8</div><div class="stat-label">Weeks</div></div>
+            <div class="stat"><div class="stat-num">24</div><div class="stat-label">Sessions</div></div>
+            <div class="stat"><div class="stat-num">7</div><div class="stat-label">Quizzes</div></div>
+            <div class="stat"><div class="stat-num">3</div><div class="stat-label">Tests</div></div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="nav-tabs">
+            <div class="nav-tab active" onclick="showTab('overview')">📊 Overview</div>
+            <div class="nav-tab" onclick="showTab('weeks')">📅 Weekly Materials</div>
+            <div class="nav-tab" onclick="showTab('assessments')">📝 Assessments</div>
+            <div class="nav-tab" onclick="showTab('teacher')">👩‍🏫 Teacher Resources</div>
+        </div>
+        
+        <!-- OVERVIEW TAB -->
+        <div class="tab-content active" id="tab-overview">
+            <h2 style="margin-bottom:15px; color:#1F4E79;">Course at a Glance</h2>
+            <div class="overview-grid">
+                <div class="overview-card geo">
+                    <h3>📐</h3>
+                    <p><strong>Weeks 1-4</strong><br>Geometry</p>
+                    <p style="font-size:0.8em; margin-top:8px;">Angles • Area • Circles • Volume</p>
+                </div>
+                <div class="overview-card alg">
+                    <h3>📊</h3>
+                    <p><strong>Weeks 5-8</strong><br>Algebra</p>
+                    <p style="font-size:0.8em; margin-top:8px;">Expressions • Equations • Inequalities • Graphing</p>
+                </div>
+                <div class="overview-card assess">
+                    <h3>📝</h3>
+                    <p><strong>Assessments</strong><br>7 Quizzes + 3 Tests</p>
+                    <p style="font-size:0.8em; margin-top:8px;">iPad-friendly • Auto-grade ready</p>
+                </div>
+                <div class="overview-card tools">
+                    <h3>🛠️</h3>
+                    <p><strong>Resources</strong><br>Grade Book + Lesson Plans</p>
+                    <p style="font-size:0.8em; margin-top:8px;">Excel files for tracking</p>
+                </div>
+            </div>
+            
+            <div class="info-box" style="margin-top:20px;">
+                <strong>💡 How to Use This Portal</strong><br>
+                • <strong>Students:</strong> Click on worksheets and quizzes — they open right on your iPad!<br>
+                • <strong>Teacher:</strong> Answer keys are hidden behind a toggle button on each page<br>
+                • All materials are interactive — students can type answers directly
+            </div>
+        </div>
+        
+        <!-- WEEKLY MATERIALS TAB -->
+        <div class="tab-content" id="tab-weeks">
+            <h2 style="margin-bottom:15px; color:#1F4E79;">📅 Weekly Materials</h2>
+            
+            <!-- WEEK 1 -->
+            <div class="week-section">
+                <div class="week-header geo" onclick="toggleWeek(this)">
+                    <h3>📐 Week 1: Angles & Shapes</h3>
+                    <span class="badge">3 sessions</span>
+                </div>
+                <div class="materials-grid">
+                    <a class="material-card" href="worksheets/W01_Angle_Explorer.html">
+                        <div class="icon">📄</div>
+                        <div class="info"><h4>Angle Explorer <span class="student-badge">STUDENT</span></h4><p>Session 1 — Classify & measure angles</p></div>
+                    </a>
+                    <a class="material-card" href="worksheets/W02_Angle_Relationships.html">
+                        <div class="icon">📄</div>
+                        <div class="info"><h4>Angle Relationships <span class="student-badge">STUDENT</span></h4><p>Session 2 — Complementary & supplementary</p></div>
+                    </a>
+                    <a class="material-card" href="worksheets/W03_Shape_Detective.html">
+                        <div class="icon">📄</div>
+                        <div class="info"><h4>Shape Detective <span class="student-badge">STUDENT</span></h4><p>Session 3 — Triangles & polygons</p></div>
+                    </a>
+                    <a class="material-card" href="quizzes/Quiz_1_Angles_Shapes.html">
+                        <div class="icon">📝</div>
+                        <div class="info"><h4>Quiz 1 <span class="student-badge">STUDENT</span></h4><p>Angles, triangles, polygons</p></div>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- WEEK 2 -->
+            <div class="week-section">
+                <div class="week-header geo" onclick="toggleWeek(this)">
+                    <h3>📐 Week 2: Perimeter & Area</h3>
+                    <span class="badge">3 sessions</span>
+                </div>
+                <div class="materials-grid">
+                    <a class="material-card" href="worksheets/W04_Perimeter_Pro.html">
+                        <div class="icon">📄</div>
+                        <div class="info"><h4>Perimeter Pro <span class="student-badge">STUDENT</span></h4><p>Session 4 — Perimeter of polygons</p></div>
+                    </a>
+                    <a class="material-card" href="worksheets/W05_Area_Architect.html">
+                        <div class="icon">📄</div>
+                        <div class="info"><h4>Area Architect <span class="student-badge">STUDENT</span></h4><p>Session 5 — Rectangles & triangles</p></div>
+                    </a>
+                    <a class="material-card" href="worksheets/W06_Shape_Shifter.html">
+                        <div class="icon">📄</div>
+                        <div class="info"><h4>Shape Shifter <span class="student-badge">STUDENT</span></h4><p>Session 6 — Parallelograms & trapezoids</p></div>
+                    </a>
+                    <a class="material-card" href="quizzes/Quiz_2_Perimeter_Area.html">
+                        <div class="icon">📝</div>
+                        <div class="info"><h4>Quiz 2 <span class="student-badge">STUDENT</span></h4><p>Perimeter & area</p></div>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- WEEK 3 -->
+            <div class="week-section">
+                <div class="week-header geo" onclick="toggleWeek(this)">
+                    <h3>📐 Week 3: Circles & Composite Shapes</h3>
+                    <span class="badge">3 sessions</span>
+                </div>
+                <div class="materials-grid">
+                    <a class="material-card" href="worksheets/W07_Going_in_Circles.html">
+                        <div class="icon">📄</div>
+                        <div class="info"><h4>Going in Circles <span class="student-badge">STUDENT</span></h4><p>Session 7 — Circumference</p></div>
+                    </a>
+                    <a class="material-card" href="worksheets/W08_Area_of_the_Round.html">
+                        <div class="icon">📄</div>
+                        <div class="info"><h4>Area of the Round <span class="student-badge">STUDENT</span></h4><p>Session 8 — Circle area & pizza math</p></div>
+                    </a>
+                    <a class="material-card" href="worksheets/W09_Blueprint_Builder.html">
+                        <div class="icon">📄</div>
+                        <div class="info"><h4>Blueprint Builder <span class="student-badge">STUDENT</span></h4><p>Session 9 — Composite shapes</p></div>
+                    </a>
+                    <a class="material-card" href="quizzes/Quiz_3_Circles_Composite.html">
+                        <div class="icon">📝</div>
+                        <div class="info"><h4>Quiz 3 <span class="student-badge">STUDENT</span></h4><p>Circles & composite shapes</p></div>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- WEEK 4 -->
+            <div class="week-section">
+                <div class="week-header geo" onclick="toggleWeek(this)">
+                    <h3>📐 Week 4: Volume & Surface Area + Geometry Test</h3>
+                    <span class="badge">3 sessions</span>
+                </div>
+                <div class="materials-grid">
+                    <a class="material-card" href="worksheets/W10_Box_It_Up.html">
+                        <div class="icon">📄</div>
+                        <div class="info"><h4>Box It Up <span class="student-badge">STUDENT</span></h4><p>Session 10 — Volume of prisms</p></div>
+                    </a>
+                    <a class="material-card" href="worksheets/W11_Container_Challenge.html">
+                        <div class="icon">📄</div>
+                        <div class="info"><h4>Container Challenge <span class="student-badge">STUDENT</span></h4><p>Session 11 — Cylinders & surface area</p></div>
+                    </a>
+                    <a class="material-card" href="tests/Test_1_Geometry.html">
+                        <div class="icon">🔴</div>
+                        <div class="info"><h4>TEST 1: Geometry <span class="teacher-badge">TEACHER</span></h4><p>Session 12 — All geometry (Weeks 1-4)</p></div>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- WEEK 5 -->
+            <div class="week-section">
+                <div class="week-header alg" onclick="toggleWeek(this)">
+                    <h3>📊 Week 5: Variables & Expressions</h3>
+                    <span class="badge">3 sessions</span>
+                </div>
+                <div class="materials-grid">
+                    <a class="material-card" href="worksheets/W13_Expression_Station.html">
+                        <div class="icon">📄</div>
+                        <div class="info"><h4>Expression Station <span class="student-badge">STUDENT</span></h4><p>Session 13 — Variables & expressions</p></div>
+                    </a>
+                    <a class="material-card" href="worksheets/W14_Like_Terms_Lineup.html">
+                        <div class="icon">📄</div>
+                        <div class="info"><h4>Like Terms Lineup <span class="student-badge">STUDENT</span></h4><p>Session 14 — Combining like terms</p></div>
+                    </a>
+                    <a class="material-card" href="worksheets/W15_Order_Up.html">
+                        <div class="icon">📄</div>
+                        <div class="info"><h4>Order Up! <span class="student-badge">STUDENT</span></h4><p>Session 15 — PEMDAS & recipe scaling</p></div>
+                    </a>
+                    <a class="material-card" href="quizzes/Quiz_4_Expressions.html">
+                        <div class="icon">📝</div>
+                        <div class="info"><h4>Quiz 4 <span class="student-badge">STUDENT</span></h4><p>Expressions & order of operations</p></div>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- WEEK 6 -->
+            <div class="week-section">
+                <div class="week-header alg" onclick="toggleWeek(this)">
+                    <h3>📊 Week 6: One-Step Equations</h3>
+                    <span class="badge">3 sessions</span>
+                </div>
+                <div class="materials-grid">
+                    <a class="material-card" href="worksheets/W16_Balance_It_Out.html">
+                        <div class="icon">📄</div>
+                        <div class="info"><h4>Balance It Out <span class="student-badge">STUDENT</span></h4><p>Session 16 — Addition & subtraction equations</p></div>
+                    </a>
+                    <a class="material-card" href="worksheets/W17_Fair_and_Square.html">
+                        <div class="icon">📄</div>
+                        <div class="info"><h4>Fair & Square <span class="student-badge">STUDENT</span></h4><p>Session 17 — Multiplication & division equations</p></div>
+                    </a>
+                    <a class="material-card" href="worksheets/W18_Equation_Mix.html">
+                        <div class="icon">📄</div>
+                        <div class="info"><h4>Equation Mix <span class="student-badge">STUDENT</span></h4><p>Session 18 — Mixed equations & lemonade stand</p></div>
+                    </a>
+                    <a class="material-card" href="quizzes/Quiz_5_One_Step_Equations.html">
+                        <div class="icon">📝</div>
+                        <div class="info"><h4>Quiz 5 <span class="student-badge">STUDENT</span></h4><p>One-step equations</p></div>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- WEEK 7 -->
+            <div class="week-section">
+                <div class="week-header alg" onclick="toggleWeek(this)">
+                    <h3>📊 Week 7: Two-Step Equations & Inequalities</h3>
+                    <span class="badge">3 sessions</span>
+                </div>
+                <div class="materials-grid">
+                    <a class="material-card" href="worksheets/W19_Two_Steps_to_Go.html">
+                        <div class="icon">📄</div>
+                        <div class="info"><h4>Two Steps to Go <span class="student-badge">STUDENT</span></h4><p>Session 19 — Two-step equations</p></div>
+                    </a>
+                    <a class="material-card" href="worksheets/W20_More_or_Less.html">
+                        <div class="icon">📄</div>
+                        <div class="info"><h4>More or Less <span class="student-badge">STUDENT</span></h4><p>Session 20 — Inequalities</p></div>
+                    </a>
+                    <a class="material-card" href="quizzes/Quiz_6_TwoStep_Inequalities.html">
+                        <div class="icon">📝</div>
+                        <div class="info"><h4>Quiz 6 <span class="student-badge">STUDENT</span></h4><p>Two-step equations & inequalities</p></div>
+                    </a>
+                    <a class="material-card" href="tests/Test_2_Algebra.html">
+                        <div class="icon">🔴</div>
+                        <div class="info"><h4>TEST 2: Algebra Part 1 <span class="teacher-badge">TEACHER</span></h4><p>Session 21 — Weeks 5-7</p></div>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- WEEK 8 -->
+            <div class="week-section">
+                <div class="week-header alg" onclick="toggleWeek(this)">
+                    <h3>📊 Week 8: Coordinate Plane & Review</h3>
+                    <span class="badge">3 sessions</span>
+                </div>
+                <div class="materials-grid">
+                    <a class="material-card" href="worksheets/W22_Plot_Twist.html">
+                        <div class="icon">📄</div>
+                        <div class="info"><h4>Plot Twist <span class="student-badge">STUDENT</span></h4><p>Session 22 — Coordinate plane</p></div>
+                    </a>
+                    <a class="material-card" href="worksheets/W23_Connect_the_Data.html">
+                        <div class="icon">📄</div>
+                        <div class="info"><h4>Connect the Data <span class="student-badge">STUDENT</span></h4><p>Session 23 — Linear relationships</p></div>
+                    </a>
+                    <a class="material-card" href="quizzes/Quiz_7_Coordinate_Linear.html">
+                        <div class="icon">📝</div>
+                        <div class="info"><h4>Quiz 7 <span class="student-badge">STUDENT</span></h4><p>Coordinate plane & linear</p></div>
+                    </a>
+                    <a class="material-card" href="tests/Test_Final_Comprehensive.html">
+                        <div class="icon">🔴</div>
+                        <div class="info"><h4>FINAL TEST <span class="teacher-badge">TEACHER</span></h4><p>Session 24 — Comprehensive</p></div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ASSESSMENTS TAB -->
+        <div class="tab-content" id="tab-assessments">
+            <h2 style="margin-bottom:15px; color:#1F4E79;">📝 Assessment Schedule</h2>
+            <table class="assessment-table">
+                <thead>
+                    <tr><th>Week</th><th>Assessment</th><th>Content</th><th>Weight</th><th>Link</th></tr>
+                </thead>
+                <tbody>
+                    <tr class="quiz-row"><td>1</td><td>Quiz 1</td><td>Angles, triangles, polygons</td><td>5%</td>
+                        <td><a href="quizzes/Quiz_1_Angles_Shapes.html">Open →</a></td></tr>
+                    <tr class="quiz-row"><td>2</td><td>Quiz 2</td><td>Perimeter & area</td><td>5%</td>
+                        <td><a href="quizzes/Quiz_2_Perimeter_Area.html">Open →</a></td></tr>
+                    <tr class="quiz-row"><td>3</td><td>Quiz 3</td><td>Circles & composite shapes</td><td>5%</td>
+                        <td><a href="quizzes/Quiz_3_Circles_Composite.html">Open →</a></td></tr>
+                    <tr class="test-row"><td>4</td><td>TEST 1</td><td>All Geometry (Weeks 1-4)</td><td>15%</td>
+                        <td><a href="tests/Test_1_Geometry.html">Open →</a></td></tr>
+                    <tr class="quiz-row"><td>5</td><td>Quiz 4</td><td>Variables, expressions, PEMDAS</td><td>5%</td>
+                        <td><a href="quizzes/Quiz_4_Expressions.html">Open →</a></td></tr>
+                    <tr class="quiz-row"><td>6</td><td>Quiz 5</td><td>One-step equations</td><td>5%</td>
+                        <td><a href="quizzes/Quiz_5_One_Step_Equations.html">Open →</a></td></tr>
+                    <tr class="quiz-row"><td>7</td><td>Quiz 6</td><td>Two-step equations & inequalities</td><td>5%</td>
+                        <td><a href="quizzes/Quiz_6_TwoStep_Inequalities.html">Open →</a></td></tr>
+                    <tr class="test-row"><td>7</td><td>TEST 2</td><td>Algebra Part 1 (Weeks 5-7)</td><td>15%</td>
+                        <td><a href="tests/Test_2_Algebra.html">Open →</a></td></tr>
+                    <tr class="quiz-row"><td>8</td><td>Quiz 7</td><td>Coordinate plane & linear</td><td>5%</td>
+                        <td><a href="quizzes/Quiz_7_Coordinate_Linear.html">Open →</a></td></tr>
+                    <tr class="test-row"><td>8</td><td>FINAL TEST</td><td>Comprehensive (all 8 weeks)</td><td>20%</td>
+                        <td><a href="tests/Test_Final_Comprehensive.html">Open →</a></td></tr>
+                </tbody>
+            </table>
+            <div class="info-box" style="margin-top:15px;">
+                <strong>Grading Breakdown:</strong> Quizzes 35% + Tests 50% + Participation 15% = 100%
+            </div>
+        </div>
+        
+        <!-- TEACHER RESOURCES TAB -->
+        <div class="tab-content" id="tab-teacher">
+            <h2 style="margin-bottom:15px; color:#1F4E79;">👩‍🏫 Teacher Resources</h2>
+            <div class="info-box">
+                <strong>📥 Downloadable Files</strong><br>
+                These Excel files can be downloaded and used offline. The grade book has built-in formulas for weighted averages and letter grades.
+            </div>
+            <div class="materials-grid" style="margin-top:15px;">
+                <a class="material-card" href="Scope_and_Sequence.xlsx">
+                    <div class="icon">📊</div>
+                    <div class="info"><h4>Scope & Sequence</h4><p>Full 8-week plan with objectives</p></div>
+                </a>
+                <a class="material-card" href="lesson-plans/All_Lesson_Plans.xlsx">
+                    <div class="icon">📋</div>
+                    <div class="info"><h4>All 24 Lesson Plans</h4><p>Detailed plans for every session</p></div>
+                </a>
+                <a class="material-card" href="Grade_Book.xlsx">
+                    <div class="icon">📈</div>
+                    <div class="info"><h4>Grade Book</h4><p>24 students, auto-weighted averages</p></div>
+                </a>
+            </div>
+            
+            <h3 style="margin-top:25px; color:#1F4E79;">💡 Tips for Mrs. Williams</h3>
+            <div style="margin-top:10px; line-height:1.8;">
+                <p>• <strong>Answer Keys:</strong> Every worksheet, quiz, and test has a hidden answer key — click "Show/Hide Answer Key" at the bottom.</p>
+                <p>• <strong>iPad Distribution:</strong> Share this portal link with students. They can open worksheets and type answers directly.</p>
+                <p>• <strong>Quizzes on iPads:</strong> Students can complete quizzes in their browser. For tests, consider having them work on paper for show-your-work sections.</p>
+                <p>• <strong>Differentiation:</strong> Each lesson plan includes suggestions for struggling and advanced students.</p>
+                <p>• <strong>Real-World Contexts:</strong> Every worksheet uses practical scenarios — pizza math, budgets, baking, sports, and more!</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+            document.getElementById('tab-' + tabId).classList.add('active');
+            event.target.classList.add('active');
+        }
+        function toggleWeek(el) {
+            const grid = el.nextElementSibling;
+            if (grid) grid.style.display = grid.style.display === 'none' ? 'grid' : grid.style.display === 'grid' ? 'none' : 'grid';
+        }
+    </script>
+</body>
+</html>
