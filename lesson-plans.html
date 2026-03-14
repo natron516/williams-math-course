@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lesson Plans — 6th/7th Grade Math</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Playfair+Display:wght@700&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-               background: #f0f4f8; color: #333; }
-        .header { background: linear-gradient(135deg, #1F4E79, #2E75B6); color: white;
+        body { font-family: 'Nunito', sans-serif;
+               background: #FAF5F7; color: #333; }
+        .header { background: linear-gradient(135deg, #8B5E83, #C06C84); color: white;
                   padding: 25px 20px; text-align: center; }
-        .header h1 { font-size: 1.6em; margin-bottom: 5px; }
+        .header h1 { font-family: 'Playfair Display', serif; font-size: 1.6em; margin-bottom: 5px; }
         .back { display: inline-block; color: rgba(255,255,255,0.8); text-decoration: none;
                 margin-bottom: 10px; font-size: 0.9em; }
         .back:hover { color: white; }
@@ -22,45 +23,45 @@
                       display: flex; align-items: center; justify-content: center;
                       cursor: pointer; font-weight: 700; font-size: 0.9em; background: white;
                       transition: all 0.2s; }
-        .session-btn:hover { border-color: #2E75B6; background: #f0f7ff; }
-        .session-btn.active { background: #1F4E79; color: white; border-color: #1F4E79; }
-        .session-btn.geo { color: #1F4E79; }
-        .session-btn.alg { color: #2D6A1E; }
+        .session-btn:hover { border-color: #C06C84; background: #FFF5F7; }
+        .session-btn.active { background: #8B5E83; color: white; border-color: #8B5E83; }
+        .session-btn.geo { color: #8B5E83; }
+        .session-btn.alg { color: #5B8C5A; }
         .lesson { display: none; background: white; border-radius: 12px; padding: 25px;
                  box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
         .lesson.active { display: block; }
-        .lesson-title { font-size: 1.4em; color: #1F4E79; margin-bottom: 5px; }
+        .lesson-title { font-size: 1.4em; color: #8B5E83; margin-bottom: 5px; }
         .lesson-meta { color: #888; font-size: 0.9em; margin-bottom: 20px; }
         .lesson-section { margin-bottom: 18px; }
         .lesson-section h3 { font-size: 0.95em; text-transform: uppercase; letter-spacing: 0.5px;
-                            color: #2E75B6; margin-bottom: 8px; padding-bottom: 5px;
-                            border-bottom: 2px solid #D6E4F0; }
+                            color: #C06C84; margin-bottom: 8px; padding-bottom: 5px;
+                            border-bottom: 2px solid #FDE8EE; }
         .lesson-section .content { font-size: 0.95em; line-height: 1.7; white-space: pre-line; }
         .time-bar { display: flex; flex-wrap: wrap; gap: 8px; }
         .time-block { padding: 6px 12px; border-radius: 6px; font-size: 0.85em;
-                     background: #f0f4f8; }
-        .time-block strong { color: #1F4E79; }
+                     background: #FAF5F7; }
+        .time-block strong { color: #8B5E83; }
         .diff-box { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .diff-item { padding: 10px; border-radius: 8px; font-size: 0.9em; }
         .diff-item.struggling { background: #FFF2CC; border-left: 3px solid #F0C040; }
-        .diff-item.advanced { background: #E2EFDA; border-left: 3px solid #4CAF50; }
+        .diff-item.advanced { background: #E8F5E9; border-left: 3px solid #6BBF8A; }
         .diff-label { font-weight: 700; font-size: 0.8em; text-transform: uppercase;
                      margin-bottom: 4px; }
         @media (max-width: 600px) { .diff-box { grid-template-columns: 1fr; } }
         /* Teaching Guide Styles */
         .expand-btn { display: flex; align-items: center; gap: 8px; width: 100%;
-                     padding: 12px 16px; background: linear-gradient(135deg, #E8F0FE, #F0F4FF);
-                     border: 2px solid #C2D6F2; border-radius: 10px; cursor: pointer;
+                     padding: 12px 16px; background: linear-gradient(135deg, #FDE8EE, #FFF0F5);
+                     border: 2px solid #E8C4CF; border-radius: 10px; cursor: pointer;
                      font-family: inherit; font-size: 0.95em; font-weight: 700;
-                     color: #1F4E79; transition: all 0.2s; margin: 6px 0; text-align: left; }
-        .expand-btn:hover { background: #D6E4F0; border-color: #2E75B6; transform: translateX(3px); }
+                     color: #8B5E83; transition: all 0.2s; margin: 6px 0; text-align: left; }
+        .expand-btn:hover { background: #FDE8EE; border-color: #C06C84; transform: translateX(3px); }
         .expand-btn .arrow { transition: transform 0.2s; font-size: 0.8em; }
         .expand-btn.open .arrow { transform: rotate(90deg); }
         .expand-content { display: none; padding: 15px; margin: 0 0 10px;
                         border: 1px solid #e8e8e8; border-radius: 0 0 10px 10px;
                         background: #fafbfc; font-size: 0.93em; line-height: 1.7; }
         .expand-content.open { display: block; }
-        .expand-content h4 { color: #1F4E79; margin: 14px 0 8px; font-size: 1.05em; }
+        .expand-content h4 { color: #8B5E83; margin: 14px 0 8px; font-size: 1.05em; }
         .expand-content h4:first-child { margin-top: 0; }
         .expand-content p { margin: 6px 0; }
         .expand-content ol, .expand-content ul { margin: 8px 0; padding-left: 24px; }
@@ -69,15 +70,15 @@
         .concept-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
                        gap: 10px; margin: 12px 0; }
         .concept-card { padding: 14px; border-radius: 10px; text-align: center; font-size: 0.92em; }
-        .concept-card.blue { background: #E8F0FE; border: 1px solid #C2D6F2; }
+        .concept-card.blue { background: #FDE8EE; border: 1px solid #E8C4CF; }
         .concept-card.green { background: #E8F5E9; border: 1px solid #C8E6C9; }
         .concept-card.orange { background: #FFF3E0; border: 1px solid #FFE0B2; }
         .concept-card.red { background: #FFEBEE; border: 1px solid #FFCDD2; }
         .concept-icon { font-size: 1.5em; margin-bottom: 4px; }
 
-        .example-box { background: white; border-left: 4px solid #2E75B6; border-radius: 8px;
+        .example-box { background: white; border-left: 4px solid #C06C84; border-radius: 8px;
                       padding: 14px; margin: 12px 0; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
-        .example-title { font-weight: 800; color: #2E75B6; margin-bottom: 8px; font-size: 0.95em; }
+        .example-title { font-weight: 800; color: #C06C84; margin-bottom: 8px; font-size: 0.95em; }
 
         .mistake-card { margin: 10px 0; padding: 12px; border-radius: 8px;
                        background: #FFF8F0; border: 1px solid #FFE0CC; }
@@ -88,8 +89,8 @@
                        border-radius: 8px; border-left: 3px solid #9C27B0; font-weight: 600; }
 
         .simple-table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 0.92em; }
-        .simple-table th { background: #E8F0FE; color: #1F4E79; padding: 8px 12px;
-                          text-align: left; border-bottom: 2px solid #C2D6F2; }
+        .simple-table th { background: #FDE8EE; color: #8B5E83; padding: 8px 12px;
+                          text-align: left; border-bottom: 2px solid #E8C4CF; }
         .simple-table td { padding: 8px 12px; border-bottom: 1px solid #eee; }
 
         .tip { background: #FFFDE7; padding: 8px 12px; border-radius: 6px;
@@ -948,7 +949,7 @@ closing:"Partner check: swap papers, verify 3 answers each. Discuss any disagree
 hw:"None",
 time:"Warm-Up: 5 min | Direct Instruction: 15 min | Guided Practice: 10 min | Independent Work: 20 min | Closing: 5 min | Buffer: 5 min",
 diff_s:"Color-code complementary pairs blue, supplementary pairs red",diff_a:"Create their own angle relationship puzzles for classmates"},
-{s:3,w:1,d:"Friday",t:"Classifying Triangles & Polygons",u:"geo",
+{s:3,w:1,d:"Thursday",t:"Classifying Triangles & Polygons",u:"geo",
 obj:"• Classify triangles by sides and angles\n• Identify regular polygons\n• Interior angle sums",
 mat:"Whiteboard, iPad, quiz (iPad-friendly), worksheet",
 warm:"⚽ Show overhead view of a soccer field. \"How many rectangles can you find? Any triangles? Other shapes?\" (5 min)",
@@ -981,7 +982,7 @@ closing:"\"What surprised you about calculating room areas?\" Brief discussion. 
 hw:"None",
 time:"Warm-Up: 5 min | Direct Instruction: 15 min | Guided Practice: 10 min | Independent Work: 20 min | Closing: 5 min | Buffer: 5 min",
 diff_s:"Grid paper provided to count squares and verify formulas",diff_a:"Calculate cost comparison — carpet vs. tile for the same room"},
-{s:6,w:2,d:"Friday",t:"Area: Parallelograms & Trapezoids",u:"geo",
+{s:6,w:2,d:"Thursday",t:"Area: Parallelograms & Trapezoids",u:"geo",
 obj:"• Calculate area of parallelograms and trapezoids\n• Find areas of composite shapes",
 mat:"Whiteboard, iPad, quiz (iPad-friendly), worksheet",
 warm:"🧁 Show different baking pan shapes. \"Which pan holds more batter? How would you figure it out?\" (5 min)",
@@ -1014,7 +1015,7 @@ closing:"Revisit warmup: show the math. \"Always do the math before you order pi
 hw:"None",
 time:"Warm-Up: 5 min | Direct Instruction: 15 min | Guided Practice: 10 min | Independent Work: 20 min | Closing: 5 min | Buffer: 5 min",
 diff_s:"r² reference table (1² through 15²)",diff_a:"Calculate cost per square inch for local pizza places"},
-{s:9,w:3,d:"Friday",t:"Composite Shapes",u:"geo",
+{s:9,w:3,d:"Thursday",t:"Composite Shapes",u:"geo",
 obj:"• Break down complex shapes into simple components\n• Calculate total area\n• Apply to floor plans",
 mat:"Whiteboard, iPad, quiz (iPad-friendly), worksheet",
 warm:"🏗️ Show an L-shaped room. \"How would you figure out the area?\" (5 min)",
@@ -1047,7 +1048,7 @@ closing:"\"Why are most cans cylinders, not cubes?\" Discussion. (5 min)",
 hw:"Study for Geometry Test (Session 12).",
 time:"Warm-Up: 5 min | Direct Instruction: 15 min | Guided Practice: 10 min | Independent Work: 20 min | Closing: 5 min | Buffer: 5 min",
 diff_s:"Net diagrams to visualize surface area",diff_a:"Find dimensions that minimize surface area for a given volume"},
-{s:12,w:4,d:"Friday",t:"Geometry Review & Test 1",u:"geo",
+{s:12,w:4,d:"Thursday",t:"Geometry Review & Test 1",u:"geo",
 obj:"• Review all geometry concepts\n• Demonstrate mastery on unit test",
 mat:"Whiteboard, iPad, test (iPad-friendly), review worksheet",
 warm:"\"One topic you feel confident about? One to review?\" Quick survey. (3 min)",
@@ -1080,7 +1081,7 @@ closing:"Quick whiteboard check: \"Simplify 4x + 3y + 2x − y.\" (5 min)",
 hw:"None",
 time:"Warm-Up: 5 min | Direct Instruction: 15 min | Guided Practice: 10 min | Independent Work: 20 min | Closing: 5 min | Buffer: 5 min",
 diff_s:"Color-code like terms",diff_a:"Simplify with three or more variables"},
-{s:15,w:5,d:"Friday",t:"Order of Operations with Variables",u:"alg",
+{s:15,w:5,d:"Thursday",t:"Order of Operations with Variables",u:"alg",
 obj:"• Apply PEMDAS with variables\n• Evaluate multi-step expressions\n• Recipe scaling",
 mat:"Whiteboard, iPad, quiz (iPad-friendly), worksheet",
 warm:"🍳 \"Cookie recipe makes 24. Need 72. How to scale ingredients?\" (5 min)",
@@ -1113,7 +1114,7 @@ closing:"\"3 shirts for $45 or 5 hats for $60 — which costs more per item?\" (
 hw:"None",
 time:"Warm-Up: 5 min | Direct Instruction: 15 min | Guided Practice: 10 min | Independent Work: 20 min | Closing: 5 min | Buffer: 5 min",
 diff_s:"\"Undo\" reference card",diff_a:"Write and solve equations from store flyers"},
-{s:18,w:6,d:"Friday",t:"Mixed One-Step Equations",u:"alg",
+{s:18,w:6,d:"Thursday",t:"Mixed One-Step Equations",u:"alg",
 obj:"• Solve one-step equations with all operations\n• Write equations from word problems",
 mat:"Whiteboard, iPad, quiz (iPad-friendly), worksheet",
 warm:"🏪 \"Starting a lemonade stand with cups, lemons, sugar, $20 budget. What algebra questions can we ask?\" (5 min)",
@@ -1146,7 +1147,7 @@ closing:"\"Write an inequality for 'need at least $50 for a video game.' What am
 hw:"None",
 time:"Warm-Up: 5 min | Direct Instruction: 15 min | Guided Practice: 10 min | Independent Work: 20 min | Closing: 5 min | Buffer: 5 min",
 diff_s:"Inequality symbol reference card",diff_a:"Solve and graph two-step inequalities"},
-{s:21,w:7,d:"Friday",t:"Equations & Inequalities Practice + Test 2",u:"alg",
+{s:21,w:7,d:"Thursday",t:"Equations & Inequalities Practice + Test 2",u:"alg",
 obj:"• Practice mixed equations and inequalities\n• Demonstrate mastery on Algebra Part 1 test",
 mat:"Whiteboard, iPad, quiz and test (iPad-friendly)",
 warm:"🎯 Show 3 solved problems with deliberate mistakes. Find the errors! (5 min)",
@@ -1179,7 +1180,7 @@ closing:"📝 QUIZ 7 on iPads (15 min): Coordinate plane, tables, linear relatio
 hw:"Study for Final Test. Review all 8 weeks.",
 time:"Warm-Up: 5 min | Direct Instruction: 12 min | Guided Practice: 8 min | Independent Work: 15 min | Quiz: 15 min | Buffer: 5 min",
 diff_s:"Pre-drawn coordinate planes with labeled axes",diff_a:"Find equations from tables, predict beyond the table"},
-{s:24,w:8,d:"Friday",t:"Course Review & Final Test",u:"alg",
+{s:24,w:8,d:"Thursday",t:"Course Review & Final Test",u:"alg",
 obj:"• Review all course content\n• Demonstrate comprehensive mastery",
 mat:"Whiteboard, iPad, test (iPad-friendly), review handout",
 warm:"\"One thing from geometry and one from algebra you feel great about?\" (3 min)",

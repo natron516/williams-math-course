@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scope & Sequence — 6th/7th Grade Math</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Playfair+Display:wght@700&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-               background: #f0f4f8; color: #333; }
-        .header { background: linear-gradient(135deg, #1F4E79, #2E75B6); color: white;
+        body { font-family: 'Nunito', sans-serif;
+               background: #FAF5F7; color: #333; }
+        .header { background: linear-gradient(135deg, #8B5E83, #C06C84); color: white;
                   padding: 25px 20px; text-align: center; }
-        .header h1 { font-size: 1.6em; margin-bottom: 5px; }
+        .header h1 { font-family: 'Playfair Display', serif; font-size: 1.6em; margin-bottom: 5px; }
         .header p { opacity: 0.9; font-size: 0.95em; }
         .back { display: inline-block; color: rgba(255,255,255,0.8); text-decoration: none;
                 margin-bottom: 10px; font-size: 0.9em; }
@@ -18,14 +19,14 @@
         .container { max-width: 1100px; margin: 0 auto; padding: 20px; }
         .unit-label { display: inline-block; padding: 6px 16px; border-radius: 20px;
                      font-weight: 700; font-size: 0.95em; margin: 20px 0 10px; }
-        .unit-geo { background: #D6E4F0; color: #1F4E79; }
-        .unit-alg { background: #E2EFDA; color: #2D6A1E; }
+        .unit-geo { background: #FDE8EE; color: #8B5E83; }
+        .unit-alg { background: #E8F5E9; color: #5B8C5A; }
         .week-card { background: white; border-radius: 12px; margin-bottom: 15px;
                     box-shadow: 0 2px 8px rgba(0,0,0,0.06); overflow: hidden; }
         .week-title { padding: 14px 20px; font-weight: 700; font-size: 1.1em;
                      cursor: pointer; display: flex; align-items: center; justify-content: space-between; }
-        .week-title.geo { background: linear-gradient(90deg, #D6E4F0, #EDF3F9); color: #1F4E79; }
-        .week-title.alg { background: linear-gradient(90deg, #E2EFDA, #F0F7EC); color: #2D6A1E; }
+        .week-title.geo { background: linear-gradient(90deg, #FDE8EE, #FFF0F3); color: #8B5E83; }
+        .week-title.alg { background: linear-gradient(90deg, #E8F5E9, #F1F8F2); color: #5B8C5A; }
         .week-title .arrow { transition: transform 0.2s; font-size: 0.8em; }
         .week-title.open .arrow { transform: rotate(90deg); }
         .week-body { display: none; }
@@ -33,33 +34,33 @@
         .session { padding: 15px 20px; border-bottom: 1px solid #f0f0f0; }
         .session:last-child { border-bottom: none; }
         .session-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
-        .session-num { background: #2E75B6; color: white; width: 30px; height: 30px;
+        .session-num { background: #C06C84; color: white; width: 30px; height: 30px;
                       border-radius: 50%; display: flex; align-items: center; justify-content: center;
                       font-size: 0.85em; font-weight: 700; flex-shrink: 0; }
         .session-day { color: #888; font-size: 0.85em; }
-        .session-topic { font-weight: 600; font-size: 1.05em; color: #1F4E79; }
+        .session-topic { font-weight: 600; font-size: 1.05em; color: #8B5E83; }
         .objectives { margin: 8px 0 8px 40px; font-size: 0.92em; line-height: 1.6; color: #555; }
         .activity { margin: 5px 0 5px 40px; padding: 8px 12px; background: #f8f9fa;
-                   border-radius: 6px; font-size: 0.9em; border-left: 3px solid #2E75B6; }
-        .assessment-badge { display: inline-block; background: #FF6B35; color: white;
+                   border-radius: 6px; font-size: 0.9em; border-left: 3px solid #C06C84; }
+        .assessment-badge { display: inline-block; background: #C06C84; color: white;
                           padding: 3px 10px; border-radius: 12px; font-size: 0.8em;
                           font-weight: 600; margin-left: 40px; margin-top: 5px; }
         .summary { background: white; border-radius: 12px; padding: 20px; margin-top: 20px;
                   box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-        .summary h2 { color: #1F4E79; margin-bottom: 15px; }
+        .summary h2 { color: #8B5E83; margin-bottom: 15px; }
         .summary-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; }
         .summary-item { padding: 12px; border-radius: 8px; text-align: center; }
-        .summary-item.q { background: #D6E4F0; }
+        .summary-item.q { background: #FDE8EE; }
         .summary-item.t { background: #FFF2CC; font-weight: 700; }
         .summary-item .label { font-size: 0.85em; color: #555; }
-        .summary-item .val { font-size: 1.1em; font-weight: 600; color: #1F4E79; }
+        .summary-item .val { font-size: 1.1em; font-weight: 600; color: #8B5E83; }
     </style>
 </head>
 <body>
     <div class="header">
         <a href="index.html" class="back">← Back to Portal</a>
         <h1>📐 Scope & Sequence</h1>
-        <p>8 Weeks · 3 Sessions/Week · 1 Hour Each · 24 Sessions Total</p>
+        <p>Mon/Wed 9:30–10:30 · Thu 10:30–11:30 · Mar 16 – May 21 · Easter Break Apr 6–17</p>
     </div>
     <div class="container">
         <div class="unit-label unit-geo">📐 UNIT 1: GEOMETRY — Weeks 1–4</div>
@@ -78,7 +79,7 @@
                     <div class="activity">🏠 Roof Pitch Problems — find missing angles in house roof designs and ramp constructions</div>
                 </div>
                 <div class="session">
-                    <div class="session-header"><span class="session-num">3</span><span class="session-day">Fri</span><span class="session-topic">Classifying Triangles & Polygons</span></div>
+                    <div class="session-header"><span class="session-num">3</span><span class="session-day">Thu</span><span class="session-topic">Classifying Triangles & Polygons</span></div>
                     <div class="objectives">• Classify triangles by sides and angles<br>• Identify regular polygons<br>• Interior angle sums</div>
                     <div class="activity">⚽ Sports Geometry — find shapes in soccer fields, basketball courts, and game boards</div>
                     <span class="assessment-badge">📝 Quiz 1</span>
@@ -100,7 +101,7 @@
                     <div class="activity">🎨 Room Makeover — calculate paint needed for walls, carpet for floors (real room dimensions)</div>
                 </div>
                 <div class="session">
-                    <div class="session-header"><span class="session-num">6</span><span class="session-day">Fri</span><span class="session-topic">Area: Parallelograms & Trapezoids</span></div>
+                    <div class="session-header"><span class="session-num">6</span><span class="session-day">Thu</span><span class="session-topic">Area: Parallelograms & Trapezoids</span></div>
                     <div class="objectives">• Derive area formulas from rectangles<br>• Apply to real measurements<br>• Composite shape areas</div>
                     <div class="activity">🧁 Baking Pans — figure out how much batter fills different pan shapes, compare pan sizes</div>
                     <span class="assessment-badge">📝 Quiz 2</span>
@@ -122,7 +123,7 @@
                     <div class="activity">🍪 Cookie & Pizza Math — which is a better deal: one 16" pizza or two 10" pizzas?</div>
                 </div>
                 <div class="session">
-                    <div class="session-header"><span class="session-num">9</span><span class="session-day">Fri</span><span class="session-topic">Composite Shapes</span></div>
+                    <div class="session-header"><span class="session-num">9</span><span class="session-day">Thu</span><span class="session-topic">Composite Shapes</span></div>
                     <div class="objectives">• Break down complex shapes into simple ones<br>• Add and subtract areas<br>• Real-world floor plans</div>
                     <div class="activity">🏗️ Blueprint Challenge — calculate total area of an L-shaped room or irregular yard</div>
                     <span class="assessment-badge">📝 Quiz 3</span>
@@ -144,7 +145,7 @@
                     <div class="activity">🥤 Drink Container Design — which cup holds more: tall & thin or short & wide?</div>
                 </div>
                 <div class="session">
-                    <div class="session-header"><span class="session-num">12</span><span class="session-day">Fri</span><span class="session-topic">Geometry Review & Test</span></div>
+                    <div class="session-header"><span class="session-num">12</span><span class="session-day">Thu</span><span class="session-topic">Geometry Review & Test</span></div>
                     <div class="objectives">• Review all geometry concepts<br>• Problem-solving with mixed geometry<br>• Test preparation</div>
                     <div class="activity">Mixed review problems covering all 4 weeks</div>
                     <span class="assessment-badge" style="background:#dc3545;">🔴 TEST 1: Geometry</span>
@@ -168,7 +169,7 @@
                     <div class="activity">🛒 Shopping Cart Math — simplify a grocery list with pricing expressions</div>
                 </div>
                 <div class="session">
-                    <div class="session-header"><span class="session-num">15</span><span class="session-day">Fri</span><span class="session-topic">Order of Operations with Variables</span></div>
+                    <div class="session-header"><span class="session-num">15</span><span class="session-day">Thu</span><span class="session-topic">Order of Operations with Variables</span></div>
                     <div class="objectives">• Apply PEMDAS with variables<br>• Evaluate multi-step expressions<br>• Write and simplify</div>
                     <div class="activity">🍳 Recipe Scaling — use expressions to double, triple, or halve recipes</div>
                     <span class="assessment-badge">📝 Quiz 4</span>
@@ -190,7 +191,7 @@
                     <div class="activity">🍕 Fair Shares — split costs, divide materials evenly, find unit prices</div>
                 </div>
                 <div class="session">
-                    <div class="session-header"><span class="session-num">18</span><span class="session-day">Fri</span><span class="session-topic">Mixed One-Step Equations</span></div>
+                    <div class="session-header"><span class="session-num">18</span><span class="session-day">Thu</span><span class="session-topic">Mixed One-Step Equations</span></div>
                     <div class="objectives">• All four operation types mixed<br>• Writing equations from word problems<br>• Multi-context practice</div>
                     <div class="activity">🏪 Lemonade Stand — set prices, calculate profits, find break-even amounts</div>
                     <span class="assessment-badge">📝 Quiz 5</span>
@@ -212,7 +213,7 @@
                     <div class="activity">🎢 Height Requirements — model "you must be at least this tall" as inequalities</div>
                 </div>
                 <div class="session">
-                    <div class="session-header"><span class="session-num">21</span><span class="session-day">Fri</span><span class="session-topic">Equations & Inequalities Practice</span></div>
+                    <div class="session-header"><span class="session-num">21</span><span class="session-day">Thu</span><span class="session-topic">Equations & Inequalities Practice</span></div>
                     <div class="objectives">• Mixed practice with equations and inequalities<br>• Word problem translation<br>• Error analysis</div>
                     <div class="activity">🎯 Equation Detective — find and fix mistakes in solved problems</div>
                     <span class="assessment-badge">📝 Quiz 6</span>
@@ -236,7 +237,7 @@
                     <span class="assessment-badge">📝 Quiz 7</span>
                 </div>
                 <div class="session">
-                    <div class="session-header"><span class="session-num">24</span><span class="session-day">Fri</span><span class="session-topic">Course Review & Final Test</span></div>
+                    <div class="session-header"><span class="session-num">24</span><span class="session-day">Thu</span><span class="session-topic">Course Review & Final Test</span></div>
                     <div class="objectives">• Review all algebra concepts<br>• Mixed geometry and algebra problems<br>• Final assessment</div>
                     <div class="activity">Comprehensive review covering full 8 weeks</div>
                     <span class="assessment-badge" style="background:#dc3545;">🔴 FINAL TEST</span>

@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grade Book — 6th/7th Grade Math</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Playfair+Display:wght@700&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-               background: #f0f4f8; color: #333; }
-        .header { background: linear-gradient(135deg, #1F4E79, #2E75B6); color: white;
+        body { font-family: 'Nunito', sans-serif;
+               background: #FAF5F7; color: #333; }
+        .header { background: linear-gradient(135deg, #8B5E83, #C06C84); color: white;
                   padding: 25px 20px; text-align: center; }
-        .header h1 { font-size: 1.6em; margin-bottom: 5px; }
+        .header h1 { font-family: 'Playfair Display', serif; font-size: 1.6em; margin-bottom: 5px; }
         .back { display: inline-block; color: rgba(255,255,255,0.8); text-decoration: none;
                 margin-bottom: 10px; font-size: 0.9em; }
         .back:hover { color: white; }
@@ -19,50 +20,50 @@
                   box-shadow: 0 2px 8px rgba(0,0,0,0.06); position: sticky; top: 0; z-index: 10; }
         .toolbar button { padding: 8px 16px; border-radius: 6px; border: 1px solid #ddd;
                          background: white; cursor: pointer; font-size: 0.9em; transition: all 0.2s; }
-        .toolbar button:hover { background: #f0f7ff; border-color: #2E75B6; }
-        .toolbar button.primary { background: #1F4E79; color: white; border-color: #1F4E79; }
-        .toolbar button.primary:hover { background: #2E75B6; }
+        .toolbar button:hover { background: #FFF5F7; border-color: #C06C84; }
+        .toolbar button.primary { background: #8B5E83; color: white; border-color: #8B5E83; }
+        .toolbar button.primary:hover { background: #C06C84; }
         .toolbar button.danger { color: #dc3545; border-color: #dc3545; }
-        .save-status { font-size: 0.85em; color: #4CAF50; font-weight: 600; }
+        .save-status { font-size: 0.85em; color: #6BBF8A; font-weight: 600; }
         .container { max-width: 100%; overflow-x: auto; padding: 15px; }
         table { border-collapse: collapse; width: 100%; min-width: 900px; background: white;
                border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-        th { background: #1F4E79; color: white; padding: 8px 6px; font-size: 0.8em;
+        th { background: #8B5E83; color: white; padding: 8px 6px; font-size: 0.8em;
             text-align: center; position: sticky; top: 52px; z-index: 5; }
         th.name-col { text-align: left; min-width: 160px; }
-        th.quiz { background: #2E75B6; }
-        th.test { background: #8B6914; }
-        th.part { background: #2D6A1E; }
-        th.avg { background: #C65102; }
+        th.quiz { background: #C06C84; }
+        th.test { background: #A0856B; }
+        th.part { background: #5B8C5A; }
+        th.avg { background: #B85C78; }
         td { padding: 6px; text-align: center; border-bottom: 1px solid #f0f0f0; }
         td.name-cell { text-align: left; padding-left: 10px; }
         .name-input { border: none; background: transparent; width: 100%; padding: 4px;
                      font-size: 0.95em; outline: none; }
-        .name-input:focus { background: #f0f7ff; border-radius: 4px; }
+        .name-input:focus { background: #FFF5F7; border-radius: 4px; }
         .grade-input { width: 50px; border: 1px solid #e0e0e0; border-radius: 4px;
                       text-align: center; padding: 4px; font-size: 0.95em; outline: none; }
-        .grade-input:focus { border-color: #2E75B6; background: #f8fbff; }
+        .grade-input:focus { border-color: #C06C84; background: #FFF5F7; }
         .grade-input.low { background: #FFC7CE; color: #9C0006; }
         .avg-cell { font-weight: 700; font-size: 1em; }
         .letter-cell { font-weight: 700; font-size: 1em; }
-        .letter-A { color: #2D6A1E; }
-        .letter-B { color: #1F4E79; }
-        .letter-C { color: #8B6914; }
-        .letter-D { color: #C65102; }
+        .letter-A { color: #5B8C5A; }
+        .letter-B { color: #8B5E83; }
+        .letter-C { color: #A0856B; }
+        .letter-D { color: #B85C78; }
         .letter-F { color: #dc3545; }
-        .avg-row td { background: #1F4E79; color: white; font-weight: 700; font-size: 0.9em; }
+        .avg-row td { background: #8B5E83; color: white; font-weight: 700; font-size: 0.9em; }
         .weight-row td { background: #f8f9fa; font-size: 0.75em; color: #888; font-weight: 600; }
         .stats { background: white; border-radius: 12px; padding: 20px; margin: 15px;
                 box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-        .stats h3 { color: #1F4E79; margin-bottom: 10px; }
+        .stats h3 { color: #8B5E83; margin-bottom: 10px; }
         .stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
         .stat-card { padding: 12px; border-radius: 8px; text-align: center; }
-        .stat-card.good { background: #E2EFDA; }
+        .stat-card.good { background: #E8F5E9; }
         .stat-card.warn { background: #FFF2CC; }
         .stat-card.bad { background: #FFC7CE; }
-        .stat-num { font-size: 1.5em; font-weight: 700; color: #1F4E79; }
+        .stat-num { font-size: 1.5em; font-weight: 700; color: #8B5E83; }
         .stat-label { font-size: 0.8em; color: #666; }
-        .info-box { background: #f0f7ff; border-left: 4px solid #2E75B6; padding: 12px 15px;
+        .info-box { background: #FFF5F7; border-left: 4px solid #C06C84; padding: 12px 15px;
                    border-radius: 0 8px 8px 0; margin: 0 15px 15px; font-size: 0.9em; }
     </style>
 </head>
