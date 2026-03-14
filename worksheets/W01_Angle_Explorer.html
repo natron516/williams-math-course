@@ -10,137 +10,146 @@
         body { font-family: 'Nunito', sans-serif; max-width: 820px; margin: 0 auto;
                background: #F5F7FA; color: #333; -webkit-tap-highlight-color: transparent; }
         
-        /* Hero */
         .hero { background: linear-gradient(135deg, #1565C0, #42A5F5, #64B5F6);
                 color: white; padding: 28px 22px; position: relative; overflow: hidden;
-                border-radius: 0 0 28px 28px; }
-        .hero::after { content: '📐'; position: absolute; font-size: 7em; opacity: 0.1;
-                      top: -15px; right: 5px; transform: rotate(12deg); }
+                border-radius: 0 0 24px 24px; }
+        .hero::after { content: '📐'; position: absolute; font-size: 6em; opacity: 0.1;
+                      top: -10px; right: 10px; transform: rotate(12deg); }
         .hero .badge { display: inline-block; background: rgba(255,255,255,0.2);
-                      backdrop-filter: blur(4px); padding: 5px 14px; border-radius: 20px;
-                      font-size: 0.75em; font-weight: 700; letter-spacing: 0.5px; }
-        .hero h1 { font-size: 1.7em; font-weight: 900; margin: 8px 0 4px; }
-        .hero p { opacity: 0.85; font-size: 0.92em; }
+                      padding: 4px 12px; border-radius: 16px; font-size: 0.75em; font-weight: 700; }
+        .hero h1 { font-size: 1.6em; font-weight: 900; margin: 6px 0 3px; }
+        .hero p { opacity: 0.85; font-size: 0.9em; }
         
-        /* Progress */
-        .progress-wrap { padding: 12px 18px 0; display: flex; align-items: center; gap: 10px; }
-        .progress-track { flex: 1; height: 8px; background: #D0D8E8; border-radius: 8px; overflow: hidden; }
+        .progress-wrap { padding: 10px 16px 0; display: flex; align-items: center; gap: 8px; }
+        .progress-track { flex: 1; height: 6px; background: #E0E4EA; border-radius: 6px; overflow: hidden; }
         .progress-fill { height: 100%; background: linear-gradient(90deg, #4CAF50, #81C784);
-                        border-radius: 8px; transition: width 0.4s ease; width: 0%; }
-        .progress-label { font-size: 0.78em; font-weight: 700; color: #888; white-space: nowrap; }
+                        border-radius: 6px; transition: width 0.3s; width: 0%; }
+        .progress-label { font-size: 0.75em; font-weight: 700; color: #999; }
         
-        /* Cards */
-        .card { background: white; border-radius: 20px; margin: 14px; overflow: hidden;
-                box-shadow: 0 1px 8px rgba(0,0,0,0.05); }
-        .card-head { padding: 16px 20px; font-weight: 800; font-size: 1.05em;
+        .card { background: white; border-radius: 18px; margin: 12px 14px; overflow: hidden;
+                box-shadow: 0 1px 6px rgba(0,0,0,0.05); }
+        .card-head { padding: 14px 18px; font-weight: 800; font-size: 1em;
                     display: flex; align-items: center; gap: 10px; }
-        .card-head .emoji { font-size: 1.5em; width: 40px; height: 40px; border-radius: 12px;
-                           display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-        .card-head.blue { color: #1565C0; border-bottom: 3px solid #E3F2FD; }
-        .card-head.blue .emoji { background: #E3F2FD; }
-        .card-head.orange { color: #E65100; border-bottom: 3px solid #FFF3E0; }
-        .card-head.orange .emoji { background: #FFF3E0; }
-        .card-head.green { color: #2E7D32; border-bottom: 3px solid #E8F5E9; }
-        .card-head.green .emoji { background: #E8F5E9; }
-        .card-head.purple { color: #6A1B9A; border-bottom: 3px solid #F3E5F5; }
-        .card-head.purple .emoji { background: #F3E5F5; }
-        .card-body { padding: 6px 18px 20px; }
+        .card-head .emoji { font-size: 1.3em; }
+        .card-head.blue { color: #1565C0; border-bottom: 2px solid #E3F2FD; }
+        .card-head.orange { color: #E65100; border-bottom: 2px solid #FFF3E0; }
+        .card-head.green { color: #2E7D32; border-bottom: 2px solid #E8F5E9; }
+        .card-head.purple { color: #6A1B9A; border-bottom: 2px solid #F3E5F5; }
+        .card-body { padding: 16px; }
         
-        /* Visual reference */
-        .ref-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 16px 0; }
-        .ref-item { text-align: center; padding: 16px 6px 12px; border-radius: 16px;
-                   background: #F8FAFF; border: 2px solid #E8F0FE; transition: transform 0.15s; }
-        .ref-item:active { transform: scale(0.96); }
-        .ref-item svg { display: block; margin: 0 auto 8px; }
-        .ref-name { font-weight: 800; font-size: 0.88em; color: #1565C0; }
-        .ref-rule { font-size: 0.72em; color: #999; margin-top: 3px; font-weight: 600; }
+        /* Reference strip */
+        .ref-strip { display: flex; gap: 8px; margin-bottom: 16px; }
+        .ref-strip .ref { flex: 1; text-align: center; padding: 10px 4px; border-radius: 12px; background: #F8FAFF; }
+        .ref-strip svg { display: block; margin: 0 auto 4px; }
+        .ref-strip .name { font-weight: 800; font-size: 0.8em; color: #1565C0; }
+        .ref-strip .rule { font-size: 0.68em; color: #aaa; }
         
-        /* Cheat sheet pills */
-        .pills { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; margin: 12px 0 8px; }
-        .pill { padding: 7px 14px; border-radius: 20px; font-weight: 700; font-size: 0.78em;
-               box-shadow: 0 2px 0 rgba(0,0,0,0.08); }
-        .pill.a { background: #C8E6C9; color: #2E7D32; }
-        .pill.r { background: #BBDEFB; color: #1565C0; }
-        .pill.o { background: #FFE0B2; color: #E65100; }
-        .pill.s { background: #F8BBD0; color: #C62828; }
+        /* Classify grid — tap buttons instead of typing */
+        .classify-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .classify-item { background: #FAFBFC; border: 2px solid #EEE; border-radius: 14px;
+                        padding: 14px; transition: border-color 0.2s; }
+        .classify-item .degree { font-size: 1.4em; font-weight: 900; color: #1565C0; text-align: center; }
+        .classify-item .choices { display: flex; gap: 5px; margin-top: 8px; flex-wrap: wrap; justify-content: center; }
+        .classify-item .ch { padding: 6px 10px; border-radius: 8px; border: 2px solid #E0E0E0;
+                           background: white; font-size: 0.75em; font-weight: 700; cursor: pointer;
+                           transition: all 0.15s; font-family: 'Nunito', sans-serif; color: #666; }
+        .classify-item .ch:hover { border-color: #42A5F5; color: #1565C0; }
+        .classify-item .ch.selected { background: #1565C0; color: white; border-color: #1565C0; }
+        .classify-item .ch.selected.acute { background: #43A047; border-color: #43A047; }
+        .classify-item .ch.selected.right { background: #1565C0; border-color: #1565C0; }
+        .classify-item .ch.selected.obtuse { background: #E65100; border-color: #E65100; }
+        .classify-item .ch.selected.straight { background: #C62828; border-color: #C62828; }
+        .classify-item.answered { border-color: #81C784; }
+        /* Hidden input stores the answer */
+        .classify-item input[type="hidden"] { display: none; }
         
-        /* Scene — big visual context block */
-        .scene { display: flex; gap: 16px; align-items: center; padding: 18px;
-                background: #F9FAFB; border-radius: 18px;
-                margin: 16px 0; }
+        /* Scene */
+        .scene { display: flex; gap: 14px; align-items: center; padding: 16px;
+                background: #F9FAFB; border-radius: 14px; margin-bottom: 14px; }
         .scene svg { flex-shrink: 0; }
-        .scene .desc h4 { font-size: 1em; font-weight: 800; color: #333; margin-bottom: 4px; }
-        .scene .desc p { font-size: 0.85em; color: #888; line-height: 1.5; }
+        .scene .desc h4 { font-size: 0.95em; font-weight: 800; margin-bottom: 3px; }
+        .scene .desc p { font-size: 0.83em; color: #888; line-height: 1.4; }
         
-        /* Problem */
-        .q { padding: 16px 0; border-bottom: 1px solid #F0F0F0; }
-        .q:last-child { border-bottom: none; }
-        .q-row { display: flex; align-items: flex-start; gap: 12px; }
-        .q-num { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center;
-                justify-content: center; font-weight: 800; font-size: 0.82em; color: white;
-                background: linear-gradient(135deg, #42A5F5, #1565C0); flex-shrink: 0;
-                 }
-        .q-text { flex: 1; font-size: 0.95em; line-height: 1.55; padding-top: 5px; }
-        .q-text strong { color: #1565C0; }
+        /* Equation fill-in — answer embedded in the math */
+        .eq-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+                 font-size: 1.05em; font-weight: 700; color: #555; padding: 10px 0; }
+        .eq-row .eq-input { width: 60px; padding: 6px 8px; border: 2px solid #E0E0E0;
+                          border-radius: 8px; font-size: 0.95em; font-weight: 700;
+                          font-family: 'Nunito', sans-serif; text-align: center;
+                          outline: none; color: #1565C0; }
+        .eq-row .eq-input:focus { border-color: #42A5F5; box-shadow: 0 0 0 3px rgba(66,165,245,0.1); }
+        .eq-row .eq-input.wide { width: 80px; }
         
-        /* Answer bubble — NOT a plain form field */
-        .answer { display: block; margin: 10px 0 4px 46px; width: calc(100% - 46px);
-                 padding: 12px 16px; background: white; border: 2px solid #E0E0E0;
-                 border-radius: 14px; font-family: 'Nunito', sans-serif; font-size: 0.95em;
-                 font-weight: 600; color: #333; outline: none; transition: all 0.2s;
-                 -webkit-appearance: none; }
-        .answer::placeholder { color: #bbb; font-weight: 500; }
-        .answer:focus { border-color: #42A5F5; box-shadow: 0 0 0 3px rgba(66,165,245,0.1); }
+        /* Clock question cards */
+        .clock-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+        .clock-card { text-align: center; padding: 14px 8px; background: #F9FAFB;
+                     border-radius: 14px; border: 2px solid #EEE; }
+        .clock-card svg { display: block; margin: 0 auto 8px; }
+        .clock-card .time { font-weight: 800; font-size: 0.9em; color: #2E7D32; margin-bottom: 6px; }
+        .clock-card input { width: 60px; padding: 6px; border: 2px solid #E0E0E0;
+                          border-radius: 8px; text-align: center; font-family: 'Nunito', sans-serif;
+                          font-weight: 700; font-size: 0.9em; outline: none; color: #2E7D32; }
+        .clock-card input:focus { border-color: #43A047; }
         
         /* Work area */
-        .work { display: block; margin: 8px 0 4px 46px; width: calc(100% - 46px);
-               min-height: 80px; padding: 12px; background: #FAFAFA; border: 2px dashed #DDD;
-               border-radius: 14px; font-family: 'Nunito', sans-serif; font-size: 0.9em;
-               color: #666; outline: none; resize: vertical; }
-        .work::placeholder { color: #ccc; }
+        .work { display: block; width: 100%; min-height: 70px; padding: 10px; background: #FAFAFA;
+               border: 2px dashed #DDD; border-radius: 12px; font-family: 'Nunito', sans-serif;
+               font-size: 0.88em; color: #666; outline: none; resize: vertical; margin: 8px 0; }
         .work:focus { border-color: #42A5F5; background: white; }
         
-        /* Hint */
-        .hint { margin: 6px 0 2px 46px; font-size: 0.82em; color: #42A5F5; font-weight: 700; }
+        /* MC buttons for Part 4 */
+        .mc-options { display: flex; gap: 8px; margin-top: 8px; }
+        .mc-btn { flex: 1; padding: 10px; border: 2px solid #E0E0E0; border-radius: 10px;
+                 background: white; font-weight: 700; font-size: 0.85em; cursor: pointer;
+                 text-align: center; transition: all 0.15s; font-family: 'Nunito', sans-serif; color: #666; }
+        .mc-btn:hover { border-color: #42A5F5; color: #1565C0; }
+        .mc-btn.selected { background: #6A1B9A; color: white; border-color: #6A1B9A; }
+        
+        /* Question with number */
+        .q-inline { display: flex; align-items: flex-start; gap: 10px; padding: 12px 0;
+                   border-bottom: 1px solid #F0F0F0; }
+        .q-inline:last-child { border-bottom: none; }
+        .q-num { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center;
+                justify-content: center; font-weight: 800; font-size: 0.78em; color: white;
+                background: linear-gradient(135deg, #42A5F5, #1565C0); flex-shrink: 0; }
+        .q-num.orange { background: linear-gradient(135deg, #FF9800, #E65100); }
+        .q-num.green { background: linear-gradient(135deg, #66BB6A, #2E7D32); }
+        .q-num.purple { background: linear-gradient(135deg, #AB47BC, #6A1B9A); }
+        .q-body { flex: 1; }
+        .q-body .text { font-size: 0.92em; line-height: 1.5; margin-bottom: 6px; }
+        .q-body .text strong { color: inherit; }
+        .hint { font-size: 0.8em; color: #42A5F5; font-weight: 600; margin-bottom: 4px; }
         
         /* Fun fact */
-        .fact { margin: 14px 0; padding: 16px 18px; border-radius: 16px;
-               background: linear-gradient(135deg, #FFF8E1, #FFFDE7);
-               border: 2px solid #FFE082; font-size: 0.88em; line-height: 1.5;
-               box-shadow: 0 2px 8px rgba(255,193,7,0.1); }
-        
-        /* Encouragement */
-        .cheer { text-align: center; padding: 10px; font-size: 0.85em; font-weight: 700; color: #999; }
+        .fact { margin: 14px 0; padding: 14px 16px; border-radius: 14px;
+               background: #FFFDE7; border: 1.5px solid #FFE082; font-size: 0.85em; line-height: 1.5; }
         
         /* Submit */
         .submit-wrap { text-align: center; padding: 20px; }
         .submit-btn { background: linear-gradient(135deg, #4CAF50, #388E3C); color: white;
-                     border: none; padding: 16px 48px; border-radius: 16px; font-size: 1.15em;
+                     border: none; padding: 14px 42px; border-radius: 14px; font-size: 1.1em;
                      font-weight: 800; font-family: 'Nunito', sans-serif; cursor: pointer;
-                     box-shadow: 0 2px 8px rgba(76,175,80,0.3); transition: all 0.15s;
-                     -webkit-tap-highlight-color: transparent; }
-        .submit-btn:active { transform: translateY(1px); box-shadow: none; }
+                     box-shadow: 0 2px 8px rgba(76,175,80,0.3); }
         .submit-btn:disabled { opacity: 0.5; }
         #submitMsg { margin-top: 10px; font-weight: 700; }
         
         /* Answer key */
-        .answer-key { background: #FFF9E6; padding: 20px; border-radius: 16px;
-                     margin: 0 14px 14px; border: 2px solid #F0C040; display: none; }
+        .answer-key { background: #FFF9E6; padding: 18px; border-radius: 14px; margin: 0 14px 14px;
+                     border: 2px solid #F0C040; display: none; }
         .answer-key-header { display: flex; justify-content: space-between; align-items: center;
-                            font-size: 1.1em; font-weight: 800; color: #8B6914; margin-bottom: 12px;
-                            padding-bottom: 10px; border-bottom: 2px solid rgba(240,192,64,0.25); }
-        .answer-btn { display: block; margin: 0 auto 20px; padding: 12px 28px;
+                            font-weight: 800; color: #8B6914; margin-bottom: 10px; padding-bottom: 8px;
+                            border-bottom: 2px solid rgba(240,192,64,0.25); }
+        .answer-btn { display: block; margin: 0 auto 16px; padding: 10px 24px;
                      background: linear-gradient(135deg, #1565C0, #42A5F5); color: white;
-                     border: none; border-radius: 12px; font-size: 0.95em; font-weight: 700;
-                     cursor: pointer; font-family: 'Nunito', sans-serif;
-                      }
-        .close-btn { background: none; border: 1px solid #ddd; padding: 5px 12px;
+                     border: none; border-radius: 10px; font-size: 0.9em; font-weight: 700;
+                     cursor: pointer; font-family: 'Nunito', sans-serif; }
+        .close-btn { background: none; border: 1px solid #ddd; padding: 4px 10px;
                     border-radius: 6px; cursor: pointer; font-size: 0.8em; color: #888; }
         
         @media (max-width: 500px) {
-            .ref-grid { grid-template-columns: repeat(2, 1fr); }
+            .classify-grid { grid-template-columns: 1fr; }
+            .clock-row { grid-template-columns: 1fr; }
             .scene { flex-direction: column; text-align: center; }
-            .hero h1 { font-size: 1.4em; }
         }
     </style>
 </head>
@@ -150,255 +159,286 @@
         <h1>🔍 Angle Explorer</h1>
         <p>Find angles hiding in pizza, clocks, and scissors!</p>
     </div>
-    
     <div class="progress-wrap">
         <div class="progress-track"><div class="progress-fill" id="prog"></div></div>
         <div class="progress-label" id="progLabel">0 / 15</div>
     </div>
     
-    <div class="content-area">
-        
-        <!-- PART 1 -->
-        <div class="card">
-            <div class="card-head blue"><div class="emoji">📐</div> Part 1: Know Your Angles</div>
-            <div class="card-body">
-                <div class="ref-grid">
-                    <div class="ref-item">
-                        <svg width="60" height="55" viewBox="0 0 60 55">
-                            <line x1="8" y1="45" x2="52" y2="45" stroke="#42A5F5" stroke-width="3" stroke-linecap="round"/>
-                            <line x1="8" y1="45" x2="30" y2="8" stroke="#42A5F5" stroke-width="3" stroke-linecap="round"/>
-                            <path d="M 22 45 A 14 14 0 0 1 16 35" fill="none" stroke="#FF9800" stroke-width="2.5"/>
-                        </svg>
-                        <div class="ref-name">Acute</div>
-                        <div class="ref-rule">&lt; 90°</div>
-                    </div>
-                    <div class="ref-item">
-                        <svg width="60" height="55" viewBox="0 0 60 55">
-                            <line x1="8" y1="45" x2="52" y2="45" stroke="#42A5F5" stroke-width="3" stroke-linecap="round"/>
-                            <line x1="8" y1="45" x2="8" y2="5" stroke="#42A5F5" stroke-width="3" stroke-linecap="round"/>
-                            <rect x="8" y="32" width="11" height="11" fill="none" stroke="#FF9800" stroke-width="2"/>
-                        </svg>
-                        <div class="ref-name">Right</div>
-                        <div class="ref-rule">= 90°</div>
-                    </div>
-                    <div class="ref-item">
-                        <svg width="60" height="55" viewBox="0 0 60 55">
-                            <line x1="5" y1="45" x2="55" y2="45" stroke="#42A5F5" stroke-width="3" stroke-linecap="round"/>
-                            <line x1="5" y1="45" x2="48" y2="8" stroke="#42A5F5" stroke-width="3" stroke-linecap="round"/>
-                            <path d="M 20 45 A 15 15 0 0 1 19 30" fill="none" stroke="#FF9800" stroke-width="2.5"/>
-                        </svg>
-                        <div class="ref-name">Obtuse</div>
-                        <div class="ref-rule">90°–180°</div>
-                    </div>
-                    <div class="ref-item">
-                        <svg width="60" height="55" viewBox="0 0 60 55">
-                            <line x1="3" y1="30" x2="57" y2="30" stroke="#42A5F5" stroke-width="3" stroke-linecap="round"/>
-                            <circle cx="30" cy="30" r="4" fill="#FF9800"/>
-                        </svg>
-                        <div class="ref-name">Straight</div>
-                        <div class="ref-rule">= 180°</div>
-                    </div>
+    <!-- PART 1: TAP TO CLASSIFY -->
+    <div class="card">
+        <div class="card-head blue"><span class="emoji">📐</span> Part 1: Classify These Angles</div>
+        <div class="card-body">
+            <div class="ref-strip">
+                <div class="ref">
+                    <svg width="50" height="40" viewBox="0 0 50 40"><line x1="5" y1="35" x2="45" y2="35" stroke="#42A5F5" stroke-width="2.5" stroke-linecap="round"/><line x1="5" y1="35" x2="25" y2="5" stroke="#42A5F5" stroke-width="2.5" stroke-linecap="round"/><path d="M 18 35 A 13 13 0 0 1 13 26" fill="none" stroke="#FF9800" stroke-width="2"/></svg>
+                    <div class="name">Acute</div><div class="rule">&lt; 90°</div>
                 </div>
-                
-                
-                
-                <div class="q"><div class="q-row"><span class="q-num">1</span><span class="q-text">An angle that measures <strong>45°</strong>. Type: ____</span></div>
-                    <input type="text" class="answer" placeholder="acute, right, obtuse, or straight?" oninput="updateProgress()"/></div>
-                <div class="q"><div class="q-row"><span class="q-num">2</span><span class="q-text">An angle that measures <strong>90°</strong>. Type: ____</span></div>
-                    <input type="text" class="answer" placeholder="acute, right, obtuse, or straight?" oninput="updateProgress()"/></div>
-                <div class="q"><div class="q-row"><span class="q-num">3</span><span class="q-text">An angle that measures <strong>120°</strong>. Type: ____</span></div>
-                    <input type="text" class="answer" placeholder="acute, right, obtuse, or straight?" oninput="updateProgress()"/></div>
-                <div class="q"><div class="q-row"><span class="q-num">4</span><span class="q-text">An angle that measures <strong>180°</strong>. Type: ____</span></div>
-                    <input type="text" class="answer" placeholder="acute, right, obtuse, or straight?" oninput="updateProgress()"/></div>
-                <div class="q"><div class="q-row"><span class="q-num">5</span><span class="q-text">An angle that measures <strong>15°</strong>. Type: ____</span></div>
-                    <input type="text" class="answer" placeholder="acute, right, obtuse, or straight?" oninput="updateProgress()"/></div>
-                <div class="q"><div class="q-row"><span class="q-num">6</span><span class="q-text">An angle that measures <strong>89°</strong>. Type: ____</span></div>
-                    <input type="text" class="answer" placeholder="acute, right, obtuse, or straight?" oninput="updateProgress()"/></div>
-                <div class="q"><div class="q-row"><span class="q-num">7</span><span class="q-text">An angle that measures <strong>91°</strong>. Type: ____</span></div>
-                    <input type="text" class="answer" placeholder="acute, right, obtuse, or straight?" oninput="updateProgress()"/></div>
-                <div class="q"><div class="q-row"><span class="q-num">8</span><span class="q-text">An angle that measures <strong>175°</strong>. Type: ____</span></div>
-                    <input type="text" class="answer" placeholder="acute, right, obtuse, or straight?" oninput="updateProgress()"/></div>
-                
-                
-            </div>
-        </div>
-        
-        <!-- PART 2: PIZZA -->
-        <div class="card">
-            <div class="card-head orange"><div class="emoji">🍕</div> Part 2: Pizza Math</div>
-            <div class="card-body">
-                <div class="scene">
-                    <svg width="120" height="120" viewBox="0 0 120 120">
-                        <circle cx="60" cy="60" r="54" fill="#F4A460"/>
-                        <circle cx="60" cy="60" r="50" fill="#FDEBD0"/>
-                        <circle cx="60" cy="60" r="50" fill="#F9E79F" opacity="0.5"/>
-                        <!-- Slices -->
-                        <line x1="60" y1="60" x2="60" y2="6" stroke="#A0522D" stroke-width="1.5" opacity="0.6"/>
-                        <line x1="60" y1="60" x2="98" y2="22" stroke="#A0522D" stroke-width="1.5" opacity="0.6"/>
-                        <line x1="60" y1="60" x2="114" y2="60" stroke="#A0522D" stroke-width="1.5" opacity="0.6"/>
-                        <line x1="60" y1="60" x2="98" y2="98" stroke="#A0522D" stroke-width="1.5" opacity="0.6"/>
-                        <line x1="60" y1="60" x2="60" y2="114" stroke="#A0522D" stroke-width="1.5" opacity="0.6"/>
-                        <line x1="60" y1="60" x2="22" y2="98" stroke="#A0522D" stroke-width="1.5" opacity="0.6"/>
-                        <line x1="60" y1="60" x2="6" y2="60" stroke="#A0522D" stroke-width="1.5" opacity="0.6"/>
-                        <line x1="60" y1="60" x2="22" y2="22" stroke="#A0522D" stroke-width="1.5" opacity="0.6"/>
-                        <!-- Pepperoni -->
-                        <circle cx="72" cy="30" r="5" fill="#E74C3C"/><circle cx="72" cy="30" r="3" fill="#C0392B"/>
-                        <circle cx="38" cy="42" r="4.5" fill="#E74C3C"/><circle cx="38" cy="42" r="2.5" fill="#C0392B"/>
-                        <circle cx="80" cy="72" r="5" fill="#E74C3C"/><circle cx="80" cy="72" r="3" fill="#C0392B"/>
-                        <circle cx="42" cy="82" r="4.5" fill="#E74C3C"/><circle cx="42" cy="82" r="2.5" fill="#C0392B"/>
-                        <circle cx="72" cy="88" r="4" fill="#E74C3C"/><circle cx="72" cy="88" r="2" fill="#C0392B"/>
-                        <circle cx="30" cy="62" r="4" fill="#E74C3C"/><circle cx="30" cy="62" r="2" fill="#C0392B"/>
-                        <circle cx="88" cy="48" r="4.5" fill="#E74C3C"/><circle cx="88" cy="48" r="2.5" fill="#C0392B"/>
-                        <!-- Angle marker -->
-                        <path d="M 70 60 A 10 10 0 0 0 60 50" fill="none" stroke="#E65100" stroke-width="2.5"/>
-                        <text x="64" y="48" fill="#E65100" font-size="11" font-weight="bold">?°</text>
-                    </svg>
-                    <div class="desc">
-                        <h4>🍕 A whole pizza cut into 8 equal slices</h4>
-                        <p>A full circle = <strong>360°</strong>. Divide equally into slices and each slice has the same angle. Think: <strong>360° ÷ slices</strong>!</p>
-                    </div>
+                <div class="ref">
+                    <svg width="50" height="40" viewBox="0 0 50 40"><line x1="5" y1="35" x2="45" y2="35" stroke="#42A5F5" stroke-width="2.5" stroke-linecap="round"/><line x1="5" y1="35" x2="5" y2="3" stroke="#42A5F5" stroke-width="2.5" stroke-linecap="round"/><rect x="5" y="24" width="9" height="9" fill="none" stroke="#FF9800" stroke-width="1.5"/></svg>
+                    <div class="name">Right</div><div class="rule">= 90°</div>
                 </div>
-                
-                <div class="q"><div class="q-row"><span class="q-num">9</span><span class="q-text">What is the angle of <strong>each pizza slice</strong>?</span></div>
-                    <div class="hint">💡 360° ÷ 8 slices = ?</div>
-                    <textarea class="work" placeholder="✏️ Show your work..." oninput="updateProgress()"></textarea>
-                    <input type="text" class="answer" placeholder="___°" oninput="updateProgress()"/></div>
-                <div class="q"><div class="q-row"><span class="q-num">10</span><span class="q-text">You eat <strong>3 slices</strong>. What angle does the <strong>remaining pizza</strong> form?</span></div>
-                    <div class="hint">💡 5 remaining slices × angle per slice = ?</div>
-                    <textarea class="work" placeholder="✏️ Show your work..." oninput="updateProgress()"></textarea>
-                    <input type="text" class="answer" placeholder="___°" oninput="updateProgress()"/></div>
-            </div>
-        </div>
-        
-        <!-- PART 3: CLOCK -->
-        <div class="card">
-            <div class="card-head green"><div class="emoji">🕐</div> Part 3: Clock Angles</div>
-            <div class="card-body">
-                <div class="scene">
-                    <svg width="120" height="120" viewBox="0 0 120 120">
-                        <circle cx="60" cy="60" r="54" fill="white" stroke="#E0E0E0" stroke-width="3"/>
-                        <circle cx="60" cy="60" r="50" fill="white" stroke="#BDBDBD" stroke-width="1"/>
-                        <!-- Hour ticks -->
-                        <line x1="60" y1="12" x2="60" y2="22" stroke="#333" stroke-width="2.5" stroke-linecap="round"/>
-                        <line x1="60" y1="98" x2="60" y2="108" stroke="#333" stroke-width="2.5" stroke-linecap="round"/>
-                        <line x1="12" y1="60" x2="22" y2="60" stroke="#333" stroke-width="2.5" stroke-linecap="round"/>
-                        <line x1="98" y1="60" x2="108" y2="60" stroke="#333" stroke-width="2.5" stroke-linecap="round"/>
-                        <!-- Minor ticks -->
-                        <line x1="84" y1="18" x2="80" y2="25" stroke="#999" stroke-width="1.5"/>
-                        <line x1="102" y1="36" x2="95" y2="40" stroke="#999" stroke-width="1.5"/>
-                        <line x1="102" y1="84" x2="95" y2="80" stroke="#999" stroke-width="1.5"/>
-                        <line x1="84" y1="102" x2="80" y2="95" stroke="#999" stroke-width="1.5"/>
-                        <line x1="36" y1="102" x2="40" y2="95" stroke="#999" stroke-width="1.5"/>
-                        <line x1="18" y1="84" x2="25" y2="80" stroke="#999" stroke-width="1.5"/>
-                        <line x1="18" y1="36" x2="25" y2="40" stroke="#999" stroke-width="1.5"/>
-                        <line x1="36" y1="18" x2="40" y2="25" stroke="#999" stroke-width="1.5"/>
-                        <!-- Numbers -->
-                        <text x="55" y="32" font-size="12" fill="#555" font-weight="700">12</text>
-                        <text x="92" y="64" font-size="12" fill="#555" font-weight="700">3</text>
-                        <text x="57" y="100" font-size="12" fill="#555" font-weight="700">6</text>
-                        <text x="20" y="64" font-size="12" fill="#555" font-weight="700">9</text>
-                        <!-- Hands (3:00) -->
-                        <line x1="60" y1="60" x2="60" y2="22" stroke="#333" stroke-width="4" stroke-linecap="round"/>
-                        <line x1="60" y1="60" x2="95" y2="60" stroke="#1565C0" stroke-width="3" stroke-linecap="round"/>
-                        <!-- Angle arc -->
-                        <path d="M 72 60 A 12 12 0 0 0 60 48" fill="none" stroke="#FF9800" stroke-width="3"/>
-                        <text x="66" y="47" fill="#FF9800" font-size="10" font-weight="bold">90°</text>
-                        <!-- Center -->
-                        <circle cx="60" cy="60" r="4" fill="#333"/>
-                        <circle cx="60" cy="60" r="2" fill="#E65100"/>
-                    </svg>
-                    <div class="desc">
-                        <h4>⏰ Clock hands create angles!</h4>
-                        <p>There are <strong>12 hours</strong> on a clock. A full circle = 360°, so each hour mark = <strong>30°</strong> apart. Count the hour marks between the hands!</p>
-                    </div>
+                <div class="ref">
+                    <svg width="50" height="40" viewBox="0 0 50 40"><line x1="3" y1="35" x2="47" y2="35" stroke="#42A5F5" stroke-width="2.5" stroke-linecap="round"/><line x1="3" y1="35" x2="40" y2="5" stroke="#42A5F5" stroke-width="2.5" stroke-linecap="round"/><path d="M 18 35 A 15 15 0 0 1 16 22" fill="none" stroke="#FF9800" stroke-width="2"/></svg>
+                    <div class="name">Obtuse</div><div class="rule">90°–180°</div>
                 </div>
-                
-                <div class="q"><div class="q-row"><span class="q-num">11</span><span class="q-text">What angle do the hands make at <strong>3:00</strong>?</span></div>
-                    <div class="hint">💡 From 12 to 3 = how many hour marks × 30°?</div>
-                    <input type="text" class="answer" placeholder="___°" oninput="updateProgress()"/></div>
-                <div class="q"><div class="q-row"><span class="q-num">12</span><span class="q-text">What angle do the hands make at <strong>6:00</strong>?</span></div>
-                    <input type="text" class="answer" placeholder="___°" oninput="updateProgress()"/></div>
-                <div class="q"><div class="q-row"><span class="q-num">13</span><span class="q-text">What angle do the hands make at <strong>1:00</strong>?</span></div>
-                    <div class="hint">💡 1 hour mark × 30° = ?</div>
-                    <textarea class="work" placeholder="✏️ Show your work..." oninput="updateProgress()"></textarea>
-                    <input type="text" class="answer" placeholder="___°" oninput="updateProgress()"/></div>
-                
-                <div class="fact">
-                    <strong>🤯 Fun fact:</strong> A full rotation is 360°. Ancient Babylonians chose 360 because it has tons of factors (1, 2, 3, 4, 5, 6, 8, 9, 10, 12…) making it super easy to divide evenly!
+                <div class="ref">
+                    <svg width="50" height="40" viewBox="0 0 50 40"><line x1="3" y1="22" x2="47" y2="22" stroke="#42A5F5" stroke-width="2.5" stroke-linecap="round"/><circle cx="25" cy="22" r="3" fill="#FF9800"/></svg>
+                    <div class="name">Straight</div><div class="rule">= 180°</div>
                 </div>
             </div>
-        </div>
-        
-        <!-- PART 4: SCISSORS -->
-        <div class="card">
-            <div class="card-head purple"><div class="emoji">✂️</div> Part 4: Angles All Around You</div>
-            <div class="card-body">
-                <div class="scene">
-                    <svg width="110" height="110" viewBox="0 0 110 110">
-                        <!-- Blades -->
-                        <line x1="55" y1="90" x2="25" y2="18" stroke="#78909C" stroke-width="5" stroke-linecap="round"/>
-                        <line x1="55" y1="90" x2="90" y2="28" stroke="#78909C" stroke-width="5" stroke-linecap="round"/>
-                        <!-- Handles -->
-                        <ellipse cx="20" cy="12" rx="12" ry="8" fill="none" stroke="#E65100" stroke-width="3" transform="rotate(-20 20 12)"/>
-                        <ellipse cx="94" cy="22" rx="12" ry="8" fill="none" stroke="#E65100" stroke-width="3" transform="rotate(20 94 22)"/>
-                        <!-- Pivot -->
-                        <circle cx="55" cy="90" r="5" fill="#90A4AE"/>
-                        <circle cx="55" cy="90" r="2.5" fill="#607D8B"/>
-                        <!-- Angle -->
-                        <path d="M 63 80 A 12 12 0 0 1 46 80" fill="none" stroke="#FF9800" stroke-width="3"/>
-                        <text x="47" y="75" fill="#E65100" font-size="11" font-weight="bold">40°</text>
-                    </svg>
-                    <div class="desc">
-                        <h4>✂️ Scissors create angles!</h4>
-                        <p>When scissors open, the blades form an angle at the pivot. The wider they open, the <strong>bigger the angle</strong>.</p>
-                    </div>
-                </div>
-                
-                <div class="q"><div class="q-row"><span class="q-num">14</span><span class="q-text">Scissors open to <strong>40°</strong>. Is this acute, right, or obtuse?</span></div>
-                    <input type="text" class="answer" placeholder="acute, right, or obtuse?" oninput="updateProgress()"/></div>
-                <div class="q"><div class="q-row"><span class="q-num">15</span><span class="q-text">Scissors fully open at <strong>170°</strong>. What type of angle?</span></div>
-                    <input type="text" class="answer" placeholder="acute, right, or obtuse?" oninput="updateProgress()"/></div>
-                
-                <div class="cheer">🏆 You made it! Hit submit when you're done 👇</div>
+            
+            <div class="classify-grid" id="classifyGrid">
+                <!-- Generated by JS -->
             </div>
         </div>
     </div>
     
-    <!-- Submit -->
+    <!-- PART 2: PIZZA with inline equations -->
+    <div class="card">
+        <div class="card-head orange"><span class="emoji">🍕</span> Part 2: Pizza Math</div>
+        <div class="card-body">
+            <div class="scene">
+                <svg width="110" height="110" viewBox="0 0 110 110">
+                    <circle cx="55" cy="55" r="50" fill="#F4A460"/>
+                    <circle cx="55" cy="55" r="46" fill="#FDEBD0"/>
+                    <line x1="55" y1="55" x2="55" y2="5" stroke="#A0522D" stroke-width="1.2" opacity="0.5"/>
+                    <line x1="55" y1="55" x2="90" y2="20" stroke="#A0522D" stroke-width="1.2" opacity="0.5"/>
+                    <line x1="55" y1="55" x2="105" y2="55" stroke="#A0522D" stroke-width="1.2" opacity="0.5"/>
+                    <line x1="55" y1="55" x2="90" y2="90" stroke="#A0522D" stroke-width="1.2" opacity="0.5"/>
+                    <line x1="55" y1="55" x2="55" y2="105" stroke="#A0522D" stroke-width="1.2" opacity="0.5"/>
+                    <line x1="55" y1="55" x2="20" y2="90" stroke="#A0522D" stroke-width="1.2" opacity="0.5"/>
+                    <line x1="55" y1="55" x2="5" y2="55" stroke="#A0522D" stroke-width="1.2" opacity="0.5"/>
+                    <line x1="55" y1="55" x2="20" y2="20" stroke="#A0522D" stroke-width="1.2" opacity="0.5"/>
+                    <circle cx="68" cy="28" r="5" fill="#E74C3C"/><circle cx="35" cy="40" r="4" fill="#E74C3C"/>
+                    <circle cx="75" cy="65" r="5" fill="#E74C3C"/><circle cx="38" cy="75" r="4" fill="#E74C3C"/>
+                    <circle cx="68" cy="82" r="4" fill="#E74C3C"/><circle cx="82" cy="45" r="4" fill="#E74C3C"/>
+                    <path d="M 65 55 A 10 10 0 0 0 55 45" fill="none" stroke="#E65100" stroke-width="2.5"/>
+                    <text x="60" y="43" fill="#E65100" font-size="10" font-weight="bold">?°</text>
+                </svg>
+                <div class="desc">
+                    <h4>🍕 8 equal slices — what's the angle?</h4>
+                    <p>A full circle = <strong>360°</strong>. Divide it equally and each slice has the same angle!</p>
+                </div>
+            </div>
+            
+            <div class="q-inline">
+                <span class="q-num orange">9</span>
+                <div class="q-body">
+                    <div class="text">What is the angle of <strong>each slice</strong>?</div>
+                    <div class="eq-row">360° ÷ 8 = <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/>°</div>
+                </div>
+            </div>
+            <div class="q-inline">
+                <span class="q-num orange">10</span>
+                <div class="q-body">
+                    <div class="text">You eat <strong>3 slices</strong>. Remaining pizza angle?</div>
+                    <div class="eq-row">
+                        <input type="text" class="eq-input" style="width:30px" placeholder="?" oninput="updateProgress()"/> remaining slices × 
+                        <input type="text" class="eq-input" style="width:40px" placeholder="?" oninput="updateProgress()"/>° = 
+                        <input type="text" class="eq-input wide" placeholder="?" oninput="updateProgress()"/>°
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- PART 3: CLOCK — visual cards with mini clocks -->
+    <div class="card">
+        <div class="card-head green"><span class="emoji">🕐</span> Part 3: Clock Angles</div>
+        <div class="card-body">
+            <p style="font-size:0.85em;color:#888;margin-bottom:14px;">Each hour mark = <strong style="color:#2E7D32;">30°</strong>. Count the marks between the hands!</p>
+            
+            <div class="clock-row">
+                <!-- 3:00 -->
+                <div class="clock-card">
+                    <svg width="80" height="80" viewBox="0 0 80 80">
+                        <circle cx="40" cy="40" r="36" fill="white" stroke="#CCC" stroke-width="2"/>
+                        <line x1="40" y1="6" x2="40" y2="13" stroke="#333" stroke-width="2"/>
+                        <line x1="40" y1="67" x2="40" y2="74" stroke="#333" stroke-width="2"/>
+                        <line x1="6" y1="40" x2="13" y2="40" stroke="#333" stroke-width="2"/>
+                        <line x1="67" y1="40" x2="74" y2="40" stroke="#333" stroke-width="2"/>
+                        <text x="36" y="22" font-size="8" fill="#888" font-weight="600">12</text>
+                        <text x="64" y="43" font-size="8" fill="#888" font-weight="600">3</text>
+                        <text x="37" y="70" font-size="8" fill="#888" font-weight="600">6</text>
+                        <text x="12" y="43" font-size="8" fill="#888" font-weight="600">9</text>
+                        <line x1="40" y1="40" x2="40" y2="14" stroke="#333" stroke-width="3" stroke-linecap="round"/>
+                        <line x1="40" y1="40" x2="68" y2="40" stroke="#2E7D32" stroke-width="2.5" stroke-linecap="round"/>
+                        <path d="M 50 40 A 10 10 0 0 0 40 30" fill="none" stroke="#FF9800" stroke-width="2"/>
+                        <circle cx="40" cy="40" r="3" fill="#333"/>
+                    </svg>
+                    <div class="time">3:00</div>
+                    <input type="text" placeholder="___°" oninput="updateProgress()"/>
+                </div>
+                <!-- 6:00 -->
+                <div class="clock-card">
+                    <svg width="80" height="80" viewBox="0 0 80 80">
+                        <circle cx="40" cy="40" r="36" fill="white" stroke="#CCC" stroke-width="2"/>
+                        <line x1="40" y1="6" x2="40" y2="13" stroke="#333" stroke-width="2"/>
+                        <line x1="40" y1="67" x2="40" y2="74" stroke="#333" stroke-width="2"/>
+                        <line x1="6" y1="40" x2="13" y2="40" stroke="#333" stroke-width="2"/>
+                        <line x1="67" y1="40" x2="74" y2="40" stroke="#333" stroke-width="2"/>
+                        <text x="36" y="22" font-size="8" fill="#888" font-weight="600">12</text>
+                        <text x="64" y="43" font-size="8" fill="#888" font-weight="600">3</text>
+                        <text x="37" y="70" font-size="8" fill="#888" font-weight="600">6</text>
+                        <text x="12" y="43" font-size="8" fill="#888" font-weight="600">9</text>
+                        <line x1="40" y1="40" x2="40" y2="14" stroke="#333" stroke-width="3" stroke-linecap="round"/>
+                        <line x1="40" y1="40" x2="40" y2="68" stroke="#2E7D32" stroke-width="2.5" stroke-linecap="round"/>
+                        <path d="M 50 40 A 10 10 0 0 1 50 40" fill="none" stroke="#FF9800" stroke-width="2"/>
+                        <circle cx="40" cy="40" r="3" fill="#333"/>
+                    </svg>
+                    <div class="time">6:00</div>
+                    <input type="text" placeholder="___°" oninput="updateProgress()"/>
+                </div>
+                <!-- 1:00 -->
+                <div class="clock-card">
+                    <svg width="80" height="80" viewBox="0 0 80 80">
+                        <circle cx="40" cy="40" r="36" fill="white" stroke="#CCC" stroke-width="2"/>
+                        <line x1="40" y1="6" x2="40" y2="13" stroke="#333" stroke-width="2"/>
+                        <line x1="40" y1="67" x2="40" y2="74" stroke="#333" stroke-width="2"/>
+                        <line x1="6" y1="40" x2="13" y2="40" stroke="#333" stroke-width="2"/>
+                        <line x1="67" y1="40" x2="74" y2="40" stroke="#333" stroke-width="2"/>
+                        <text x="36" y="22" font-size="8" fill="#888" font-weight="600">12</text>
+                        <text x="64" y="43" font-size="8" fill="#888" font-weight="600">3</text>
+                        <text x="37" y="70" font-size="8" fill="#888" font-weight="600">6</text>
+                        <text x="12" y="43" font-size="8" fill="#888" font-weight="600">9</text>
+                        <line x1="40" y1="40" x2="40" y2="14" stroke="#333" stroke-width="3" stroke-linecap="round"/>
+                        <line x1="40" y1="40" x2="49" y2="15" stroke="#2E7D32" stroke-width="2.5" stroke-linecap="round"/>
+                        <path d="M 44 34 A 6 6 0 0 0 40 33" fill="none" stroke="#FF9800" stroke-width="2"/>
+                        <circle cx="40" cy="40" r="3" fill="#333"/>
+                    </svg>
+                    <div class="time">1:00</div>
+                    <input type="text" placeholder="___°" oninput="updateProgress()"/>
+                </div>
+            </div>
+            
+            <div class="fact" style="margin-top:14px;">
+                <strong>🤯</strong> A full rotation = 360°. The Babylonians chose 360 because it has tons of factors — easy to divide evenly!
+            </div>
+        </div>
+    </div>
+    
+    <!-- PART 4: SCISSORS — multiple choice -->
+    <div class="card">
+        <div class="card-head purple"><span class="emoji">✂️</span> Part 4: Real-World Angles</div>
+        <div class="card-body">
+            <div class="scene">
+                <svg width="100" height="100" viewBox="0 0 100 100">
+                    <line x1="50" y1="82" x2="22" y2="15" stroke="#78909C" stroke-width="4.5" stroke-linecap="round"/>
+                    <line x1="50" y1="82" x2="82" y2="24" stroke="#78909C" stroke-width="4.5" stroke-linecap="round"/>
+                    <ellipse cx="18" cy="10" rx="11" ry="7" fill="none" stroke="#E65100" stroke-width="2.5" transform="rotate(-20 18 10)"/>
+                    <ellipse cx="86" cy="18" rx="11" ry="7" fill="none" stroke="#E65100" stroke-width="2.5" transform="rotate(20 86 18)"/>
+                    <circle cx="50" cy="82" r="4.5" fill="#90A4AE"/>
+                    <path d="M 58 73 A 10 10 0 0 1 42 73" fill="none" stroke="#FF9800" stroke-width="2.5"/>
+                    <text x="42" y="68" fill="#E65100" font-size="10" font-weight="bold">40°</text>
+                </svg>
+                <div class="desc">
+                    <h4>✂️ Scissors open to different angles</h4>
+                    <p>The blades form an angle at the pivot. Wider open = bigger angle.</p>
+                </div>
+            </div>
+            
+            <div class="q-inline">
+                <span class="q-num purple">14</span>
+                <div class="q-body">
+                    <div class="text">Scissors open to <strong>40°</strong>. What type?</div>
+                    <div class="mc-options" data-q="14">
+                        <button class="mc-btn" onclick="selectMC(this)">Acute</button>
+                        <button class="mc-btn" onclick="selectMC(this)">Right</button>
+                        <button class="mc-btn" onclick="selectMC(this)">Obtuse</button>
+                    </div>
+                    <input type="hidden" class="answer-hidden"/>
+                </div>
+            </div>
+            <div class="q-inline" style="border-bottom:none;">
+                <span class="q-num purple">15</span>
+                <div class="q-body">
+                    <div class="text">Scissors fully open at <strong>170°</strong>. What type?</div>
+                    <div class="mc-options" data-q="15">
+                        <button class="mc-btn" onclick="selectMC(this)">Acute</button>
+                        <button class="mc-btn" onclick="selectMC(this)">Right</button>
+                        <button class="mc-btn" onclick="selectMC(this)">Obtuse</button>
+                    </div>
+                    <input type="hidden" class="answer-hidden"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <div class="submit-wrap">
         <button class="submit-btn" id="submitBtn" onclick="doSubmit()">📤 Submit Worksheet</button>
         <div id="submitMsg"></div>
     </div>
     
     <!-- PIN + Answer Key -->
-    <div id="pinOverlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:1000; align-items:center; justify-content:center;">
-        <div style="background:white; padding:30px; border-radius:16px; text-align:center; max-width:320px; margin:20px;">
-            <div style="font-size:2em; margin-bottom:10px;">🔒</div>
-            <h3 style="color:#1565C0; margin-bottom:15px;">Teacher Access</h3>
-            <p style="color:#666; font-size:0.9em; margin-bottom:15px;">Enter today's PIN</p>
-            <input type="number" id="pinInput" placeholder="PIN" style="width:100px;padding:12px;font-size:1.3em;text-align:center;border:2px solid #ddd;border-radius:8px;outline:none;" oninput="checkPin()"/>
-            <p id="pinError" style="color:#E74C3C;font-size:0.85em;margin-top:8px;display:none;">Wrong PIN</p>
-            <br><button onclick="closePinDialog()" style="margin-top:10px;padding:8px 20px;background:none;border:1px solid #ddd;border-radius:6px;cursor:pointer;color:#888;">Cancel</button>
+    <div id="pinOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:1000;align-items:center;justify-content:center;">
+        <div style="background:white;padding:28px;border-radius:16px;text-align:center;max-width:300px;margin:20px;">
+            <div style="font-size:2em;margin-bottom:8px;">🔒</div>
+            <h3 style="color:#1565C0;margin-bottom:12px;">Teacher Access</h3>
+            <input type="number" id="pinInput" placeholder="Today's PIN" style="width:100px;padding:10px;font-size:1.2em;text-align:center;border:2px solid #ddd;border-radius:8px;outline:none;" oninput="checkPin()"/>
+            <p id="pinError" style="color:#E74C3C;font-size:0.82em;margin-top:6px;display:none;">Wrong PIN</p>
+            <br><button onclick="closePinDialog()" style="margin-top:8px;padding:6px 18px;background:none;border:1px solid #ddd;border-radius:6px;cursor:pointer;color:#888;font-size:0.85em;">Cancel</button>
         </div>
     </div>
     <div class="answer-key" id="answerKey">
         <div class="answer-key-header"><span>🔑 Answer Key</span><button onclick="hideAnswers()" class="close-btn">✕</button></div>
         <p><strong>1.</strong> Acute · <strong>2.</strong> Right · <strong>3.</strong> Obtuse · <strong>4.</strong> Straight · <strong>5.</strong> Acute · <strong>6.</strong> Acute · <strong>7.</strong> Obtuse · <strong>8.</strong> Obtuse</p>
-        <p><strong>9.</strong> 360° ÷ 8 = 45° · <strong>10.</strong> 5 × 45° = 225°</p>
+        <p><strong>9.</strong> 45° · <strong>10.</strong> 5 × 45° = 225°</p>
         <p><strong>11.</strong> 90° · <strong>12.</strong> 180° · <strong>13.</strong> 30°</p>
         <p><strong>14.</strong> Acute · <strong>15.</strong> Obtuse</p>
     </div>
     <button class="answer-btn" id="showAnswerBtn" onclick="showPinDialog()">🔒 Answer Key (Teacher Only)</button>
     
     <script>
-    // Progress tracker
+    // Build classify grid
+    const angles = [
+        {deg: 45, num: 1}, {deg: 90, num: 2}, {deg: 120, num: 3}, {deg: 180, num: 4},
+        {deg: 15, num: 5}, {deg: 89, num: 6}, {deg: 91, num: 7}, {deg: 175, num: 8}
+    ];
+    const types = ['Acute', 'Right', 'Obtuse', 'Straight'];
+    const grid = document.getElementById('classifyGrid');
+    angles.forEach(a => {
+        const div = document.createElement('div');
+        div.className = 'classify-item';
+        div.innerHTML = `<div class="degree">${a.deg}°</div>
+            <div class="choices">${types.map(t => 
+                `<button class="ch" data-type="${t.toLowerCase()}" onclick="selectClassify(this, ${a.num})">${t}</button>`
+            ).join('')}</div>
+            <input type="hidden" class="classify-answer" data-num="${a.num}"/>`;
+        grid.appendChild(div);
+    });
+    
+    function selectClassify(btn, num) {
+        const item = btn.closest('.classify-item');
+        item.querySelectorAll('.ch').forEach(b => b.classList.remove('selected', 'acute', 'right', 'obtuse', 'straight'));
+        btn.classList.add('selected', btn.dataset.type);
+        item.classList.add('answered');
+        item.querySelector('.classify-answer').value = btn.textContent;
+        updateProgress();
+    }
+    
+    function selectMC(btn) {
+        btn.parentElement.querySelectorAll('.mc-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        btn.parentElement.parentElement.querySelector('.answer-hidden').value = btn.textContent;
+        updateProgress();
+    }
+    
     function updateProgress() {
-        const inputs = document.querySelectorAll('.answer, .work');
-        const filled = Array.from(inputs).filter(i => i.value.trim() !== '').length;
-        const total = document.querySelectorAll('.answer').length; // only count answer fields
-        const pct = Math.round((filled / (total + document.querySelectorAll('.work').length)) * 100);
-        document.getElementById('prog').style.width = pct + '%';
-        document.getElementById('progLabel').textContent = `${Array.from(document.querySelectorAll('.answer')).filter(i=>i.value.trim()).length} / ${total}`;
+        const classifyAnswered = document.querySelectorAll('.classify-answer');
+        const eqInputs = document.querySelectorAll('.eq-input');
+        const clockInputs = document.querySelectorAll('.clock-card input');
+        const mcAnswers = document.querySelectorAll('.answer-hidden');
+        
+        let filled = 0;
+        classifyAnswered.forEach(i => { if (i.value) filled++; });
+        eqInputs.forEach(i => { if (i.value.trim()) filled++; });
+        clockInputs.forEach(i => { if (i.value.trim()) filled++; });
+        mcAnswers.forEach(i => { if (i.value) filled++; });
+        
+        const total = 15;
+        const pct = Math.round((filled / total) * 100);
+        document.getElementById('prog').style.width = Math.min(pct, 100) + '%';
+        document.getElementById('progLabel').textContent = `${Math.min(filled, total)} / ${total}`;
     }
     
     // PIN
@@ -415,7 +455,6 @@
     function hideAnswers() { document.getElementById('answerKey').style.display='none'; document.getElementById('showAnswerBtn').style.display='block'; }
     </script>
     
-    <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
@@ -427,22 +466,14 @@
         const msg = document.getElementById('submitMsg');
         btn.disabled = true; btn.textContent = '⏳ Submitting...';
         try {
-            const inputs = document.querySelectorAll('.answer');
-            const filled = Array.from(inputs).filter(i => i.value.trim() !== '').length;
-            const total = inputs.length;
-            const score = total > 0 ? Math.round((filled / total) * 100 * 10) / 10 : 0;
-            const result = await submitScore('w01', score, { filled, total, type: 'completion' });
-            if (result) {
-                msg.textContent = '✅ Submitted! Your teacher will see your work.'; msg.style.color = '#2E7D32';
-                btn.textContent = '✓ Submitted';
-            } else {
-                msg.textContent = '⚠️ Please log in on the Student Portal first.'; msg.style.color = '#E65100';
-                btn.disabled = false; btn.textContent = '📤 Submit Worksheet';
-            }
-        } catch(e) {
-            msg.textContent = '⚠️ Error — try again.'; msg.style.color = '#E65100';
-            btn.disabled = false; btn.textContent = '📤 Submit Worksheet';
-        }
+            let filled = 0;
+            document.querySelectorAll('.classify-answer, .answer-hidden').forEach(i => { if(i.value) filled++; });
+            document.querySelectorAll('.eq-input, .clock-card input').forEach(i => { if(i.value.trim()) filled++; });
+            const score = Math.round((filled / 15) * 100 * 10) / 10;
+            const result = await submitScore('w01', score, { filled, total: 15, type: 'completion' });
+            if (result) { msg.textContent = '✅ Submitted!'; msg.style.color = '#2E7D32'; btn.textContent = '✓ Submitted'; }
+            else { msg.textContent = '⚠️ Log in on Student Portal first.'; msg.style.color = '#E65100'; btn.disabled = false; btn.textContent = '📤 Submit Worksheet'; }
+        } catch(e) { msg.textContent = '⚠️ Error — try again.'; msg.style.color = '#E65100'; btn.disabled = false; btn.textContent = '📤 Submit Worksheet'; }
     }
     </script>
     <script>if(localStorage.getItem('math_current_user')){const b=document.getElementById('showAnswerBtn');if(b)b.style.display='none';}</script>
