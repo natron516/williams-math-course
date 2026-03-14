@@ -151,6 +151,8 @@
 <script>
 // Schedule: Mon 9:30-10:30, Wed 9:30-10:30, Thu 10:30-11:30
 // Starts Mon Mar 16. Easter break Apr 6-17 (2 weeks off).
+const VIDS = {1:[{t:"Acute, Right & Obtuse Angles",id:"4ZyTVTGVPgE"},{t:"Angles & Degrees",id:"4r_j10jtavU"}],2:[{t:"Supplementary & Complementary",id:"TzT_HtojVOU"},{t:"Vertical Angles",id:"WN2E-KMuXoE"}],3:[{t:"Triangles",id:"oQeK4LyKLHw"},{t:"Polygons",id:"ZJnKPl99fTs"}],4:[{t:"Perimeter",id:"AAY1bsazcgM"}],5:[{t:"Area: Rectangles & Triangles",id:"xCdxURXMdFY"}],6:[{t:"Area: Parallelograms",id:"SEXLRQol970"},{t:"Composite Area",id:"5UIbpphAz-U"}],7:[{t:"Circumference & Area",id:"5cbFN2wOUFY"}],8:[{t:"Circumference & Area",id:"5cbFN2wOUFY"}],9:[{t:"Composite Shapes",id:"L8W3ch_Zrmk"}],10:[{t:"Volume",id:"-05rNRCHkhQ"}],11:[{t:"Volume: Cylinders",id:"-05rNRCHkhQ"},{t:"Surface Area",id:"kSj_Wo5hdVU"}],13:[{t:"What Is Algebra?",id:"NybHckSEQBI"},{t:"Evaluating Expressions",id:"52tpYl2tTqk"}],14:[{t:"Combining Like Terms",id:"y7GwRJOIohM"}],15:[{t:"Order of Operations",id:"dAgfnK528RA"}],16:[{t:"Equations: +/−",id:"l3XzepN03KQ"}],17:[{t:"Equations: ×/÷",id:"Qyd_v3DGzTM"}],18:[{t:"Solving Equations",id:"l3XzepN03KQ"}],19:[{t:"2-Step Equations",id:"LDIiYKYvvdA"}],20:[{t:"Inequalities",id:"mgHO-bsCDrA"}],22:[{t:"Coordinate Plane",id:"3JqndcNQPYs"}],23:[{t:"Linear Functions",id:"MXV65i9g1Xg"}]};
+
 const S = [
 {s:1, w:1,t:"Intro to Angles",       d:"Mon",dt:"2026-03-16",tm:"9:30–10:30",  u:"geo",ws:"worksheets/W01_Angle_Explorer.html"},
 {s:2, w:1,t:"Angle Relationships",    d:"Wed",dt:"2026-03-18",tm:"9:30–10:30",  u:"geo",ws:"worksheets/W02_Angle_Relationships.html"},
@@ -259,11 +261,29 @@ function render() {
     if (next) {
         document.getElementById('nextTitle').textContent = `Session ${next.s}: ${next.t}`;
         document.getElementById('nextMeta').textContent = `${fmtDate(next.dt)} · ${next.tm} · ${next.u === 'geo' ? 'Geometry' : 'Algebra'}`;
-        let btns = `<a class="next-btn primary" href="lesson-plans.html">📋 Lesson Plan</a>`;
+        let btns = `<a class="next-btn primary" href="lesson-plans.html#session-${next.s}">📋 Lesson Plan</a>`;
         if (next.ws) btns += `<a class="next-btn secondary" href="${next.ws}">📄 Worksheet</a>`;
         if (next.ts) btns += `<a class="next-btn secondary" href="${next.ts}">🔴 Test</a>`;
         if (next.qz) btns += `<a class="next-btn secondary" href="${next.qz}">📝 Quiz</a>`;
-        document.getElementById('nextActions').innerHTML = btns;
+        
+        // Add video previews
+        const vids = VIDS[next.s];
+        let vidHtml = '';
+        if (vids && vids.length) {
+            vidHtml = '<div style="margin-top:10px;display:flex;gap:8px;overflow-x:auto;">';
+            vids.forEach(v => {
+                vidHtml += `<a href="https://www.youtube.com/watch?v=${v.id}" target="_blank" style="flex-shrink:0;text-decoration:none;width:140px;">
+                    <div style="position:relative;border-radius:8px;overflow:hidden;background:#000;">
+                        <img src="https://img.youtube.com/vi/${v.id}/mqdefault.jpg" style="width:140px;height:79px;object-fit:cover;display:block;opacity:0.85;">
+                        <span style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:white;font-size:1.5em;text-shadow:0 0 8px rgba(0,0,0,0.5);">▶</span>
+                    </div>
+                    <div style="font-size:0.72em;color:#666;font-weight:600;margin-top:4px;line-height:1.2;">${v.t}</div>
+                </a>`;
+            });
+            vidHtml += '</div>';
+        }
+        
+        document.getElementById('nextActions').innerHTML = btns + vidHtml;
     } else {
         document.getElementById('nextTitle').textContent = '🎉 All done!';
         document.getElementById('nextMeta').textContent = 'Every session complete';
