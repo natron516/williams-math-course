@@ -1,5 +1,5 @@
 // Firebase Configuration — Mrs. Williams' Math Class
-const firebaseConfig = {
+window.firebaseConfig = {
     apiKey: "AIzaSyA5qnahNEDXEo4CvDZi7PIqcKGfga0Oqn4",
     authDomain: "mrswilliamsmath-1d6de.firebaseapp.com",
     projectId: "mrswilliamsmath-1d6de",

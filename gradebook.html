@@ -47,6 +47,23 @@
         .name-input { border: none; background: transparent; width: 100%; padding: 3px;
                      font-size: 0.9em; font-family: 'Nunito', sans-serif; outline: none; color: #444; }
         .name-input:focus { background: #FFF5F7; border-radius: 4px; }
+        .name-view { cursor: pointer; color: #8B5E83; font-weight: 700; font-size: 0.9em;
+                    text-decoration: none; display: block; padding: 3px; }
+        .name-view:hover { text-decoration: underline; }
+        .modal-section { margin-bottom: 16px; }
+        .modal-section h4 { font-size: 0.85em; font-weight: 800; text-transform: uppercase;
+                          letter-spacing: 0.5px; color: #C06C84; margin-bottom: 8px; }
+        .work-link { display: flex; align-items: center; gap: 10px; padding: 10px 12px;
+                    background: #FAF5F7; border-radius: 10px; margin-bottom: 6px;
+                    text-decoration: none; color: #444; transition: all 0.15s; }
+        .work-link:hover { background: #FDE8EE; transform: translateX(3px); }
+        .work-link .icon { font-size: 1.3em; }
+        .work-link .info { flex: 1; }
+        .work-link .title { font-weight: 700; font-size: 0.9em; }
+        .work-link .sub { font-size: 0.78em; color: #aaa; }
+        .work-link .score-badge { padding: 3px 10px; border-radius: 12px; font-size: 0.78em; font-weight: 700; }
+        .work-link .score-badge.has { background: #E8F5E9; color: #5B8C5A; }
+        .work-link .score-badge.none { background: #f5f5f5; color: #ccc; }
         .grade-input { width: 44px; border: 1.5px solid #f0e0e6; border-radius: 6px;
                       text-align: center; padding: 4px 2px; font-size: 0.9em; outline: none;
                       font-family: 'Nunito', sans-serif; color: #444; transition: border-color 0.2s; }
@@ -140,6 +157,21 @@
         <h3>📊 Class Statistics</h3>
         <div class="stats-grid" id="statsGrid"><p style="color:#baa;font-size:0.88em;">Enter grades to see statistics</p></div>
     </div>
+    
+    <!-- Student Detail Modal -->
+    <div id="studentModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:100; overflow-y:auto;">
+        <div style="max-width:600px; margin:40px auto; background:white; border-radius:16px; overflow:hidden; box-shadow:0 10px 40px rgba(0,0,0,0.2);">
+            <div style="background:linear-gradient(135deg,#8B5E83,#C06C84); color:white; padding:18px 20px; display:flex; align-items:center; justify-content:space-between;">
+                <div>
+                    <div style="font-family:'Playfair Display',serif; font-size:1.3em; font-weight:700;" id="modalName">Student</div>
+                    <div style="opacity:0.8; font-size:0.85em;" id="modalAvg"></div>
+                </div>
+                <button onclick="closeModal()" style="background:rgba(255,255,255,0.2); border:none; color:white; width:36px; height:36px; border-radius:50%; font-size:1.2em; cursor:pointer;">✕</button>
+            </div>
+            <div style="padding:20px;" id="modalBody"></div>
+        </div>
+    </div>
+    
     <div class="footer">Made with 🌸 for Mrs. Williams' class</div>
 
 <!-- Firebase SDK -->
@@ -175,10 +207,12 @@ function renderTable() {
         const tr = document.createElement('tr');
         const nameTd = document.createElement('td');
         nameTd.className = 'name-cell';
-        const ni = document.createElement('input');
-        ni.className = 'name-input'; ni.value = s.name;
-        ni.onchange = () => { students[i].name = ni.value; saveData(); };
-        nameTd.appendChild(ni); tr.appendChild(nameTd);
+        const nameLink = document.createElement('a');
+        nameLink.className = 'name-view';
+        nameLink.textContent = s.name;
+        nameLink.href = '#';
+        nameLink.onclick = (e) => { e.preventDefault(); openStudentModal(i); };
+        nameTd.appendChild(nameLink); tr.appendChild(nameTd);
 
         COLS.forEach(col => {
             const td = document.createElement('td');
@@ -338,6 +372,116 @@ async function syncFromFirebase() {
     
     btn.textContent = '🔄 Sync Scores'; btn.disabled = false;
 }
+
+// ── Student Detail Modal ──
+const WORK_ITEMS = [
+    {w:1, type:'ws', label:'Intro to Angles', href:'worksheets/W01_Angle_Explorer.html'},
+    {w:1, type:'ws', label:'Angle Relationships', href:'worksheets/W02_Angle_Relationships.html'},
+    {w:1, type:'ws', label:'Triangles & Polygons', href:'worksheets/W03_Shape_Detective.html'},
+    {w:1, type:'qz', label:'Quiz 1: Angles & Shapes', href:'quizzes/Quiz_1_Angles_Shapes.html', col:'q1'},
+    {w:2, type:'ws', label:'Perimeter', href:'worksheets/W04_Perimeter_Pro.html'},
+    {w:2, type:'ws', label:'Area: Rectangles & Triangles', href:'worksheets/W05_Area_Architect.html'},
+    {w:2, type:'ws', label:'Area: Parallelograms & Trapezoids', href:'worksheets/W06_Shape_Shifter.html'},
+    {w:2, type:'qz', label:'Quiz 2: Perimeter & Area', href:'quizzes/Quiz_2_Perimeter_Area.html', col:'q2'},
+    {w:3, type:'ws', label:'Circumference', href:'worksheets/W07_Going_in_Circles.html'},
+    {w:3, type:'ws', label:'Circle Area', href:'worksheets/W08_Area_of_the_Round.html'},
+    {w:3, type:'ws', label:'Composite Shapes', href:'worksheets/W09_Blueprint_Builder.html'},
+    {w:3, type:'qz', label:'Quiz 3: Circles & Composite', href:'quizzes/Quiz_3_Circles_Composite.html', col:'q3'},
+    {w:4, type:'ws', label:'Volume of Prisms', href:'worksheets/W10_Box_It_Up.html'},
+    {w:4, type:'ws', label:'Cylinders & Surface Area', href:'worksheets/W11_Container_Challenge.html'},
+    {w:4, type:'ts', label:'Test 1: Geometry', href:'tests/Test_1_Geometry.html', col:'t1'},
+    {w:5, type:'ws', label:'Variables & Expressions', href:'worksheets/W13_Expression_Station.html'},
+    {w:5, type:'ws', label:'Combining Like Terms', href:'worksheets/W14_Like_Terms_Lineup.html'},
+    {w:5, type:'ws', label:'Order of Operations', href:'worksheets/W15_Order_Up.html'},
+    {w:5, type:'qz', label:'Quiz 4: Expressions', href:'quizzes/Quiz_4_Expressions.html', col:'q4'},
+    {w:6, type:'ws', label:'One-Step Equations (+/−)', href:'worksheets/W16_Balance_It_Out.html'},
+    {w:6, type:'ws', label:'One-Step Equations (×/÷)', href:'worksheets/W17_Fair_and_Square.html'},
+    {w:6, type:'ws', label:'Mixed Equations', href:'worksheets/W18_Equation_Mix.html'},
+    {w:6, type:'qz', label:'Quiz 5: One-Step Equations', href:'quizzes/Quiz_5_One_Step_Equations.html', col:'q5'},
+    {w:7, type:'ws', label:'Two-Step Equations', href:'worksheets/W19_Two_Steps_to_Go.html'},
+    {w:7, type:'ws', label:'Inequalities', href:'worksheets/W20_More_or_Less.html'},
+    {w:7, type:'qz', label:'Quiz 6: Two-Step & Inequalities', href:'quizzes/Quiz_6_TwoStep_Inequalities.html', col:'q6'},
+    {w:7, type:'ts', label:'Test 2: Algebra', href:'tests/Test_2_Algebra.html', col:'t2'},
+    {w:8, type:'ws', label:'Coordinate Plane', href:'worksheets/W22_Plot_Twist.html'},
+    {w:8, type:'ws', label:'Linear Relationships', href:'worksheets/W23_Connect_the_Data.html'},
+    {w:8, type:'qz', label:'Quiz 7: Coordinate & Linear', href:'quizzes/Quiz_7_Coordinate_Linear.html', col:'q7'},
+    {w:8, type:'ts', label:'Final Test', href:'tests/Test_Final_Comprehensive.html', col:'final'},
+];
+
+const WK_NAMES = {1:'Angles & Shapes',2:'Perimeter & Area',3:'Circles',4:'Volume + Test 1',
+                  5:'Expressions',6:'Equations',7:'Inequalities + Test 2',8:'Graphing + Final'};
+
+function openStudentModal(idx) {
+    const s = students[idx];
+    document.getElementById('modalName').textContent = s.name;
+    
+    // Calc average
+    let tw=0, ws=0;
+    COLS.forEach((col,j) => { if(s[col]!==''&&s[col]!==null&&s[col]!==undefined) { ws+=parseFloat(s[col])*WEIGHTS[j]; tw+=WEIGHTS[j]; } });
+    const avg = tw > 0 ? (ws/tw).toFixed(1) : '—';
+    const letter = tw > 0 ? letterGrade(ws/tw) : '';
+    document.getElementById('modalAvg').textContent = avg !== '—' ? `${avg}% · ${letter}` : 'No grades yet';
+    
+    // Build body
+    let html = '';
+    
+    // Edit name
+    html += `<div class="modal-section"><h4>✏️ Student Name</h4>
+        <input type="text" value="${s.name}" onchange="students[${idx}].name=this.value;saveData();renderTable();document.getElementById('modalName').textContent=this.value;"
+        style="width:100%;padding:8px 12px;border:1.5px solid #E8C4CF;border-radius:8px;font-family:Nunito,sans-serif;font-size:0.95em;outline:none;">
+    </div>`;
+    
+    // Scores summary
+    html += '<div class="modal-section"><h4>📊 Scores</h4><div style="display:flex;flex-wrap:wrap;gap:6px;">';
+    const colLabels = {q1:'Q1',q2:'Q2',q3:'Q3',q4:'Q4',q5:'Q5',q6:'Q6',q7:'Q7',t1:'T1',t2:'T2',final:'Final',part:'Part.'};
+    COLS.forEach(col => {
+        const v = s[col];
+        const has = v !== '' && v !== null && v !== undefined;
+        const bg = has ? (v >= 90 ? '#E8F5E9' : v >= 70 ? '#FFF8E8' : '#FFF0F0') : '#f5f5f5';
+        const clr = has ? (v >= 90 ? '#5B8C5A' : v >= 70 ? '#A0856B' : '#B73A3A') : '#ccc';
+        html += `<div style="padding:6px 10px;border-radius:8px;background:${bg};text-align:center;min-width:50px;">
+            <div style="font-size:0.7em;color:#aaa;font-weight:700;">${colLabels[col]}</div>
+            <div style="font-size:1.05em;font-weight:800;color:${clr};">${has ? v : '—'}</div>
+        </div>`;
+    });
+    html += '</div></div>';
+    
+    // All work links grouped by week
+    html += '<div class="modal-section"><h4>📋 All Work</h4>';
+    let curW = 0;
+    WORK_ITEMS.forEach(item => {
+        if (item.w !== curW) {
+            curW = item.w;
+            html += `<div style="font-size:0.78em;font-weight:800;color:#C06C84;margin:12px 0 6px;text-transform:uppercase;letter-spacing:0.5px;">Week ${curW}: ${WK_NAMES[curW]}</div>`;
+        }
+        const icon = item.type === 'ws' ? '📄' : item.type === 'qz' ? '📝' : '🔴';
+        const typeLabel = item.type === 'ws' ? 'Worksheet' : item.type === 'qz' ? 'Quiz' : 'Test';
+        let scoreBadge = '';
+        if (item.col) {
+            const v = s[item.col];
+            const has = v !== '' && v !== null && v !== undefined;
+            scoreBadge = `<span class="score-badge ${has?'has':'none'}">${has ? v+'%' : 'Not graded'}</span>`;
+        }
+        html += `<a class="work-link" href="${item.href}" target="_blank">
+            <span class="icon">${icon}</span>
+            <span class="info"><span class="title">${item.label}</span><span class="sub">${typeLabel}</span></span>
+            ${scoreBadge}
+        </a>`;
+    });
+    html += '</div>';
+    
+    document.getElementById('modalBody').innerHTML = html;
+    document.getElementById('studentModal').style.display = 'block';
+}
+
+function closeModal() {
+    document.getElementById('studentModal').style.display = 'none';
+}
+
+// Close modal on backdrop click
+document.getElementById('studentModal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+});
 </script>
 </body>
 </html>
