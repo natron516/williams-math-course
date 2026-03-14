@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade Book — 6th/7th Grade Math</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+               background: #f0f4f8; color: #333; }
+        .header { background: linear-gradient(135deg, #1F4E79, #2E75B6); color: white;
+                  padding: 25px 20px; text-align: center; }
+        .header h1 { font-size: 1.6em; margin-bottom: 5px; }
+        .back { display: inline-block; color: rgba(255,255,255,0.8); text-decoration: none;
+                margin-bottom: 10px; font-size: 0.9em; }
+        .back:hover { color: white; }
+        .toolbar { background: white; padding: 12px 20px; display: flex; flex-wrap: wrap;
+                  gap: 10px; align-items: center; justify-content: center;
+                  box-shadow: 0 2px 8px rgba(0,0,0,0.06); position: sticky; top: 0; z-index: 10; }
+        .toolbar button { padding: 8px 16px; border-radius: 6px; border: 1px solid #ddd;
+                         background: white; cursor: pointer; font-size: 0.9em; transition: all 0.2s; }
+        .toolbar button:hover { background: #f0f7ff; border-color: #2E75B6; }
+        .toolbar button.primary { background: #1F4E79; color: white; border-color: #1F4E79; }
+        .toolbar button.primary:hover { background: #2E75B6; }
+        .toolbar button.danger { color: #dc3545; border-color: #dc3545; }
+        .save-status { font-size: 0.85em; color: #4CAF50; font-weight: 600; }
+        .container { max-width: 100%; overflow-x: auto; padding: 15px; }
+        table { border-collapse: collapse; width: 100%; min-width: 900px; background: white;
+               border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+        th { background: #1F4E79; color: white; padding: 8px 6px; font-size: 0.8em;
+            text-align: center; position: sticky; top: 52px; z-index: 5; }
+        th.name-col { text-align: left; min-width: 160px; }
+        th.quiz { background: #2E75B6; }
+        th.test { background: #8B6914; }
+        th.part { background: #2D6A1E; }
+        th.avg { background: #C65102; }
+        td { padding: 6px; text-align: center; border-bottom: 1px solid #f0f0f0; }
+        td.name-cell { text-align: left; padding-left: 10px; }
+        .name-input { border: none; background: transparent; width: 100%; padding: 4px;
+                     font-size: 0.95em; outline: none; }
+        .name-input:focus { background: #f0f7ff; border-radius: 4px; }
+        .grade-input { width: 50px; border: 1px solid #e0e0e0; border-radius: 4px;
+                      text-align: center; padding: 4px; font-size: 0.95em; outline: none; }
+        .grade-input:focus { border-color: #2E75B6; background: #f8fbff; }
+        .grade-input.low { background: #FFC7CE; color: #9C0006; }
+        .avg-cell { font-weight: 700; font-size: 1em; }
+        .letter-cell { font-weight: 700; font-size: 1em; }
+        .letter-A { color: #2D6A1E; }
+        .letter-B { color: #1F4E79; }
+        .letter-C { color: #8B6914; }
+        .letter-D { color: #C65102; }
+        .letter-F { color: #dc3545; }
+        .avg-row td { background: #1F4E79; color: white; font-weight: 700; font-size: 0.9em; }
+        .weight-row td { background: #f8f9fa; font-size: 0.75em; color: #888; font-weight: 600; }
+        .stats { background: white; border-radius: 12px; padding: 20px; margin: 15px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+        .stats h3 { color: #1F4E79; margin-bottom: 10px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+        .stat-card { padding: 12px; border-radius: 8px; text-align: center; }
+        .stat-card.good { background: #E2EFDA; }
+        .stat-card.warn { background: #FFF2CC; }
+        .stat-card.bad { background: #FFC7CE; }
+        .stat-num { font-size: 1.5em; font-weight: 700; color: #1F4E79; }
+        .stat-label { font-size: 0.8em; color: #666; }
+        .info-box { background: #f0f7ff; border-left: 4px solid #2E75B6; padding: 12px 15px;
+                   border-radius: 0 8px 8px 0; margin: 0 15px 15px; font-size: 0.9em; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="index.html" class="back">← Back to Portal</a>
+        <h1>📈 Grade Book</h1>
+        <p>Grades auto-save to this device</p>
+    </div>
+    <div class="toolbar">
+        <button class="primary" onclick="saveData()">💾 Save</button>
+        <button onclick="addStudent()">➕ Add Student</button>
+        <button onclick="exportCSV()">📤 Export CSV</button>
+        <button class="danger" onclick="if(confirm('Clear ALL grades? This cannot be undone.'))clearAll()">🗑️ Clear All</button>
+        <span class="save-status" id="saveStatus"></span>
+    </div>
+    <div class="info-box">
+        💡 <strong>Auto-saves</strong> every time you enter a grade. Data is stored on this device's browser. Click a student name to edit it. Scores below 70 highlight red.
+    </div>
+    <div class="container">
+        <table id="gradeTable">
+            <thead>
+                <tr>
+                    <th class="name-col" rowspan="2">Student Name</th>
+                    <th class="quiz" colspan="7">Quizzes (5% each = 35%)</th>
+                    <th class="test" colspan="3">Tests (15% + 15% + 20% = 50%)</th>
+                    <th class="part" colspan="1">Participation</th>
+                    <th class="avg" colspan="2">Final</th>
+                </tr>
+                <tr>
+                    <th class="quiz">Q1</th><th class="quiz">Q2</th><th class="quiz">Q3</th>
+                    <th class="quiz">Q4</th><th class="quiz">Q5</th><th class="quiz">Q6</th><th class="quiz">Q7</th>
+                    <th class="test">T1</th><th class="test">T2</th><th class="test">Final</th>
+                    <th class="part">Part.</th>
+                    <th class="avg">Avg</th><th class="avg">Grade</th>
+                </tr>
+            </thead>
+            <tbody id="gradeBody"></tbody>
+            <tfoot>
+                <tr class="weight-row">
+                    <td>WEIGHT →</td>
+                    <td>5%</td><td>5%</td><td>5%</td><td>5%</td><td>5%</td><td>5%</td><td>5%</td>
+                    <td>15%</td><td>15%</td><td>20%</td><td>15%</td>
+                    <td colspan="2"></td>
+                </tr>
+                <tr class="avg-row" id="avgRow">
+                    <td>CLASS AVERAGE</td>
+                    <td id="avg-q1">—</td><td id="avg-q2">—</td><td id="avg-q3">—</td>
+                    <td id="avg-q4">—</td><td id="avg-q5">—</td><td id="avg-q6">—</td><td id="avg-q7">—</td>
+                    <td id="avg-t1">—</td><td id="avg-t2">—</td><td id="avg-final">—</td>
+                    <td id="avg-part">—</td>
+                    <td id="avg-weighted">—</td><td></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <div class="stats" id="statsPanel">
+        <h3>📊 Class Statistics</h3>
+        <div class="stats-grid" id="statsGrid"></div>
+    </div>
+
+    <script>
+const WEIGHTS = [0.05,0.05,0.05,0.05,0.05,0.05,0.05, 0.15,0.15,0.20, 0.15];
+const COLS = ['q1','q2','q3','q4','q5','q6','q7','t1','t2','final','part'];
+const STORAGE_KEY = 'williams_math_gradebook';
+
+let students = [];
+
+function loadData() {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+        students = JSON.parse(saved);
+    } else {
+        students = [];
+        for (let i = 1; i <= 24; i++) {
+            const s = { name: `Student ${i}` };
+            COLS.forEach(c => s[c] = '');
+            students.push(s);
+        }
+    }
+    renderTable();
+}
+
+function saveData() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(students));
+    document.getElementById('saveStatus').textContent = '✓ Saved!';
+    setTimeout(() => document.getElementById('saveStatus').textContent = '', 2000);
+}
+
+function renderTable() {
+    const body = document.getElementById('gradeBody');
+    body.innerHTML = '';
+    students.forEach((s, i) => {
+        const tr = document.createElement('tr');
+        // Name
+        const nameTd = document.createElement('td');
+        nameTd.className = 'name-cell';
+        const nameInput = document.createElement('input');
+        nameInput.className = 'name-input';
+        nameInput.value = s.name;
+        nameInput.onchange = () => { students[i].name = nameInput.value; saveData(); };
+        nameTd.appendChild(nameInput);
+        tr.appendChild(nameTd);
+
+        // Grade cells
+        COLS.forEach(col => {
+            const td = document.createElement('td');
+            const input = document.createElement('input');
+            input.className = 'grade-input';
+            input.type = 'number';
+            input.min = '0';
+            input.max = '100';
+            input.value = s[col];
+            input.onchange = () => {
+                students[i][col] = input.value ? parseFloat(input.value) : '';
+                input.className = 'grade-input' + (input.value && parseFloat(input.value) < 70 ? ' low' : '');
+                updateRow(i);
+                updateAverages();
+                saveData();
+            };
+            if (s[col] !== '' && s[col] < 70) input.className += ' low';
+            td.appendChild(input);
+            tr.appendChild(td);
+        });
+
+        // Weighted average
+        const avgTd = document.createElement('td');
+        avgTd.className = 'avg-cell';
+        avgTd.id = `wavg-${i}`;
+        tr.appendChild(avgTd);
+
+        // Letter grade
+        const letterTd = document.createElement('td');
+        letterTd.className = 'letter-cell';
+        letterTd.id = `letter-${i}`;
+        tr.appendChild(letterTd);
+
+        body.appendChild(tr);
+        updateRow(i);
+    });
+    updateAverages();
+}
+
+function updateRow(i) {
+    const s = students[i];
+    let totalWeight = 0, weightedSum = 0;
+    COLS.forEach((col, j) => {
+        if (s[col] !== '' && s[col] !== null && s[col] !== undefined) {
+            weightedSum += parseFloat(s[col]) * WEIGHTS[j];
+            totalWeight += WEIGHTS[j];
+        }
+    });
+    const avgEl = document.getElementById(`wavg-${i}`);
+    const letterEl = document.getElementById(`letter-${i}`);
+    if (totalWeight > 0) {
+        const avg = weightedSum / totalWeight;
+        avgEl.textContent = avg.toFixed(1);
+        const letter = getLetterGrade(avg);
+        letterEl.textContent = letter;
+        letterEl.className = 'letter-cell letter-' + letter.charAt(0);
+    } else {
+        avgEl.textContent = '—';
+        letterEl.textContent = '—';
+        letterEl.className = 'letter-cell';
+    }
+}
+
+function getLetterGrade(avg) {
+    if (avg >= 93) return 'A';
+    if (avg >= 90) return 'A-';
+    if (avg >= 87) return 'B+';
+    if (avg >= 83) return 'B';
+    if (avg >= 80) return 'B-';
+    if (avg >= 77) return 'C+';
+    if (avg >= 73) return 'C';
+    if (avg >= 70) return 'C-';
+    if (avg >= 67) return 'D+';
+    if (avg >= 63) return 'D';
+    if (avg >= 60) return 'D-';
+    return 'F';
+}
+
+function updateAverages() {
+    COLS.forEach((col, j) => {
+        const vals = students.map(s => s[col]).filter(v => v !== '' && v !== null && v !== undefined).map(Number);
+        const el = document.getElementById(`avg-${col}`);
+        el.textContent = vals.length > 0 ? (vals.reduce((a,b)=>a+b,0)/vals.length).toFixed(1) : '—';
+    });
+    // Weighted class average
+    const avgs = [];
+    students.forEach((s, i) => {
+        let tw = 0, ws = 0;
+        COLS.forEach((col, j) => {
+            if (s[col] !== '' && s[col] !== null) { ws += parseFloat(s[col]) * WEIGHTS[j]; tw += WEIGHTS[j]; }
+        });
+        if (tw > 0) avgs.push(ws / tw);
+    });
+    document.getElementById('avg-weighted').textContent = avgs.length > 0 ? (avgs.reduce((a,b)=>a+b,0)/avgs.length).toFixed(1) : '—';
+
+    // Stats panel
+    const grid = document.getElementById('statsGrid');
+    if (avgs.length === 0) { grid.innerHTML = '<p>Enter grades to see statistics</p>'; return; }
+    const classAvg = avgs.reduce((a,b)=>a+b,0)/avgs.length;
+    const aCount = avgs.filter(a => a >= 90).length;
+    const bCount = avgs.filter(a => a >= 80 && a < 90).length;
+    const cCount = avgs.filter(a => a >= 70 && a < 80).length;
+    const below70 = avgs.filter(a => a < 70).length;
+    const highest = Math.max(...avgs);
+    const lowest = Math.min(...avgs);
+    grid.innerHTML = `
+        <div class="stat-card good"><div class="stat-num">${classAvg.toFixed(1)}</div><div class="stat-label">Class Average</div></div>
+        <div class="stat-card good"><div class="stat-num">${aCount}</div><div class="stat-label">A's (90+)</div></div>
+        <div class="stat-card good"><div class="stat-num">${bCount}</div><div class="stat-label">B's (80-89)</div></div>
+        <div class="stat-card warn"><div class="stat-num">${cCount}</div><div class="stat-label">C's (70-79)</div></div>
+        <div class="stat-card ${below70 > 0 ? 'bad' : 'good'}"><div class="stat-num">${below70}</div><div class="stat-label">Below 70</div></div>
+        <div class="stat-card good"><div class="stat-num">${highest.toFixed(1)}</div><div class="stat-label">Highest Avg</div></div>
+        <div class="stat-card ${lowest < 70 ? 'bad' : 'warn'}"><div class="stat-num">${lowest.toFixed(1)}</div><div class="stat-label">Lowest Avg</div></div>
+        <div class="stat-card good"><div class="stat-num">${avgs.length}</div><div class="stat-label">Students Graded</div></div>`;
+}
+
+function addStudent() {
+    const s = { name: `Student ${students.length + 1}` };
+    COLS.forEach(c => s[c] = '');
+    students.push(s);
+    renderTable();
+    saveData();
+}
+
+function clearAll() {
+    localStorage.removeItem(STORAGE_KEY);
+    students = [];
+    for (let i = 1; i <= 24; i++) {
+        const s = { name: `Student ${i}` };
+        COLS.forEach(c => s[c] = '');
+        students.push(s);
+    }
+    renderTable();
+}
+
+function exportCSV() {
+    let csv = 'Name,' + COLS.map(c => c.toUpperCase()).join(',') + ',Weighted Avg,Letter Grade\n';
+    students.forEach((s, i) => {
+        let tw = 0, ws = 0;
+        COLS.forEach((col, j) => {
+            if (s[col] !== '' && s[col] !== null) { ws += parseFloat(s[col]) * WEIGHTS[j]; tw += WEIGHTS[j]; }
+        });
+        const avg = tw > 0 ? (ws/tw).toFixed(1) : '';
+        const letter = tw > 0 ? getLetterGrade(ws/tw) : '';
+        csv += `"${s.name}",${COLS.map(c => s[c]).join(',')},${avg},${letter}\n`;
+    });
+    const blob = new Blob([csv], {type: 'text/csv'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'math_grades.csv';
+    a.click();
+}
+
+loadData();
+    </script>
+</body>
+</html>

@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson Plans — 6th/7th Grade Math</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+               background: #f0f4f8; color: #333; }
+        .header { background: linear-gradient(135deg, #1F4E79, #2E75B6); color: white;
+                  padding: 25px 20px; text-align: center; }
+        .header h1 { font-size: 1.6em; margin-bottom: 5px; }
+        .back { display: inline-block; color: rgba(255,255,255,0.8); text-decoration: none;
+                margin-bottom: 10px; font-size: 0.9em; }
+        .back:hover { color: white; }
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        .session-nav { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px;
+                      background: white; padding: 15px; border-radius: 12px;
+                      box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+        .session-btn { width: 42px; height: 42px; border-radius: 50%; border: 2px solid #ddd;
+                      display: flex; align-items: center; justify-content: center;
+                      cursor: pointer; font-weight: 700; font-size: 0.9em; background: white;
+                      transition: all 0.2s; }
+        .session-btn:hover { border-color: #2E75B6; background: #f0f7ff; }
+        .session-btn.active { background: #1F4E79; color: white; border-color: #1F4E79; }
+        .session-btn.geo { color: #1F4E79; }
+        .session-btn.alg { color: #2D6A1E; }
+        .lesson { display: none; background: white; border-radius: 12px; padding: 25px;
+                 box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+        .lesson.active { display: block; }
+        .lesson-title { font-size: 1.4em; color: #1F4E79; margin-bottom: 5px; }
+        .lesson-meta { color: #888; font-size: 0.9em; margin-bottom: 20px; }
+        .lesson-section { margin-bottom: 18px; }
+        .lesson-section h3 { font-size: 0.95em; text-transform: uppercase; letter-spacing: 0.5px;
+                            color: #2E75B6; margin-bottom: 8px; padding-bottom: 5px;
+                            border-bottom: 2px solid #D6E4F0; }
+        .lesson-section .content { font-size: 0.95em; line-height: 1.7; white-space: pre-line; }
+        .time-bar { display: flex; flex-wrap: wrap; gap: 8px; }
+        .time-block { padding: 6px 12px; border-radius: 6px; font-size: 0.85em;
+                     background: #f0f4f8; }
+        .time-block strong { color: #1F4E79; }
+        .diff-box { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .diff-item { padding: 10px; border-radius: 8px; font-size: 0.9em; }
+        .diff-item.struggling { background: #FFF2CC; border-left: 3px solid #F0C040; }
+        .diff-item.advanced { background: #E2EFDA; border-left: 3px solid #4CAF50; }
+        .diff-label { font-weight: 700; font-size: 0.8em; text-transform: uppercase;
+                     margin-bottom: 4px; }
+        @media (max-width: 600px) { .diff-box { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="index.html" class="back">← Back to Portal</a>
+        <h1>📋 Lesson Plans</h1>
+        <p>Click a session number to view the full lesson plan</p>
+    </div>
+    <div class="container">
+        <div class="session-nav" id="sessionNav"></div>
+        <div id="lessonContainer"></div>
+    </div>
+    <script>
+const lessons = [
+{s:1,w:1,d:"Monday",t:"Intro to Geometry & Angles",u:"geo",
+obj:"• Identify types of angles (acute, right, obtuse, straight)\n• Measure angles with a protractor\n• Understand angle relationships",
+mat:"Whiteboard, iPad, protractors (or protractor app), printed worksheet",
+warm:"🍕 Show a picture of a pizza cut into slices on the TV. Ask: \"Which slice has the biggest angle? The smallest? Can you estimate the degrees?\" (5 min discussion)",
+direct:"• Define geometry — the study of shapes, sizes, and positions\n• Types of angles: acute (<90°), right (=90°), obtuse (>90°), straight (=180°)\n• Show examples with real objects (book corners = right angle, clock hands, door opening)\n• Demonstrate measuring with a protractor\n• Key vocabulary: vertex, ray, degree",
+guided:"• As a class, measure 5 angles projected on the TV\n• Students hold up fingers to show their estimate before revealing the answer\n• Practice identifying angle types from pictures of real objects",
+indep:"Worksheet: \"Angle Explorer\" — measure and classify 15 angles, estimate angles from real-world photos (pizza, clocks, scissors, ramps)",
+closing:"Exit ticket (on iPad): Identify 3 angles in the classroom and estimate their measure. Share one with the class. (5 min)",
+hw:"Find 5 angles at home, sketch them, estimate their degrees. Bring sketches to next class.",
+time:"Warm-Up: 5 min | Direct Instruction: 15 min | Guided Practice: 10 min | Independent Work: 20 min | Closing: 5 min | Buffer: 5 min",
+diff_s:"Provide angle reference card with visuals",diff_a:"Estimate angles first, then measure — track accuracy"},
+{s:2,w:1,d:"Wednesday",t:"Angle Relationships",u:"geo",
+obj:"• Complementary & supplementary angles\n• Vertical angles\n• Solve for unknown angles",
+mat:"Whiteboard, iPad, worksheet",
+warm:"Quick review: Flash 5 angles on the TV — students classify as acute, right, or obtuse. Then ask: \"What do a 30° angle and a 60° angle have in common?\" (5 min)",
+direct:"• Complementary angles: two angles that add to 90°\n• Supplementary angles: two angles that add to 180°\n• Vertical angles: formed by intersecting lines, always equal\n• Real-world examples: door hinges, corner decorations\n• Model solving: \"If one angle is 65°, what's its supplement?\"",
+guided:"• Work through 5 problems together on whiteboard\n• \"I Do, We Do, You Do\" progression\n• 🏠 Roof Pitch Problems: show house roof diagrams, find missing angles",
+indep:"Worksheet: \"Angle Relationships\" — 20 problems mixing complementary, supplementary, and vertical angles. Includes roof designs and ramp constructions.",
+closing:"Partner check: swap papers, verify 3 answers each. Discuss any disagreements. (5 min)",
+hw:"None",
+time:"Warm-Up: 5 min | Direct Instruction: 15 min | Guided Practice: 10 min | Independent Work: 20 min | Closing: 5 min | Buffer: 5 min",
+diff_s:"Color-code complementary pairs blue, supplementary pairs red",diff_a:"Create their own angle relationship puzzles for classmates"},
+{s:3,w:1,d:"Friday",t:"Classifying Triangles & Polygons",u:"geo",
+obj:"• Classify triangles by sides and angles\n• Identify regular polygons\n• Interior angle sums",
+mat:"Whiteboard, iPad, quiz (iPad-friendly), worksheet",
+warm:"⚽ Show overhead view of a soccer field. \"How many rectangles can you find? Any triangles? Other shapes?\" (5 min)",
+direct:"• Triangle by sides: equilateral, isosceles, scalene\n• Triangle by angles: acute, right, obtuse\n• Polygons: triangle→hexagon and beyond\n• Regular vs irregular polygons\n• Interior angle sum: triangle=180°, quadrilateral=360°",
+guided:"• Classify 8 triangles together\n• Sports Geometry: identify shapes in basketball courts, game boards",
+indep:"Worksheet: \"Shape Detective\" — classify triangles, identify polygons, find missing angles.",
+closing:"📝 QUIZ 1 on iPads (15 min): Angles, angle relationships, triangles, polygons",
+hw:"None",
+time:"Warm-Up: 5 min | Direct Instruction: 12 min | Guided Practice: 8 min | Independent Work: 15 min | Quiz: 15 min | Buffer: 5 min",
+diff_s:"Triangle classification flowchart provided",diff_a:"Calculate interior angle sums for polygons up to octagon"},
+{s:4,w:2,d:"Monday",t:"Perimeter of Polygons",u:"geo",
+obj:"• Calculate perimeter of rectangles, triangles, irregular shapes\n• Convert units within problems\n• Perimeter word problems",
+mat:"Whiteboard, iPad, worksheet, rulers",
+warm:"🌿 \"You have 40 feet of fencing. What's the biggest rectangular garden you could make? Sketch some options.\" (5 min)",
+direct:"• Perimeter = total distance around a shape\n• Rectangle: P = 2l + 2w\n• Regular polygons: P = n × s\n• Irregular shapes: add all sides\n• Fencing math with real prices",
+guided:"• Garden Planning: design 3 gardens with a fixed 60-foot perimeter budget\n• Calculate fencing cost at $4.50/foot\n• Which shape gives the most growing space?",
+indep:"Worksheet: \"Perimeter Pro\" — 18 problems including gardens, baseboards, picture frames, sports fields.",
+closing:"Quick share: \"What shape garden did you design, and why?\" (5 min)",
+hw:"Measure the perimeter of your bedroom. Bring the measurement.",
+time:"Warm-Up: 5 min | Direct Instruction: 15 min | Guided Practice: 10 min | Independent Work: 20 min | Closing: 5 min | Buffer: 5 min",
+diff_s:"Provide labeled diagrams with side lengths",diff_a:"Design an irregular garden with specific perimeter, calculate fencing cost with corners costing extra"},
+{s:5,w:2,d:"Wednesday",t:"Area: Rectangles & Triangles",u:"geo",
+obj:"• Calculate area of rectangles and triangles\n• Decompose complex shapes\n• Apply area to real-world contexts",
+mat:"Whiteboard, iPad, worksheet",
+warm:"🎨 \"Your parents are letting you repaint your room. Paint costs $35/gallon, covers 350 sq ft. How would you figure out how much to buy?\" (5 min)",
+direct:"• Area = space inside a shape (square units)\n• Rectangle: A = l × w\n• Triangle: A = ½ × b × h — show WHY by cutting a rectangle in half\n• Decomposing L-shapes\n• Real paint coverage math",
+guided:"• Room Makeover: calculate wall area, subtract windows/doors, figure out gallons needed, calculate carpet for floor",
+indep:"Worksheet: \"Area Architect\" — 16 problems. Floor areas, wall areas, carpet/tile needed. L-shaped room. Real prices.",
+closing:"\"What surprised you about calculating room areas?\" Brief discussion. (5 min)",
+hw:"None",
+time:"Warm-Up: 5 min | Direct Instruction: 15 min | Guided Practice: 10 min | Independent Work: 20 min | Closing: 5 min | Buffer: 5 min",
+diff_s:"Grid paper provided to count squares and verify formulas",diff_a:"Calculate cost comparison — carpet vs. tile for the same room"},
+{s:6,w:2,d:"Friday",t:"Area: Parallelograms & Trapezoids",u:"geo",
+obj:"• Calculate area of parallelograms and trapezoids\n• Find areas of composite shapes",
+mat:"Whiteboard, iPad, quiz (iPad-friendly), worksheet",
+warm:"🧁 Show different baking pan shapes. \"Which pan holds more batter? How would you figure it out?\" (5 min)",
+direct:"• Parallelogram: A = b × h\n• Trapezoid: A = ½(b₁ + b₂) × h\n• Composite shapes: break apart OR subtract\n• Baking Pan Math: compare 9×13 vs two 8×8",
+guided:"• 4 composite shape problems as a class\n• Which pan combination gives more area for a party?",
+indep:"Worksheet: \"Shape Shifter\" — 15 problems with parallelograms, trapezoids, and composite shapes.",
+closing:"📝 QUIZ 2 on iPads (15 min): Perimeter and area",
+hw:"None",
+time:"Warm-Up: 5 min | Direct Instruction: 12 min | Guided Practice: 8 min | Independent Work: 15 min | Quiz: 15 min | Buffer: 5 min",
+diff_s:"Cut-out shapes to physically rearrange into rectangles",diff_a:"Design a composite-shaped room and calculate its area"},
+{s:7,w:3,d:"Monday",t:"Circles: Circumference",u:"geo",
+obj:"• Understand pi\n• Calculate circumference using C = πd and C = 2πr\n• Apply to real-world contexts",
+mat:"Whiteboard, iPad, worksheet",
+warm:"🚲 \"How far does a bike travel in one full pedal rotation? What info would you need?\" (5 min)",
+direct:"• Circle vocabulary: radius, diameter, circumference, center\n• d = 2r (and r = d/2)\n• Pi (π) ≈ 3.14159...\n• Circumference: C = πd or C = 2πr\n• Bike wheel: diameter 26\" → one rotation = 81.64\"",
+guided:"• Bike Wheel Math: 26\" vs 20\" wheel comparison\n• If you bike 1 mile, how many rotations for each?",
+indep:"Worksheet: \"Going in Circles\" — 16 problems. Bike wheels, circular tracks, Ferris wheels, tire sizes.",
+closing:"\"How many rotations of the clock's minute hand in a school day?\" (5 min)",
+hw:"Find 3 circular objects at home, measure diameter, calculate circumference.",
+time:"Warm-Up: 5 min | Direct Instruction: 15 min | Guided Practice: 10 min | Independent Work: 20 min | Closing: 5 min | Buffer: 5 min",
+diff_s:"π = 3.14 reference, step-by-step formula card",diff_a:"Calculate rotations to travel specific distances"},
+{s:8,w:3,d:"Wednesday",t:"Circles: Area",u:"geo",
+obj:"• Calculate area of circles\n• Compare circular to rectangular areas\n• Real-world contexts",
+mat:"Whiteboard, iPad, worksheet",
+warm:"🍪 One 16\" pizza for $18 or two 10\" pizzas for $10 each? Vote before solving. (5 min)",
+direct:"• Area: A = πr²\n• Careful: radius SQUARED, not diameter!\n• Step by step: find r → square it → multiply by π\n• Pizza Problem: A₁₆ = 201 sq in vs A₁₀ = 2×78.5 = 157 sq in — big pizza wins!\n• Price per square inch comparison",
+guided:"• More pizza math: compare other sizes\n• How many 3\" cookies fit on a 15×10 baking sheet?",
+indep:"Worksheet: \"Area of the Round\" — 16 problems. Pizza deals, cookies, pools, sprinkler coverage.",
+closing:"Revisit warmup: show the math. \"Always do the math before you order pizza!\" (5 min)",
+hw:"None",
+time:"Warm-Up: 5 min | Direct Instruction: 15 min | Guided Practice: 10 min | Independent Work: 20 min | Closing: 5 min | Buffer: 5 min",
+diff_s:"r² reference table (1² through 15²)",diff_a:"Calculate cost per square inch for local pizza places"},
+{s:9,w:3,d:"Friday",t:"Composite Shapes",u:"geo",
+obj:"• Break down complex shapes into simple components\n• Calculate total area\n• Apply to floor plans",
+mat:"Whiteboard, iPad, quiz (iPad-friendly), worksheet",
+warm:"🏗️ Show an L-shaped room. \"How would you figure out the area?\" (5 min)",
+direct:"• Strategy 1: DECOMPOSE — break into parts, add\n• Strategy 2: SUBTRACT — big shape minus missing piece\n• Walk through L-shaped room both ways\n• Shapes with semicircles",
+guided:"• Blueprint Challenge: 3 floor plans as a class (L-room, bay window, semicircle pool)",
+indep:"Worksheet: \"Blueprint Builder\" — 12 problems. Floor plans, irregular yards, pool designs.",
+closing:"📝 QUIZ 3 on iPads (15 min): Circles and composite shapes",
+hw:"None",
+time:"Warm-Up: 5 min | Direct Instruction: 12 min | Guided Practice: 8 min | Independent Work: 15 min | Quiz: 15 min | Buffer: 5 min",
+diff_s:"Shapes pre-decomposed with dotted lines",diff_a:"Design their own composite room and calculate area"},
+{s:10,w:4,d:"Monday",t:"3D Shapes & Volume of Prisms",u:"geo",
+obj:"• Identify 3D shapes\n• Calculate volume of rectangular prisms (V = lwh)\n• Volume word problems",
+mat:"Whiteboard, iPad, worksheet",
+warm:"📦 Show 3 shipping box sizes. \"Which would you choose for a basketball? A stack of books? Why?\" (5 min)",
+direct:"• 3D vocabulary: face, edge, vertex\n• Common 3D shapes\n• Volume = lwh, Cube = s³\n• USPS box dimensions and volume",
+guided:"• Shipping & Storage: which box fits more? How many small boxes in a big box?",
+indep:"Worksheet: \"Box It Up\" — 16 problems. Shipping, fish tanks, moving boxes, luggage.",
+closing:"Fun fact: 1 cubic foot = 7.48 gallons. Solve a fish tank problem together. (5 min)",
+hw:"None",
+time:"Warm-Up: 5 min | Direct Instruction: 15 min | Guided Practice: 10 min | Independent Work: 20 min | Closing: 5 min | Buffer: 5 min",
+diff_s:"Unit cube diagrams to count and verify",diff_a:"Calculate how many textbooks fit in their locker"},
+{s:11,w:4,d:"Wednesday",t:"Volume of Cylinders & Surface Area Intro",u:"geo",
+obj:"• Calculate volume of cylinders\n• Understand surface area\n• Apply to container design",
+mat:"Whiteboard, iPad, worksheet",
+warm:"🥤 Tall thin cup (r=2\", h=8\") vs short wide cup (r=3\", h=4\"). \"Which holds more?\" Vote. (5 min)",
+direct:"• Cylinder: V = πr²h (circle area × height)\n• Solve cup problem: V₁ = 100.5 vs V₂ = 113.1 — short wide wins!\n• Surface area intro: unwrapping 3D shapes\n• Rectangular prism SA = 2lw + 2lh + 2wh",
+guided:"• Design a cup that holds exactly 20 oz\n• Compare soda can vs juice box volumes",
+indep:"Worksheet: \"Container Challenge\" — 14 problems. Cans, cups, wrapping paper, cardboard.",
+closing:"\"Why are most cans cylinders, not cubes?\" Discussion. (5 min)",
+hw:"Study for Geometry Test (Session 12).",
+time:"Warm-Up: 5 min | Direct Instruction: 15 min | Guided Practice: 10 min | Independent Work: 20 min | Closing: 5 min | Buffer: 5 min",
+diff_s:"Net diagrams to visualize surface area",diff_a:"Find dimensions that minimize surface area for a given volume"},
+{s:12,w:4,d:"Friday",t:"Geometry Review & Test 1",u:"geo",
+obj:"• Review all geometry concepts\n• Demonstrate mastery on unit test",
+mat:"Whiteboard, iPad, test (iPad-friendly), review worksheet",
+warm:"\"One topic you feel confident about? One to review?\" Quick survey. (3 min)",
+direct:"• Rapid review based on student needs (15 min)\n• Angles, area, perimeter, circles, volume\n• Quick-fire practice problems",
+guided:"• Class solves 5-6 mixed review problems together",
+indep:"📝 TEST 1 — GEOMETRY (on iPads, 35 min)\n25-30 questions, all Week 1-4 content",
+closing:"\"How did it go?\" Brief debrief. Preview algebra. (2 min)",
+hw:"None",
+time:"Warm-Up: 3 min | Review: 15 min | Test: 35 min | Closing: 2 min | Buffer: 5 min",
+diff_s:"Extended time available",diff_a:"Test has scaffolded difficulty"},
+{s:13,w:5,d:"Monday",t:"Intro to Variables & Expressions",u:"alg",
+obj:"• Understand variables as unknowns\n• Write algebraic expressions from words\n• Evaluate expressions",
+mat:"Whiteboard, iPad, worksheet",
+warm:"🎮 \"In a video game, you earn 3 pts/coin and 5 pts/gem. How would you write your total score?\" (5 min)",
+direct:"• Variable = letter representing unknown\n• Expression = math phrase (no = sign)\n• Translating: \"5 more than n\" → n + 5, \"3 times n\" → 3n\n• Evaluating: plug in and calculate\n• Game Score: 3c + 5g",
+guided:"• Translate 8 word phrases\n• Evaluate game score for different collections",
+indep:"Worksheet: \"Expression Station\" — 20 problems. Translations, evaluations, game scores.",
+closing:"\"Write an expression for: started with $20, earned $8/hour.\" (5 min)",
+hw:"None",
+time:"Warm-Up: 5 min | Direct Instruction: 15 min | Guided Practice: 10 min | Independent Work: 20 min | Closing: 5 min | Buffer: 5 min",
+diff_s:"Word-to-algebra translation reference sheet",diff_a:"Expressions with two variables, create own word problems"},
+{s:14,w:5,d:"Wednesday",t:"Combining Like Terms",u:"alg",
+obj:"• Identify like terms\n• Simplify expressions\n• Translate word problems to expressions",
+mat:"Whiteboard, iPad, worksheet",
+warm:"🛒 \"Cart has: 3 apples, 2 oranges, 5 apples, 1 orange. Simplify!\" → 8 apples, 3 oranges. (5 min)",
+direct:"• Like terms: same variable, same exponent\n• Combining: add/subtract coefficients\n• 3x + 5x = 8x; 3x + 4y stays as is\n• Shopping cart analogy throughout",
+guided:"• Shopping Cart Math: combine grocery items with prices\n• Simplify 6 expressions together",
+indep:"Worksheet: \"Like Terms Lineup\" — 20 problems. Simplify, shopping scenarios, error-spotting.",
+closing:"Quick whiteboard check: \"Simplify 4x + 3y + 2x − y.\" (5 min)",
+hw:"None",
+time:"Warm-Up: 5 min | Direct Instruction: 15 min | Guided Practice: 10 min | Independent Work: 20 min | Closing: 5 min | Buffer: 5 min",
+diff_s:"Color-code like terms",diff_a:"Simplify with three or more variables"},
+{s:15,w:5,d:"Friday",t:"Order of Operations with Variables",u:"alg",
+obj:"• Apply PEMDAS with variables\n• Evaluate multi-step expressions\n• Recipe scaling",
+mat:"Whiteboard, iPad, quiz (iPad-friendly), worksheet",
+warm:"🍳 \"Cookie recipe makes 24. Need 72. How to scale ingredients?\" (5 min)",
+direct:"• PEMDAS review with variables\n• 3(x + 2) when x=5 → 3(7) = 21\n• 2x² vs (2x)² — different!\n• Distributive property intro\n• Recipe scaling with expressions",
+guided:"• Triple a recipe using expressions\n• Evaluate 4-5 multi-step expressions",
+indep:"Worksheet: \"Order Up!\" — 18 problems. PEMDAS, recipe scaling, multi-step.",
+closing:"📝 QUIZ 4 on iPads (15 min): Variables, expressions, combining, PEMDAS",
+hw:"None",
+time:"Warm-Up: 5 min | Direct Instruction: 12 min | Guided Practice: 8 min | Independent Work: 15 min | Quiz: 15 min | Buffer: 5 min",
+diff_s:"PEMDAS step-by-step tracker",diff_a:"Create recipe-scaling expressions and evaluate"},
+{s:16,w:6,d:"Monday",t:"Solving One-Step Equations (+/−)",u:"alg",
+obj:"• Solve addition and subtraction equations\n• Use inverse operations\n• Check solutions",
+mat:"Whiteboard, iPad, worksheet",
+warm:"💰 \"You spent some money and have $23 left. Started with $50. How much did you spend?\" (5 min)",
+direct:"• Equation vs expression: equations have =\n• Goal: get variable alone\n• Inverse: addition ↔ subtraction\n• x + 7 = 15 → x = 8\n• ALWAYS check your answer\n• Balance analogy",
+guided:"• Budget Balancing: 5 money-based equations\n• Students practice on mini whiteboards",
+indep:"Worksheet: \"Balance It Out\" — 20 equations. Budgets, temperature, age problems, sports.",
+closing:"Write your own word problem, swap with partner and solve. (5 min)",
+hw:"5 practice equations (bottom of worksheet)",
+time:"Warm-Up: 5 min | Direct Instruction: 15 min | Guided Practice: 10 min | Independent Work: 20 min | Closing: 5 min | Buffer: 5 min",
+diff_s:"Balance scale diagrams for first 5 problems",diff_a:"Write equations from word problems"},
+{s:17,w:6,d:"Wednesday",t:"Solving One-Step Equations (×/÷)",u:"alg",
+obj:"• Solve multiplication and division equations\n• Apply to fair-share and unit-price problems",
+mat:"Whiteboard, iPad, worksheet",
+warm:"🍕 \"4 friends split a bill, each paid $8.50. Total bill?\" (5 min)",
+direct:"• Inverse: multiplication ↔ division\n• 5x = 35 → x = 7\n• n/4 = 12 → n = 48\n• Model with fair shares and unit prices",
+guided:"• Fair Shares on whiteboard: split costs, find unit prices, \"which is a better deal?\"",
+indep:"Worksheet: \"Fair & Square\" — 20 equations. Pizza, bulk buying, speed/distance, sharing.",
+closing:"\"3 shirts for $45 or 5 hats for $60 — which costs more per item?\" (5 min)",
+hw:"None",
+time:"Warm-Up: 5 min | Direct Instruction: 15 min | Guided Practice: 10 min | Independent Work: 20 min | Closing: 5 min | Buffer: 5 min",
+diff_s:"\"Undo\" reference card",diff_a:"Write and solve equations from store flyers"},
+{s:18,w:6,d:"Friday",t:"Mixed One-Step Equations",u:"alg",
+obj:"• Solve one-step equations with all operations\n• Write equations from word problems",
+mat:"Whiteboard, iPad, quiz (iPad-friendly), worksheet",
+warm:"🏪 \"Starting a lemonade stand with cups, lemons, sugar, $20 budget. What algebra questions can we ask?\" (5 min)",
+direct:"• Identify the operation → use the inverse\n• Writing equations from words:\n  1. What's unknown? → variable\n  2. What's happening? → operation\n  3. What does it equal? → other side",
+guided:"• Lemonade Stand: set prices, calculate profits, find break-even\n• Quick-fire equations on TV",
+indep:"Worksheet: \"Equation Mix\" — 16 mixed equations + 4 word-problem translations.",
+closing:"📝 QUIZ 5 on iPads (15 min): One-step equations, all operations",
+hw:"None",
+time:"Warm-Up: 5 min | Direct Instruction: 10 min | Guided Practice: 10 min | Independent Work: 15 min | Quiz: 15 min | Buffer: 5 min",
+diff_s:"Operation identification helper",diff_a:"Two-variable lemonade stand problems"},
+{s:19,w:7,d:"Monday",t:"Two-Step Equations",u:"alg",
+obj:"• Solve equations requiring two operations\n• Understand order of inverse operations\n• Real-world two-step problems",
+mat:"Whiteboard, iPad, worksheet",
+warm:"📱 \"Phone plan: $25/month + $0.10/text. Bill was $37. How many texts?\" (5 min)",
+direct:"• Two operations to undo\n• REVERSE order: undo +/− first, then ×/÷\n• 2x + 5 = 17 → 2x = 12 → x = 6\n• Socks-and-shoes analogy\n• Phone plan: 25 + 0.10t = 37 → t = 120",
+guided:"• Phone Plan Math: different plans, different bills\n• 5 two-step equations with the class",
+indep:"Worksheet: \"Two Steps to Go\" — 18 problems. Phone plans, gym fees, taxi fares, movie rentals.",
+closing:"Partner talk: why undo +/− before ×/÷? (5 min)",
+hw:"5 two-step equations (bottom of worksheet)",
+time:"Warm-Up: 5 min | Direct Instruction: 15 min | Guided Practice: 10 min | Independent Work: 20 min | Closing: 5 min | Buffer: 5 min",
+diff_s:"Two-step checklist (Step 1: undo +/−, Step 2: undo ×/÷)",diff_a:"Equations with variables on both sides (preview)"},
+{s:20,w:7,d:"Wednesday",t:"Intro to Inequalities",u:"alg",
+obj:"• Understand inequality symbols\n• Solve one-step inequalities\n• Graph on a number line",
+mat:"Whiteboard, iPad, worksheet",
+warm:"🎢 \"Roller coaster: 'must be at least 48 inches.' If you're exactly 48, can you ride? 47? 50?\" (5 min)",
+direct:"• Symbols: < > ≤ ≥\n• Many solutions, not just one\n• Solving: same as equations\n• Special rule: flip when ×/÷ by negative\n• Graphing: open vs closed circles, arrows",
+guided:"• Height requirements, weight limits\n• Solve and graph 4-5 inequalities\n• Real-world: speed limits, minimum ages",
+indep:"Worksheet: \"More or Less\" — 18 problems. Solve and graph. Heights, weights, speeds, scores, budgets.",
+closing:"\"Write an inequality for 'need at least $50 for a video game.' What amounts work?\" (5 min)",
+hw:"None",
+time:"Warm-Up: 5 min | Direct Instruction: 15 min | Guided Practice: 10 min | Independent Work: 20 min | Closing: 5 min | Buffer: 5 min",
+diff_s:"Inequality symbol reference card",diff_a:"Solve and graph two-step inequalities"},
+{s:21,w:7,d:"Friday",t:"Equations & Inequalities Practice + Test 2",u:"alg",
+obj:"• Practice mixed equations and inequalities\n• Demonstrate mastery on Algebra Part 1 test",
+mat:"Whiteboard, iPad, quiz and test (iPad-friendly)",
+warm:"🎯 Show 3 solved problems with deliberate mistakes. Find the errors! (5 min)",
+direct:"• Common mistakes review\n• Speed round: 5 quick problems",
+guided:"• 4-5 mixed problems (equations AND inequalities)\n• Error analysis",
+indep:"📝 QUIZ 6 (10 min): Two-step equations & inequalities\n📝 TEST 2 — ALGEBRA PART 1 (25 min): Weeks 5-7",
+closing:"\"Algebra — harder or easier than geometry?\" Preview coordinate plane. (2 min)",
+hw:"None",
+time:"Warm-Up: 5 min | Review: 8 min | Quiz 6: 10 min | Test 2: 25 min | Closing: 2 min | Buffer: 10 min",
+diff_s:"Extended time available",diff_a:"Test scaffolded from easier to harder"},
+{s:22,w:8,d:"Monday",t:"The Coordinate Plane",u:"alg",
+obj:"• Understand the coordinate plane\n• Plot ordered pairs in all 4 quadrants\n• Identify coordinates from graphs",
+mat:"Whiteboard, iPad, worksheet, graph paper",
+warm:"🗺️ \"Find treasure: 3 steps east, 5 steps north from the tree. How do we give locations with two directions?\" (5 min)",
+direct:"• x-axis (horizontal), y-axis (vertical), origin (0,0)\n• Ordered pairs: (x, y)\n• Four quadrants: I (+,+), II (−,+), III (−,−), IV (+,−)\n• Plot: start at origin, go x first, then y\n• Real-world: maps, battleship, pixel art",
+guided:"• Treasure Map: plot 8 locations\n• Battleship-style: call coordinates, mark hits\n• Connect points to make shapes",
+indep:"Worksheet: \"Plot Twist\" — 20 problems. Plot, identify, connect-the-dots, mystery picture.",
+closing:"\"What's the coordinate of your desk?\" Set up a class grid. (5 min)",
+hw:"None",
+time:"Warm-Up: 5 min | Direct Instruction: 15 min | Guided Practice: 10 min | Independent Work: 20 min | Closing: 5 min | Buffer: 5 min",
+diff_s:"Quadrant reference card, numbered axes",diff_a:"Plot points and calculate distances between them"},
+{s:23,w:8,d:"Wednesday",t:"Intro to Linear Relationships",u:"alg",
+obj:"• Create input/output tables\n• Plot points from tables\n• Recognize linear patterns",
+mat:"Whiteboard, iPad, quiz (iPad-friendly), worksheet",
+warm:"🚗 \"Driving 60 mph. After 1 hour = 60 miles. After 2? 3? Fill in the pattern.\" (5 min)",
+direct:"• Input/output tables with rules\n• y = 2x + 1: x=0→1, 1→3, 2→5, 3→7\n• Plot table values → straight line!\n• Finding the rule: how does y change?\n• d = 60t for road trips",
+guided:"• Road Trip: Car at 60 mph vs 45 mph\n• Tables, plots on same graph\n• \"When is the fast car 30 miles ahead?\"",
+indep:"Worksheet: \"Connect the Data\" — 14 problems. Tables, plots, find rules. Road trips, earning, plant growth.",
+closing:"📝 QUIZ 7 on iPads (15 min): Coordinate plane, tables, linear relationships",
+hw:"Study for Final Test. Review all 8 weeks.",
+time:"Warm-Up: 5 min | Direct Instruction: 12 min | Guided Practice: 8 min | Independent Work: 15 min | Quiz: 15 min | Buffer: 5 min",
+diff_s:"Pre-drawn coordinate planes with labeled axes",diff_a:"Find equations from tables, predict beyond the table"},
+{s:24,w:8,d:"Friday",t:"Course Review & Final Test",u:"alg",
+obj:"• Review all course content\n• Demonstrate comprehensive mastery",
+mat:"Whiteboard, iPad, test (iPad-friendly), review handout",
+warm:"\"One thing from geometry and one from algebra you feel great about?\" (3 min)",
+direct:"• Lightning review (15 min):\n  Geometry: angles, area, perimeter, circles, volume\n  Algebra: expressions, equations, inequalities, coordinate plane, linear\n• Address student questions",
+guided:"• 5-6 rapid-fire mixed problems\n• Last chance for questions",
+indep:"📝 FINAL TEST — COMPREHENSIVE (40 min)\n30-35 questions, all 8 weeks\nGeometry + Algebra + Mixed Application",
+closing:"\"You made it! Favorite topic?\" Celebrate! 🎉 (2 min)",
+hw:"None — enjoy!",
+time:"Warm-Up: 3 min | Review: 15 min | Final Test: 40 min | Closing: 2 min",
+diff_s:"Extended time available",diff_a:"Test progresses from fundamental to challenging"},
+];
+
+const nav = document.getElementById('sessionNav');
+const container = document.getElementById('lessonContainer');
+
+lessons.forEach((l, i) => {
+    // Nav button
+    const btn = document.createElement('div');
+    btn.className = `session-btn ${l.u}`;
+    btn.textContent = l.s;
+    btn.onclick = () => showLesson(i);
+    nav.appendChild(btn);
+
+    // Lesson content
+    const div = document.createElement('div');
+    div.className = 'lesson';
+    div.innerHTML = `
+        <div class="lesson-title">${l.t}</div>
+        <div class="lesson-meta">Session ${l.s} · Week ${l.w} · ${l.d} · ${l.u === 'geo' ? '📐 Geometry' : '📊 Algebra'}</div>
+        <div class="lesson-section"><h3>⏱️ Time Breakdown</h3><div class="time-bar">${l.time.split('|').map(t => `<span class="time-block">${t.trim()}</span>`).join('')}</div></div>
+        <div class="lesson-section"><h3>🎯 Objectives</h3><div class="content">${l.obj}</div></div>
+        <div class="lesson-section"><h3>📦 Materials</h3><div class="content">${l.mat}</div></div>
+        <div class="lesson-section"><h3>🔥 Warm-Up</h3><div class="content">${l.warm}</div></div>
+        <div class="lesson-section"><h3>📖 Direct Instruction</h3><div class="content">${l.direct}</div></div>
+        <div class="lesson-section"><h3>👥 Guided Practice</h3><div class="content">${l.guided}</div></div>
+        <div class="lesson-section"><h3>✏️ Independent Work</h3><div class="content">${l.indep}</div></div>
+        <div class="lesson-section"><h3>🏁 Closing</h3><div class="content">${l.closing}</div></div>
+        <div class="lesson-section"><h3>📚 Homework</h3><div class="content">${l.hw}</div></div>
+        <div class="lesson-section"><h3>🔀 Differentiation</h3>
+            <div class="diff-box">
+                <div class="diff-item struggling"><div class="diff-label">⬇️ Struggling</div>${l.diff_s}</div>
+                <div class="diff-item advanced"><div class="diff-label">⬆️ Advanced</div>${l.diff_a}</div>
+            </div>
+        </div>`;
+    container.appendChild(div);
+});
+
+function showLesson(idx) {
+    document.querySelectorAll('.session-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.lesson').forEach(l => l.classList.remove('active'));
+    nav.children[idx].classList.add('active');
+    container.children[idx].classList.add('active');
+}
+showLesson(0);
+    </script>
+</body>
+</html>

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scope & Sequence — 6th/7th Grade Math</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+               background: #f0f4f8; color: #333; }
+        .header { background: linear-gradient(135deg, #1F4E79, #2E75B6); color: white;
+                  padding: 25px 20px; text-align: center; }
+        .header h1 { font-size: 1.6em; margin-bottom: 5px; }
+        .header p { opacity: 0.9; font-size: 0.95em; }
+        .back { display: inline-block; color: rgba(255,255,255,0.8); text-decoration: none;
+                margin-bottom: 10px; font-size: 0.9em; }
+        .back:hover { color: white; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 20px; }
+        .unit-label { display: inline-block; padding: 6px 16px; border-radius: 20px;
+                     font-weight: 700; font-size: 0.95em; margin: 20px 0 10px; }
+        .unit-geo { background: #D6E4F0; color: #1F4E79; }
+        .unit-alg { background: #E2EFDA; color: #2D6A1E; }
+        .week-card { background: white; border-radius: 12px; margin-bottom: 15px;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.06); overflow: hidden; }
+        .week-title { padding: 14px 20px; font-weight: 700; font-size: 1.1em;
+                     cursor: pointer; display: flex; align-items: center; justify-content: space-between; }
+        .week-title.geo { background: linear-gradient(90deg, #D6E4F0, #EDF3F9); color: #1F4E79; }
+        .week-title.alg { background: linear-gradient(90deg, #E2EFDA, #F0F7EC); color: #2D6A1E; }
+        .week-title .arrow { transition: transform 0.2s; font-size: 0.8em; }
+        .week-title.open .arrow { transform: rotate(90deg); }
+        .week-body { display: none; }
+        .week-body.open { display: block; }
+        .session { padding: 15px 20px; border-bottom: 1px solid #f0f0f0; }
+        .session:last-child { border-bottom: none; }
+        .session-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+        .session-num { background: #2E75B6; color: white; width: 30px; height: 30px;
+                      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+                      font-size: 0.85em; font-weight: 700; flex-shrink: 0; }
+        .session-day { color: #888; font-size: 0.85em; }
+        .session-topic { font-weight: 600; font-size: 1.05em; color: #1F4E79; }
+        .objectives { margin: 8px 0 8px 40px; font-size: 0.92em; line-height: 1.6; color: #555; }
+        .activity { margin: 5px 0 5px 40px; padding: 8px 12px; background: #f8f9fa;
+                   border-radius: 6px; font-size: 0.9em; border-left: 3px solid #2E75B6; }
+        .assessment-badge { display: inline-block; background: #FF6B35; color: white;
+                          padding: 3px 10px; border-radius: 12px; font-size: 0.8em;
+                          font-weight: 600; margin-left: 40px; margin-top: 5px; }
+        .summary { background: white; border-radius: 12px; padding: 20px; margin-top: 20px;
+                  box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+        .summary h2 { color: #1F4E79; margin-bottom: 15px; }
+        .summary-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; }
+        .summary-item { padding: 12px; border-radius: 8px; text-align: center; }
+        .summary-item.q { background: #D6E4F0; }
+        .summary-item.t { background: #FFF2CC; font-weight: 700; }
+        .summary-item .label { font-size: 0.85em; color: #555; }
+        .summary-item .val { font-size: 1.1em; font-weight: 600; color: #1F4E79; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="index.html" class="back">← Back to Portal</a>
+        <h1>📐 Scope & Sequence</h1>
+        <p>8 Weeks · 3 Sessions/Week · 1 Hour Each · 24 Sessions Total</p>
+    </div>
+    <div class="container">
+        <div class="unit-label unit-geo">📐 UNIT 1: GEOMETRY — Weeks 1–4</div>
+
+        <div class="week-card">
+            <div class="week-title geo" onclick="toggleWeek(this)"><span>Week 1: Angles & Shapes</span><span class="arrow">▶</span></div>
+            <div class="week-body">
+                <div class="session">
+                    <div class="session-header"><span class="session-num">1</span><span class="session-day">Mon</span><span class="session-topic">Intro to Geometry & Angles</span></div>
+                    <div class="objectives">• Identify types of angles (acute, right, obtuse, straight)<br>• Measure angles with a protractor<br>• Understand angle relationships</div>
+                    <div class="activity">🍕 Pizza Slice Angles — estimate and measure angles of pizza slices, pie pieces, and clock hands</div>
+                </div>
+                <div class="session">
+                    <div class="session-header"><span class="session-num">2</span><span class="session-day">Wed</span><span class="session-topic">Angle Relationships</span></div>
+                    <div class="objectives">• Complementary & supplementary angles<br>• Vertical angles<br>• Solve for unknown angles</div>
+                    <div class="activity">🏠 Roof Pitch Problems — find missing angles in house roof designs and ramp constructions</div>
+                </div>
+                <div class="session">
+                    <div class="session-header"><span class="session-num">3</span><span class="session-day">Fri</span><span class="session-topic">Classifying Triangles & Polygons</span></div>
+                    <div class="objectives">• Classify triangles by sides and angles<br>• Identify regular polygons<br>• Interior angle sums</div>
+                    <div class="activity">⚽ Sports Geometry — find shapes in soccer fields, basketball courts, and game boards</div>
+                    <span class="assessment-badge">📝 Quiz 1</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="week-card">
+            <div class="week-title geo" onclick="toggleWeek(this)"><span>Week 2: Perimeter & Area</span><span class="arrow">▶</span></div>
+            <div class="week-body">
+                <div class="session">
+                    <div class="session-header"><span class="session-num">4</span><span class="session-day">Mon</span><span class="session-topic">Perimeter of Polygons</span></div>
+                    <div class="objectives">• Calculate perimeter of rectangles, triangles, irregular shapes<br>• Convert units within problems<br>• Perimeter word problems</div>
+                    <div class="activity">🌿 Garden Planning — design a garden bed with specific perimeter constraints and fencing budget</div>
+                </div>
+                <div class="session">
+                    <div class="session-header"><span class="session-num">5</span><span class="session-day">Wed</span><span class="session-topic">Area: Rectangles & Triangles</span></div>
+                    <div class="objectives">• Area formulas for rectangles, squares, triangles<br>• Decompose complex shapes<br>• Area word problems</div>
+                    <div class="activity">🎨 Room Makeover — calculate paint needed for walls, carpet for floors (real room dimensions)</div>
+                </div>
+                <div class="session">
+                    <div class="session-header"><span class="session-num">6</span><span class="session-day">Fri</span><span class="session-topic">Area: Parallelograms & Trapezoids</span></div>
+                    <div class="objectives">• Derive area formulas from rectangles<br>• Apply to real measurements<br>• Composite shape areas</div>
+                    <div class="activity">🧁 Baking Pans — figure out how much batter fills different pan shapes, compare pan sizes</div>
+                    <span class="assessment-badge">📝 Quiz 2</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="week-card">
+            <div class="week-title geo" onclick="toggleWeek(this)"><span>Week 3: Circles & Composite Shapes</span><span class="arrow">▶</span></div>
+            <div class="week-body">
+                <div class="session">
+                    <div class="session-header"><span class="session-num">7</span><span class="session-day">Mon</span><span class="session-topic">Circles: Circumference</span></div>
+                    <div class="objectives">• Understand pi (π)<br>• Circumference formula (C = πd or 2πr)<br>• Real-world circumference problems</div>
+                    <div class="activity">🚲 Bike Wheel Math — how far does a bike travel per wheel rotation? Compare tire sizes</div>
+                </div>
+                <div class="session">
+                    <div class="session-header"><span class="session-num">8</span><span class="session-day">Wed</span><span class="session-topic">Circles: Area</span></div>
+                    <div class="objectives">• Area of a circle (A = πr²)<br>• Estimate and calculate<br>• Compare circular vs rectangular spaces</div>
+                    <div class="activity">🍪 Cookie & Pizza Math — which is a better deal: one 16" pizza or two 10" pizzas?</div>
+                </div>
+                <div class="session">
+                    <div class="session-header"><span class="session-num">9</span><span class="session-day">Fri</span><span class="session-topic">Composite Shapes</span></div>
+                    <div class="objectives">• Break down complex shapes into simple ones<br>• Add and subtract areas<br>• Real-world floor plans</div>
+                    <div class="activity">🏗️ Blueprint Challenge — calculate total area of an L-shaped room or irregular yard</div>
+                    <span class="assessment-badge">📝 Quiz 3</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="week-card">
+            <div class="week-title geo" onclick="toggleWeek(this)"><span>Week 4: Volume & Surface Area</span><span class="arrow">▶</span></div>
+            <div class="week-body">
+                <div class="session">
+                    <div class="session-header"><span class="session-num">10</span><span class="session-day">Mon</span><span class="session-topic">3D Shapes & Volume of Prisms</span></div>
+                    <div class="objectives">• Identify 3D shapes (prisms, cylinders, pyramids)<br>• Volume of rectangular prisms (V = lwh)<br>• Volume word problems</div>
+                    <div class="activity">📦 Shipping & Storage — which box fits more? Compare shipping box sizes for cost efficiency</div>
+                </div>
+                <div class="session">
+                    <div class="session-header"><span class="session-num">11</span><span class="session-day">Wed</span><span class="session-topic">Volume of Cylinders & Surface Area Intro</span></div>
+                    <div class="objectives">• Volume of cylinders (V = πr²h)<br>• Surface area of rectangular prisms<br>• Nets of 3D shapes</div>
+                    <div class="activity">🥤 Drink Container Design — which cup holds more: tall & thin or short & wide?</div>
+                </div>
+                <div class="session">
+                    <div class="session-header"><span class="session-num">12</span><span class="session-day">Fri</span><span class="session-topic">Geometry Review & Test</span></div>
+                    <div class="objectives">• Review all geometry concepts<br>• Problem-solving with mixed geometry<br>• Test preparation</div>
+                    <div class="activity">Mixed review problems covering all 4 weeks</div>
+                    <span class="assessment-badge" style="background:#dc3545;">🔴 TEST 1: Geometry</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="unit-label unit-alg">📊 UNIT 2: INTRO TO ALGEBRA — Weeks 5–8</div>
+
+        <div class="week-card">
+            <div class="week-title alg" onclick="toggleWeek(this)"><span>Week 5: Variables & Expressions</span><span class="arrow">▶</span></div>
+            <div class="week-body">
+                <div class="session">
+                    <div class="session-header"><span class="session-num">13</span><span class="session-day">Mon</span><span class="session-topic">Intro to Variables & Expressions</span></div>
+                    <div class="objectives">• Understand variables as unknowns<br>• Write algebraic expressions from words<br>• Evaluate expressions</div>
+                    <div class="activity">🎮 Game Score Algebra — write expressions for point systems (3 coins + 2 gems = ?)</div>
+                </div>
+                <div class="session">
+                    <div class="session-header"><span class="session-num">14</span><span class="session-day">Wed</span><span class="session-topic">Combining Like Terms</span></div>
+                    <div class="objectives">• Identify like terms<br>• Simplify expressions<br>• Translate word problems to expressions</div>
+                    <div class="activity">🛒 Shopping Cart Math — simplify a grocery list with pricing expressions</div>
+                </div>
+                <div class="session">
+                    <div class="session-header"><span class="session-num">15</span><span class="session-day">Fri</span><span class="session-topic">Order of Operations with Variables</span></div>
+                    <div class="objectives">• Apply PEMDAS with variables<br>• Evaluate multi-step expressions<br>• Write and simplify</div>
+                    <div class="activity">🍳 Recipe Scaling — use expressions to double, triple, or halve recipes</div>
+                    <span class="assessment-badge">📝 Quiz 4</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="week-card">
+            <div class="week-title alg" onclick="toggleWeek(this)"><span>Week 6: One-Step Equations</span><span class="arrow">▶</span></div>
+            <div class="week-body">
+                <div class="session">
+                    <div class="session-header"><span class="session-num">16</span><span class="session-day">Mon</span><span class="session-topic">Solving One-Step Equations (+/−)</span></div>
+                    <div class="objectives">• Addition and subtraction equations<br>• Inverse operations<br>• Check solutions</div>
+                    <div class="activity">💰 Budget Balancing — find the missing expense when you know the total budget</div>
+                </div>
+                <div class="session">
+                    <div class="session-header"><span class="session-num">17</span><span class="session-day">Wed</span><span class="session-topic">Solving One-Step Equations (×/÷)</span></div>
+                    <div class="objectives">• Multiplication and division equations<br>• Inverse operations<br>• Word problems</div>
+                    <div class="activity">🍕 Fair Shares — split costs, divide materials evenly, find unit prices</div>
+                </div>
+                <div class="session">
+                    <div class="session-header"><span class="session-num">18</span><span class="session-day">Fri</span><span class="session-topic">Mixed One-Step Equations</span></div>
+                    <div class="objectives">• All four operation types mixed<br>• Writing equations from word problems<br>• Multi-context practice</div>
+                    <div class="activity">🏪 Lemonade Stand — set prices, calculate profits, find break-even amounts</div>
+                    <span class="assessment-badge">📝 Quiz 5</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="week-card">
+            <div class="week-title alg" onclick="toggleWeek(this)"><span>Week 7: Two-Step Equations & Inequalities</span><span class="arrow">▶</span></div>
+            <div class="week-body">
+                <div class="session">
+                    <div class="session-header"><span class="session-num">19</span><span class="session-day">Mon</span><span class="session-topic">Two-Step Equations</span></div>
+                    <div class="objectives">• Solve equations with two operations<br>• Order of inverse operations<br>• Real-world two-step problems</div>
+                    <div class="activity">📱 Phone Plan Math — base cost + per-minute rate: how many minutes can you afford?</div>
+                </div>
+                <div class="session">
+                    <div class="session-header"><span class="session-num">20</span><span class="session-day">Wed</span><span class="session-topic">Intro to Inequalities</span></div>
+                    <div class="objectives">• Inequality symbols (<, >, ≤, ≥)<br>• Solve one-step inequalities<br>• Graph on a number line</div>
+                    <div class="activity">🎢 Height Requirements — model "you must be at least this tall" as inequalities</div>
+                </div>
+                <div class="session">
+                    <div class="session-header"><span class="session-num">21</span><span class="session-day">Fri</span><span class="session-topic">Equations & Inequalities Practice</span></div>
+                    <div class="objectives">• Mixed practice with equations and inequalities<br>• Word problem translation<br>• Error analysis</div>
+                    <div class="activity">🎯 Equation Detective — find and fix mistakes in solved problems</div>
+                    <span class="assessment-badge">📝 Quiz 6</span>
+                    <span class="assessment-badge" style="background:#dc3545;">🔴 TEST 2: Algebra Part 1</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="week-card">
+            <div class="week-title alg" onclick="toggleWeek(this)"><span>Week 8: Coordinate Plane & Review</span><span class="arrow">▶</span></div>
+            <div class="week-body">
+                <div class="session">
+                    <div class="session-header"><span class="session-num">22</span><span class="session-day">Mon</span><span class="session-topic">The Coordinate Plane</span></div>
+                    <div class="objectives">• Understand x-axis, y-axis, origin<br>• Plot ordered pairs in all 4 quadrants<br>• Identify coordinates from graphs</div>
+                    <div class="activity">🗺️ Treasure Map — plot coordinates to find hidden treasure locations on a grid</div>
+                </div>
+                <div class="session">
+                    <div class="session-header"><span class="session-num">23</span><span class="session-day">Wed</span><span class="session-topic">Intro to Linear Relationships</span></div>
+                    <div class="objectives">• Create input/output tables<br>• Plot points from tables<br>• Recognize linear patterns</div>
+                    <div class="activity">🚗 Road Trip Math — graph distance vs. time at different speeds, predict arrival times</div>
+                    <span class="assessment-badge">📝 Quiz 7</span>
+                </div>
+                <div class="session">
+                    <div class="session-header"><span class="session-num">24</span><span class="session-day">Fri</span><span class="session-topic">Course Review & Final Test</span></div>
+                    <div class="objectives">• Review all algebra concepts<br>• Mixed geometry and algebra problems<br>• Final assessment</div>
+                    <div class="activity">Comprehensive review covering full 8 weeks</div>
+                    <span class="assessment-badge" style="background:#dc3545;">🔴 FINAL TEST</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="summary">
+            <h2>📝 Assessment Schedule</h2>
+            <div class="summary-grid">
+                <div class="summary-item q"><div class="val">Quiz 1</div><div class="label">Week 1 · 5%</div></div>
+                <div class="summary-item q"><div class="val">Quiz 2</div><div class="label">Week 2 · 5%</div></div>
+                <div class="summary-item q"><div class="val">Quiz 3</div><div class="label">Week 3 · 5%</div></div>
+                <div class="summary-item t"><div class="val">TEST 1</div><div class="label">Week 4 · 15%</div></div>
+                <div class="summary-item q"><div class="val">Quiz 4</div><div class="label">Week 5 · 5%</div></div>
+                <div class="summary-item q"><div class="val">Quiz 5</div><div class="label">Week 6 · 5%</div></div>
+                <div class="summary-item q"><div class="val">Quiz 6</div><div class="label">Week 7 · 5%</div></div>
+                <div class="summary-item t"><div class="val">TEST 2</div><div class="label">Week 7 · 15%</div></div>
+                <div class="summary-item q"><div class="val">Quiz 7</div><div class="label">Week 8 · 5%</div></div>
+                <div class="summary-item t"><div class="val">FINAL</div><div class="label">Week 8 · 20%</div></div>
+            </div>
+            <p style="margin-top:12px; color:#666; font-size:0.9em;">Quizzes 35% + Tests 50% + Participation 15% = 100%</p>
+        </div>
+    </div>
+    <script>
+        function toggleWeek(el) {
+            el.classList.toggle('open');
+            el.nextElementSibling.classList.toggle('open');
+        }
+    </script>
+</body>
+</html>
