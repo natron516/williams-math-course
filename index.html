@@ -9,50 +9,60 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Nunito', sans-serif; background: #FAF5F7; color: #444; }
         
-        /* Compact hero */
         .hero { background: linear-gradient(135deg, #8B5E83, #C06C84);
-                color: white; padding: 22px 20px 18px; text-align: center; position: relative; }
+                color: white; padding: 22px 28px 18px; text-align: center; position: relative; }
         .hero h1 { font-family: 'Playfair Display', serif; font-size: 1.6em; }
         .hero p { opacity: 0.85; font-size: 0.88em; margin-top: 2px; }
-        .hero .student-btn { position: absolute; top: 14px; right: 14px; background: rgba(255,255,255,0.25);
+        .hero .student-btn { position: absolute; top: 14px; right: 20px; background: rgba(255,255,255,0.25);
                            color: white; padding: 10px 22px; border-radius: 10px; font-size: 0.95em;
                            font-weight: 700; text-decoration: none; transition: background 0.2s; }
         .hero .student-btn:hover { background: rgba(255,255,255,0.35); }
         
-        .container { max-width: 960px; margin: 0 auto; padding: 16px 24px; }
+        /* Two-column layout */
+        .page-wrap { max-width: 1200px; margin: 0 auto; padding: 20px 24px; display: flex; gap: 24px; align-items: flex-start; }
+        .main-col { flex: 1; min-width: 0; }
+        .side-col { width: 320px; flex-shrink: 0; position: sticky; top: 20px; }
         
-        /* Top row: greeting + progress inline */
-        .top-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
-        .greeting { font-size: 0.95em; color: #8B5E83; font-weight: 700; }
+        /* Main column header */
+        .main-hdr { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+        .main-hdr h2 { font-family: 'Playfair Display', serif; font-size: 1.2em; color: #6B4460; }
         .prog-pill { display: flex; align-items: center; gap: 8px; }
         .prog-pill span { font-size: 0.8em; color: #8B5E83; font-weight: 700; }
-        .prog-bar { width: 80px; height: 6px; background: #f0e0e6; border-radius: 10px; overflow: hidden; }
+        .prog-bar { width: 100px; height: 6px; background: #f0e0e6; border-radius: 10px; overflow: hidden; }
         .prog-fill { height: 100%; border-radius: 10px; background: linear-gradient(90deg, #C06C84, #F67280);
                     transition: width 0.5s; width: 0%; }
         
-        /* Up Next card */
-        .next-card { background: white; border-radius: 14px; padding: 16px 18px; margin-bottom: 14px; display:flex; gap:16px;
-                    box-shadow: 0 2px 8px rgba(0,0,0,0.04); border-left: 4px solid #C06C84; }
+        /* Sidebar cards */
+        .side-card { background: white; border-radius: 14px; padding: 16px 18px; margin-bottom: 14px;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+        
+        /* Up Next */
         .next-label { font-size: 0.72em; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;
-                     color: #C06C84; margin-bottom: 4px; }
-        .next-title { font-family: 'Playfair Display', serif; font-size: 1.15em; color: #6B4460; }
-        .next-meta { font-size: 0.82em; color: #aaa; margin: 2px 0 10px; }
+                     color: #C06C84; margin-bottom: 6px; }
+        .next-title { font-family: 'Playfair Display', serif; font-size: 1.1em; color: #6B4460; }
+        .next-meta { font-size: 0.8em; color: #aaa; margin: 3px 0 10px; }
         .next-actions { display: flex; gap: 6px; flex-wrap: wrap; }
-        .next-btn { padding: 7px 14px; border-radius: 8px; font-size: 0.82em; font-weight: 700;
+        .next-btn { padding: 7px 13px; border-radius: 8px; font-size: 0.8em; font-weight: 700;
                    text-decoration: none; transition: all 0.2s; }
         .next-btn.primary { background: #C06C84; color: white; }
         .next-btn.secondary { background: #FDE8EE; color: #8B5E83; }
         .next-btn:hover { transform: translateY(-1px); }
         
-        /* Quick links — compact row */
-        .quick { display: flex; gap: 8px; margin-bottom: 14px; }
-        .quick a { flex: 1; background: white; border-radius: 10px; padding: 12px 8px; text-align: center;
-                  text-decoration: none; color: #6B4460; box-shadow: 0 2px 6px rgba(0,0,0,0.04);
-                  transition: all 0.2s; font-weight: 700; font-size: 0.82em; }
-        .quick a:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        /* Quick links */
+        .quick { display: flex; gap: 8px; }
+        .quick a { flex: 1; background: #FAF5F7; border-radius: 10px; padding: 14px 8px; text-align: center;
+                  text-decoration: none; color: #6B4460; transition: all 0.2s; font-weight: 700; font-size: 0.82em; }
+        .quick a:hover { transform: translateY(-2px); background: #F3E5F5; }
         .quick a span { display: block; font-size: 1.4em; margin-bottom: 2px; }
         
-        /* Collapsible weeks */
+        /* Greeting card */
+        .greeting-card { text-align: center; }
+        .greeting { font-size: 0.95em; color: #8B5E83; font-weight: 700; margin-bottom: 8px; }
+        .quote { font-family: 'Playfair Display', serif; font-size: 0.88em; color: #8B5E83;
+                font-style: italic; line-height: 1.5; }
+        .attr { font-size: 0.72em; color: #baa; margin-top: 4px; }
+        
+        /* Weeks */
         .week { background: white; border-radius: 12px; margin-bottom: 6px;
                box-shadow: 0 1px 4px rgba(0,0,0,0.03); overflow: hidden; }
         .week-hdr { display: flex; align-items: center; gap: 10px; padding: 12px 14px;
@@ -80,10 +90,9 @@
         .s-check { width: 28px; height: 28px; border-radius: 50%; border: 2px solid #dcc;
                   display: flex; align-items: center; justify-content: center; cursor: pointer;
                   font-size: 0.72em; font-weight: 800; color: #C06C84; flex-shrink: 0;
-                  transition: all 0.2s; background: white; }
+                  transition: all 0.2s; background: white; position: relative; }
         .s-check:hover { background: #FDE8EE; border-color: #C06C84; transform: scale(1.1); color: transparent; }
         .s-check:hover::after { content: '✓'; color: #C06C84; position: absolute; font-weight: 800; font-size: 0.85em; }
-        .s-check { position: relative; display: flex; align-items: center; justify-content: center; }
         .s-check.done:hover { color: white; }
         .s-check.done:hover::after { color: white; }
         .s-check.done { background: #C06C84; border-color: #C06C84; color: white; }
@@ -99,16 +108,13 @@
         .s-link.qz { background: #F3E5F5; }
         .s-link.ts { background: #FADCE6; }
         
-        /* Footer — minimal */
-        .footer { text-align: center; padding: 24px 20px 30px; }
-        .footer .quote { font-family: 'Playfair Display', serif; font-size: 0.92em; color: #8B5E83;
-                        font-style: italic; max-width: 420px; margin: 0 auto 3px; line-height: 1.5; }
-        .footer .attr { font-size: 0.75em; color: #baa; }
-        .footer .heart { font-size: 0.78em; color: #dbb; margin-top: 10px; }
+        .heart { text-align: center; font-size: 0.78em; color: #dbb; margin-top: 6px; }
         
-        @media (max-width: 500px) {
-            .quick { flex-direction: column; }
-            .s-links { display: flex; }
+        /* Responsive: collapse to single column on mobile */
+        @media (max-width: 768px) {
+            .page-wrap { flex-direction: column-reverse; }
+            .side-col { width: 100%; position: static; }
+            .quick { flex-direction: row; }
             .s-link { width: 36px; height: 36px; font-size: 1.2em; }
             .hero .student-btn { position: static; display: inline-block; margin-top: 8px; }
         }
@@ -121,43 +127,51 @@
         <p>6th & 7th Grade · Mon/Wed/Thu · Mar 16 – May 21</p>
     </div>
     
-    <div class="container">
-        <div class="top-row">
-            <div class="greeting" id="greeting"></div>
-            <div class="prog-pill">
-                <div class="prog-bar"><div class="prog-fill" id="progFill"></div></div>
-                <span id="progText">0/24</span>
+    <div class="page-wrap">
+        <!-- Main: Week list -->
+        <div class="main-col">
+            <div class="main-hdr">
+                <h2>Course Schedule</h2>
+                <div class="prog-pill">
+                    <div class="prog-bar"><div class="prog-fill" id="progFill"></div></div>
+                    <span id="progText">0/24</span>
+                </div>
             </div>
+            <div id="weekList"></div>
         </div>
         
-        <div class="next-card">
-            <div style="flex:1;min-width:0;">
+        <!-- Sidebar -->
+        <div class="side-col">
+            <!-- Greeting + Quote -->
+            <div class="side-card greeting-card">
+                <div class="greeting" id="greeting"></div>
+                <div class="quote" id="quote"></div>
+                <div class="attr" id="quoteAttr"></div>
+            </div>
+            
+            <!-- Up Next -->
+            <div class="side-card">
                 <div class="next-label">Up Next</div>
                 <div class="next-title" id="nextTitle"></div>
                 <div class="next-meta" id="nextMeta"></div>
                 <div class="next-actions" id="nextActions"></div>
+                <div id="nextVideos" style="margin-top:10px;"></div>
             </div>
-            <div id="nextVideos" style="flex-shrink:0;"></div>
+            
+            <!-- Quick Links -->
+            <div class="side-card">
+                <div class="quick">
+                    <a href="lesson-plans.html"><span>📋</span>Lessons</a>
+                    <a href="gradebook.html"><span>📈</span>Grades</a>
+                    <a href="scope-sequence.html"><span>📊</span>Scope</a>
+                </div>
+            </div>
+            
+            <div class="heart">Made with 🌸 for Mrs. Williams' class</div>
         </div>
-        
-        <div class="quick">
-            <a href="lesson-plans.html"><span>📋</span>Lessons</a>
-            <a href="gradebook.html"><span>📈</span>Grades</a>
-            <a href="scope-sequence.html"><span>📊</span>Scope</a>
-        </div>
-        
-        <div id="weekList"></div>
-    </div>
-    
-    <div class="footer">
-        <div class="quote" id="quote"></div>
-        <div class="attr" id="quoteAttr"></div>
-        <div class="heart">Made with 🌸 for Mrs. Williams' class</div>
     </div>
 
 <script>
-// Schedule: Mon 9:30-10:30, Wed 9:30-10:30, Thu 10:30-11:30
-// Starts Mon Mar 16. Easter break Apr 6-17 (2 weeks off).
 const VIDS = {1:[{t:"Acute, Right & Obtuse Angles",id:"4ZyTVTGVPgE"},{t:"Angles & Degrees",id:"4r_j10jtavU"}],2:[{t:"Supplementary & Complementary",id:"TzT_HtojVOU"},{t:"Vertical Angles",id:"WN2E-KMuXoE"}],3:[{t:"Triangles",id:"oQeK4LyKLHw"},{t:"Polygons",id:"ZJnKPl99fTs"}],4:[{t:"Perimeter",id:"AAY1bsazcgM"}],5:[{t:"Area: Rectangles & Triangles",id:"xCdxURXMdFY"}],6:[{t:"Area: Parallelograms",id:"SEXLRQol970"},{t:"Composite Area",id:"5UIbpphAz-U"}],7:[{t:"Circumference & Area",id:"5cbFN2wOUFY"}],8:[{t:"Circumference & Area",id:"5cbFN2wOUFY"}],9:[{t:"Composite Shapes",id:"L8W3ch_Zrmk"}],10:[{t:"Volume",id:"-05rNRCHkhQ"}],11:[{t:"Volume: Cylinders",id:"-05rNRCHkhQ"},{t:"Surface Area",id:"kSj_Wo5hdVU"}],13:[{t:"What Is Algebra?",id:"NybHckSEQBI"},{t:"Evaluating Expressions",id:"52tpYl2tTqk"}],14:[{t:"Combining Like Terms",id:"y7GwRJOIohM"}],15:[{t:"Order of Operations",id:"dAgfnK528RA"}],16:[{t:"Equations: +/−",id:"l3XzepN03KQ"}],17:[{t:"Equations: ×/÷",id:"Qyd_v3DGzTM"}],18:[{t:"Solving Equations",id:"l3XzepN03KQ"}],19:[{t:"2-Step Equations",id:"LDIiYKYvvdA"}],20:[{t:"Inequalities",id:"mgHO-bsCDrA"}],22:[{t:"Coordinate Plane",id:"3JqndcNQPYs"}],23:[{t:"Linear Functions",id:"MXV65i9g1Xg"}]};
 
 const S = [
@@ -170,7 +184,6 @@ const S = [
 {s:7, w:3,t:"Circumference",          d:"Mon",dt:"2026-03-30",tm:"9:30–10:30",  u:"geo",ws:"worksheets/W07_Going_in_Circles.html"},
 {s:8, w:3,t:"Circle Area",            d:"Wed",dt:"2026-04-01",tm:"9:30–10:30",  u:"geo",ws:"worksheets/W08_Area_of_the_Round.html"},
 {s:9, w:3,t:"Composite Shapes",       d:"Thu",dt:"2026-04-02",tm:"10:30–11:30", u:"geo",ws:"worksheets/W09_Blueprint_Builder.html",qz:"quizzes/Quiz_3_Circles_Composite.html"},
-// ── Easter break: Apr 6–17 ──
 {s:10,w:4,t:"Volume of Prisms",       d:"Mon",dt:"2026-04-20",tm:"9:30–10:30",  u:"geo",ws:"worksheets/W10_Box_It_Up.html"},
 {s:11,w:4,t:"Cylinders & Surface Area",d:"Wed",dt:"2026-04-22",tm:"9:30–10:30", u:"geo",ws:"worksheets/W11_Container_Challenge.html"},
 {s:12,w:4,t:"Geometry Test",           d:"Thu",dt:"2026-04-23",tm:"10:30–11:30", u:"geo",ts:"tests/Test_1_Geometry.html"},
@@ -217,17 +230,14 @@ const Q = [
 {q:"Courage is not simply one of the virtues, but the form of every virtue at the testing point.",a:"C.S. Lewis"},
 ];
 
-// Greeting
 const h = new Date().getHours();
 const g = h < 12 ? "Good morning" : h < 17 ? "Good afternoon" : "Good evening";
-document.getElementById('greeting').textContent = `${g}, Mrs. Williams`;
+document.getElementById('greeting').textContent = `${g}, Mrs. Williams 🌸`;
 
-// Quote
 const qi = new Date().getDate() % Q.length;
 document.getElementById('quote').textContent = `"${Q[qi].q}"`;
 document.getElementById('quoteAttr').textContent = `— ${Q[qi].a}`;
 
-// Progress
 const PK = 'williams_progress';
 function gp() { const s = localStorage.getItem(PK); return s ? JSON.parse(s) : {}; }
 function sp(p) { localStorage.setItem(PK, JSON.stringify(p)); }
@@ -253,7 +263,6 @@ function render() {
     document.getElementById('progText').textContent = `${done}/24`;
     document.getElementById('progFill').style.width = (done/24*100) + '%';
     
-    // Find next: first unchecked session whose date hasn't passed, or first unchecked overall
     const today = new Date().toISOString().slice(0,10);
     let next = S.find(s => !p[s.s] && s.dt >= today) || S.find(s => !p[s.s]) || null;
     
@@ -264,26 +273,25 @@ function render() {
         return `${days[d.getDay()]}, ${m[d.getMonth()]} ${d.getDate()}`;
     }
     
-    // Next card
     if (next) {
         document.getElementById('nextTitle').textContent = `Session ${next.s}: ${next.t}`;
         document.getElementById('nextMeta').textContent = `${fmtDate(next.dt)} · ${next.tm} · ${next.u === 'geo' ? 'Geometry' : 'Algebra'}`;
-        let btns = `<a class="next-btn primary" href="lesson-plans.html#session-${next.s}">📋 Lesson Plan</a>`;
+        let btns = `<a class="next-btn primary" href="lesson-plans.html#session-${next.s}">📋 Lesson</a>`;
         if (next.ws) btns += `<a class="next-btn secondary" href="${next.ws}">📄 Worksheet</a>`;
-        if (next.ts) btns += `<a class="next-btn secondary" href="${next.ts}">🔴 Test</a>`;
-        if (next.qz) btns += `<a class="next-btn secondary" href="${next.qz}">📝 Quiz</a>`;
+        if (next.qz) btns += `<a class="next-btn secondary" href="${next.qz}">✏️ Quiz</a>`;
+        if (next.ts) btns += `<a class="next-btn secondary" href="${next.ts}">📋 Test</a>`;
         document.getElementById('nextActions').innerHTML = btns;
         
-        // Add video previews below buttons
         const vids = VIDS[next.s];
         if (vids && vids.length) {
-            let vidHtml = '<div style="display:flex;flex-direction:column;gap:6px;">';
+            let vidHtml = '<div style="display:flex;gap:8px;flex-wrap:wrap;">';
             vids.slice(0,2).forEach(v => {
-                vidHtml += `<a href="https://www.youtube.com/watch?v=${v.id}" target="_blank" style="text-decoration:none;display:block;width:120px;">
+                vidHtml += `<a href="https://www.youtube.com/watch?v=${v.id}" target="_blank" style="text-decoration:none;display:block;width:135px;">
                     <div style="position:relative;border-radius:8px;overflow:hidden;background:#000;">
-                        <img src="https://img.youtube.com/vi/${v.id}/mqdefault.jpg" style="width:120px;height:68px;object-fit:cover;display:block;opacity:0.85;">
+                        <img src="https://img.youtube.com/vi/${v.id}/mqdefault.jpg" style="width:135px;height:76px;object-fit:cover;display:block;opacity:0.85;">
                         <span style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:white;font-size:1.3em;text-shadow:0 0 8px rgba(0,0,0,0.5);">▶</span>
                     </div>
+                    <div style="font-size:0.7em;color:#888;margin-top:3px;line-height:1.2;">${v.t}</div>
                 </a>`;
             });
             vidHtml += '</div>';
@@ -295,7 +303,6 @@ function render() {
         document.getElementById('nextActions').innerHTML = '';
     }
     
-    // Build weeks
     const list = document.getElementById('weekList');
     list.innerHTML = '';
     
@@ -340,7 +347,6 @@ function render() {
 
 render();
 </script>
-<!-- Teacher Auth Gate -->
 <div id="teacherGate" style="display:none; position:fixed; inset:0; z-index:9999; background:linear-gradient(135deg,#8B5E83,#C06C84); display:flex; align-items:center; justify-content:center;">
     <div style="background:white; border-radius:20px; padding:40px 30px; text-align:center; max-width:340px; width:90%; box-shadow:0 10px 40px rgba(0,0,0,0.2);">
         <div style="font-size:2.5em; margin-bottom:10px;">🌸</div>
