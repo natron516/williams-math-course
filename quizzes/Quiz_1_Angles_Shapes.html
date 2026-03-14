@@ -142,6 +142,19 @@
     .work-tabs { flex-wrap: wrap; }
 }
 </style>
+
+<style>
+.submit-bar { text-align: center; padding: 20px; margin: 10px 0; }
+.submit-btn { background: linear-gradient(135deg, #C06C84, #8B5E83); color: white;
+             border: none; padding: 14px 40px; border-radius: 12px; font-size: 1.1em;
+             font-weight: 700; cursor: pointer; font-family: 'Nunito', sans-serif;
+             box-shadow: 0 4px 15px rgba(192,108,132,0.3); transition: all 0.2s; }
+.submit-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(192,108,132,0.4); }
+.submit-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+.submit-msg { margin-top: 10px; font-weight: 700; font-size: 0.95em; }
+.submit-msg.ok { color: #5B8C5A; }
+.submit-msg.err { color: #dc3545; }
+</style>
 </head>
 <body>
     <div class="hero">
@@ -270,6 +283,12 @@
         <p><strong>1.</strong> C) Obtuse | <strong>2.</strong> A) 90° | <strong>3.</strong> 108° | <strong>4.</strong> 55° | <strong>5.</strong> C) Equilateral</p>
 <p><strong>6.</strong> 55° | <strong>7.</strong> C) Right | <strong>8.</strong> 540° | <strong>9.</strong> 22.5° and 67.5° | <strong>10.</strong> 120°</p>
     </div>
+    
+<div class="submit-bar">
+    <button class="submit-btn" id="submitBtn" onclick="doSubmit()">📤 Submit Quiz</button>
+    <div class="submit-msg" id="submitMsg"></div>
+</div>
+
     <button class="answer-btn" id="showAnswerBtn" onclick="showPinDialog()">🔒 Answer Key (Teacher Only)</button>
     <script>
         function showPinDialog() {
@@ -543,7 +562,7 @@
     const assessId = "q1";
     
     // Find all number/text inputs that look like answer fields
-    function collectAndSubmit() {
+    async function collectAndSubmit() {
         const inputs = document.querySelectorAll('input[type="number"], input[type="text"], select, textarea');
         let filled = 0, total = 0;
         inputs.forEach(inp => {
@@ -562,18 +581,26 @@
         let score = completion; // default to completion %
         if (scoreEl && scoreEl.dataset.score) score = parseFloat(scoreEl.dataset.score);
         
-        submitScore(assessId, score, { filled, total, type: 'completion' });
+        return await submitScore(assessId, score, { filled, total, type: 'completion' });
     }
     
-    // Hook into any existing submit/check buttons
-    document.addEventListener('click', function(e) {
-        const btn = e.target.closest('button, .btn, [onclick]');
-        if (!btn) return;
-        const text = (btn.textContent || '').toLowerCase();
-        if (text.includes('submit') || text.includes('check') || text.includes('done') || text.includes('finish')) {
-            setTimeout(collectAndSubmit, 500); // delay to let any existing scoring run first
-        }
-    });
+    // doSubmit is called by the Submit button
+    window.doSubmit = function() {
+        const btn = document.getElementById('submitBtn');
+        const msg = document.getElementById('submitMsg');
+        btn.disabled = true; btn.textContent = '⏳ Submitting...';
+        collectAndSubmit().then(ok => {
+            if (ok) {
+                msg.className = 'submit-msg ok';
+                msg.textContent = '✅ Submitted! Your teacher will see your score.';
+                btn.textContent = '✓ Submitted';
+            } else {
+                msg.className = 'submit-msg err';
+                msg.textContent = '⚠️ Could not submit — please make sure you're signed in on the Student Portal.';
+                btn.disabled = false; btn.textContent = '📤 Try Again';
+            }
+        });
+    };
     
     // Also submit on page unload if anything was filled in
     window.addEventListener('beforeunload', function() {

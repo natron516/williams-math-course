@@ -19,10 +19,10 @@ const db = window._db;
  */
 async function submitScore(assessmentId, score, details = {}) {
     // Get student name from localStorage (set by student portal login)
-    const studentData = localStorage.getItem('williams_student');
-    if (!studentData) { console.warn('No student logged in'); return; }
+    const studentData = localStorage.getItem('math_current_user');
+    if (!studentData) { console.warn('No student logged in — please sign in on the Student Portal first'); return; }
     const student = JSON.parse(studentData);
-    const studentName = student.name || student.username || 'Unknown';
+    const studentName = student.name || student.fullName || student.username || 'Unknown';
     const username = student.username || studentName.toLowerCase().replace(/\s+/g, '_');
     
     try {
