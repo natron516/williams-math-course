@@ -10,19 +10,15 @@
         body { font-family: 'Nunito', -apple-system, sans-serif;
                max-width: 850px; margin: 0 auto; padding: 0; background: #f0f4f8; color: #333; }
         
-        .hero { background: linear-gradient(135deg, #1F4E79 0%, #2E75B6 60%, #2E75B6cc 100%);
+        .hero { background: linear-gradient(135deg, #1565C0 0%, #42A5F5 60%, #90CAF9 100%);
                 color: white; padding: 30px 25px 25px; position: relative; overflow: hidden; }
-        .hero::before { content: ''; position: absolute; top: -50px; right: -50px;
-                        width: 200px; height: 200px; border-radius: 50%;
-                        background: rgba(255,255,255,0.08); }
-        .hero::after { content: ''; position: absolute; bottom: -80px; left: -40px;
-                       width: 250px; height: 250px; border-radius: 50%;
-                       background: rgba(255,255,255,0.05); }
-        .hero h1 { font-size: 1.6em; font-weight: 800; position: relative; z-index: 1; }
-        .hero p { font-size: 0.95em; opacity: 0.9; margin-top: 5px; position: relative; z-index: 1; }
+        .hero::before { content: '📐'; position: absolute; font-size: 8em; opacity: 0.08;
+                       top: -20px; right: -10px; transform: rotate(15deg); }
         .hero .type-badge { display: inline-block; background: rgba(255,255,255,0.2);
                            padding: 4px 12px; border-radius: 20px; font-size: 0.8em;
                            font-weight: 700; margin-bottom: 8px; position: relative; z-index: 1; }
+        .hero h1 { font-size: 1.8em; font-weight: 800; position: relative; z-index: 1; }
+        .hero p { font-size: 0.95em; opacity: 0.9; margin-top: 5px; position: relative; z-index: 1; }
         
         .content-area { padding: 15px; }
         
@@ -30,76 +26,76 @@
                    box-shadow: 0 2px 12px rgba(0,0,0,0.06); overflow: hidden;
                    border: 1px solid rgba(0,0,0,0.04); }
         .section-header { padding: 16px 20px; font-weight: 800; font-size: 1.1em;
-                         color: #1F4E79; display: flex; align-items: center; gap: 10px;
-                         border-bottom: 2px solid #2E75B615;
-                         background: linear-gradient(90deg, #2E75B608, transparent); }
-        .section-header .section-icon { font-size: 1.4em; }
-        .section-body { padding: 5px 15px 15px; }
+                         display: flex; align-items: center; gap: 10px;
+                         border-bottom: 2px solid rgba(0,0,0,0.04); }
+        .section-header.blue { color: #1565C0; background: linear-gradient(90deg, #E3F2FD, transparent); }
+        .section-header.orange { color: #E65100; background: linear-gradient(90deg, #FFF3E0, transparent); }
+        .section-header.green { color: #2E7D32; background: linear-gradient(90deg, #E8F5E9, transparent); }
+        .section-header .icon { font-size: 1.4em; }
+        .section-body { padding: 10px 18px 18px; }
         
-        .problem { padding: 14px 5px; border-bottom: 1px solid #f0f0f0;
-                   transition: background 0.2s; border-radius: 8px; margin: 2px 0; }
-        .problem:hover { background: #f8fbff; }
+        /* Visual reference cards */
+        .ref-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 14px 0; }
+        .ref-card { text-align: center; padding: 14px 8px; border-radius: 12px; border: 2px solid #E3F2FD; }
+        .ref-card svg { display: block; margin: 0 auto 6px; }
+        .ref-card .label { font-weight: 800; font-size: 0.85em; color: #1565C0; }
+        .ref-card .sub { font-size: 0.72em; color: #999; margin-top: 2px; }
+        
+        /* Photo context blocks */
+        .photo-context { display: flex; gap: 14px; align-items: center; padding: 14px;
+                        background: #FAFAFA; border-radius: 14px; margin: 14px 0; }
+        .photo-context img { width: 90px; height: 90px; object-fit: cover; border-radius: 12px;
+                           flex-shrink: 0; }
+        .photo-context .text { flex: 1; }
+        .photo-context .text h4 { font-size: 0.95em; color: #333; margin-bottom: 3px; }
+        .photo-context .text p { font-size: 0.85em; color: #888; line-height: 1.4; }
+        
+        /* Problems */
+        .problem { padding: 14px 5px; border-bottom: 1px solid #f0f0f0; border-radius: 8px; margin: 2px 0; }
         .problem:last-child { border-bottom: none; }
         .problem-header { display: flex; align-items: flex-start; gap: 10px; }
         .problem-num { display: flex; align-items: center; justify-content: center;
-                       background: linear-gradient(135deg, #2E75B6, #1F4E79);
+                       background: linear-gradient(135deg, #42A5F5, #1565C0);
                        color: white; min-width: 32px; height: 32px; border-radius: 50%;
                        font-size: 0.85em; font-weight: 800; flex-shrink: 0; }
         .problem-text { font-size: 1em; line-height: 1.5; flex: 1; }
-        
         .answer-input { display: block; margin: 10px 0 5px 42px; width: calc(100% - 42px);
-                        border: 2px solid #e8e8e8; border-radius: 10px; padding: 12px 14px;
-                        font-size: 1em; font-family: 'Nunito', sans-serif; outline: none;
-                        transition: all 0.2s; background: #fafafa; }
-        .answer-input:focus { border-color: #2E75B6; background: white;
-                             box-shadow: 0 0 0 3px #2E75B615; }
+                       padding: 10px 14px; border: 2px solid #e0e0e0; border-radius: 10px;
+                       font-family: 'Nunito', sans-serif; font-size: 0.95em;
+                       transition: border 0.2s; outline: none; }
+        .answer-input:focus { border-color: #42A5F5; }
+        
+        .hint { margin: 6px 0 4px 42px; font-size: 0.82em; color: #42A5F5; font-weight: 600; }
+        
+        /* Inline angle diagram */
+        .angle-diagram { display: inline-flex; align-items: center; justify-content: center;
+                        background: #F5F5F5; border-radius: 10px; padding: 10px; margin: 8px 0 8px 42px; }
+        
+        /* Fun fact */
+        .fun-fact { margin: 12px 0; padding: 14px 16px; border-radius: 12px;
+                   background: linear-gradient(135deg, #FFF8E1, #FFFDE7);
+                   border-left: 4px solid #FFB300; font-size: 0.88em; line-height: 1.5; }
+        .fun-fact .emoji { font-size: 1.2em; margin-right: 6px; }
+        
+        /* Drawing area */
         .work-area { display: block; margin: 8px 0 5px 42px; width: calc(100% - 42px);
-                     border: 1.5px dashed #ddd; border-radius: 10px; padding: 10px 14px;
-                     min-height: 80px; font-size: 0.9em; font-family: 'Nunito', sans-serif;
-                     outline: none; color: #666; resize: vertical; background: #fcfcfc; }
-        .work-area:focus { border-color: #2E75B6; border-style: solid; background: white; }
+                    min-height: 100px; padding: 10px; border: 2px dashed #e0e0e0;
+                    border-radius: 10px; font-family: 'Nunito', sans-serif; font-size: 0.9em;
+                    resize: vertical; outline: none; }
+        .work-area:focus { border-color: #42A5F5; }
         
-        .context-box { margin: 12px 0; padding: 14px 16px; background: linear-gradient(135deg, #2E75B608, #2E75B604);
-                       border-radius: 12px; border-left: 4px solid #2E75B6;
-                       font-size: 0.95em; line-height: 1.5; }
-        .context-box .context-emoji { font-size: 1.5em; margin-right: 8px; vertical-align: middle; }
+        /* Formula cards */
+        .formula-row { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin: 12px 0; }
+        .formula-card { padding: 8px 16px; border-radius: 20px; font-weight: 700; font-size: 0.82em;
+                       display: inline-block; }
+        .formula-card.acute { background: #E8F5E9; color: #2E7D32; }
+        .formula-card.right { background: #E3F2FD; color: #1565C0; }
+        .formula-card.obtuse { background: #FFF3E0; color: #E65100; }
+        .formula-card.straight { background: #FCE4EC; color: #C62828; }
         
-        .hint { color: #999; font-size: 0.85em; font-style: italic; margin: 4px 0 0 42px;
-                padding: 4px 8px; background: #fff8e1; border-radius: 6px; display: inline-block; }
-        
-        .mc-option { display: block; padding: 12px 16px; margin: 6px 0 6px 42px;
-                     width: calc(100% - 42px); background: #f8f9fa; border: 2px solid #e8e8e8;
-                     border-radius: 10px; cursor: pointer; transition: all 0.2s;
-                     font-size: 1em; font-family: 'Nunito', sans-serif; }
-        .mc-option:hover { background: #2E75B608; border-color: #2E75B644; transform: translateX(3px); }
-        .mc-option.selected { background: #2E75B615; border-color: #2E75B6; font-weight: 700; }
-        
-        .illustration { text-align: center; padding: 15px; margin: 10px 0; }
-        .illustration svg { max-width: 100%; }
-        
-        .formula-card { display: inline-block; background: linear-gradient(135deg, #667eea, #764ba2);
-                        color: white; padding: 10px 18px; border-radius: 10px;
-                        font-size: 1.1em; font-weight: 700; margin: 8px 4px;
-                        box-shadow: 0 3px 10px rgba(102,126,234,0.3); }
-        
-        .fun-fact { background: linear-gradient(135deg, #ffecd2, #fcb69f44);
-                   padding: 14px 16px; border-radius: 12px; margin: 10px 0;
-                   border-left: 4px solid #f093fb; font-size: 0.9em; }
-        .fun-fact::before { content: '💡 '; font-size: 1.2em; }
-        
-        .progress-bar { background: #e0e0e0; border-radius: 20px; height: 8px;
-                        margin: 15px 20px; overflow: hidden; }
-        .progress-fill { background: linear-gradient(90deg, #2E75B6, #4CAF50);
-                         height: 100%; border-radius: 20px; transition: width 0.5s;
-                         width: 0%; }
-        
-        .score-box { background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
-                    padding: 20px; border-radius: 16px; text-align: center;
-                    font-size: 1.2em; font-weight: 700; margin-top: 15px;
-                    color: #2E7D32; }
-        
+        /* Answer key */
         .answer-key { background: #fff9e6; padding: 20px; border-radius: 16px;
-                     margin: 20px 15px; border: 2px solid #f0c040; }
+                     margin: 20px 15px; border: 2px solid #f0c040; display: none; }
         .answer-key-header { display: flex; justify-content: space-between; align-items: center;
                             font-size: 1.2em; font-weight: 800; color: #8B6914;
                             margin-bottom: 15px; padding-bottom: 10px;
@@ -107,182 +103,324 @@
         .close-btn { background: none; border: 1px solid #ddd; padding: 5px 12px;
                     border-radius: 6px; cursor: pointer; font-size: 0.8em; color: #888; }
         .answer-btn { display: block; margin: 15px auto; padding: 14px 30px;
-                     background: linear-gradient(135deg, #1F4E79, #2E75B6);
+                     background: linear-gradient(135deg, #1565C0, #42A5F5);
                      color: white; border: none; border-radius: 12px;
                      font-size: 1em; font-weight: 700; cursor: pointer;
-                     font-family: 'Nunito', sans-serif;
-                     box-shadow: 0 3px 12px #2E75B644; transition: transform 0.2s; }
-        .answer-btn:hover { transform: translateY(-2px); }
+                     font-family: 'Nunito', sans-serif; box-shadow: 0 3px 12px #1565C044; }
         
-        @media print { .answer-btn, .answer-key, }
-    
-.work-wrapper { position: relative; }
-.work-tabs { display: flex; align-items: center; gap: 4px; margin-bottom: 6px; }
-.work-tab { padding: 6px 14px; border: 1.5px solid #e0e0e0; border-radius: 8px 8px 0 0;
-            background: #f5f5f5; cursor: pointer; font-family: 'Nunito', sans-serif;
-            font-size: 0.85em; font-weight: 600; color: #888; transition: all 0.2s; border-bottom: none; }
-.work-tab.active { background: white; color: #2E75B6; border-color: #2E75B6; }
-.draw-tools { display: flex; align-items: center; gap: 6px; margin-left: auto;
-              padding: 3px 8px; background: #f8f9fa; border-radius: 8px; }
-.tool-btn { background: none; border: 1.5px solid transparent; padding: 3px 6px;
-            border-radius: 6px; cursor: pointer; font-size: 1em; transition: all 0.2s; }
-.tool-btn.active { border-color: #2E75B6; background: #e8f0fe; }
-.tool-btn:hover { background: #e8e8e8; }
-.draw-panel canvas { display: block; }
-@media (max-width: 600px) {
-    .draw-tools { flex-wrap: wrap; gap: 4px; }
-    .work-tabs { flex-wrap: wrap; }
-}
-</style>
+        @media (max-width: 600px) {
+            .ref-grid { grid-template-columns: repeat(2, 1fr); }
+            .photo-context { flex-direction: column; text-align: center; }
+            .photo-context img { width: 100%; height: 120px; }
+        }
+    </style>
 </head>
 <body>
     <div class="hero">
         <div class="type-badge">📄 WORKSHEET</div>
-        <h1>Angle Explorer</h1>
+        <h1>🔍 Angle Explorer</h1>
         <p>Session 1 — Identify and measure angles in the real world</p>
     </div>
-    <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
+    
     <div class="content-area">
-        <div class="section"><div class="section-header"><span class="section-icon">📐</span>Part 1: Classify These Angles</div><div class="section-body"><div class="illustration"><svg width="300" height="150" viewBox="0 0 300 150">
-    <line x1="20" y1="120" x2="140" y2="120" stroke="#2E75B6" stroke-width="3"/>
-    <line x1="20" y1="120" x2="80" y2="30" stroke="#2E75B6" stroke-width="3"/>
-    <path d="M 50 120 A 30 30 0 0 1 38 95" fill="none" stroke="#E67E22" stroke-width="2.5"/>
-    <text x="52" y="108" fill="#E67E22" font-size="14" font-weight="bold">45°</text>
-    <text x="10" y="140" fill="#888" font-size="11">Acute Angle</text>
-    <line x1="170" y1="120" x2="280" y2="120" stroke="#2E75B6" stroke-width="3"/>
-    <line x1="170" y1="120" x2="170" y2="30" stroke="#2E75B6" stroke-width="3"/>
-    <rect x="170" y="100" width="18" height="18" fill="none" stroke="#E67E22" stroke-width="2"/>
-    <text x="195" y="108" fill="#E67E22" font-size="14" font-weight="bold">90°</text>
-    <text x="170" y="140" fill="#888" font-size="11">Right Angle</text>
-    </svg></div><div style="text-align:center; margin:10px 0;"><span class="formula-card">Acute: &lt; 90°</span><span class="formula-card">Right: = 90°</span><span class="formula-card">Obtuse: &gt; 90°</span><span class="formula-card">Straight: = 180°</span></div><div class="problem">
-        <div class="problem-header">
-            <span class="problem-num">1</span>
-            <span class="problem-text">An angle that measures 45°. Type: ____</span>
+        <!-- PART 1: Visual Reference + Classification -->
+        <div class="section">
+            <div class="section-header blue"><span class="icon">📐</span> Part 1: Know Your Angles</div>
+            <div class="section-body">
+                
+                <!-- Visual angle reference cards -->
+                <div class="ref-grid">
+                    <div class="ref-card">
+                        <svg width="70" height="60" viewBox="0 0 70 60">
+                            <line x1="10" y1="50" x2="60" y2="50" stroke="#42A5F5" stroke-width="2.5"/>
+                            <line x1="10" y1="50" x2="35" y2="10" stroke="#42A5F5" stroke-width="2.5"/>
+                            <path d="M 25 50 A 15 15 0 0 1 20 40" fill="none" stroke="#FF9800" stroke-width="2"/>
+                            <text x="28" y="45" fill="#FF9800" font-size="9" font-weight="bold">45°</text>
+                        </svg>
+                        <div class="label">Acute</div>
+                        <div class="sub">Less than 90°</div>
+                    </div>
+                    <div class="ref-card">
+                        <svg width="70" height="60" viewBox="0 0 70 60">
+                            <line x1="10" y1="50" x2="60" y2="50" stroke="#42A5F5" stroke-width="2.5"/>
+                            <line x1="10" y1="50" x2="10" y2="8" stroke="#42A5F5" stroke-width="2.5"/>
+                            <rect x="10" y="36" width="12" height="12" fill="none" stroke="#FF9800" stroke-width="1.5"/>
+                        </svg>
+                        <div class="label">Right</div>
+                        <div class="sub">Exactly 90°</div>
+                    </div>
+                    <div class="ref-card">
+                        <svg width="70" height="60" viewBox="0 0 70 60">
+                            <line x1="10" y1="50" x2="65" y2="50" stroke="#42A5F5" stroke-width="2.5"/>
+                            <line x1="10" y1="50" x2="55" y2="10" stroke="#42A5F5" stroke-width="2.5"/>
+                            <path d="M 25 50 A 15 15 0 0 1 24 35" fill="none" stroke="#FF9800" stroke-width="2"/>
+                            <text x="28" y="42" fill="#FF9800" font-size="8" font-weight="bold">120°</text>
+                        </svg>
+                        <div class="label">Obtuse</div>
+                        <div class="sub">90° to 180°</div>
+                    </div>
+                    <div class="ref-card">
+                        <svg width="70" height="60" viewBox="0 0 70 60">
+                            <line x1="5" y1="35" x2="65" y2="35" stroke="#42A5F5" stroke-width="2.5"/>
+                            <circle cx="35" cy="35" r="4" fill="#FF9800"/>
+                        </svg>
+                        <div class="label">Straight</div>
+                        <div class="sub">Exactly 180°</div>
+                    </div>
+                </div>
+                
+                <div class="formula-row">
+                    <span class="formula-card acute">Acute: &lt; 90°</span>
+                    <span class="formula-card right">Right: = 90°</span>
+                    <span class="formula-card obtuse">Obtuse: &gt; 90°</span>
+                    <span class="formula-card straight">Straight: = 180°</span>
+                </div>
+                
+                <p style="font-size:0.88em;color:#666;margin:10px 0 14px;text-align:center;">
+                    👆 Use the reference above to classify each angle below!
+                </p>
+                
+                <div class="problem">
+                    <div class="problem-header">
+                        <span class="problem-num">1</span>
+                        <span class="problem-text">An angle that measures <strong>45°</strong>. Type: ____</span>
+                    </div>
+                    <input type="text" class="answer-input" placeholder="Acute, right, obtuse, or straight?" />
+                </div>
+                <div class="problem">
+                    <div class="problem-header">
+                        <span class="problem-num">2</span>
+                        <span class="problem-text">An angle that measures <strong>90°</strong>. Type: ____</span>
+                    </div>
+                    <input type="text" class="answer-input" placeholder="Acute, right, obtuse, or straight?" />
+                </div>
+                <div class="problem">
+                    <div class="problem-header">
+                        <span class="problem-num">3</span>
+                        <span class="problem-text">An angle that measures <strong>120°</strong>. Type: ____</span>
+                    </div>
+                    <input type="text" class="answer-input" placeholder="Acute, right, obtuse, or straight?" />
+                </div>
+                <div class="problem">
+                    <div class="problem-header">
+                        <span class="problem-num">4</span>
+                        <span class="problem-text">An angle that measures <strong>180°</strong>. Type: ____</span>
+                    </div>
+                    <input type="text" class="answer-input" placeholder="Acute, right, obtuse, or straight?" />
+                </div>
+                <div class="problem">
+                    <div class="problem-header">
+                        <span class="problem-num">5</span>
+                        <span class="problem-text">An angle that measures <strong>15°</strong>. Type: ____</span>
+                    </div>
+                    <input type="text" class="answer-input" placeholder="Acute, right, obtuse, or straight?" />
+                </div>
+                <div class="problem">
+                    <div class="problem-header">
+                        <span class="problem-num">6</span>
+                        <span class="problem-text">An angle that measures <strong>89°</strong>. Type: ____</span>
+                    </div>
+                    <input type="text" class="answer-input" placeholder="Acute, right, obtuse, or straight?" />
+                </div>
+                <div class="problem">
+                    <div class="problem-header">
+                        <span class="problem-num">7</span>
+                        <span class="problem-text">An angle that measures <strong>91°</strong>. Type: ____</span>
+                    </div>
+                    <input type="text" class="answer-input" placeholder="Acute, right, obtuse, or straight?" />
+                </div>
+                <div class="problem">
+                    <div class="problem-header">
+                        <span class="problem-num">8</span>
+                        <span class="problem-text">An angle that measures <strong>175°</strong>. Type: ____</span>
+                    </div>
+                    <input type="text" class="answer-input" placeholder="Acute, right, obtuse, or straight?" />
+                </div>
+            </div>
         </div>
         
-        <input type="text" class="answer-input" placeholder="Your answer..." />
-    </div><div class="problem">
-        <div class="problem-header">
-            <span class="problem-num">2</span>
-            <span class="problem-text">An angle that measures 90°. Type: ____</span>
+        <!-- PART 2: Pizza Angles -->
+        <div class="section">
+            <div class="section-header orange"><span class="icon">🍕</span> Part 2: Pizza Math</div>
+            <div class="section-body">
+                <div class="photo-context">
+                    <svg width="90" height="90" viewBox="0 0 90 90">
+                        <circle cx="45" cy="45" r="40" fill="#F4A460"/>
+                        <circle cx="45" cy="45" r="38" fill="#FFD700" opacity="0.3"/>
+                        <!-- Pizza slices -->
+                        <line x1="45" y1="45" x2="45" y2="5" stroke="#8B4513" stroke-width="1.5"/>
+                        <line x1="45" y1="45" x2="73" y2="17" stroke="#8B4513" stroke-width="1.5"/>
+                        <line x1="45" y1="45" x2="85" y2="45" stroke="#8B4513" stroke-width="1.5"/>
+                        <line x1="45" y1="45" x2="73" y2="73" stroke="#8B4513" stroke-width="1.5"/>
+                        <line x1="45" y1="45" x2="45" y2="85" stroke="#8B4513" stroke-width="1.5"/>
+                        <line x1="45" y1="45" x2="17" y2="73" stroke="#8B4513" stroke-width="1.5"/>
+                        <line x1="45" y1="45" x2="5" y2="45" stroke="#8B4513" stroke-width="1.5"/>
+                        <line x1="45" y1="45" x2="17" y2="17" stroke="#8B4513" stroke-width="1.5"/>
+                        <!-- Pepperoni -->
+                        <circle cx="55" cy="25" r="4" fill="#C0392B"/>
+                        <circle cx="30" cy="35" r="3.5" fill="#C0392B"/>
+                        <circle cx="60" cy="55" r="4" fill="#C0392B"/>
+                        <circle cx="35" cy="65" r="3.5" fill="#C0392B"/>
+                        <circle cx="55" cy="70" r="3" fill="#C0392B"/>
+                        <circle cx="25" cy="50" r="3" fill="#C0392B"/>
+                        <!-- Angle marker on one slice -->
+                        <path d="M 52 45 A 7 7 0 0 0 45 38" fill="none" stroke="#E65100" stroke-width="2"/>
+                        <text x="48" y="36" fill="#E65100" font-size="8" font-weight="bold">?°</text>
+                    </svg>
+                    <div class="text">
+                        <h4>🍕 A whole pizza cut into 8 equal slices</h4>
+                        <p>A full circle = 360°. If you divide it equally into slices, each slice is the same angle. Think: 360° ÷ number of slices!</p>
+                    </div>
+                </div>
+                
+                <div class="problem">
+                    <div class="problem-header">
+                        <span class="problem-num">9</span>
+                        <span class="problem-text">What is the angle of <strong>each pizza slice</strong>?</span>
+                    </div>
+                    <div class="hint">💡 360° ÷ 8 slices = ?</div>
+                    <textarea class="work-area" placeholder="Show your work here..."></textarea>
+                    <input type="text" class="answer-input" placeholder="Your answer..." />
+                </div>
+                <div class="problem">
+                    <div class="problem-header">
+                        <span class="problem-num">10</span>
+                        <span class="problem-text">If you eat <strong>3 slices</strong>, what angle does the <strong>remaining pizza</strong> form?</span>
+                    </div>
+                    <div class="hint">💡 5 remaining slices × angle per slice = ?</div>
+                    <textarea class="work-area" placeholder="Show your work here..."></textarea>
+                    <input type="text" class="answer-input" placeholder="Your answer..." />
+                </div>
+            </div>
         </div>
         
-        <input type="text" class="answer-input" placeholder="Your answer..." />
-    </div><div class="problem">
-        <div class="problem-header">
-            <span class="problem-num">3</span>
-            <span class="problem-text">An angle that measures 120°. Type: ____</span>
+        <!-- PART 3: Clock Angles -->
+        <div class="section">
+            <div class="section-header green"><span class="icon">🕐</span> Part 3: Clock Angles</div>
+            <div class="section-body">
+                <div class="photo-context">
+                    <svg width="90" height="90" viewBox="0 0 90 90">
+                        <!-- Clock face -->
+                        <circle cx="45" cy="45" r="40" fill="white" stroke="#333" stroke-width="2"/>
+                        <!-- Hour marks -->
+                        <line x1="45" y1="8" x2="45" y2="15" stroke="#333" stroke-width="2"/>
+                        <line x1="45" y1="75" x2="45" y2="82" stroke="#333" stroke-width="2"/>
+                        <line x1="8" y1="45" x2="15" y2="45" stroke="#333" stroke-width="2"/>
+                        <line x1="75" y1="45" x2="82" y2="45" stroke="#333" stroke-width="2"/>
+                        <!-- 3:00 hands -->
+                        <line x1="45" y1="45" x2="45" y2="16" stroke="#333" stroke-width="3" stroke-linecap="round"/>
+                        <line x1="45" y1="45" x2="76" y2="45" stroke="#1565C0" stroke-width="2.5" stroke-linecap="round"/>
+                        <!-- Center dot -->
+                        <circle cx="45" cy="45" r="3" fill="#333"/>
+                        <!-- Angle arc -->
+                        <path d="M 55 45 A 10 10 0 0 0 45 35" fill="none" stroke="#FF9800" stroke-width="2"/>
+                        <!-- Numbers -->
+                        <text x="42" y="26" font-size="8" fill="#666" font-weight="600">12</text>
+                        <text x="69" y="48" font-size="8" fill="#666" font-weight="600">3</text>
+                        <text x="43" y="72" font-size="8" fill="#666" font-weight="600">6</text>
+                        <text x="17" y="48" font-size="8" fill="#666" font-weight="600">9</text>
+                    </svg>
+                    <div class="text">
+                        <h4>⏰ Clock hands create angles!</h4>
+                        <p>A clock face is a circle (360°). There are 12 hours, so each hour mark is <strong>30°</strong> apart. The angle between the hands depends on how many hour marks apart they are.</p>
+                    </div>
+                </div>
+                
+                <div class="problem">
+                    <div class="problem-header">
+                        <span class="problem-num">11</span>
+                        <span class="problem-text">What angle do the hands make at <strong>3:00</strong>?</span>
+                    </div>
+                    <div class="hint">💡 How many hour marks from 12 to 3?</div>
+                    <input type="text" class="answer-input" placeholder="Your answer..." />
+                </div>
+                <div class="problem">
+                    <div class="problem-header">
+                        <span class="problem-num">12</span>
+                        <span class="problem-text">What angle do the hands make at <strong>6:00</strong>?</span>
+                    </div>
+                    <input type="text" class="answer-input" placeholder="Your answer..." />
+                </div>
+                <div class="problem">
+                    <div class="problem-header">
+                        <span class="problem-num">13</span>
+                        <span class="problem-text">What angle do the hands make at <strong>1:00</strong>?</span>
+                    </div>
+                    <div class="hint">💡 1 hour mark × 30° = ?</div>
+                    <textarea class="work-area" placeholder="Show your work here..."></textarea>
+                    <input type="text" class="answer-input" placeholder="Your answer..." />
+                </div>
+                
+                <div class="fun-fact">
+                    <span class="emoji">🤯</span> <strong>Fun fact:</strong> A full rotation is 360°. Ancient Babylonians chose 360 because it has tons of factors (1, 2, 3, 4, 5, 6, 8, 9, 10, 12...) making it easy to divide evenly!
+                </div>
+            </div>
         </div>
         
-        <input type="text" class="answer-input" placeholder="Your answer..." />
-    </div><div class="problem">
-        <div class="problem-header">
-            <span class="problem-num">4</span>
-            <span class="problem-text">An angle that measures 180°. Type: ____</span>
+        <!-- PART 4: Scissors Angles -->
+        <div class="section">
+            <div class="section-header blue"><span class="icon">✂️</span> Part 4: Angles All Around You</div>
+            <div class="section-body">
+                <div class="photo-context">
+                    <svg width="90" height="90" viewBox="0 0 90 90">
+                        <!-- Scissors -->
+                        <line x1="45" y1="75" x2="20" y2="15" stroke="#555" stroke-width="4" stroke-linecap="round"/>
+                        <line x1="45" y1="75" x2="75" y2="25" stroke="#555" stroke-width="4" stroke-linecap="round"/>
+                        <!-- Handles -->
+                        <ellipse cx="15" cy="10" rx="10" ry="7" fill="none" stroke="#E65100" stroke-width="2.5" transform="rotate(-25 15 10)"/>
+                        <ellipse cx="78" cy="20" rx="10" ry="7" fill="none" stroke="#E65100" stroke-width="2.5" transform="rotate(25 78 20)"/>
+                        <!-- Pivot -->
+                        <circle cx="45" cy="75" r="4" fill="#888"/>
+                        <!-- Angle arc -->
+                        <path d="M 50 65 A 12 12 0 0 1 37 65" fill="none" stroke="#FF9800" stroke-width="2.5"/>
+                        <text x="38" y="62" fill="#FF9800" font-size="9" font-weight="bold">40°</text>
+                    </svg>
+                    <div class="text">
+                        <h4>✂️ Scissors create angles!</h4>
+                        <p>When scissors open, the blades form an angle at the pivot point. The wider they open, the bigger the angle.</p>
+                    </div>
+                </div>
+                
+                <div class="problem">
+                    <div class="problem-header">
+                        <span class="problem-num">14</span>
+                        <span class="problem-text">If scissors are open to a <strong>40° angle</strong>, is this acute, right, or obtuse?</span>
+                    </div>
+                    <input type="text" class="answer-input" placeholder="Your answer..." />
+                </div>
+                <div class="problem">
+                    <div class="problem-header">
+                        <span class="problem-num">15</span>
+                        <span class="problem-text">If scissors are fully open at <strong>170°</strong>, what type of angle is this?</span>
+                    </div>
+                    <input type="text" class="answer-input" placeholder="Your answer..." />
+                </div>
+            </div>
         </div>
-        
-        <input type="text" class="answer-input" placeholder="Your answer..." />
-    </div><div class="problem">
-        <div class="problem-header">
-            <span class="problem-num">5</span>
-            <span class="problem-text">An angle that measures 15°. Type: ____</span>
-        </div>
-        
-        <input type="text" class="answer-input" placeholder="Your answer..." />
-    </div><div class="problem">
-        <div class="problem-header">
-            <span class="problem-num">6</span>
-            <span class="problem-text">An angle that measures 89°. Type: ____</span>
-        </div>
-        
-        <input type="text" class="answer-input" placeholder="Your answer..." />
-    </div><div class="problem">
-        <div class="problem-header">
-            <span class="problem-num">7</span>
-            <span class="problem-text">An angle that measures 91°. Type: ____</span>
-        </div>
-        
-        <input type="text" class="answer-input" placeholder="Your answer..." />
-    </div><div class="problem">
-        <div class="problem-header">
-            <span class="problem-num">8</span>
-            <span class="problem-text">An angle that measures 175°. Type: ____</span>
-        </div>
-        
-        <input type="text" class="answer-input" placeholder="Your answer..." />
-    </div></div></div><div class="section"><div class="section-header"><span class="section-icon">🍕</span>Part 2: Real-World Angles</div><div class="section-body"><div class="context-box"><span class="context-emoji">🍕</span> A whole pizza is cut into 8 equal slices. Think about the angle each slice makes!</div><div class="problem">
-        <div class="problem-header">
-            <span class="problem-num">9</span>
-            <span class="problem-text">What is the angle of each pizza slice?</span>
-        </div>
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-input" placeholder="Your answer..." />
-    </div><div class="problem">
-        <div class="problem-header">
-            <span class="problem-num">10</span>
-            <span class="problem-text">If you eat 3 slices, what angle does the remaining pizza form?</span>
-        </div>
-        <textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-input" placeholder="Your answer..." />
-    </div><div class="context-box"><span class="context-emoji">🕐</span> Think about a clock face. The hands move in angles!</div><div class="problem">
-        <div class="problem-header">
-            <span class="problem-num">11</span>
-            <span class="problem-text">What angle do the hands make at 3:00?</span>
-        </div>
-        
-        <input type="text" class="answer-input" placeholder="Your answer..." />
-    </div><div class="problem">
-        <div class="problem-header">
-            <span class="problem-num">12</span>
-            <span class="problem-text">What angle do the hands make at 6:00?</span>
-        </div>
-        
-        <input type="text" class="answer-input" placeholder="Your answer..." />
-    </div><div class="problem">
-        <div class="problem-header">
-            <span class="problem-num">13</span>
-            <span class="problem-text">What angle do the hands make at 1:00?</span>
-        </div>
-        <div class="hint">💡 Each hour mark = 30°</div><textarea class="work-area" placeholder="Show your work here..."></textarea>
-        <input type="text" class="answer-input" placeholder="Your answer..." />
-    </div><div class="fun-fact">A full rotation is 360° — that's why a circle has 360 degrees! Ancient Babylonians chose 360 because it has lots of factors.</div><div class="context-box"><span class="context-emoji">✂️</span> A pair of scissors opens to different widths, creating different angles.</div><div class="problem">
-        <div class="problem-header">
-            <span class="problem-num">14</span>
-            <span class="problem-text">If scissors are open to a 40° angle, is this acute, right, or obtuse?</span>
-        </div>
-        
-        <input type="text" class="answer-input" placeholder="Your answer..." />
-    </div><div class="problem">
-        <div class="problem-header">
-            <span class="problem-num">15</span>
-            <span class="problem-text">If scissors are fully open at 170°, what type of angle is this?</span>
-        </div>
-        
-        <input type="text" class="answer-input" placeholder="Your answer..." />
-    </div></div></div>
     </div>
     
-    <div id="pinOverlay" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0;
-         background:rgba(0,0,0,0.7); z-index:1000; display:none; align-items:center; justify-content:center;">
+    <!-- Submit -->
+    <div style="text-align:center; margin: 30px 20px;">
+        <button id="submitBtn" onclick="doSubmit()" style="background:linear-gradient(135deg,#4CAF50,#388E3C); color:white; border:none; padding:14px 40px; border-radius:12px; font-size:1.1em; font-weight:700; font-family:Nunito,sans-serif; cursor:pointer; box-shadow:0 4px 15px rgba(76,175,80,0.3);">📤 Submit Worksheet</button>
+        <div id="submitMsg" style="margin-top:10px; font-weight:600;"></div>
+    </div>
+    
+    <!-- Answer Key -->
+    <div id="pinOverlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:1000; align-items:center; justify-content:center;">
         <div style="background:white; padding:30px; border-radius:16px; text-align:center; max-width:320px; margin:20px;">
             <div style="font-size:2em; margin-bottom:10px;">🔒</div>
-            <h3 style="color:#1F4E79; margin-bottom:15px;">Teacher Access</h3>
+            <h3 style="color:#1565C0; margin-bottom:15px;">Teacher Access</h3>
             <p style="color:#666; font-size:0.9em; margin-bottom:15px;">Enter today's PIN to view answer key</p>
             <input type="number" id="pinInput" placeholder="Enter PIN"
                    style="width:120px; padding:12px; font-size:1.3em; text-align:center;
-                          border:2px solid #ddd; border-radius:8px; outline:none;"
-                   oninput="checkPin()" />
+                          border:2px solid #ddd; border-radius:8px; outline:none;" oninput="checkPin()" />
             <p id="pinError" style="color:#E74C3C; font-size:0.85em; margin-top:8px; display:none;">Incorrect PIN</p>
             <br><button onclick="closePinDialog()" style="margin-top:10px; padding:8px 20px;
                    background:none; border:1px solid #ddd; border-radius:6px; cursor:pointer; color:#888;">Cancel</button>
         </div>
     </div>
     
-    <div style="text-align:center; margin: 30px 20px;">
-        <button id="submitBtn" onclick="doSubmit()" style="background:linear-gradient(135deg,#4CAF50,#388E3C); color:white; border:none; padding:14px 40px; border-radius:12px; font-size:1.1em; font-weight:700; font-family:Nunito,sans-serif; cursor:pointer; box-shadow:0 4px 15px rgba(76,175,80,0.3);">📤 Submit Worksheet</button>
-        <div id="submitMsg" style="margin-top:10px; font-weight:600;"></div>
-    </div>
-<div class="answer-key" style="display:none;" id="answerKey">
+    <div class="answer-key" id="answerKey">
         <div class="answer-key-header">
             <span>🔑 Answer Key</span>
             <button onclick="hideAnswers()" class="close-btn">✕ Hide</button>
@@ -294,24 +432,21 @@
 <p><strong>14.</strong> Acute | <strong>15.</strong> Obtuse</p>
     </div>
     <button class="answer-btn" id="showAnswerBtn" onclick="showPinDialog()">🔒 Answer Key (Teacher Only)</button>
+    
     <script>
         function showPinDialog() {
             document.getElementById('pinOverlay').style.display = 'flex';
             document.getElementById('pinInput').value = '';
-            document.getElementById('pinInput').focus();
             document.getElementById('pinError').style.display = 'none';
+            document.getElementById('pinInput').focus();
         }
-        function closePinDialog() {
-            document.getElementById('pinOverlay').style.display = 'none';
-        }
+        function closePinDialog() { document.getElementById('pinOverlay').style.display = 'none'; }
         function checkPin() {
             const pin = document.getElementById('pinInput').value;
-            const today = new Date().getDate().toString();
-            if (pin === today) {
+            if (pin.length >= 1 && parseInt(pin) === new Date().getDate()) {
                 document.getElementById('pinOverlay').style.display = 'none';
                 document.getElementById('answerKey').style.display = 'block';
                 document.getElementById('showAnswerBtn').style.display = 'none';
-                window.scrollTo(0, document.body.scrollHeight);
             } else if (pin.length >= 2) {
                 document.getElementById('pinError').style.display = 'block';
             }
@@ -321,282 +456,47 @@
             document.getElementById('showAnswerBtn').style.display = 'block';
         }
     </script>
+    
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="../firebase-config.js?v=5"></script>
+    <script src="../grade-sync.js?v=5"></script>
+    
     <script>
-        // Track progress
-        const inputs = document.querySelectorAll('.answer-input, .mc-option.selected');
-        function updateProgress() {
-            const all = document.querySelectorAll('.answer-input');
-            const filled = Array.from(all).filter(i => i.value.trim() !== '').length;
-            const pct = all.length > 0 ? (filled / all.length * 100) : 0;
-            document.getElementById('progressBar').style.width = pct + '%';
-        }
-        document.querySelectorAll('.answer-input').forEach(i => i.addEventListener('input', updateProgress));
-        
-        // MC selection
-        document.querySelectorAll('.mc-option').forEach(opt => {
-            opt.addEventListener('click', function() {
-                this.parentElement.querySelectorAll('.mc-option').forEach(o => o.classList.remove('selected'));
-                this.classList.add('selected');
-                updateProgress();
-            });
-        });
-    </script>
-<script>
-// Drawing Canvas System
-(function() {
-    let canvasId = 0;
-    
-    // Replace all work-area textareas with hybrid draw+type areas
-    document.querySelectorAll('.work-area').forEach(ta => {
-        const id = 'canvas_' + (canvasId++);
-        const wrapper = document.createElement('div');
-        wrapper.className = 'work-wrapper';
-        wrapper.style.cssText = 'margin:8px 0 5px 42px; width:calc(100% - 42px);';
-        
-        wrapper.innerHTML = `
-            <div class="work-tabs">
-                <button class="work-tab active" onclick="switchWorkTab(this,'draw')">✏️ Draw</button>
-                <button class="work-tab" onclick="switchWorkTab(this,'type')">⌨️ Type</button>
-                <div class="draw-tools" id="tools_${id}">
-                    <button class="tool-btn active" onclick="setTool(this,'${id}','pen')" title="Pen">🖊️</button>
-                    <button class="tool-btn" onclick="setTool(this,'${id}','eraser')" title="Eraser">🧽</button>
-                    <input type="color" value="#333333" onchange="setColor('${id}',this.value)" 
-                           style="width:28px;height:28px;border:none;border-radius:4px;cursor:pointer;" title="Color"/>
-                    <select onchange="setSize('${id}',this.value)" style="padding:2px 4px;border-radius:4px;border:1px solid #ddd;font-size:0.8em;">
-                        <option value="2">Fine</option>
-                        <option value="3" selected>Medium</option>
-                        <option value="5">Thick</option>
-                    </select>
-                    <button class="tool-btn" onclick="undoDraw('${id}')" title="Undo">↩️</button>
-                    <button class="tool-btn" onclick="clearCanvas('${id}')" title="Clear All">🗑️</button>
-                </div>
-            </div>
-            <div class="draw-panel" id="drawPanel_${id}">
-                <canvas id="${id}" width="600" height="160" 
-                        style="width:100%;border:1.5px solid #e0e0e0;border-radius:8px;
-                               background:white;touch-action:none;cursor:crosshair;"></canvas>
-            </div>
-            <div class="type-panel" id="typePanel_${id}" style="display:none;">
-                <textarea class="work-area-text" placeholder="Type your work here..."
-                          style="width:100%;min-height:80px;border:1.5px solid #e0e0e0;border-radius:8px;
-                                 padding:10px;font-family:Nunito,sans-serif;font-size:0.9em;resize:vertical;
-                                 outline:none;color:#444;"></textarea>
-            </div>
-        `;
-        
-        ta.parentNode.replaceChild(wrapper, ta);
-        
-        // Initialize canvas
-        setTimeout(() => initCanvas(id), 50);
-    });
-    
-    // Canvas state storage
-    window._canvasState = {};
-    
-    window.initCanvas = function(id) {
-        const canvas = document.getElementById(id);
-        if (!canvas) return;
-        const ctx = canvas.getContext('2d');
-        
-        // Set actual pixel size based on display size
-        const rect = canvas.getBoundingClientRect();
-        canvas.width = rect.width * 2;
-        canvas.height = rect.height * 2;
-        ctx.scale(2, 2);
-        
-        const state = {
-            drawing: false,
-            tool: 'pen',
-            color: '#333333',
-            size: 3,
-            history: [],
-            ctx: ctx,
-            canvas: canvas,
-            lastX: 0, lastY: 0
-        };
-        window._canvasState[id] = state;
-        
-        // Save initial blank state
-        saveHistory(id);
-        
-        // Pointer events (works with touch, pencil, and mouse)
-        canvas.addEventListener('pointerdown', e => startDraw(e, id));
-        canvas.addEventListener('pointermove', e => draw(e, id));
-        canvas.addEventListener('pointerup', e => endDraw(e, id));
-        canvas.addEventListener('pointerleave', e => endDraw(e, id));
-        
-        // Prevent scroll while drawing
-        canvas.addEventListener('touchstart', e => e.preventDefault(), {passive: false});
-        canvas.addEventListener('touchmove', e => e.preventDefault(), {passive: false});
-    };
-    
-    function getPos(e, canvas) {
-        const rect = canvas.getBoundingClientRect();
-        return {
-            x: (e.clientX - rect.left),
-            y: (e.clientY - rect.top)
-        };
-    }
-    
-    window.startDraw = function(e, id) {
-        const s = window._canvasState[id];
-        s.drawing = true;
-        const pos = getPos(e, s.canvas);
-        s.lastX = pos.x;
-        s.lastY = pos.y;
-        s.ctx.beginPath();
-        s.ctx.moveTo(pos.x, pos.y);
-    };
-    
-    window.draw = function(e, id) {
-        const s = window._canvasState[id];
-        if (!s.drawing) return;
-        const pos = getPos(e, s.canvas);
-        
-        s.ctx.lineWidth = s.tool === 'eraser' ? s.size * 4 : s.size;
-        s.ctx.lineCap = 'round';
-        s.ctx.lineJoin = 'round';
-        s.ctx.strokeStyle = s.tool === 'eraser' ? '#ffffff' : s.color;
-        s.ctx.globalCompositeOperation = s.tool === 'eraser' ? 'destination-out' : 'source-over';
-        
-        // Use pressure for Apple Pencil if available
-        if (e.pressure && e.pressure > 0 && e.pressure < 1) {
-            s.ctx.lineWidth *= (0.5 + e.pressure);
-        }
-        
-        s.ctx.lineTo(pos.x, pos.y);
-        s.ctx.stroke();
-        s.ctx.beginPath();
-        s.ctx.moveTo(pos.x, pos.y);
-        s.lastX = pos.x;
-        s.lastY = pos.y;
-    };
-    
-    window.endDraw = function(e, id) {
-        const s = window._canvasState[id];
-        if (s.drawing) {
-            s.drawing = false;
-            s.ctx.globalCompositeOperation = 'source-over';
-            saveHistory(id);
-        }
-    };
-    
-    function saveHistory(id) {
-        const s = window._canvasState[id];
-        const imgData = s.canvas.toDataURL();
-        s.history.push(imgData);
-        if (s.history.length > 20) s.history.shift(); // limit memory
-    }
-    
-    window.undoDraw = function(id) {
-        const s = window._canvasState[id];
-        if (s.history.length > 1) {
-            s.history.pop();
-            const img = new Image();
-            img.onload = () => {
-                s.ctx.clearRect(0, 0, s.canvas.width/2, s.canvas.height/2);
-                s.ctx.drawImage(img, 0, 0, s.canvas.width/2, s.canvas.height/2);
-            };
-            img.src = s.history[s.history.length - 1];
-        }
-    };
-    
-    window.clearCanvas = function(id) {
-        const s = window._canvasState[id];
-        s.ctx.clearRect(0, 0, s.canvas.width/2, s.canvas.height/2);
-        saveHistory(id);
-    };
-    
-    window.setTool = function(btn, id, tool) {
-        window._canvasState[id].tool = tool;
-        btn.parentElement.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const canvas = document.getElementById(id);
-        canvas.style.cursor = tool === 'eraser' ? 'cell' : 'crosshair';
-    };
-    
-    window.setColor = function(id, color) {
-        window._canvasState[id].color = color;
-    };
-    
-    window.setSize = function(id, size) {
-        window._canvasState[id].size = parseInt(size);
-    };
-    
-    window.switchWorkTab = function(btn, mode) {
-        const wrapper = btn.closest('.work-wrapper');
-        wrapper.querySelectorAll('.work-tab').forEach(t => t.classList.remove('active'));
-        btn.classList.add('active');
-        
-        const drawPanel = wrapper.querySelector('[id^="drawPanel_"]');
-        const typePanel = wrapper.querySelector('[id^="typePanel_"]');
-        const tools = wrapper.querySelector('[id^="tools_"]');
-        
-        if (mode === 'draw') {
-            drawPanel.style.display = 'block';
-            typePanel.style.display = 'none';
-            tools.style.display = 'flex';
-            // Resize canvas on show
-            const canvasEl = drawPanel.querySelector('canvas');
-            if (canvasEl && window._canvasState[canvasEl.id]) {
-                const rect = canvasEl.getBoundingClientRect();
-                if (rect.width > 0) {
-                    // Don't resize if already initialized properly
-                }
+    async function doSubmit() {
+        const btn = document.getElementById('submitBtn');
+        const msg = document.getElementById('submitMsg');
+        btn.disabled = true; btn.textContent = '⏳ Submitting...';
+        try {
+            const inputs = document.querySelectorAll('input[type="text"], textarea');
+            const filled = Array.from(inputs).filter(i => i.value.trim() !== '' && !i.closest('.answer-key')).length;
+            const total = Array.from(inputs).filter(i => !i.closest('.answer-key')).length;
+            const score = total > 0 ? Math.round((filled / total) * 100 * 10) / 10 : 0;
+            const result = await submitScore('w01', score, { filled, total, type: 'completion' });
+            if (result) {
+                msg.textContent = '✅ Submitted! Your teacher will see your work.';
+                msg.style.color = '#5B8C5A';
+                btn.textContent = '✓ Submitted';
+            } else {
+                msg.textContent = '⚠️ Could not submit — make sure you are logged in.';
+                msg.style.color = '#D35400';
+                btn.disabled = false; btn.textContent = '📤 Submit Worksheet';
             }
-        } else {
-            drawPanel.style.display = 'none';
-            typePanel.style.display = 'block';
-            tools.style.display = 'none';
-        }
-    };
-})();
-</script>
-
-<!-- Firebase SDK -->
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-<script src="../firebase-config.js?v=5"></script>
-<script src="../grade-sync.js?v=5"></script>
-
-<script>
-async function doSubmit() {
-    const btn = document.getElementById('submitBtn');
-    const msg = document.getElementById('submitMsg');
-    btn.disabled = true; btn.textContent = '⏳ Submitting...';
-    
-    // Count filled inputs
-    const inputs = document.querySelectorAll('input[type="text"], textarea, select');
-    const filled = Array.from(inputs).filter(i => i.value.trim() !== '').length;
-    const total = inputs.length;
-    const score = total > 0 ? Math.round((filled / total) * 100 * 10) / 10 : 0;
-    
-    try {
-        const result = await submitScore('w01', score, { filled, total, type: 'completion' });
-        if (result) {
-            msg.textContent = '✅ Submitted! Your teacher will see your work.';
-            msg.style.color = '#5B8C5A';
-            btn.textContent = '✓ Submitted';
-        } else {
-            msg.textContent = '⚠️ Could not submit — make sure you are logged in.';
+        } catch(e) {
+            msg.textContent = '⚠️ Error submitting. Try again.';
             msg.style.color = '#D35400';
             btn.disabled = false; btn.textContent = '📤 Submit Worksheet';
         }
-    } catch(e) {
-        msg.textContent = '⚠️ Error submitting. Try again.';
-        msg.style.color = '#D35400';
-        btn.disabled = false; btn.textContent = '📤 Submit Worksheet';
     }
-}
-</script>
-
-<script>
-// Hide answer key for students
-if (localStorage.getItem('math_current_user')) {
-    const akBtn = document.getElementById('showAnswerBtn');
-    if (akBtn) akBtn.style.display = 'none';
-}
-</script>
+    </script>
+    <script>
+    // Hide answer key for students
+    if (localStorage.getItem('math_current_user')) {
+        const akBtn = document.getElementById('showAnswerBtn');
+        if (akBtn) akBtn.style.display = 'none';
+    }
+    </script>
 </body>
 </html>
