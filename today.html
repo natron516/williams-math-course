@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Today's Lesson</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Playfair+Display:wght@700&display=swap');
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Nunito', sans-serif; background: #FAF5F7; min-height: 100vh; padding: 20px; }
+        .card { max-width: 420px; margin: 20px auto; background: white; border-radius: 20px;
+               box-shadow: 0 2px 12px rgba(0,0,0,0.06); overflow: hidden; }
+        .header { background: linear-gradient(135deg, #8B5E83, #C06C84); color: white; padding: 24px 20px;
+                 text-align: center; }
+        .header h1 { font-family: 'Playfair Display', serif; font-size: 1.4em; }
+        .header p { opacity: 0.85; font-size: 0.88em; margin-top: 4px; }
+        .body { padding: 20px; }
+        .info { text-align: center; margin-bottom: 18px; }
+        .session-num { font-size: 0.78em; font-weight: 700; color: #C06C84; text-transform: uppercase;
+                      letter-spacing: 0.5px; }
+        .session-title { font-size: 1.3em; font-weight: 800; color: #333; margin: 4px 0; }
+        .session-meta { font-size: 0.85em; color: #999; }
+        .links { display: flex; flex-direction: column; gap: 10px; }
+        .link { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-radius: 14px;
+               text-decoration: none; color: #333; transition: all 0.15s; }
+        .link:active { transform: scale(0.98); }
+        .link .icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center;
+                    justify-content: center; font-size: 1.3em; flex-shrink: 0; }
+        .link .text { flex: 1; }
+        .link .label { font-weight: 800; font-size: 0.92em; }
+        .link .sub { font-size: 0.75em; color: #aaa; }
+        .link .arrow { color: #ccc; font-size: 1.2em; }
+        .link.lesson { background: #F3E5F5; }
+        .link.lesson .icon { background: #8B5E83; color: white; }
+        .link.ws { background: #E3F2FD; }
+        .link.ws .icon { background: #1565C0; color: white; }
+        .link.quiz { background: #FFF3E0; }
+        .link.quiz .icon { background: #E65100; color: white; }
+        .link.test { background: #FFEBEE; }
+        .link.test .icon { background: #C62828; color: white; }
+        .link.grades { background: #E8F5E9; }
+        .link.grades .icon { background: #2E7D32; color: white; }
+        .pin { text-align: center; margin-top: 16px; padding: 12px; background: #FFF9E6;
+              border-radius: 12px; font-size: 0.85em; color: #8B6914; }
+        .pin strong { font-size: 1.1em; }
+        .noclass { text-align: center; padding: 40px 20px; color: #999; }
+        .noclass .emoji { font-size: 3em; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="header">
+            <h1>🌸 Mrs. Williams' Math</h1>
+            <p id="dateStr"></p>
+        </div>
+        <div class="body" id="content"></div>
+    </div>
+    <script>
+    const BASE = '';
+    const SESSIONS = [
+        {d:'2026-03-16',s:1,t:'Intro to Angles',u:'Geometry',tm:'9:30–10:30',ws:'worksheets/W01_Angle_Explorer.html'},
+        {d:'2026-03-18',s:2,t:'Angle Relationships',u:'Geometry',tm:'9:30–10:30',ws:'worksheets/W02_Angle_Relationships.html'},
+        {d:'2026-03-19',s:3,t:'Triangles & Polygons',u:'Geometry',tm:'10:30–11:30',ws:'worksheets/W03_Shape_Detective.html',qz:'quizzes/Quiz_1_Angles_Shapes.html'},
+        {d:'2026-03-23',s:4,t:'Perimeter',u:'Geometry',tm:'9:30–10:30',ws:'worksheets/W04_Perimeter_Pro.html'},
+        {d:'2026-03-25',s:5,t:'Area: Rectangles & Triangles',u:'Geometry',tm:'9:30–10:30',ws:'worksheets/W05_Area_Architect.html'},
+        {d:'2026-03-26',s:6,t:'Area: Parallelograms',u:'Geometry',tm:'10:30–11:30',ws:'worksheets/W06_Shape_Shifter.html',qz:'quizzes/Quiz_2_Perimeter_Area.html'},
+        {d:'2026-03-30',s:7,t:'Circumference',u:'Geometry',tm:'9:30–10:30',ws:'worksheets/W07_Going_in_Circles.html'},
+        {d:'2026-04-01',s:8,t:'Circle Area',u:'Geometry',tm:'9:30–10:30',ws:'worksheets/W08_Area_of_the_Round.html'},
+        {d:'2026-04-02',s:9,t:'Composite Shapes',u:'Geometry',tm:'10:30–11:30',ws:'worksheets/W09_Blueprint_Builder.html',qz:'quizzes/Quiz_3_Circles_Composite.html'},
+        {d:'2026-04-20',s:10,t:'Volume of Prisms',u:'Geometry',tm:'9:30–10:30',ws:'worksheets/W10_Box_It_Up.html'},
+        {d:'2026-04-22',s:11,t:'Cylinders & Surface Area',u:'Geometry',tm:'9:30–10:30',ws:'worksheets/W11_Container_Challenge.html'},
+        {d:'2026-04-23',s:12,t:'Geometry Test',u:'Geometry',tm:'10:30–11:30',ts:'tests/Test_1_Geometry.html'},
+        {d:'2026-04-27',s:13,t:'Variables & Expressions',u:'Algebra',tm:'9:30–10:30',ws:'worksheets/W13_Expression_Station.html'},
+        {d:'2026-04-29',s:14,t:'Combining Like Terms',u:'Algebra',tm:'9:30–10:30',ws:'worksheets/W14_Like_Terms_Lineup.html'},
+        {d:'2026-04-30',s:15,t:'Order of Operations',u:'Algebra',tm:'10:30–11:30',ws:'worksheets/W15_Order_Up.html',qz:'quizzes/Quiz_4_Expressions.html'},
+        {d:'2026-05-04',s:16,t:'One-Step Equations (+/−)',u:'Algebra',tm:'9:30–10:30',ws:'worksheets/W16_Balance_It_Out.html'},
+        {d:'2026-05-06',s:17,t:'One-Step Equations (×/÷)',u:'Algebra',tm:'9:30–10:30',ws:'worksheets/W17_Fair_and_Square.html'},
+        {d:'2026-05-07',s:18,t:'Mixed Equations',u:'Algebra',tm:'10:30–11:30',ws:'worksheets/W18_Equation_Mix.html',qz:'quizzes/Quiz_5_One_Step_Equations.html'},
+        {d:'2026-05-11',s:19,t:'Two-Step Equations',u:'Algebra',tm:'9:30–10:30',ws:'worksheets/W19_Two_Steps_to_Go.html'},
+        {d:'2026-05-13',s:20,t:'Inequalities',u:'Algebra',tm:'9:30–10:30',ws:'worksheets/W20_More_or_Less.html'},
+        {d:'2026-05-14',s:21,t:'Review + Algebra Test',u:'Algebra',tm:'10:30–11:30',qz:'quizzes/Quiz_6_TwoStep_Inequalities.html',ts:'tests/Test_2_Algebra.html'},
+        {d:'2026-05-18',s:22,t:'Coordinate Plane',u:'Algebra',tm:'9:30–10:30',ws:'worksheets/W22_Plot_Twist.html'},
+        {d:'2026-05-20',s:23,t:'Linear Relationships',u:'Algebra',tm:'9:30–10:30',ws:'worksheets/W23_Connect_the_Data.html',qz:'quizzes/Quiz_7_Coordinate_Linear.html'},
+        {d:'2026-05-21',s:24,t:'Final Test',u:'Algebra',tm:'10:30–11:30',ts:'tests/Test_Final_Comprehensive.html'},
+    ];
+    
+    const now = new Date();
+    const today = now.toISOString().split('T')[0];
+    const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    document.getElementById('dateStr').textContent = `${days[now.getDay()]}, ${months[now.getMonth()]} ${now.getDate()}`;
+    
+    const session = SESSIONS.find(s => s.d === today);
+    const content = document.getElementById('content');
+    
+    if (session) {
+        let html = `<div class="info">
+            <div class="session-num">Session ${session.s}</div>
+            <div class="session-title">${session.t}</div>
+            <div class="session-meta">${session.u} · ${session.tm}</div>
+        </div><div class="links">`;
+        
+        html += `<a class="link lesson" href="lesson-plans.html#session-${session.s}">
+            <div class="icon">📋</div><div class="text"><div class="label">Lesson Plan</div><div class="sub">Teaching guide & examples</div></div><div class="arrow">›</div></a>`;
+        
+        if (session.ws) html += `<a class="link ws" href="${session.ws}">
+            <div class="icon">✏️</div><div class="text"><div class="label">Worksheet</div><div class="sub">Student activity</div></div><div class="arrow">›</div></a>`;
+        
+        if (session.qz) html += `<a class="link quiz" href="${session.qz}">
+            <div class="icon">📝</div><div class="text"><div class="label">Quiz</div><div class="sub">Assessment today</div></div><div class="arrow">›</div></a>`;
+        
+        if (session.ts) html += `<a class="link test" href="${session.ts}">
+            <div class="icon">🔴</div><div class="text"><div class="label">Test</div><div class="sub">Major assessment</div></div><div class="arrow">›</div></a>`;
+        
+        html += `<a class="link grades" href="gradebook.html">
+            <div class="icon">📈</div><div class="text"><div class="label">Grade Book</div><div class="sub">View & sync scores</div></div><div class="arrow">›</div></a>`;
+        
+        html += `</div><div class="pin">🔒 Answer Key PIN: <strong>${now.getDate()}</strong></div>`;
+        content.innerHTML = html;
+    } else {
+        // Find next class
+        const next = SESSIONS.find(s => s.d > today);
+        let msg = '<div class="noclass"><div class="emoji">☀️</div><h3>No class today!</h3>';
+        if (next) msg += `<p style="margin-top:8px;">Next: Session ${next.s} — ${next.t}<br>${next.d}</p>`;
+        msg += '</div>';
+        content.innerHTML = msg;
+    }
+    </script>
+</body>
+</html>
