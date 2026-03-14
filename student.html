@@ -111,20 +111,82 @@
             <h2>Welcome to Math Class!</h2>
             <p>Enter your name to get started. Your progress will be saved on this device.</p>
             <div style="max-width:350px; margin:20px auto;">
-                <input type="text" id="nameInput" placeholder="Enter your first & last name"
-                       style="width:100%; padding:14px 18px; font-size:1.1em; border:2px solid #ddd;
-                              border-radius:12px; font-family:'Nunito',sans-serif; text-align:center;
-                              outline:none; transition:border 0.2s;"
-                       onfocus="this.style.borderColor='#667eea'"
-                       onblur="this.style.borderColor='#ddd'"
-                       onkeydown="if(event.key==='Enter')nameLogin()" />
-                <button onclick="nameLogin()" style="width:100%; margin-top:12px; padding:14px;
-                        background:linear-gradient(135deg,#667eea,#764ba2); color:white; border:none;
-                        border-radius:12px; font-size:1.1em; font-weight:700; cursor:pointer;
-                        font-family:'Nunito',sans-serif; box-shadow:0 3px 12px rgba(102,126,234,0.3);
-                        transition:transform 0.2s;">
-                    Let's Go! 🚀
-                </button>
+                <!-- Sign In / Sign Up toggle -->
+                <div style="display:flex; margin-bottom:15px; border-radius:10px; overflow:hidden; border:2px solid #667eea;">
+                    <button id="tabSignIn" onclick="switchAuthTab('signin')" class="auth-tab active"
+                            style="flex:1; padding:10px; border:none; font-family:'Nunito',sans-serif;
+                                   font-weight:700; font-size:0.95em; cursor:pointer; transition:all 0.2s;
+                                   background:linear-gradient(135deg,#667eea,#764ba2); color:white;">
+                        Sign In
+                    </button>
+                    <button id="tabSignUp" onclick="switchAuthTab('signup')"
+                            style="flex:1; padding:10px; border:none; font-family:'Nunito',sans-serif;
+                                   font-weight:700; font-size:0.95em; cursor:pointer; transition:all 0.2s;
+                                   background:white; color:#667eea;">
+                        Create Account
+                    </button>
+                </div>
+
+                <!-- Sign In Form -->
+                <div id="signinForm">
+                    <input type="text" id="loginUser" placeholder="Username"
+                           style="width:100%; padding:14px 18px; font-size:1.05em; border:2px solid #ddd;
+                                  border-radius:12px 12px 0 0; font-family:'Nunito',sans-serif;
+                                  outline:none; transition:border 0.2s; border-bottom:1px solid #ddd;"
+                           onfocus="this.style.borderColor='#667eea'"
+                           onblur="this.style.borderColor='#ddd'" />
+                    <input type="password" id="loginPass" placeholder="Password"
+                           style="width:100%; padding:14px 18px; font-size:1.05em; border:2px solid #ddd;
+                                  border-radius:0 0 12px 12px; font-family:'Nunito',sans-serif;
+                                  outline:none; transition:border 0.2s; border-top:none;"
+                           onfocus="this.style.borderColor='#667eea'"
+                           onblur="this.style.borderColor='#ddd'"
+                           onkeydown="if(event.key==='Enter')doSignIn()" />
+                    <p id="loginError" style="color:#E74C3C; font-size:0.85em; margin-top:8px; display:none;"></p>
+                    <button onclick="doSignIn()" style="width:100%; margin-top:12px; padding:14px;
+                            background:linear-gradient(135deg,#667eea,#764ba2); color:white; border:none;
+                            border-radius:12px; font-size:1.1em; font-weight:700; cursor:pointer;
+                            font-family:'Nunito',sans-serif; box-shadow:0 3px 12px rgba(102,126,234,0.3);">
+                        Sign In 🔑
+                    </button>
+                </div>
+
+                <!-- Sign Up Form -->
+                <div id="signupForm" style="display:none;">
+                    <input type="text" id="regName" placeholder="Your full name (e.g. Jane Smith)"
+                           style="width:100%; padding:14px 18px; font-size:1.05em; border:2px solid #ddd;
+                                  border-radius:12px 12px 0 0; font-family:'Nunito',sans-serif;
+                                  outline:none; transition:border 0.2s; border-bottom:1px solid #ddd;"
+                           onfocus="this.style.borderColor='#667eea'"
+                           onblur="this.style.borderColor='#ddd'" />
+                    <input type="text" id="regUser" placeholder="Choose a username"
+                           style="width:100%; padding:14px 18px; font-size:1.05em; border:2px solid #ddd;
+                                  border-radius:0; font-family:'Nunito',sans-serif;
+                                  outline:none; transition:border 0.2s; border-top:none; border-bottom:1px solid #ddd;"
+                           onfocus="this.style.borderColor='#667eea'"
+                           onblur="this.style.borderColor='#ddd'" />
+                    <input type="password" id="regPass" placeholder="Choose a password"
+                           style="width:100%; padding:14px 18px; font-size:1.05em; border:2px solid #ddd;
+                                  border-radius:0; font-family:'Nunito',sans-serif;
+                                  outline:none; transition:border 0.2s; border-top:none; border-bottom:1px solid #ddd;"
+                           onfocus="this.style.borderColor='#667eea'"
+                           onblur="this.style.borderColor='#ddd'" />
+                    <input type="password" id="regPass2" placeholder="Confirm password"
+                           style="width:100%; padding:14px 18px; font-size:1.05em; border:2px solid #ddd;
+                                  border-radius:0 0 12px 12px; font-family:'Nunito',sans-serif;
+                                  outline:none; transition:border 0.2s; border-top:none;"
+                           onfocus="this.style.borderColor='#667eea'"
+                           onblur="this.style.borderColor='#ddd'"
+                           onkeydown="if(event.key==='Enter')doSignUp()" />
+                    <p id="regError" style="color:#E74C3C; font-size:0.85em; margin-top:8px; display:none;"></p>
+                    <button onclick="doSignUp()" style="width:100%; margin-top:12px; padding:14px;
+                            background:linear-gradient(135deg,#667eea,#764ba2); color:white; border:none;
+                            border-radius:12px; font-size:1.1em; font-weight:700; cursor:pointer;
+                            font-family:'Nunito',sans-serif; box-shadow:0 3px 12px rgba(102,126,234,0.3);">
+                        Create Account 🚀
+                    </button>
+                </div>
+                <p style="margin-top:15px; font-size:0.82em; color:#aaa;">Your account is saved on this device.</p>
             </div>
         </div>
         
@@ -252,19 +314,96 @@
     <script>
         let currentUser = null;
         const STORAGE_PREFIX = 'math_student_';
+        const ACCOUNTS_KEY = 'math_accounts';
         const EMOJIS = ['😊','🌟','🎯','🚀','💪','🧠','📐','✏️','🎨','⭐','🔥','💡','🌈','🎵','🦊','🐱','🐶','🐼','🦁','🐸','🐙','🦋','🌻','🍕'];
         
-        function nameLogin() {
-            const name = document.getElementById('nameInput').value.trim();
-            if (!name || name.length < 2) {
-                document.getElementById('nameInput').style.borderColor = '#E74C3C';
-                document.getElementById('nameInput').placeholder = 'Please enter your name!';
-                return;
+        function getAccounts() {
+            const saved = localStorage.getItem(ACCOUNTS_KEY);
+            return saved ? JSON.parse(saved) : {};
+        }
+        
+        function saveAccounts(accounts) {
+            localStorage.setItem(ACCOUNTS_KEY, JSON.stringify(accounts));
+        }
+        
+        // Simple hash for password (not crypto-grade, but fine for kids' homework tracker)
+        function simpleHash(str) {
+            let hash = 0;
+            for (let i = 0; i < str.length; i++) {
+                const char = str.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash; // Convert to 32bit int
             }
-            // Create a simple ID from the name (lowercase, no spaces)
-            const id = name.toLowerCase().replace(/[^a-z]/g, '');
-            const emoji = EMOJIS[id.charCodeAt(0) % EMOJIS.length];
-            currentUser = { id: id, name: name, emoji: emoji };
+            return hash.toString(36);
+        }
+        
+        function switchAuthTab(tab) {
+            const si = document.getElementById('tabSignIn');
+            const su = document.getElementById('tabSignUp');
+            if (tab === 'signin') {
+                document.getElementById('signinForm').style.display = 'block';
+                document.getElementById('signupForm').style.display = 'none';
+                si.style.background = 'linear-gradient(135deg,#667eea,#764ba2)';
+                si.style.color = 'white';
+                su.style.background = 'white';
+                su.style.color = '#667eea';
+            } else {
+                document.getElementById('signinForm').style.display = 'none';
+                document.getElementById('signupForm').style.display = 'block';
+                su.style.background = 'linear-gradient(135deg,#667eea,#764ba2)';
+                su.style.color = 'white';
+                si.style.background = 'white';
+                si.style.color = '#667eea';
+            }
+            // Clear errors
+            document.getElementById('loginError').style.display = 'none';
+            document.getElementById('regError').style.display = 'none';
+        }
+        
+        function showError(id, msg) {
+            const el = document.getElementById(id);
+            el.textContent = msg;
+            el.style.display = 'block';
+        }
+        
+        function doSignUp() {
+            const name = document.getElementById('regName').value.trim();
+            const user = document.getElementById('regUser').value.trim().toLowerCase();
+            const pass = document.getElementById('regPass').value;
+            const pass2 = document.getElementById('regPass2').value;
+            
+            if (!name || name.length < 2) return showError('regError', 'Please enter your full name');
+            if (!user || user.length < 3) return showError('regError', 'Username must be at least 3 characters');
+            if (/[^a-z0-9_]/.test(user)) return showError('regError', 'Username: only letters, numbers, and underscore');
+            if (!pass || pass.length < 3) return showError('regError', 'Password must be at least 3 characters');
+            if (pass !== pass2) return showError('regError', 'Passwords don\'t match!');
+            
+            const accounts = getAccounts();
+            if (accounts[user]) return showError('regError', 'That username is taken — try another!');
+            
+            const emoji = EMOJIS[user.charCodeAt(0) % EMOJIS.length];
+            accounts[user] = { name: name, hash: simpleHash(pass), emoji: emoji, created: Date.now() };
+            saveAccounts(accounts);
+            
+            currentUser = { id: user, name: name, emoji: emoji };
+            localStorage.setItem('math_current_user', JSON.stringify(currentUser));
+            showLoggedIn();
+        }
+        
+        function doSignIn() {
+            const user = document.getElementById('loginUser').value.trim().toLowerCase();
+            const pass = document.getElementById('loginPass').value;
+            
+            if (!user) return showError('loginError', 'Enter your username');
+            if (!pass) return showError('loginError', 'Enter your password');
+            
+            const accounts = getAccounts();
+            const acct = accounts[user];
+            
+            if (!acct) return showError('loginError', 'Username not found — need to create an account?');
+            if (acct.hash !== simpleHash(pass)) return showError('loginError', 'Wrong password — try again!');
+            
+            currentUser = { id: user, name: acct.name, emoji: acct.emoji };
             localStorage.setItem('math_current_user', JSON.stringify(currentUser));
             showLoggedIn();
         }
@@ -275,7 +414,8 @@
             document.getElementById('userSection').classList.add('hidden');
             document.getElementById('loginScreen').classList.remove('hidden');
             document.getElementById('mainContent').classList.add('hidden');
-            document.getElementById('nameInput').value = '';
+            document.getElementById('loginUser').value = '';
+            document.getElementById('loginPass').value = '';
         }
         
         function showLoggedIn() {
