@@ -1254,5 +1254,43 @@ if (hash && hash.startsWith('#session-')) {
     showLesson(0);
 }
     </script>
+<!-- Teacher Auth Gate -->
+<div id="teacherGate" style="display:none; position:fixed; inset:0; z-index:9999; background:linear-gradient(135deg,#8B5E83,#C06C84); display:flex; align-items:center; justify-content:center;">
+    <div style="background:white; border-radius:20px; padding:40px 30px; text-align:center; max-width:340px; width:90%; box-shadow:0 10px 40px rgba(0,0,0,0.2);">
+        <div style="font-size:2.5em; margin-bottom:10px;">🌸</div>
+        <h2 style="font-family:Playfair Display,serif; color:#8B5E83; margin-bottom:5px;">Teacher Portal</h2>
+        <p style="color:#aaa; font-size:0.85em; margin-bottom:20px;">Enter password to continue</p>
+        <input type="password" id="teacherPinInput" placeholder="Password"
+            style="width:100%; padding:12px; border:2px solid #E8C4CF; border-radius:10px; font-size:1em; text-align:center; font-family:Nunito,sans-serif; outline:none;"
+            onkeydown="if(event.key==='Enter')checkTeacherPin()">
+        <button onclick="checkTeacherPin()" style="width:100%; margin-top:12px; padding:12px; background:linear-gradient(135deg,#8B5E83,#C06C84); color:white; border:none; border-radius:10px; font-size:1em; font-weight:700; font-family:Nunito,sans-serif; cursor:pointer;">Enter</button>
+        <p id="teacherPinError" style="color:#B73A3A; font-size:0.85em; margin-top:10px; display:none;">Incorrect password</p>
+    </div>
+</div>
+<script>
+(function(){
+    const TEACHER_KEY = 'williams_teacher_auth';
+    const gate = document.getElementById('teacherGate');
+    if (localStorage.getItem(TEACHER_KEY) === 'true') {
+        gate.style.display = 'none';
+    } else {
+        gate.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        setTimeout(() => document.getElementById('teacherPinInput').focus(), 100);
+    }
+    window.checkTeacherPin = function() {
+        const v = document.getElementById('teacherPinInput').value.toLowerCase().trim();
+        if (v === 'gospel') {
+            localStorage.setItem(TEACHER_KEY, 'true');
+            gate.style.display = 'none';
+            document.body.style.overflow = '';
+        } else {
+            document.getElementById('teacherPinError').style.display = 'block';
+            document.getElementById('teacherPinInput').value = '';
+            document.getElementById('teacherPinInput').focus();
+        }
+    };
+})();
+</script>
 </body>
 </html>
