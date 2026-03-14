@@ -295,11 +295,11 @@ function render() {
             if (s.qz) links += `<a class="s-link qz" href="${s.qz}" title="Quiz">📝</a>`;
             if (s.ts) links += `<a class="s-link ts" href="${s.ts}" title="Test">🔴</a>`;
             
-            body += `<a class="session${d?' done':''}${isNext?' next':''}" href="lesson-plans.html#session-${s.s}" style="text-decoration:none;color:inherit;display:flex;align-items:center;">
-                <div class="s-check${d?' done':''}" onclick="tog(${s.s},event);event.preventDefault();">${d?'✓':s.s}</div>
+            body += `<div class="session${d?' done':''}${isNext?' next':''}" onclick="window.location.href='lesson-plans.html#session-${s.s}'" style="cursor:pointer;">
+                <div class="s-check${d?' done':''}" onclick="tog(${s.s},event);event.stopPropagation();">${d?'✓':s.s}</div>
                 <div class="s-info"><div class="s-title">${s.t}</div>
                 <div class="s-sub">${fmtDate(s.dt)} · ${s.tm}</div></div>
-                <div class="s-links" onclick="event.stopPropagation();">${links}</div></a>`;
+                <div class="s-links" onclick="event.stopPropagation();">${links}</div></div>`;
         });
         
         block.innerHTML = `<div class="week-hdr${hasNext?' open':''}" id="wh${w}" onclick="toggleWeek(${w})">
