@@ -247,7 +247,12 @@
         <input type="text" class="answer-box" placeholder="Answer" />
     </div></div><div class="score-box">Total: ____ / 25 points</div>
     
-    <div class="answer-key" style="display:none;" id="answerKey">
+    
+    <div style="text-align:center; margin: 30px 0;">
+        <button id="submitBtn" onclick="doSubmit()" style="background:linear-gradient(135deg,#E67E22,#D35400); color:white; border:none; padding:14px 40px; border-radius:12px; font-size:1.1em; font-weight:700; font-family:Nunito,sans-serif; cursor:pointer; box-shadow:0 4px 15px rgba(211,84,0,0.3);">📤 Submit Test</button>
+        <div id="submitMsg" style="margin-top:10px; font-weight:600;"></div>
+    </div>
+<div class="answer-key" style="display:none;" id="answerKey">
         <h2>🔑 Answer Key</h2>
         <p><strong>1.</strong> 3n − 6 | <strong>2.</strong> (n + 10)/2 | <strong>3.</strong> 32 | <strong>4.</strong> 14</p>
 <p><strong>5.</strong> 24 | <strong>6.</strong> 4a + 7b | <strong>7.</strong> 5x + 15 | <strong>8.</strong> 5m + 6</p>
