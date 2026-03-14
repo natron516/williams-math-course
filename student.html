@@ -85,6 +85,16 @@
         #loginScreen p { color: #888; margin-bottom: 25px; max-width: 400px; margin-left: auto; margin-right: auto; }
         
         .hidden { display: none !important; }
+        /* Iframe overlay for worksheets/quizzes/tests */
+        .iframe-overlay { display:none; position:fixed; inset:0; z-index:1000; background:white; }
+        .iframe-overlay.open { display:flex; flex-direction:column; }
+        .iframe-bar { background:linear-gradient(135deg,#667eea,#764ba2); color:white; padding:10px 16px;
+                     display:flex; align-items:center; gap:12px; flex-shrink:0; }
+        .iframe-bar button { background:rgba(255,255,255,0.2); border:none; color:white; width:36px; height:36px;
+                           border-radius:50%; font-size:1.2em; cursor:pointer; }
+        .iframe-bar button:hover { background:rgba(255,255,255,0.35); }
+        .iframe-bar .title { font-weight:700; font-size:0.95em; flex:1; }
+        .iframe-overlay iframe { flex:1; border:none; width:100%; }
     </style>
     <!-- Simple name-based login, no external auth needed -->
 </head>
@@ -461,5 +471,38 @@
             }
         });
     </script>
+<!-- Iframe overlay -->
+<div class="iframe-overlay" id="iframeOverlay">
+    <div class="iframe-bar">
+        <button onclick="closeOverlay()">✕</button>
+        <span class="title" id="iframeTitle"></span>
+    </div>
+    <iframe id="iframeContent" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
+</div>
+
+<script>
+// Intercept all material-row clicks to open in iframe overlay
+document.querySelectorAll('.material-row').forEach(link => {
+    link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const href = this.getAttribute('href');
+        const title = this.querySelector('h4')?.textContent || 'Worksheet';
+        openOverlay(href, title);
+    });
+});
+
+function openOverlay(url, title) {
+    document.getElementById('iframeTitle').textContent = title;
+    document.getElementById('iframeContent').src = url;
+    document.getElementById('iframeOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeOverlay() {
+    document.getElementById('iframeOverlay').classList.remove('open');
+    document.getElementById('iframeContent').src = '';
+    document.body.style.overflow = '';
+}
+</script>
 </body>
 </html>
