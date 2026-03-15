@@ -134,6 +134,181 @@
 
 const teachingData = {
   1: {
+    concepts: `<h4>What Is Perimeter?</h4>
+<p>Perimeter is the <strong>total distance around the outside</strong> of a shape. Imagine an ant walking along every edge — the distance it walks is the perimeter.</p>
+
+<h4>Formulas</h4>
+<div class="concept-grid">
+<div class="concept-card blue"><strong>Rectangle</strong><br>P = 2l + 2w<br><em>or P = 2(l + w)</em></div>
+<div class="concept-card green"><strong>Square</strong><br>P = 4s<br><em>(all sides equal)</em></div>
+<div class="concept-card orange"><strong>Triangle</strong><br>P = a + b + c<br><em>(add all 3 sides)</em></div>
+<div class="concept-card red"><strong>Regular Polygon</strong><br>P = n × s<br><em>(n sides, each length s)</em></div>
+</div>
+<p class="tip">💡 <strong>For irregular shapes:</strong> Just add up ALL the side lengths. There's no shortcut — measure every side!</p>
+
+<h4>Units Matter!</h4>
+<p>Perimeter is a <strong>distance</strong> (one-dimensional), so the answer is in <strong>regular units</strong>: feet, meters, inches — NOT square feet (that's area).</p>`,
+    examples: `<div class="example-box">
+<div class="example-title">Example 1: Fencing a Garden</div>
+<p><strong>Given:</strong> Rectangular garden, 15 ft × 8 ft. Fencing costs $6.50/foot.</p>
+<p><strong>Step 1:</strong> P = 2(15) + 2(8) = 30 + 16 = <strong>46 feet</strong></p>
+<p><strong>Step 2:</strong> Cost = 46 × $6.50 = <strong>$299.00</strong></p>
+</div>
+
+<div class="example-box">
+<div class="example-title">Example 2: Baseboard Around a Room</div>
+<p><strong>Given:</strong> Room is 12 ft × 10 ft. One door (3 ft wide). Baseboard costs $2.25/foot.</p>
+<p><strong>Step 1:</strong> P = 2(12) + 2(10) = 44 feet</p>
+<p><strong>Step 2:</strong> Subtract door: 44 − 3 = <strong>41 feet of baseboard</strong></p>
+<p><strong>Step 3:</strong> Cost = 41 × $2.25 = <strong>$92.25</strong></p>
+</div>
+
+<div class="example-box">
+<div class="example-title">Example 3: Missing Side Length</div>
+<p><strong>Given:</strong> Rectangle with perimeter = 54 cm, width = 11 cm</p>
+<p><strong>Step 1:</strong> P = 2l + 2w → 54 = 2l + 2(11) → 54 = 2l + 22</p>
+<p><strong>Step 2:</strong> 2l = 54 − 22 = 32 → l = <strong>16 cm</strong></p>
+</div>`,
+    mistakes: `<div class="mistake-card">
+<div class="mistake-wrong">❌ Writing "square feet" for perimeter</div>
+<div class="mistake-fix">✅ Fix: Perimeter = distance = regular units (feet, meters). Area uses square units.</div>
+</div>
+<div class="mistake-card">
+<div class="mistake-wrong">❌ Forgetting to count all sides (especially on rectangles — only adding 2 sides)</div>
+<div class="mistake-fix">✅ Fix: A rectangle has 4 sides! P = l + w only gives you HALF. Multiply by 2!</div>
+</div>
+<div class="mistake-card">
+<div class="mistake-wrong">❌ On irregular shapes, missing a side</div>
+<div class="mistake-fix">✅ Fix: Put your finger on one corner and trace ALL the way around, counting each side</div>
+</div>`,
+    whiteboard: `<h4>🖊️ Whiteboard Script</h4>
+<ol>
+<li><strong>Draw</strong> a rectangle, label 12 ft and 8 ft. "How far would an ant walk around this?" Count: 12 + 8 + 12 + 8 = 40 ft</li>
+<li><strong>Shortcut:</strong> "Since opposite sides are equal: 2(12) + 2(8) = 40 ft — same answer, faster!"</li>
+<li><strong>Real-world hook:</strong> "Fencing costs $5/foot. What's the cost?" 40 × $5 = $200</li>
+<li><strong>Garden challenge:</strong> "You have 40 feet of fencing. What rectangles can you make?" (Let students brainstorm: 1×19, 5×15, 10×10...)</li>
+<li><strong>Tricky one:</strong> Draw an L-shape. "You MUST find EVERY side length — even the ones not labeled." Show how to figure out unlabeled sides.</li>
+</ol>`,
+    discussion: `<div class="discussion-q">🗣️ "You have 40 feet of fencing. What shape rectangle gives the MOST area inside?" (Spoiler: a square!)</div>
+<div class="discussion-q">🗣️ "Why do fencing companies charge per foot of fencing, not by the area enclosed?"</div>
+<div class="discussion-q">🗣️ "If you double ALL the side lengths of a rectangle, does the perimeter double too?"</div>`,
+  },
+  2: {
+    concepts: `<h4>What Is Area?</h4>
+<p>Area is the <strong>amount of flat space inside</strong> a shape. Think of it as "how many 1×1 squares fit inside?"</p>
+
+<h4>Key Formulas</h4>
+<div class="concept-grid">
+<div class="concept-card blue"><strong>Rectangle</strong><br>A = length × width<br><em>A = l × w</em></div>
+<div class="concept-card green"><strong>Square</strong><br>A = side × side<br><em>A = s²</em></div>
+<div class="concept-card orange"><strong>Triangle</strong><br>A = ½ × base × height<br><em>A = ½bh</em></div>
+</div>
+
+<h4>Why Is Triangle Area ½ × b × h?</h4>
+<p>Every triangle is <strong>exactly half of a rectangle</strong>! Draw any triangle inside a rectangle — the triangle fills exactly half. That's where the ½ comes from.</p>
+<p class="tip">💡 <strong>Height must be PERPENDICULAR</strong> to the base (makes a 90° angle). It's not always a side of the triangle — sometimes it's a line drawn inside!</p>
+
+<h4>Square Units</h4>
+<p>Area is measured in <strong>square units</strong>: sq ft, sq m, sq in, cm². The "squared" means you're counting little squares.</p>
+
+<h4>Decomposing Complex Shapes</h4>
+<p>For L-shapes or irregular rooms: break them into rectangles, find each area, then add them together.</p>`,
+    examples: `<div class="example-box">
+<div class="example-title">Example 1: Room Carpet</div>
+<p><strong>Given:</strong> Bedroom is 14 ft × 11 ft. Carpet costs $4.50/sq ft.</p>
+<p><strong>Step 1:</strong> A = 14 × 11 = <strong>154 sq ft</strong></p>
+<p><strong>Step 2:</strong> Cost = 154 × $4.50 = <strong>$693.00</strong></p>
+</div>
+
+<div class="example-box">
+<div class="example-title">Example 2: Triangle Flag</div>
+<p><strong>Given:</strong> Pennant flag with base = 8 in, height = 20 in.</p>
+<p><strong>Step 1:</strong> A = ½ × 8 × 20</p>
+<p><strong>Step 2:</strong> A = ½ × 160 = <strong>80 sq in</strong></p>
+</div>
+
+<div class="example-box">
+<div class="example-title">Example 3: Paint a Room</div>
+<p><strong>Given:</strong> Room 12 × 10 ft, ceiling 8 ft high. One window (3 × 4 ft), one door (3 × 7 ft). Paint covers 350 sq ft/gallon at $35/gallon.</p>
+<p><strong>Step 1:</strong> Two walls: 2 × (12 × 8) = 192 sq ft</p>
+<p><strong>Step 2:</strong> Two walls: 2 × (10 × 8) = 160 sq ft</p>
+<p><strong>Step 3:</strong> Total walls = 352 sq ft</p>
+<p><strong>Step 4:</strong> Subtract window (12) + door (21) = 33 sq ft</p>
+<p><strong>Step 5:</strong> Paintable area = 352 − 33 = <strong>319 sq ft</strong></p>
+<p><strong>Step 6:</strong> 319 ÷ 350 = 0.91 gallons → Round up to <strong>1 gallon = $35</strong></p>
+</div>
+
+<div class="example-box">
+<div class="example-title">Example 4: L-Shaped Room</div>
+<p><strong>Given:</strong> L-shape: main section 15 × 10 ft, bump-out 8 × 6 ft</p>
+<p><strong>Step 1:</strong> Rectangle 1: 15 × 10 = 150 sq ft</p>
+<p><strong>Step 2:</strong> Rectangle 2: 8 × 6 = 48 sq ft</p>
+<p><strong>Step 3:</strong> Total = 150 + 48 = <strong>198 sq ft</strong></p>
+</div>`,
+    mistakes: `<div class="mistake-card">
+<div class="mistake-wrong">❌ Using the slant height instead of the perpendicular height for triangles</div>
+<div class="mistake-fix">✅ Fix: Height MUST be at 90° to the base. Draw a dotted line straight down from the top to the base.</div>
+</div>
+<div class="mistake-card">
+<div class="mistake-wrong">❌ Forgetting the ½ in triangle area</div>
+<div class="mistake-fix">✅ Fix: Remember — a triangle is HALF a rectangle. Always divide by 2!</div>
+</div>
+<div class="mistake-card">
+<div class="mistake-wrong">❌ Writing "feet" instead of "square feet" for area</div>
+<div class="mistake-fix">✅ Fix: Area = space = SQUARE units. Perimeter = distance = regular units.</div>
+</div>`,
+    whiteboard: `<h4>🖊️ Whiteboard Script</h4>
+<ol>
+<li><strong>Draw</strong> a 5 × 3 rectangle, fill it with a grid of squares. Count them: 15. "A = 5 × 3 = 15. We just counted 15 squares!"</li>
+<li><strong>Draw</strong> a rectangle, then draw a diagonal. "Cut a rectangle in half → two triangles. Each triangle is ½ the rectangle."</li>
+<li><strong>Height demo:</strong> Draw a triangle. Drop a perpendicular line from the top to the base. "THIS is the height — not the slant side!"</li>
+<li><strong>Real-world:</strong> "Let's figure out how much carpet this classroom needs." (Estimate room dimensions, calculate together)</li>
+<li><strong>L-shape challenge:</strong> Draw one on the board. "Break it into TWO rectangles. Find each area. Add them up."</li>
+</ol>`,
+    discussion: `<div class="discussion-q">🗣️ "If you double the length of a rectangle but keep the width the same, does the area double?"</div>
+<div class="discussion-q">🗣️ "Why do contractors charge by square foot? What would happen if they charged by perimeter?"</div>
+<div class="discussion-q">🗣️ "Can two shapes have the same perimeter but different areas? Give an example."</div>`,
+  },
+  3: {
+    concepts: `<h4>Parallelogram Area</h4>
+<p>A parallelogram is like a "pushed over" rectangle. Its area formula is the same as a rectangle's — just use the <strong>perpendicular height</strong>, not the slant side!</p>
+<div class="concept-card blue" style="display:inline-block;margin:8px;font-size:1.1em;"><strong>A = base × height</strong></div>
+<p class="tip">💡 If you cut a triangle off one end and move it to the other, a parallelogram becomes a rectangle!</p>
+
+<h4>Trapezoid Area</h4>
+<p>A trapezoid has two parallel sides (called <strong>bases</strong>) of different lengths. The area formula averages the two bases:</p>
+<div class="concept-card orange" style="display:inline-block;margin:8px;font-size:1.1em;"><strong>A = ½(b₁ + b₂) × h</strong></div>
+<p>Think of it as: "average the two bases, then multiply by height."</p>
+
+<h4>Composite Shapes — Two Strategies</h4>
+<ol><li><strong>DECOMPOSE:</strong> Break into simpler shapes, find each area, ADD them together</li>
+<li><strong>SUBTRACT:</strong> Find the area of the big bounding shape, then SUBTRACT the missing piece</li></ol>`,
+    examples: `<div class="example-box">
+<div class="example-title">Example 1: Parallelogram</div>
+<p><strong>Given:</strong> Base = 12 cm, height = 7 cm, slant side = 8 cm</p>
+<p><strong>Step 1:</strong> A = 12 × 7 = <strong>84 cm²</strong> (ignore the slant side!)</p>
+</div>
+<div class="example-box">
+<div class="example-title">Example 2: Trapezoid</div>
+<p><strong>Given:</strong> Bases = 10 in and 16 in, height = 7 in</p>
+<p><strong>Step 1:</strong> A = ½(10 + 16) × 7 = ½(26) × 7 = 13 × 7 = <strong>91 in²</strong></p>
+</div>
+<div class="example-box">
+<div class="example-title">Example 3: Baking Pan Comparison</div>
+<p><strong>Given:</strong> 9×13 pan vs. two 8×8 pans</p>
+<p><strong>9×13:</strong> A = 117 sq in</p>
+<p><strong>Two 8×8:</strong> A = 2 × 64 = 128 sq in — <strong>more batter space!</strong></p>
+</div>`,
+    mistakes: `<div class="mistake-card"><div class="mistake-wrong">❌ Using the slant side as the height of a parallelogram</div><div class="mistake-fix">✅ The height is the PERPENDICULAR distance between the bases</div></div>
+<div class="mistake-card"><div class="mistake-wrong">❌ Forgetting the ½ in the trapezoid formula</div><div class="mistake-fix">✅ Think: "average the bases" — averaging always means dividing by 2</div></div>`,
+    whiteboard: `<h4>🖊️ Whiteboard Script</h4>
+<ol><li>Draw a parallelogram. Cut a triangle off the left, slide it to the right → it's a rectangle! "Same formula: base × height"</li>
+<li>Draw a trapezoid. "Two different bases — which do we use? BOTH! Average them."</li>
+<li>Baking pan challenge: "Which holds more brownie batter — one 9×13 or two 8×8 pans?"</li></ol>`,
+    discussion: `<div class="discussion-q">🗣️ "Is a rectangle a special type of parallelogram? Why?"</div>
+<div class="discussion-q">🗣️ "What happens to a trapezoid's area if you make both bases the same length?"</div>`,
+  },
+  4: {
     concepts: `<h4>What Are Angles?</h4>
 <p>An angle is formed when two <strong>rays</strong> (straight lines that go on forever in one direction) share a common starting point called the <strong>vertex</strong>. We measure how "open" the angle is in <strong>degrees (°)</strong>.</p>
 
@@ -203,7 +378,7 @@ const teachingData = {
 <div class="discussion-q">🗣️ "Where do you see right angles in this classroom right now?"</div>
 <div class="discussion-q">🗣️ "If a door is open halfway, about how many degrees is that?"</div>`,
   },
-  2: {
+  5: {
     concepts: `<h4>Complementary Angles</h4>
 <p>Two angles that <strong>add up to 90°</strong> (they "complete" a right angle)</p>
 <div class="concept-card blue" style="display:inline-block;margin:8px;">
@@ -282,7 +457,7 @@ const teachingData = {
 <div class="discussion-q">🗣️ "Can an angle be its own complement? What would that angle be?"</div>
 <div class="discussion-q">🗣️ "Look at the corner where two walls meet the ceiling. How many right angles do you see?"</div>`,
   },
-  3: {
+  6: {
     concepts: `<h4>Classifying Triangles by Sides</h4>
 <div class="concept-grid">
 <div class="concept-card blue"><div class="concept-icon">🔺</div><strong>Equilateral</strong><br>All 3 sides equal<br>All 3 angles = 60°<br><em>"Equal-lateral"</em></div>
@@ -358,181 +533,6 @@ const teachingData = {
     discussion: `<div class="discussion-q">🗣️ "Can a triangle be both right AND equilateral? Why not?"</div>
 <div class="discussion-q">🗣️ "What's the maximum number of obtuse angles a triangle can have?"</div>
 <div class="discussion-q">🗣️ "Why are stop signs octagons and not circles?"</div>`,
-  },
-  4: {
-    concepts: `<h4>What Is Perimeter?</h4>
-<p>Perimeter is the <strong>total distance around the outside</strong> of a shape. Imagine an ant walking along every edge — the distance it walks is the perimeter.</p>
-
-<h4>Formulas</h4>
-<div class="concept-grid">
-<div class="concept-card blue"><strong>Rectangle</strong><br>P = 2l + 2w<br><em>or P = 2(l + w)</em></div>
-<div class="concept-card green"><strong>Square</strong><br>P = 4s<br><em>(all sides equal)</em></div>
-<div class="concept-card orange"><strong>Triangle</strong><br>P = a + b + c<br><em>(add all 3 sides)</em></div>
-<div class="concept-card red"><strong>Regular Polygon</strong><br>P = n × s<br><em>(n sides, each length s)</em></div>
-</div>
-<p class="tip">💡 <strong>For irregular shapes:</strong> Just add up ALL the side lengths. There's no shortcut — measure every side!</p>
-
-<h4>Units Matter!</h4>
-<p>Perimeter is a <strong>distance</strong> (one-dimensional), so the answer is in <strong>regular units</strong>: feet, meters, inches — NOT square feet (that's area).</p>`,
-    examples: `<div class="example-box">
-<div class="example-title">Example 1: Fencing a Garden</div>
-<p><strong>Given:</strong> Rectangular garden, 15 ft × 8 ft. Fencing costs $6.50/foot.</p>
-<p><strong>Step 1:</strong> P = 2(15) + 2(8) = 30 + 16 = <strong>46 feet</strong></p>
-<p><strong>Step 2:</strong> Cost = 46 × $6.50 = <strong>$299.00</strong></p>
-</div>
-
-<div class="example-box">
-<div class="example-title">Example 2: Baseboard Around a Room</div>
-<p><strong>Given:</strong> Room is 12 ft × 10 ft. One door (3 ft wide). Baseboard costs $2.25/foot.</p>
-<p><strong>Step 1:</strong> P = 2(12) + 2(10) = 44 feet</p>
-<p><strong>Step 2:</strong> Subtract door: 44 − 3 = <strong>41 feet of baseboard</strong></p>
-<p><strong>Step 3:</strong> Cost = 41 × $2.25 = <strong>$92.25</strong></p>
-</div>
-
-<div class="example-box">
-<div class="example-title">Example 3: Missing Side Length</div>
-<p><strong>Given:</strong> Rectangle with perimeter = 54 cm, width = 11 cm</p>
-<p><strong>Step 1:</strong> P = 2l + 2w → 54 = 2l + 2(11) → 54 = 2l + 22</p>
-<p><strong>Step 2:</strong> 2l = 54 − 22 = 32 → l = <strong>16 cm</strong></p>
-</div>`,
-    mistakes: `<div class="mistake-card">
-<div class="mistake-wrong">❌ Writing "square feet" for perimeter</div>
-<div class="mistake-fix">✅ Fix: Perimeter = distance = regular units (feet, meters). Area uses square units.</div>
-</div>
-<div class="mistake-card">
-<div class="mistake-wrong">❌ Forgetting to count all sides (especially on rectangles — only adding 2 sides)</div>
-<div class="mistake-fix">✅ Fix: A rectangle has 4 sides! P = l + w only gives you HALF. Multiply by 2!</div>
-</div>
-<div class="mistake-card">
-<div class="mistake-wrong">❌ On irregular shapes, missing a side</div>
-<div class="mistake-fix">✅ Fix: Put your finger on one corner and trace ALL the way around, counting each side</div>
-</div>`,
-    whiteboard: `<h4>🖊️ Whiteboard Script</h4>
-<ol>
-<li><strong>Draw</strong> a rectangle, label 12 ft and 8 ft. "How far would an ant walk around this?" Count: 12 + 8 + 12 + 8 = 40 ft</li>
-<li><strong>Shortcut:</strong> "Since opposite sides are equal: 2(12) + 2(8) = 40 ft — same answer, faster!"</li>
-<li><strong>Real-world hook:</strong> "Fencing costs $5/foot. What's the cost?" 40 × $5 = $200</li>
-<li><strong>Garden challenge:</strong> "You have 40 feet of fencing. What rectangles can you make?" (Let students brainstorm: 1×19, 5×15, 10×10...)</li>
-<li><strong>Tricky one:</strong> Draw an L-shape. "You MUST find EVERY side length — even the ones not labeled." Show how to figure out unlabeled sides.</li>
-</ol>`,
-    discussion: `<div class="discussion-q">🗣️ "You have 40 feet of fencing. What shape rectangle gives the MOST area inside?" (Spoiler: a square!)</div>
-<div class="discussion-q">🗣️ "Why do fencing companies charge per foot of fencing, not by the area enclosed?"</div>
-<div class="discussion-q">🗣️ "If you double ALL the side lengths of a rectangle, does the perimeter double too?"</div>`,
-  },
-  5: {
-    concepts: `<h4>What Is Area?</h4>
-<p>Area is the <strong>amount of flat space inside</strong> a shape. Think of it as "how many 1×1 squares fit inside?"</p>
-
-<h4>Key Formulas</h4>
-<div class="concept-grid">
-<div class="concept-card blue"><strong>Rectangle</strong><br>A = length × width<br><em>A = l × w</em></div>
-<div class="concept-card green"><strong>Square</strong><br>A = side × side<br><em>A = s²</em></div>
-<div class="concept-card orange"><strong>Triangle</strong><br>A = ½ × base × height<br><em>A = ½bh</em></div>
-</div>
-
-<h4>Why Is Triangle Area ½ × b × h?</h4>
-<p>Every triangle is <strong>exactly half of a rectangle</strong>! Draw any triangle inside a rectangle — the triangle fills exactly half. That's where the ½ comes from.</p>
-<p class="tip">💡 <strong>Height must be PERPENDICULAR</strong> to the base (makes a 90° angle). It's not always a side of the triangle — sometimes it's a line drawn inside!</p>
-
-<h4>Square Units</h4>
-<p>Area is measured in <strong>square units</strong>: sq ft, sq m, sq in, cm². The "squared" means you're counting little squares.</p>
-
-<h4>Decomposing Complex Shapes</h4>
-<p>For L-shapes or irregular rooms: break them into rectangles, find each area, then add them together.</p>`,
-    examples: `<div class="example-box">
-<div class="example-title">Example 1: Room Carpet</div>
-<p><strong>Given:</strong> Bedroom is 14 ft × 11 ft. Carpet costs $4.50/sq ft.</p>
-<p><strong>Step 1:</strong> A = 14 × 11 = <strong>154 sq ft</strong></p>
-<p><strong>Step 2:</strong> Cost = 154 × $4.50 = <strong>$693.00</strong></p>
-</div>
-
-<div class="example-box">
-<div class="example-title">Example 2: Triangle Flag</div>
-<p><strong>Given:</strong> Pennant flag with base = 8 in, height = 20 in.</p>
-<p><strong>Step 1:</strong> A = ½ × 8 × 20</p>
-<p><strong>Step 2:</strong> A = ½ × 160 = <strong>80 sq in</strong></p>
-</div>
-
-<div class="example-box">
-<div class="example-title">Example 3: Paint a Room</div>
-<p><strong>Given:</strong> Room 12 × 10 ft, ceiling 8 ft high. One window (3 × 4 ft), one door (3 × 7 ft). Paint covers 350 sq ft/gallon at $35/gallon.</p>
-<p><strong>Step 1:</strong> Two walls: 2 × (12 × 8) = 192 sq ft</p>
-<p><strong>Step 2:</strong> Two walls: 2 × (10 × 8) = 160 sq ft</p>
-<p><strong>Step 3:</strong> Total walls = 352 sq ft</p>
-<p><strong>Step 4:</strong> Subtract window (12) + door (21) = 33 sq ft</p>
-<p><strong>Step 5:</strong> Paintable area = 352 − 33 = <strong>319 sq ft</strong></p>
-<p><strong>Step 6:</strong> 319 ÷ 350 = 0.91 gallons → Round up to <strong>1 gallon = $35</strong></p>
-</div>
-
-<div class="example-box">
-<div class="example-title">Example 4: L-Shaped Room</div>
-<p><strong>Given:</strong> L-shape: main section 15 × 10 ft, bump-out 8 × 6 ft</p>
-<p><strong>Step 1:</strong> Rectangle 1: 15 × 10 = 150 sq ft</p>
-<p><strong>Step 2:</strong> Rectangle 2: 8 × 6 = 48 sq ft</p>
-<p><strong>Step 3:</strong> Total = 150 + 48 = <strong>198 sq ft</strong></p>
-</div>`,
-    mistakes: `<div class="mistake-card">
-<div class="mistake-wrong">❌ Using the slant height instead of the perpendicular height for triangles</div>
-<div class="mistake-fix">✅ Fix: Height MUST be at 90° to the base. Draw a dotted line straight down from the top to the base.</div>
-</div>
-<div class="mistake-card">
-<div class="mistake-wrong">❌ Forgetting the ½ in triangle area</div>
-<div class="mistake-fix">✅ Fix: Remember — a triangle is HALF a rectangle. Always divide by 2!</div>
-</div>
-<div class="mistake-card">
-<div class="mistake-wrong">❌ Writing "feet" instead of "square feet" for area</div>
-<div class="mistake-fix">✅ Fix: Area = space = SQUARE units. Perimeter = distance = regular units.</div>
-</div>`,
-    whiteboard: `<h4>🖊️ Whiteboard Script</h4>
-<ol>
-<li><strong>Draw</strong> a 5 × 3 rectangle, fill it with a grid of squares. Count them: 15. "A = 5 × 3 = 15. We just counted 15 squares!"</li>
-<li><strong>Draw</strong> a rectangle, then draw a diagonal. "Cut a rectangle in half → two triangles. Each triangle is ½ the rectangle."</li>
-<li><strong>Height demo:</strong> Draw a triangle. Drop a perpendicular line from the top to the base. "THIS is the height — not the slant side!"</li>
-<li><strong>Real-world:</strong> "Let's figure out how much carpet this classroom needs." (Estimate room dimensions, calculate together)</li>
-<li><strong>L-shape challenge:</strong> Draw one on the board. "Break it into TWO rectangles. Find each area. Add them up."</li>
-</ol>`,
-    discussion: `<div class="discussion-q">🗣️ "If you double the length of a rectangle but keep the width the same, does the area double?"</div>
-<div class="discussion-q">🗣️ "Why do contractors charge by square foot? What would happen if they charged by perimeter?"</div>
-<div class="discussion-q">🗣️ "Can two shapes have the same perimeter but different areas? Give an example."</div>`,
-  },
-  6: {
-    concepts: `<h4>Parallelogram Area</h4>
-<p>A parallelogram is like a "pushed over" rectangle. Its area formula is the same as a rectangle's — just use the <strong>perpendicular height</strong>, not the slant side!</p>
-<div class="concept-card blue" style="display:inline-block;margin:8px;font-size:1.1em;"><strong>A = base × height</strong></div>
-<p class="tip">💡 If you cut a triangle off one end and move it to the other, a parallelogram becomes a rectangle!</p>
-
-<h4>Trapezoid Area</h4>
-<p>A trapezoid has two parallel sides (called <strong>bases</strong>) of different lengths. The area formula averages the two bases:</p>
-<div class="concept-card orange" style="display:inline-block;margin:8px;font-size:1.1em;"><strong>A = ½(b₁ + b₂) × h</strong></div>
-<p>Think of it as: "average the two bases, then multiply by height."</p>
-
-<h4>Composite Shapes — Two Strategies</h4>
-<ol><li><strong>DECOMPOSE:</strong> Break into simpler shapes, find each area, ADD them together</li>
-<li><strong>SUBTRACT:</strong> Find the area of the big bounding shape, then SUBTRACT the missing piece</li></ol>`,
-    examples: `<div class="example-box">
-<div class="example-title">Example 1: Parallelogram</div>
-<p><strong>Given:</strong> Base = 12 cm, height = 7 cm, slant side = 8 cm</p>
-<p><strong>Step 1:</strong> A = 12 × 7 = <strong>84 cm²</strong> (ignore the slant side!)</p>
-</div>
-<div class="example-box">
-<div class="example-title">Example 2: Trapezoid</div>
-<p><strong>Given:</strong> Bases = 10 in and 16 in, height = 7 in</p>
-<p><strong>Step 1:</strong> A = ½(10 + 16) × 7 = ½(26) × 7 = 13 × 7 = <strong>91 in²</strong></p>
-</div>
-<div class="example-box">
-<div class="example-title">Example 3: Baking Pan Comparison</div>
-<p><strong>Given:</strong> 9×13 pan vs. two 8×8 pans</p>
-<p><strong>9×13:</strong> A = 117 sq in</p>
-<p><strong>Two 8×8:</strong> A = 2 × 64 = 128 sq in — <strong>more batter space!</strong></p>
-</div>`,
-    mistakes: `<div class="mistake-card"><div class="mistake-wrong">❌ Using the slant side as the height of a parallelogram</div><div class="mistake-fix">✅ The height is the PERPENDICULAR distance between the bases</div></div>
-<div class="mistake-card"><div class="mistake-wrong">❌ Forgetting the ½ in the trapezoid formula</div><div class="mistake-fix">✅ Think: "average the bases" — averaging always means dividing by 2</div></div>`,
-    whiteboard: `<h4>🖊️ Whiteboard Script</h4>
-<ol><li>Draw a parallelogram. Cut a triangle off the left, slide it to the right → it's a rectangle! "Same formula: base × height"</li>
-<li>Draw a trapezoid. "Two different bases — which do we use? BOTH! Average them."</li>
-<li>Baking pan challenge: "Which holds more brownie batter — one 9×13 or two 8×8 pans?"</li></ol>`,
-    discussion: `<div class="discussion-q">🗣️ "Is a rectangle a special type of parallelogram? Why?"</div>
-<div class="discussion-q">🗣️ "What happens to a trapezoid's area if you make both bases the same length?"</div>`,
   },
   7: {
     concepts: `<h4>Circle Vocabulary</h4>
@@ -908,7 +908,7 @@ function toggleExpand(id) {
     btn.classList.toggle('open');
 }
 
-const videoData = {1:[{t:"Acute, Right & Obtuse Angles",id:"4ZyTVTGVPgE",ch:"Khan Academy"},{t:"Math Antics — Angles & Degrees",id:"4r_j10jtavU",ch:"Math Antics"}],2:[{t:"Supplementary & Complementary Angles",id:"TzT_HtojVOU",ch:"Math Antics"},{t:"Vertical Angles",id:"WN2E-KMuXoE",ch:"Math Antics"}],3:[{t:"Triangles",id:"oQeK4LyKLHw",ch:"Math Antics"},{t:"Polygons",id:"ZJnKPl99fTs",ch:"Math Antics"}],4:[{t:"Perimeter",id:"AAY1bsazcgM",ch:"Math Antics"}],5:[{t:"Area (Rectangles & Triangles)",id:"xCdxURXMdFY",ch:"Math Antics"}],6:[{t:"Area (Parallelograms & Trapezoids)",id:"SEXLRQol970",ch:"Khan Academy"},{t:"Composite Shapes Area",id:"5UIbpphAz-U",ch:"FrysMath"}],7:[{t:"Circles: Circumference & Area",id:"5cbFN2wOUFY",ch:"Math Antics"}],8:[{t:"Circles: Circumference & Area",id:"5cbFN2wOUFY",ch:"Math Antics"}],9:[{t:"Area of Composite Shapes",id:"L8W3ch_Zrmk",ch:"Math Turtle"},{t:"Composite Shapes Review",id:"5UIbpphAz-U",ch:"FrysMath"}],10:[{t:"Volume",id:"-05rNRCHkhQ",ch:"Math Antics"}],11:[{t:"Volume (Cylinders)",id:"-05rNRCHkhQ",ch:"Math Antics"},{t:"Surface Area",id:"kSj_Wo5hdVU",ch:"Math Antics"}],13:[{t:"What Is Algebra?",id:"NybHckSEQBI",ch:"Math Antics"},{t:"Evaluating Expressions",id:"52tpYl2tTqk",ch:"Math Antics"}],14:[{t:"Combining Like Terms",id:"y7GwRJOIohM",ch:"Math Antics"}],15:[{t:"Order of Operations",id:"dAgfnK528RA",ch:"Math Antics"}],16:[{t:"Solving Equations Part 1 (+/−)",id:"l3XzepN03KQ",ch:"Math Antics"}],17:[{t:"Solving Equations Part 2 (×/÷)",id:"Qyd_v3DGzTM",ch:"Math Antics"}],18:[{t:"Solving Equations Part 1",id:"l3XzepN03KQ",ch:"Math Antics"},{t:"Solving Equations Part 2",id:"Qyd_v3DGzTM",ch:"Math Antics"}],19:[{t:"Solving 2-Step Equations",id:"LDIiYKYvvdA",ch:"Math Antics"}],20:[{t:"Basic Inequalities",id:"mgHO-bsCDrA",ch:"Math Antics"},{t:"Inequalities in Algebra",id:"RyesLifeUBw",ch:"Math Antics"}],22:[{t:"Graphing on the Coordinate Plane",id:"3JqndcNQPYs",ch:"Math Antics"}],23:[{t:"Basic Linear Functions",id:"MXV65i9g1Xg",ch:"Math Antics"},{t:"Graphing on Coordinate Plane",id:"3JqndcNQPYs",ch:"Math Antics"}]};
+const videoData = {1:[{t:"Perimeter",id:"AAY1bsazcgM",ch:"Math Antics"}],2:[{t:"Area (Rectangles & Triangles)",id:"xCdxURXMdFY",ch:"Math Antics"}],3:[{t:"Area (Parallelograms & Trapezoids)",id:"SEXLRQol970",ch:"Khan Academy"},{t:"Composite Shapes Area",id:"5UIbpphAz-U",ch:"FrysMath"}],4:[{t:"Acute, Right & Obtuse Angles",id:"4ZyTVTGVPgE",ch:"Khan Academy"},{t:"Math Antics — Angles & Degrees",id:"4r_j10jtavU",ch:"Math Antics"}],5:[{t:"Supplementary & Complementary Angles",id:"TzT_HtojVOU",ch:"Math Antics"},{t:"Vertical Angles",id:"WN2E-KMuXoE",ch:"Math Antics"}],6:[{t:"Triangles",id:"oQeK4LyKLHw",ch:"Math Antics"},{t:"Polygons",id:"ZJnKPl99fTs",ch:"Math Antics"}],7:[{t:"Circles: Circumference & Area",id:"5cbFN2wOUFY",ch:"Math Antics"}],8:[{t:"Circles: Circumference & Area",id:"5cbFN2wOUFY",ch:"Math Antics"}],9:[{t:"Area of Composite Shapes",id:"L8W3ch_Zrmk",ch:"Math Turtle"},{t:"Composite Shapes Review",id:"5UIbpphAz-U",ch:"FrysMath"}],10:[{t:"Volume",id:"-05rNRCHkhQ",ch:"Math Antics"}],11:[{t:"Volume (Cylinders)",id:"-05rNRCHkhQ",ch:"Math Antics"},{t:"Surface Area",id:"kSj_Wo5hdVU",ch:"Math Antics"}],13:[{t:"What Is Algebra?",id:"NybHckSEQBI",ch:"Math Antics"},{t:"Evaluating Expressions",id:"52tpYl2tTqk",ch:"Math Antics"}],14:[{t:"Combining Like Terms",id:"y7GwRJOIohM",ch:"Math Antics"}],15:[{t:"Order of Operations",id:"dAgfnK528RA",ch:"Math Antics"}],16:[{t:"Solving Equations Part 1 (+/−)",id:"l3XzepN03KQ",ch:"Math Antics"}],17:[{t:"Solving Equations Part 2 (×/÷)",id:"Qyd_v3DGzTM",ch:"Math Antics"}],18:[{t:"Solving Equations Part 1",id:"l3XzepN03KQ",ch:"Math Antics"},{t:"Solving Equations Part 2",id:"Qyd_v3DGzTM",ch:"Math Antics"}],19:[{t:"Solving 2-Step Equations",id:"LDIiYKYvvdA",ch:"Math Antics"}],20:[{t:"Basic Inequalities",id:"mgHO-bsCDrA",ch:"Math Antics"},{t:"Inequalities in Algebra",id:"RyesLifeUBw",ch:"Math Antics"}],22:[{t:"Graphing on the Coordinate Plane",id:"3JqndcNQPYs",ch:"Math Antics"}],23:[{t:"Basic Linear Functions",id:"MXV65i9g1Xg",ch:"Math Antics"},{t:"Graphing on Coordinate Plane",id:"3JqndcNQPYs",ch:"Math Antics"}]};
 
 function renderVideos(sessionNum) {
     const vids = videoData[sessionNum];
@@ -932,40 +932,7 @@ function renderVideos(sessionNum) {
 }
 
 const lessons = [
-{s:1,w:1,d:"Monday",t:"Intro to Geometry & Angles",u:"geo",
-obj:"• Identify types of angles (acute, right, obtuse, straight)\n• Measure angles with a protractor\n• Understand angle relationships",
-mat:"Whiteboard, iPad, protractors (or protractor app), printed worksheet",
-warm:"🍕 Show a picture of a pizza cut into slices on the TV. Ask: \"Which slice has the biggest angle? The smallest? Can you estimate the degrees?\" (5 min discussion)",
-direct:"• Define geometry — the study of shapes, sizes, and positions\n• Types of angles: acute (<90°), right (=90°), obtuse (>90°), straight (=180°)\n• Show examples with real objects (book corners = right angle, clock hands, door opening)\n• Demonstrate measuring with a protractor\n• Key vocabulary: vertex, ray, degree",
-guided:"• As a class, measure 5 angles projected on the TV\n• Students hold up fingers to show their estimate before revealing the answer\n• Practice identifying angle types from pictures of real objects",
-indep:"Worksheet: \"Angle Explorer\" — measure and classify 15 angles, estimate angles from real-world photos (pizza, clocks, scissors, ramps)",
-closing:"Exit ticket (on iPad): Identify 3 angles in the classroom and estimate their measure. Share one with the class. (5 min)",
-hw:"Find 5 angles at home, sketch them, estimate their degrees. Bring sketches to next class.",
-time:"Warm-Up: 5 min | Direct Instruction: 15 min | Guided Practice: 10 min | Independent Work: 20 min | Closing: 5 min | Buffer: 5 min",
-diff_s:"Provide angle reference card with visuals",diff_a:"Estimate angles first, then measure — track accuracy"},
-{s:2,w:1,d:"Wednesday",t:"Angle Relationships",u:"geo",
-obj:"• Complementary & supplementary angles\n• Vertical angles\n• Solve for unknown angles",
-mat:"Whiteboard, iPad, worksheet",
-warm:"Quick review: Flash 5 angles on the TV — students classify as acute, right, or obtuse. Then ask: \"What do a 30° angle and a 60° angle have in common?\" (5 min)",
-direct:"• Complementary angles: two angles that add to 90°\n• Supplementary angles: two angles that add to 180°\n• Vertical angles: formed by intersecting lines, always equal\n• Real-world examples: door hinges, corner decorations\n• Model solving: \"If one angle is 65°, what's its supplement?\"",
-guided:"• Work through 5 problems together on whiteboard\n• \"I Do, We Do, You Do\" progression\n• 🏠 Roof Pitch Problems: show house roof diagrams, find missing angles",
-indep:"Worksheet: \"Angle Relationships\" — 20 problems mixing complementary, supplementary, and vertical angles. Includes roof designs and ramp constructions.",
-closing:"Partner check: swap papers, verify 3 answers each. Discuss any disagreements. (5 min)",
-hw:"None",
-time:"Warm-Up: 5 min | Direct Instruction: 15 min | Guided Practice: 10 min | Independent Work: 20 min | Closing: 5 min | Buffer: 5 min",
-diff_s:"Color-code complementary pairs blue, supplementary pairs red",diff_a:"Create their own angle relationship puzzles for classmates"},
-{s:3,w:1,d:"Thursday",t:"Classifying Triangles & Polygons",u:"geo",
-obj:"• Classify triangles by sides and angles\n• Identify regular polygons\n• Interior angle sums",
-mat:"Whiteboard, iPad, quiz (iPad-friendly), worksheet",
-warm:"⚽ Show overhead view of a soccer field. \"How many rectangles can you find? Any triangles? Other shapes?\" (5 min)",
-direct:"• Triangle by sides: equilateral, isosceles, scalene\n• Triangle by angles: acute, right, obtuse\n• Polygons: triangle→hexagon and beyond\n• Regular vs irregular polygons\n• Interior angle sum: triangle=180°, quadrilateral=360°",
-guided:"• Classify 8 triangles together\n• Sports Geometry: identify shapes in basketball courts, game boards",
-indep:"Worksheet: \"Shape Detective\" — classify triangles, identify polygons, find missing angles.",
-closing:"📝 QUIZ 1 on iPads (15 min): Angles, angle relationships, triangles, polygons",
-hw:"None",
-time:"Warm-Up: 5 min | Direct Instruction: 12 min | Guided Practice: 8 min | Independent Work: 15 min | Quiz: 15 min | Buffer: 5 min",
-diff_s:"Triangle classification flowchart provided",diff_a:"Calculate interior angle sums for polygons up to octagon"},
-{s:4,w:2,d:"Monday",t:"Perimeter of Polygons",u:"geo",
+{s:1,w:1,d:"Monday",t:"Perimeter of Polygons",u:"geo",
 obj:"• Calculate perimeter of rectangles, triangles, irregular shapes\n• Convert units within problems\n• Perimeter word problems",
 mat:"Whiteboard, iPad, worksheet, rulers",
 warm:"🌿 \"You have 40 feet of fencing. What's the biggest rectangular garden you could make? Sketch some options.\" (5 min)",
@@ -976,7 +943,7 @@ closing:"Quick share: \"What shape garden did you design, and why?\" (5 min)",
 hw:"Measure the perimeter of your bedroom. Bring the measurement.",
 time:"Warm-Up: 5 min | Direct Instruction: 15 min | Guided Practice: 10 min | Independent Work: 20 min | Closing: 5 min | Buffer: 5 min",
 diff_s:"Provide labeled diagrams with side lengths",diff_a:"Design an irregular garden with specific perimeter, calculate fencing cost with corners costing extra"},
-{s:5,w:2,d:"Wednesday",t:"Area: Rectangles & Triangles",u:"geo",
+{s:2,w:1,d:"Wednesday",t:"Area: Rectangles & Triangles",u:"geo",
 obj:"• Calculate area of rectangles and triangles\n• Decompose complex shapes\n• Apply area to real-world contexts",
 mat:"Whiteboard, iPad, worksheet",
 warm:"🎨 \"Your parents are letting you repaint your room. Paint costs $35/gallon, covers 350 sq ft. How would you figure out how much to buy?\" (5 min)",
@@ -987,7 +954,7 @@ closing:"\"What surprised you about calculating room areas?\" Brief discussion. 
 hw:"None",
 time:"Warm-Up: 5 min | Direct Instruction: 15 min | Guided Practice: 10 min | Independent Work: 20 min | Closing: 5 min | Buffer: 5 min",
 diff_s:"Grid paper provided to count squares and verify formulas",diff_a:"Calculate cost comparison — carpet vs. tile for the same room"},
-{s:6,w:2,d:"Thursday",t:"Area: Parallelograms & Trapezoids",u:"geo",
+{s:3,w:1,d:"Thursday",t:"Area: Parallelograms & Trapezoids",u:"geo",
 obj:"• Calculate area of parallelograms and trapezoids\n• Find areas of composite shapes",
 mat:"Whiteboard, iPad, quiz (iPad-friendly), worksheet",
 warm:"🧁 Show different baking pan shapes. \"Which pan holds more batter? How would you figure it out?\" (5 min)",
@@ -998,6 +965,39 @@ closing:"📝 QUIZ 2 on iPads (15 min): Perimeter and area",
 hw:"None",
 time:"Warm-Up: 5 min | Direct Instruction: 12 min | Guided Practice: 8 min | Independent Work: 15 min | Quiz: 15 min | Buffer: 5 min",
 diff_s:"Cut-out shapes to physically rearrange into rectangles",diff_a:"Design a composite-shaped room and calculate its area"},
+{s:4,w:2,d:"Monday",t:"Intro to Geometry & Angles",u:"geo",
+obj:"• Identify types of angles (acute, right, obtuse, straight)\n• Measure angles with a protractor\n• Understand angle relationships",
+mat:"Whiteboard, iPad, protractors (or protractor app), printed worksheet",
+warm:"🍕 Show a picture of a pizza cut into slices on the TV. Ask: \"Which slice has the biggest angle? The smallest? Can you estimate the degrees?\" (5 min discussion)",
+direct:"• Define geometry — the study of shapes, sizes, and positions\n• Types of angles: acute (<90°), right (=90°), obtuse (>90°), straight (=180°)\n• Show examples with real objects (book corners = right angle, clock hands, door opening)\n• Demonstrate measuring with a protractor\n• Key vocabulary: vertex, ray, degree",
+guided:"• As a class, measure 5 angles projected on the TV\n• Students hold up fingers to show their estimate before revealing the answer\n• Practice identifying angle types from pictures of real objects",
+indep:"Worksheet: \"Angle Explorer\" — measure and classify 15 angles, estimate angles from real-world photos (pizza, clocks, scissors, ramps)",
+closing:"Exit ticket (on iPad): Identify 3 angles in the classroom and estimate their measure. Share one with the class. (5 min)",
+hw:"Find 5 angles at home, sketch them, estimate their degrees. Bring sketches to next class.",
+time:"Warm-Up: 5 min | Direct Instruction: 15 min | Guided Practice: 10 min | Independent Work: 20 min | Closing: 5 min | Buffer: 5 min",
+diff_s:"Provide angle reference card with visuals",diff_a:"Estimate angles first, then measure — track accuracy"},
+{s:5,w:2,d:"Wednesday",t:"Angle Relationships",u:"geo",
+obj:"• Complementary & supplementary angles\n• Vertical angles\n• Solve for unknown angles",
+mat:"Whiteboard, iPad, worksheet",
+warm:"Quick review: Flash 5 angles on the TV — students classify as acute, right, or obtuse. Then ask: \"What do a 30° angle and a 60° angle have in common?\" (5 min)",
+direct:"• Complementary angles: two angles that add to 90°\n• Supplementary angles: two angles that add to 180°\n• Vertical angles: formed by intersecting lines, always equal\n• Real-world examples: door hinges, corner decorations\n• Model solving: \"If one angle is 65°, what's its supplement?\"",
+guided:"• Work through 5 problems together on whiteboard\n• \"I Do, We Do, You Do\" progression\n• 🏠 Roof Pitch Problems: show house roof diagrams, find missing angles",
+indep:"Worksheet: \"Angle Relationships\" — 20 problems mixing complementary, supplementary, and vertical angles. Includes roof designs and ramp constructions.",
+closing:"Partner check: swap papers, verify 3 answers each. Discuss any disagreements. (5 min)",
+hw:"None",
+time:"Warm-Up: 5 min | Direct Instruction: 15 min | Guided Practice: 10 min | Independent Work: 20 min | Closing: 5 min | Buffer: 5 min",
+diff_s:"Color-code complementary pairs blue, supplementary pairs red",diff_a:"Create their own angle relationship puzzles for classmates"},
+{s:6,w:2,d:"Thursday",t:"Classifying Triangles & Polygons",u:"geo",
+obj:"• Classify triangles by sides and angles\n• Identify regular polygons\n• Interior angle sums",
+mat:"Whiteboard, iPad, quiz (iPad-friendly), worksheet",
+warm:"⚽ Show overhead view of a soccer field. \"How many rectangles can you find? Any triangles? Other shapes?\" (5 min)",
+direct:"• Triangle by sides: equilateral, isosceles, scalene\n• Triangle by angles: acute, right, obtuse\n• Polygons: triangle→hexagon and beyond\n• Regular vs irregular polygons\n• Interior angle sum: triangle=180°, quadrilateral=360°",
+guided:"• Classify 8 triangles together\n• Sports Geometry: identify shapes in basketball courts, game boards",
+indep:"Worksheet: \"Shape Detective\" — classify triangles, identify polygons, find missing angles.",
+closing:"📝 QUIZ 1 on iPads (15 min): Angles, angle relationships, triangles, polygons",
+hw:"None",
+time:"Warm-Up: 5 min | Direct Instruction: 12 min | Guided Practice: 8 min | Independent Work: 15 min | Quiz: 15 min | Buffer: 5 min",
+diff_s:"Triangle classification flowchart provided",diff_a:"Calculate interior angle sums for polygons up to octagon"},
 {s:7,w:3,d:"Monday",t:"Circles: Circumference",u:"geo",
 obj:"• Understand pi\n• Calculate circumference using C = πd and C = 2πr\n• Apply to real-world contexts",
 mat:"Whiteboard, iPad, worksheet",
