@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>⚡ Shape Sprint — Mrs. Williams' Math</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;background:#1a1a2e;color:#fff;min-height:100vh;overflow-x:hidden}
+.screen{display:none;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:20px;text-align:center}
+.screen.active{display:flex}
+
+/* Gradient accents */
+.grad-orange{background:linear-gradient(135deg,#FF6B35,#F7931E)}
+.grad-green{background:linear-gradient(135deg,#38B249,#7BC67E)}
+.grad-purple{background:linear-gradient(135deg,#8B5CF6,#A78BFA)}
+.grad-main{background:linear-gradient(135deg,#FF6B35,#38B249,#8B5CF6)}
+
+/* Start Screen */
+.game-title{font-size:clamp(2.2em,8vw,3.5em);font-weight:900;background:linear-gradient(135deg,#FF6B35,#38B249,#8B5CF6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:4px;line-height:1.1}
+.subtitle{font-size:1em;color:#aab;margin-bottom:24px;font-weight:600}
+.instructions{background:rgba(255,255,255,0.07);border-radius:16px;padding:18px 24px;margin-bottom:24px;max-width:460px;text-align:left;font-size:0.92em;line-height:1.7;color:#ccd}
+.instructions li{margin-bottom:4px}
+.player-name{font-size:1.1em;color:#8B5CF6;font-weight:700;margin-bottom:18px}
+
+.btn{border:none;border-radius:14px;padding:16px 48px;font-family:'Nunito',sans-serif;font-size:1.2em;font-weight:800;cursor:pointer;transition:all 0.2s;touch-action:manipulation;min-height:56px;min-width:180px}
+.btn:active{transform:scale(0.96)}
+.btn-start{background:linear-gradient(135deg,#FF6B35,#F7931E);color:#fff;font-size:1.4em;padding:18px 64px;box-shadow:0 6px 24px rgba(255,107,53,0.4);animation:pulse 2s infinite}
+.btn-start:hover{box-shadow:0 8px 32px rgba(255,107,53,0.6)}
+.btn-play-again{background:linear-gradient(135deg,#38B249,#7BC67E);color:#fff;box-shadow:0 6px 24px rgba(56,178,73,0.4)}
+
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
+
+/* Game Screen */
+.game-hud{width:100%;max-width:600px;display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px}
+.hud-item{background:rgba(255,255,255,0.08);border-radius:12px;padding:10px 16px;font-weight:700;font-size:0.95em}
+.hud-score{color:#F7931E}
+.hud-time{color:#7BC67E}
+.hud-progress{color:#A78BFA}
+
+.progress-bar{width:100%;max-width:600px;height:10px;background:rgba(255,255,255,0.1);border-radius:10px;margin-bottom:18px;overflow:hidden}
+.progress-fill{height:100%;border-radius:10px;background:linear-gradient(90deg,#FF6B35,#38B249,#8B5CF6);transition:width 0.4s ease}
+
+.question-card{background:rgba(255,255,255,0.06);border-radius:20px;padding:24px;width:100%;max-width:600px;margin-bottom:16px}
+.question-text{font-size:clamp(1.1em,4vw,1.4em);font-weight:700;margin-bottom:16px;color:#fff}
+.shape-container{display:flex;justify-content:center;margin-bottom:16px}
+.shape-container svg{max-width:100%;height:auto}
+
+.answer-area{width:100%;max-width:600px;display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+#answer-input{flex:1;min-width:200px;font-family:'Nunito',sans-serif;font-size:1.3em;font-weight:700;padding:16px 20px;border-radius:14px;border:3px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.08);color:#fff;text-align:center;outline:none;transition:border-color 0.2s;min-height:56px}
+#answer-input:focus{border-color:#8B5CF6}
+#answer-input::placeholder{color:#667}
+.btn-submit{background:linear-gradient(135deg,#8B5CF6,#A78BFA);color:#fff;padding:16px 36px}
+
+.feedback{width:100%;max-width:600px;min-height:56px;display:flex;align-items:center;justify-content:center;font-size:1.2em;font-weight:800;border-radius:14px;margin-top:10px;transition:all 0.3s}
+.feedback.correct{background:rgba(56,178,73,0.2);color:#7BC67E}
+.feedback.wrong{background:rgba(255,82,82,0.2);color:#FF5252}
+.feedback.hidden{opacity:0}
+
+/* End Screen */
+.final-score{font-size:clamp(3em,12vw,5em);font-weight:900;background:linear-gradient(135deg,#FF6B35,#F7931E);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.final-stats{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin:20px 0}
+.stat-box{background:rgba(255,255,255,0.07);border-radius:14px;padding:16px 24px;min-width:120px}
+.stat-value{font-size:1.6em;font-weight:900}
+.stat-label{font-size:0.78em;color:#889;font-weight:600;margin-top:2px}
+.stat-time .stat-value{color:#7BC67E}
+.stat-accuracy .stat-value{color:#A78BFA}
+
+/* Leaderboard */
+.leaderboard{background:rgba(255,255,255,0.05);border-radius:16px;padding:18px;width:100%;max-width:460px;margin-top:18px}
+.lb-title{font-size:1em;font-weight:800;margin-bottom:10px;color:#F7931E}
+.lb-row{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:10px;font-size:0.88em;font-weight:600;transition:background 0.2s}
+.lb-row:nth-child(even){background:rgba(255,255,255,0.03)}
+.lb-row.highlight{background:rgba(139,92,246,0.15);border:1px solid rgba(139,92,246,0.3)}
+.lb-rank{width:28px;text-align:center;font-weight:800;color:#F7931E}
+.lb-name{flex:1;color:#ccd;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lb-score{font-weight:800;color:#7BC67E}
+.lb-empty{color:#556;font-size:0.85em;padding:12px}
+
+/* Celebration */
+@keyframes confetti-fall{0%{transform:translateY(-100vh) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+.confetti{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:100;overflow:hidden}
+.confetti-piece{position:absolute;width:12px;height:12px;top:-20px;animation:confetti-fall 3s ease-in forwards}
+
+/* Score animation */
+@keyframes score-pop{0%{transform:scale(1)}50%{transform:scale(1.3)}100%{transform:scale(1)}}
+.score-pop{animation:score-pop 0.3s ease}
+
+/* Responsive */
+@media(max-width:500px){
+.game-hud{justify-content:center}
+.answer-area{flex-direction:column;align-items:stretch}
+.btn-submit{min-width:100%}
+.final-stats{flex-direction:column;align-items:center}
+}
+
+/* Back link */
+.back-link{position:absolute;top:16px;left:16px;color:#889;text-decoration:none;font-weight:700;font-size:0.9em;z-index:10}
+.back-link:hover{color:#fff}
+</style>
+</head>
+<body>
+<a href="../index.html" class="back-link">← Back</a>
+
+<!-- START SCREEN -->
+<div id="screen-start" class="screen active">
+    <div class="game-title">⚡ Shape Sprint</div>
+    <div class="subtitle">Perimeter & Area Speed Challenge</div>
+    <div class="instructions">
+        <ul>
+            <li>Solve <strong>15 shape problems</strong> as fast as you can!</li>
+            <li>Find the <strong>perimeter</strong> or <strong>area</strong> of each shape</li>
+            <li>Earn <strong>100 pts</strong> per correct answer + time bonus</li>
+            <li>For circles, use <strong>π ≈ 3.14</strong></li>
+            <li>Round answers to <strong>2 decimal places</strong> if needed</li>
+        </ul>
+    </div>
+    <div class="player-name" id="player-display"></div>
+    <button class="btn btn-start" id="btn-start" onclick="startGame()">▶ START</button>
+    <div class="leaderboard" id="lb-start">
+        <div class="lb-title">🏆 Top 10 Scores</div>
+        <div id="lb-start-rows"><div class="lb-empty">Loading...</div></div>
+    </div>
+</div>
+
+<!-- GAME SCREEN -->
+<div id="screen-game" class="screen">
+    <div class="game-hud">
+        <div class="hud-item hud-score">Score: <span id="hud-score">0</span></div>
+        <div class="hud-item hud-time">⏱ <span id="hud-time">0.0s</span></div>
+        <div class="hud-item hud-progress">Problem <span id="hud-current">1</span>/15</div>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+    <div class="question-card">
+        <div class="question-text" id="question-text"></div>
+        <div class="shape-container" id="shape-svg"></div>
+    </div>
+    <div class="answer-area">
+        <input type="number" step="any" id="answer-input" placeholder="Your answer..." autocomplete="off" inputmode="decimal">
+        <button class="btn btn-submit" id="btn-submit" onclick="submitAnswer()">Go →</button>
+    </div>
+    <div class="feedback hidden" id="feedback"></div>
+</div>
+
+<!-- END SCREEN -->
+<div id="screen-end" class="screen">
+    <div class="game-title" style="font-size:clamp(1.5em,6vw,2.2em);margin-bottom:8px">⚡ Shape Sprint</div>
+    <div id="end-message" style="font-size:1.1em;font-weight:700;margin-bottom:10px;color:#aab"></div>
+    <div class="final-score" id="final-score">0</div>
+    <div style="font-size:0.9em;color:#889;font-weight:700;margin-top:-4px">points</div>
+    <div class="final-stats">
+        <div class="stat-box stat-time"><div class="stat-value" id="stat-time">0s</div><div class="stat-label">Time</div></div>
+        <div class="stat-box stat-accuracy"><div class="stat-value" id="stat-accuracy">0/15</div><div class="stat-label">Correct</div></div>
+    </div>
+    <button class="btn btn-play-again" onclick="resetGame()">🔁 Play Again</button>
+    <div class="leaderboard" id="lb-end">
+        <div class="lb-title">🏆 Top 10 Scores</div>
+        <div id="lb-end-rows"><div class="lb-empty">Loading...</div></div>
+    </div>
+</div>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="../firebase-config.js"></script>
+<script>
+// ─── Firebase Init ───
+let db = null;
+function initFirebase() {
+    try {
+        let app = window._fbApp;
+        if (!app) {
+            if (window.firebaseConfig) {
+                app = firebase.initializeApp(window.firebaseConfig);
+                window._fbApp = app;
+            } else return;
+        }
+        db = firebase.firestore(app);
+        firebase.auth(app).signInAnonymously().catch(()=>{});
+    } catch(e) { console.warn('Firebase init error:', e); }
+}
+initFirebase();
+
+// ─── Audio ───
+const AudioCtx = window.AudioContext || window.webkitAudioContext;
+let audioCtx;
+function ensureAudio() { if (!audioCtx) audioCtx = new AudioCtx(); }
+
+function playDing() {
+    ensureAudio();
+    const o = audioCtx.createOscillator(), g = audioCtx.createGain();
+    o.type = 'sine'; o.frequency.setValueAtTime(880, audioCtx.currentTime);
+    o.frequency.exponentialRampToValueAtTime(1320, audioCtx.currentTime + 0.08);
+    g.gain.setValueAtTime(0.3, audioCtx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.25);
+    o.connect(g); g.connect(audioCtx.destination);
+    o.start(); o.stop(audioCtx.currentTime + 0.25);
+}
+function playBuzz() {
+    ensureAudio();
+    const o = audioCtx.createOscillator(), g = audioCtx.createGain();
+    o.type = 'sawtooth'; o.frequency.setValueAtTime(150, audioCtx.currentTime);
+    g.gain.setValueAtTime(0.12, audioCtx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
+    o.connect(g); g.connect(audioCtx.destination);
+    o.start(); o.stop(audioCtx.currentTime + 0.3);
+}
+function playTriumph() {
+    ensureAudio();
+    const notes = [523.25, 659.25, 783.99, 1046.5];
+    notes.forEach((f, i) => {
+        const o = audioCtx.createOscillator(), g = audioCtx.createGain();
+        o.type = 'sine'; o.frequency.value = f;
+        g.gain.setValueAtTime(0, audioCtx.currentTime + i*0.15);
+        g.gain.linearRampToValueAtTime(0.2, audioCtx.currentTime + i*0.15 + 0.05);
+        g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + i*0.15 + 0.8);
+        o.connect(g); g.connect(audioCtx.destination);
+        o.start(audioCtx.currentTime + i*0.15);
+        o.stop(audioCtx.currentTime + i*0.15 + 0.8);
+    });
+}
+
+// ─── State ───
+const TOTAL = 15;
+let currentProblem = 0, score = 0, correct = 0, startTime = 0, timerInterval = null;
+let problems = [], playerName = 'Student', playerUsername = '';
+let waitingForNext = false;
+
+// ─── Player ───
+function loadPlayer() {
+    try {
+        const raw = localStorage.getItem('math_current_user');
+        if (raw) {
+            const u = JSON.parse(raw);
+            if (u.name) playerName = u.name;
+            if (u.username) playerUsername = u.username;
+        }
+    } catch(e) {}
+    document.getElementById('player-display').textContent = '👤 ' + playerName;
+}
+
+// ─── Problem Generation ───
+function randInt(a, b) { return Math.floor(Math.random() * (b - a + 1)) + a; }
+function round2(n) { return Math.round(n * 100) / 100; }
+
+function generateProblems() {
+    const pool = [];
+    const types = [
+        'rect_perim', 'rect_area', 'square_perim', 'square_area',
+        'tri_perim', 'tri_area', 'para_area', 'circle_area',
+        'circle_perim', 'reg_poly_perim'
+    ];
+    // Generate 15 problems with a good mix
+    for (let i = 0; i < TOTAL; i++) {
+        const type = types[i % types.length];
+        pool.push(makeProblem(type));
+    }
+    // Shuffle
+    for (let i = pool.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [pool[i], pool[j]] = [pool[j], pool[i]];
+    }
+    return pool;
+}
+
+function makeProblem(type) {
+    switch(type) {
+        case 'rect_perim': {
+            const w = randInt(3, 15), h = randInt(3, 15);
+            return { question: `Find the PERIMETER of this rectangle`, answer: 2*(w+h), svg: svgRect(w,h), dims: `${w} × ${h}` };
+        }
+        case 'rect_area': {
+            const w = randInt(3, 15), h = randInt(3, 15);
+            return { question: `Find the AREA of this rectangle`, answer: w*h, svg: svgRect(w,h), dims: `${w} × ${h}` };
+        }
+        case 'square_perim': {
+            const s = randInt(3, 20);
+            return { question: `Find the PERIMETER of this square`, answer: 4*s, svg: svgSquare(s), dims: `side = ${s}` };
+        }
+        case 'square_area': {
+            const s = randInt(3, 15);
+            return { question: `Find the AREA of this square`, answer: s*s, svg: svgSquare(s), dims: `side = ${s}` };
+        }
+        case 'tri_perim': {
+            const a = randInt(3, 12), b = randInt(3, 12), c = randInt(Math.abs(a-b)+1, a+b-1);
+            return { question: `Find the PERIMETER of this triangle`, answer: a+b+c, svg: svgTriangle(a,b,c), dims: `sides: ${a}, ${b}, ${c}` };
+        }
+        case 'tri_area': {
+            const base = randInt(4, 16), height = randInt(3, 12);
+            return { question: `Find the AREA of this triangle`, answer: round2(base*height/2), svg: svgTriArea(base,height), dims: `base=${base}, height=${height}` };
+        }
+        case 'para_area': {
+            const base = randInt(4, 15), height = randInt(3, 12);
+            return { question: `Find the AREA of this parallelogram`, answer: base*height, svg: svgParallelogram(base,height), dims: `base=${base}, height=${height}` };
+        }
+        case 'circle_area': {
+            const r = randInt(2, 10);
+            return { question: `Find the AREA of this circle (use π ≈ 3.14)`, answer: round2(3.14*r*r), svg: svgCircle(r), dims: `radius = ${r}` };
+        }
+        case 'circle_perim': {
+            const r = randInt(2, 10);
+            return { question: `Find the CIRCUMFERENCE of this circle (use π ≈ 3.14)`, answer: round2(2*3.14*r), svg: svgCircle(r), dims: `radius = ${r}` };
+        }
+        case 'reg_poly_perim': {
+            const sides = [5,6,8][randInt(0,2)], len = randInt(3, 10);
+            const names = {5:'pentagon',6:'hexagon',8:'octagon'};
+            return { question: `Find the PERIMETER of this regular ${names[sides]}`, answer: sides*len, svg: svgRegPoly(sides,len), dims: `${sides} sides, each = ${len}` };
+        }
+    }
+}
+
+// ─── SVG Generators ───
+const SVG_W = 260, SVG_H = 180;
+function svgWrap(inner) { return `<svg viewBox="0 0 ${SVG_W} ${SVG_H}" width="${SVG_W}" height="${SVG_H}" xmlns="http://www.w3.org/2000/svg" style="max-width:100%">${inner}</svg>`; }
+const LS = 'fill:none;stroke:#A78BFA;stroke-width:2.5';
+const TS = 'fill:#F7931E;font-family:Nunito,sans-serif;font-size:14px;font-weight:700;text-anchor:middle';
+
+function svgRect(w, h) {
+    const rw = 160, rh = 100, x = 50, y = 30;
+    return svgWrap(`<rect x="${x}" y="${y}" width="${rw}" height="${rh}" style="${LS}" rx="4"/>
+        <text x="${x+rw/2}" y="${y+rh+20}" style="${TS}">${w}</text>
+        <text x="${x-20}" y="${y+rh/2+5}" style="${TS}">${h}</text>`);
+}
+function svgSquare(s) {
+    const sz = 110, x = 75, y = 25;
+    return svgWrap(`<rect x="${x}" y="${y}" width="${sz}" height="${sz}" style="${LS}" rx="4"/>
+        <text x="${x+sz/2}" y="${y+sz+20}" style="${TS}">${s}</text>
+        <text x="${x-18}" y="${y+sz/2+5}" style="${TS}">${s}</text>`);
+}
+function svgTriangle(a, b, c) {
+    return svgWrap(`<polygon points="130,20 30,150 230,150" style="${LS}"/>
+        <text x="70" y="95" style="${TS}">${a}</text>
+        <text x="190" y="95" style="${TS}">${b}</text>
+        <text x="130" y="${170}" style="${TS}">${c}</text>`);
+}
+function svgTriArea(base, height) {
+    return svgWrap(`<polygon points="130,20 30,150 230,150" style="${LS}"/>
+        <line x1="130" y1="20" x2="130" y2="150" stroke="#7BC67E" stroke-width="1.5" stroke-dasharray="6"/>
+        <text x="130" y="${170}" style="${TS}">b=${base}</text>
+        <text x="155" y="90" style="fill:#7BC67E;font-family:Nunito,sans-serif;font-size:13px;font-weight:700">h=${height}</text>`);
+}
+function svgParallelogram(base, height) {
+    return svgWrap(`<polygon points="70,30 230,30 190,145 30,145" style="${LS}"/>
+        <line x1="70" y1="30" x2="70" y2="145" stroke="#7BC67E" stroke-width="1.5" stroke-dasharray="6"/>
+        <text x="130" y="${165}" style="${TS}">b=${base}</text>
+        <text x="52" y="95" style="fill:#7BC67E;font-family:Nunito,sans-serif;font-size:13px;font-weight:700">h=${height}</text>`);
+}
+function svgCircle(r) {
+    const cx = 130, cy = 90, cr = 65;
+    return svgWrap(`<circle cx="${cx}" cy="${cy}" r="${cr}" style="${LS}"/>
+        <line x1="${cx}" y1="${cy}" x2="${cx+cr}" y2="${cy}" stroke="#F7931E" stroke-width="2"/>
+        <text x="${cx+cr/2}" y="${cy-8}" style="${TS}">r=${r}</text>
+        <circle cx="${cx}" cy="${cy}" r="3" fill="#F7931E"/>`);
+}
+function svgRegPoly(sides, len) {
+    const cx = 130, cy = 90, r = 65;
+    let pts = [];
+    for (let i = 0; i < sides; i++) {
+        const angle = (2*Math.PI*i/sides) - Math.PI/2;
+        pts.push(`${cx+r*Math.cos(angle)},${cy+r*Math.sin(angle)}`);
+    }
+    return svgWrap(`<polygon points="${pts.join(' ')}" style="${LS}"/>
+        <text x="${cx}" y="${cy+r+20}" style="${TS}">each side = ${len}</text>`);
+}
+
+// ─── Game Logic ───
+function showScreen(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+}
+
+function startGame() {
+    ensureAudio();
+    problems = generateProblems();
+    currentProblem = 0; score = 0; correct = 0; waitingForNext = false;
+    document.getElementById('hud-score').textContent = '0';
+    startTime = Date.now();
+    timerInterval = setInterval(updateTimer, 100);
+    showScreen('screen-game');
+    showProblem();
+}
+
+function updateTimer() {
+    const elapsed = (Date.now() - startTime) / 1000;
+    document.getElementById('hud-time').textContent = elapsed.toFixed(1) + 's';
+}
+
+function showProblem() {
+    const p = problems[currentProblem];
+    document.getElementById('question-text').textContent = p.question;
+    document.getElementById('shape-svg').innerHTML = p.svg;
+    document.getElementById('hud-current').textContent = currentProblem + 1;
+    document.getElementById('progress-fill').style.width = ((currentProblem) / TOTAL * 100) + '%';
+    document.getElementById('answer-input').value = '';
+    document.getElementById('feedback').className = 'feedback hidden';
+    document.getElementById('answer-input').focus();
+    waitingForNext = false;
+}
+
+function submitAnswer() {
+    if (waitingForNext) return;
+    const input = document.getElementById('answer-input');
+    const userAns = parseFloat(input.value);
+    if (isNaN(userAns)) { input.focus(); return; }
+
+    waitingForNext = true;
+    const p = problems[currentProblem];
+    const fb = document.getElementById('feedback');
+    const isCorrect = Math.abs(userAns - p.answer) < 0.02;
+
+    if (isCorrect) {
+        correct++;
+        const elapsed = (Date.now() - startTime) / 1000;
+        const timeBonus = Math.max(0, Math.round(50 - elapsed / TOTAL * 2));
+        score += 100 + timeBonus;
+        fb.textContent = '✅ Correct! +' + (100 + timeBonus) + ' pts';
+        fb.className = 'feedback correct';
+        playDing();
+        const el = document.getElementById('hud-score');
+        el.textContent = score;
+        el.classList.remove('score-pop');
+        void el.offsetWidth;
+        el.classList.add('score-pop');
+    } else {
+        fb.textContent = `❌ Nope! Answer: ${p.answer}`;
+        fb.className = 'feedback wrong';
+        playBuzz();
+    }
+
+    setTimeout(() => {
+        currentProblem++;
+        if (currentProblem >= TOTAL) {
+            endGame();
+        } else {
+            showProblem();
+        }
+    }, 1500);
+}
+
+function endGame() {
+    clearInterval(timerInterval);
+    const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
+    document.getElementById('final-score').textContent = score;
+    document.getElementById('stat-time').textContent = elapsed + 's';
+    document.getElementById('stat-accuracy').textContent = correct + '/' + TOTAL;
+    document.getElementById('progress-fill').style.width = '100%';
+
+    const pct = correct / TOTAL;
+    let msg = '';
+    if (pct >= 0.9) { msg = '🎉 Amazing job!'; playTriumph(); spawnConfetti(); }
+    else if (pct >= 0.7) { msg = '👏 Great work!'; playDing(); }
+    else if (pct >= 0.5) { msg = '💪 Keep practicing!'; }
+    else { msg = '📚 Review and try again!'; }
+    document.getElementById('end-message').textContent = msg;
+
+    showScreen('screen-end');
+    submitScore(elapsed);
+    loadLeaderboard('lb-end-rows');
+}
+
+function resetGame() {
+    showScreen('screen-start');
+    loadLeaderboard('lb-start-rows');
+}
+
+// ─── Confetti ───
+function spawnConfetti() {
+    const container = document.createElement('div');
+    container.className = 'confetti';
+    document.body.appendChild(container);
+    const colors = ['#FF6B35','#F7931E','#38B249','#7BC67E','#8B5CF6','#A78BFA','#FF5252','#FFD700'];
+    for (let i = 0; i < 60; i++) {
+        const piece = document.createElement('div');
+        piece.className = 'confetti-piece';
+        piece.style.left = Math.random()*100+'%';
+        piece.style.background = colors[Math.floor(Math.random()*colors.length)];
+        piece.style.animationDelay = (Math.random()*2)+'s';
+        piece.style.borderRadius = Math.random()>0.5?'50%':'2px';
+        piece.style.width = (8+Math.random()*10)+'px';
+        piece.style.height = (8+Math.random()*10)+'px';
+        container.appendChild(piece);
+    }
+    setTimeout(() => container.remove(), 4000);
+}
+
+// ─── Leaderboard ───
+async function loadLeaderboard(targetId) {
+    if (!db) { document.getElementById(targetId).innerHTML = '<div class="lb-empty">Leaderboard unavailable</div>'; return; }
+    try {
+        const snap = await db.collection('leaderboard_shape_sprint').orderBy('score','desc').limit(10).get();
+        const el = document.getElementById(targetId);
+        if (snap.empty) { el.innerHTML = '<div class="lb-empty">No scores yet — be the first!</div>'; return; }
+        let html = '';
+        let rank = 0;
+        snap.forEach(doc => {
+            rank++;
+            const d = doc.data();
+            const medal = rank===1?'🥇':rank===2?'🥈':rank===3?'🥉':rank;
+            const hl = d.student === playerName ? ' highlight':'';
+            html += `<div class="lb-row${hl}"><span class="lb-rank">${medal}</span><span class="lb-name">${d.student}</span><span class="lb-score">${d.score}</span></div>`;
+        });
+        el.innerHTML = html;
+    } catch(e) { console.warn('Leaderboard error:', e); }
+}
+
+async function submitScore(time) {
+    if (!db) return;
+    try {
+        const ref = db.collection('leaderboard_shape_sprint');
+        // Check for existing best score
+        const existing = await ref.where('student','==',playerName).orderBy('score','desc').limit(1).get();
+        const entry = {
+            student: playerName,
+            username: playerUsername || playerName,
+            score: score,
+            time: parseFloat(time),
+            accuracy: correct + '/' + TOTAL,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        };
+        if (!existing.empty) {
+            const best = existing.docs[0].data();
+            if (score > best.score) {
+                await existing.docs[0].ref.update(entry);
+            }
+        } else {
+            await ref.add(entry);
+        }
+        // Refresh both leaderboards
+        loadLeaderboard('lb-end-rows');
+    } catch(e) { console.warn('Score submit error:', e); }
+}
+
+// ─── Keyboard ───
+document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && document.getElementById('screen-game').classList.contains('active')) {
+        submitAnswer();
+    }
+});
+
+// ─── Init ───
+loadPlayer();
+loadLeaderboard('lb-start-rows');
+</script>
+</body>
+</html>
