@@ -112,7 +112,7 @@ body{font-family:'Nunito',sans-serif;background:#1a1a2e;color:#fff;min-height:10
             <li>Solve <strong>15 shape problems</strong> as fast as you can!</li>
             <li>Find the <strong>perimeter</strong> or <strong>area</strong> of each shape</li>
             <li>Earn <strong>100 pts</strong> per correct answer + time bonus</li>
-            <li>For circles, use <strong>π ≈ 3.14</strong></li>
+            <li>Perimeter &amp; area of rectangles, squares, triangles, parallelograms &amp; more</li>
             <li>Round answers to <strong>2 decimal places</strong> if needed</li>
         </ul>
     </div>
@@ -249,8 +249,8 @@ function generateProblems() {
     const pool = [];
     const types = [
         'rect_perim', 'rect_area', 'square_perim', 'square_area',
-        'tri_perim', 'tri_area', 'para_area', 'circle_area',
-        'circle_perim', 'reg_poly_perim'
+        'tri_perim', 'tri_area', 'para_area',
+        'reg_poly_perim'
     ];
     // Generate 15 problems with a good mix
     for (let i = 0; i < TOTAL; i++) {
