@@ -130,6 +130,126 @@ async function retryPendingScores() {
 firebase.auth().onAuthStateChanged(user => { if (user) retryPendingScores(); });
 
 /**
+ * Save a draft of the student's current work (no grading).
+ * Auto-loads when student returns to the page.
+ * @param {string} assessmentId - e.g. "w04"
+ */
+async function saveDraft(assessmentId) {
+    const studentData = localStorage.getItem('math_current_user');
+    if (!studentData) { console.warn('No student logged in'); return false; }
+    const student = JSON.parse(studentData);
+    const studentName = student.name || student.fullName || student.username || 'Unknown';
+    const username = student.username || studentName.toLowerCase().replace(/\s+/g, '_');
+
+    // Collect all input values
+    const answers = {};
+    document.querySelectorAll('input[type="text"], input[type="hidden"], textarea, select').forEach((el, i) => {
+        if (el.closest('.answer-key') || el.closest('[data-key]') || el.closest('#pinOverlay')) return;
+        const key = el.id || el.name || `field_${i}`;
+        answers[key] = el.value || '';
+    });
+    // MC selections
+    document.querySelectorAll('.mc-btn.selected').forEach(btn => {
+        const q = btn.closest('[data-q]');
+        if (q) answers[`mc_${q.dataset.q}`] = btn.textContent;
+    });
+    // Canvas drawings
+    document.querySelectorAll('canvas').forEach((c, i) => {
+        try { answers[`canvas_${i}`] = c.toDataURL('image/png', 0.5); } catch(e) {}
+    });
+
+    try {
+        await db.collection('student_drafts').doc(`${username}_${assessmentId}`).set({
+            student: studentName, username, assessment: assessmentId,
+            answers, savedAt: firebase.firestore.FieldValue.serverTimestamp()
+        }, { merge: true });
+        // Also save locally as backup
+        localStorage.setItem(`draft_${assessmentId}`, JSON.stringify(answers));
+        console.log(`💾 Draft saved: ${studentName} → ${assessmentId}`);
+        return true;
+    } catch(e) {
+        // Save locally if Firebase fails
+        localStorage.setItem(`draft_${assessmentId}`, JSON.stringify(answers));
+        console.warn('Draft saved locally only:', e);
+        return true;
+    }
+}
+
+/**
+ * Load a previously saved draft and fill in the page.
+ * @param {string} assessmentId - e.g. "w04"
+ */
+async function loadDraft(assessmentId) {
+    const studentData = localStorage.getItem('math_current_user');
+    if (!studentData) return false;
+    const student = JSON.parse(studentData);
+    const username = student.username || (student.name || '').toLowerCase().replace(/\s+/g, '_');
+
+    let answers = null;
+
+    // Try Firebase first
+    try {
+        const doc = await db.collection('student_drafts').doc(`${username}_${assessmentId}`).get();
+        if (doc.exists) answers = doc.data().answers;
+    } catch(e) { console.warn('Could not load draft from Firebase:', e); }
+
+    // Fallback to localStorage
+    if (!answers) {
+        const local = localStorage.getItem(`draft_${assessmentId}`);
+        if (local) answers = JSON.parse(local);
+    }
+
+    if (!answers) return false;
+
+    // Fill inputs
+    document.querySelectorAll('input[type="text"], input[type="hidden"], textarea, select').forEach((el, i) => {
+        if (el.closest('.answer-key') || el.closest('[data-key]') || el.closest('#pinOverlay')) return;
+        const key = el.id || el.name || `field_${i}`;
+        if (answers[key]) el.value = answers[key];
+    });
+
+    // Restore MC selections
+    document.querySelectorAll('[data-q]').forEach(q => {
+        const saved = answers[`mc_${q.dataset.q}`];
+        if (saved) {
+            q.querySelectorAll('.mc-btn').forEach(btn => {
+                if (btn.textContent === saved) {
+                    btn.classList.add('selected');
+                    const hidden = q.parentElement.querySelector('.answer-hidden');
+                    if (hidden) hidden.value = saved;
+                }
+            });
+        }
+    });
+
+    // Restore canvas drawings
+    document.querySelectorAll('canvas').forEach((c, i) => {
+        const imgData = answers[`canvas_${i}`];
+        if (imgData) {
+            const img = new Image();
+            img.onload = () => { c.getContext('2d').drawImage(img, 0, 0); };
+            img.src = imgData;
+        }
+    });
+
+    console.log(`📂 Draft loaded: ${assessmentId}`);
+    return true;
+}
+
+/**
+ * Delete draft after successful final submit.
+ * @param {string} assessmentId
+ */
+async function clearDraft(assessmentId) {
+    const studentData = localStorage.getItem('math_current_user');
+    if (!studentData) return;
+    const student = JSON.parse(studentData);
+    const username = student.username || (student.name || '').toLowerCase().replace(/\s+/g, '_');
+    try { await db.collection('student_drafts').doc(`${username}_${assessmentId}`).delete(); } catch(e) {}
+    localStorage.removeItem(`draft_${assessmentId}`);
+}
+
+/**
  * Teacher review mode: load student's saved answers into the page.
  * Triggered by URL params: ?student=username&assess=assessmentId
  */

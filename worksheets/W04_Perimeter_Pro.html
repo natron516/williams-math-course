@@ -346,7 +346,9 @@
     </div>
 
     <div class="submit-wrap">
+        <button class="save-btn" id="saveBtn" onclick="doSave()" style="background:linear-gradient(135deg,#42A5F5,#1565C0);color:white;border:none;padding:14px 36px;border-radius:14px;font-size:1.05em;font-weight:800;font-family:'Nunito',sans-serif;cursor:pointer;box-shadow:0 2px 8px rgba(66,165,245,0.3);margin-right:12px;">💾 Save for Later</button>
         <button class="submit-btn" id="submitBtn" onclick="doSubmit()">📤 Submit Worksheet</button>
+        <div id="saveMsg" style="margin-top:8px;font-weight:700;color:#1565C0;"></div>
         <div id="submitMsg"></div>
         <div id="gradeMsg"></div>
     </div>
@@ -508,6 +510,8 @@
             gradeMsg.className = 'perfect';
             gradeMsg.textContent = '✅ Your work has been graded. Great job!';
             btn.textContent = '✓ Submitted';
+            document.getElementById('saveBtn').style.display = 'none'; // hide save button
+            clearDraft('w04'); // clean up draft
             // Scroll wrong answers into view? No — all correct, just scroll to message
         } else {
             gradeMsg.className = 'review';
@@ -534,6 +538,40 @@
 
     </script>
     <script>if(localStorage.getItem('math_current_user')){const b=document.getElementById('showAnswerBtn');if(b)b.style.display='none';}</script>
+    <script>
+    // Save draft
+    async function doSave() {
+        const btn = document.getElementById('saveBtn');
+        const msg = document.getElementById('saveMsg');
+        btn.disabled = true; btn.textContent = '⏳ Saving...';
+        const ok = await saveDraft('w04');
+        if (ok) {
+            msg.textContent = '✅ Work saved! You can close this page and come back later.';
+            msg.style.color = '#1565C0';
+        } else {
+            msg.textContent = '⚠️ Log in on Student Portal first.';
+            msg.style.color = '#E65100';
+        }
+        btn.disabled = false; btn.textContent = '💾 Save for Later';
+        setTimeout(() => { msg.textContent = ''; }, 4000);
+    }
+
+    // Auto-load saved draft when page opens
+    firebase.auth().onAuthStateChanged(async user => {
+        if (!user) return;
+        const loaded = await loadDraft('w04');
+        if (loaded) {
+            const msg = document.getElementById('saveMsg');
+            msg.textContent = '📂 Your saved work has been loaded.';
+            msg.style.color = '#1565C0';
+            setTimeout(() => { msg.textContent = ''; }, 3000);
+            // Update progress bar
+            if (typeof updateProgress === 'function') updateProgress();
+            // Trigger the recalc IIFE
+            document.querySelectorAll('.eq-input').forEach(i => i.dispatchEvent(new Event('input')));
+        }
+    });
+    </script>
 <script src="../scratchpad.js"></script>
 </body>
 </html>
