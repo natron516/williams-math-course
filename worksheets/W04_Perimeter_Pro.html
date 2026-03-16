@@ -108,6 +108,16 @@
         .close-btn { background: none; border: 1px solid #ddd; padding: 4px 10px;
                     border-radius: 6px; cursor: pointer; font-size: 0.8em; color: #888; }
 
+
+        /* Grading feedback */
+        .eq-input.wrong { border-color: #E74C3C !important; background: #FFF0F0 !important; }
+        .eq-input.correct { border-color: #4CAF50 !important; background: #F1F8E9 !important; }
+        .mc-btn.wrong { border-color: #E74C3C !important; background: #FFF0F0 !important; color: #E74C3C !important; }
+        .mc-btn.correct-answer { border-color: #4CAF50 !important; background: #E8F5E9 !important; color: #2E7D32 !important; }
+        #gradeMsg { margin-top: 14px; padding: 16px; border-radius: 12px; font-weight: 700;
+                   font-size: 1em; text-align: center; display: none; }
+        #gradeMsg.perfect { background: #E8F5E9; color: #2E7D32; border: 2px solid #A5D6A7; }
+        #gradeMsg.review { background: #FFF8E1; color: #E65100; border: 2px solid #FFE082; }
         @media (max-width: 500px) {
             .shape-row { grid-template-columns: 1fr; }
             .scene { flex-direction: column; text-align: center; }
@@ -117,7 +127,7 @@
 </head>
 <body>
     <div class="hero">
-        <div class="badge">📄 WORKSHEET · SESSION 4</div>
+        <div class="badge">📄 WORKSHEET · SESSION 1</div>
         <h1>📏 Perimeter Pro</h1>
         <p>Fence gardens, frame pictures, and run tracks — perimeter everywhere!</p>
     </div>
@@ -141,7 +151,7 @@
                         <line x1="10" y1="4" x2="110" y2="4" stroke="#E65100" stroke-width="1" marker-start="url(#arr)" marker-end="url(#arr)"/>
                     </svg>
                     <div class="shape-title">Rectangle</div>
-                    <div class="eq-row">P = 2(<input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/>) + 2(<input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/>) = <input type="text" class="eq-input wide" placeholder="?" oninput="updateProgress()"/> ft</div>
+                    <div class="eq-row">P = 2(<input type="text" id="a1" class="eq-input" placeholder="?" oninput="updateProgress()"/>) + 2(<input type="text" id="a2" class="eq-input" placeholder="?" oninput="updateProgress()"/>) = <input type="text" id="a3" class="eq-input wide" placeholder="?" oninput="updateProgress()"/> ft</div>
                 </div>
                 <!-- Square 6.5m -->
                 <div class="shape-card">
@@ -151,7 +161,7 @@
                         <text x="86" y="42" font-size="11" fill="#FF9800" text-anchor="middle" font-weight="bold">6.5 m</text>
                     </svg>
                     <div class="shape-title">Square</div>
-                    <div class="eq-row">P = 4 × <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/> = <input type="text" class="eq-input wide" placeholder="?" oninput="updateProgress()"/> m</div>
+                    <div class="eq-row">P = 4 × <input type="text" id="a4" class="eq-input" placeholder="?" oninput="updateProgress()"/> = <input type="text" id="a5" class="eq-input wide" placeholder="?" oninput="updateProgress()"/> m</div>
                 </div>
             </div>
 
@@ -159,14 +169,14 @@
                 <span class="q-num">3</span>
                 <div class="q-body">
                     <div class="text">Triangle with sides <strong>9 cm, 12 cm, 15 cm</strong>. Find P.</div>
-                    <div class="eq-row">P = 9 + 12 + 15 = <input type="text" class="eq-input wide" placeholder="?" oninput="updateProgress()"/> cm</div>
+                    <div class="eq-row">P = 9 + 12 + 15 = <input type="text" id="a6" class="eq-input wide" placeholder="?" oninput="updateProgress()"/> cm</div>
                 </div>
             </div>
             <div class="q-inline">
                 <span class="q-num">4</span>
                 <div class="q-body">
                     <div class="text">Regular hexagon, each side = <strong>4 inches</strong>. Find P.</div>
-                    <div class="eq-row">P = 6 × <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/> = <input type="text" class="eq-input wide" placeholder="?" oninput="updateProgress()"/> in</div>
+                    <div class="eq-row">P = 6 × <input type="text" id="a7" class="eq-input" placeholder="?" oninput="updateProgress()"/> = <input type="text" id="a8" class="eq-input wide" placeholder="?" oninput="updateProgress()"/> in</div>
                 </div>
             </div>
             <div class="q-inline">
@@ -174,7 +184,7 @@
                 <div class="q-body">
                     <div class="text">Rectangle with P = <strong>36 ft</strong> and length = <strong>11 ft</strong>. Find the width.</div>
                     <div class="hint">36 = 2(11) + 2w → solve for w</div>
-                    <div class="eq-row">w = <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/> ft</div>
+                    <div class="eq-row">w = <input type="text" id="a9" class="eq-input" placeholder="?" oninput="updateProgress()"/> ft</div>
                 </div>
             </div>
 
@@ -213,8 +223,8 @@
                 <span class="q-num green">6</span>
                 <div class="q-body">
                     <div class="text">Rectangular garden: <strong>15 ft × 10 ft</strong>. How much fencing? What's the cost?</div>
-                    <div class="eq-row">P = 2(<input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/>) + 2(<input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/>) = <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/> ft</div>
-                    <div class="eq-row">Cost = <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/> × $4.50 = $<input type="text" class="eq-input wide" placeholder="?" oninput="updateProgress()"/></div>
+                    <div class="eq-row">P = 2(<input type="text" id="a10" class="eq-input" placeholder="?" oninput="updateProgress()"/>) + 2(<input type="text" id="a11" class="eq-input" placeholder="?" oninput="updateProgress()"/>) = <input type="text" id="a12" class="eq-input" placeholder="?" oninput="updateProgress()"/> ft</div>
+                    <div class="eq-row">Cost = <input type="text" id="a13" class="eq-input" placeholder="?" oninput="updateProgress()"/> × $4.50 = $<input type="text" id="a14" class="eq-input wide" placeholder="?" oninput="updateProgress()"/></div>
                 </div>
             </div>
             <div class="q-inline">
@@ -222,7 +232,7 @@
                 <div class="q-body">
                     <div class="text">You have <strong>48 feet of fencing</strong>. What rectangle dimensions give the largest area? (Try 3 options)</div>
                     <div class="hint">Hint: a square gives the maximum area!</div>
-                    <div class="eq-row">Best dimensions: <input type="text" class="eq-input" placeholder="l?" oninput="updateProgress()"/> ft × <input type="text" class="eq-input" placeholder="w?" oninput="updateProgress()"/> ft = <input type="text" class="eq-input wide" placeholder="area?" oninput="updateProgress()"/> sq ft</div>
+                    <div class="eq-row">Best dimensions: <input type="text" id="a15" class="eq-input" placeholder="l?" oninput="updateProgress()"/> ft × <input type="text" id="a16" class="eq-input" placeholder="w?" oninput="updateProgress()"/> ft = <input type="text" id="a17" class="eq-input wide" placeholder="area?" oninput="updateProgress()"/> sq ft</div>
                 </div>
             </div>
             <div class="q-inline">
@@ -230,7 +240,7 @@
                 <div class="q-body">
                     <div class="text">L-shaped garden: main part 20 ft × 12 ft, corner cut-out 6 ft × 8 ft. What is the perimeter?</div>
                     <div class="hint">Trace the outside edges: 20 + 12 + 14 + 4 + 6 + 8 = ?</div>
-                    <div class="eq-row">P = <input type="text" class="eq-input wide" placeholder="?" oninput="updateProgress()"/> ft</div>
+                    <div class="eq-row">P = <input type="text" id="a18" class="eq-input wide" placeholder="?" oninput="updateProgress()"/> ft</div>
                 </div>
             </div>
         </div>
@@ -265,14 +275,14 @@
                 <div class="q-body">
                     <div class="text">Frame a <strong>16" × 20"</strong> photo. Molding needed (in feet)? Cost?</div>
                     <div class="hint">P = 2(16)+2(20) = 72 in = 6 ft</div>
-                    <div class="eq-row">P = <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/> in = <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/> ft → $<input type="text" class="eq-input wide" placeholder="?" oninput="updateProgress()"/></div>
+                    <div class="eq-row">P = <input type="text" id="a19" class="eq-input" placeholder="?" oninput="updateProgress()"/> in = <input type="text" id="a20" class="eq-input" placeholder="?" oninput="updateProgress()"/> ft → $<input type="text" id="a21" class="eq-input wide" placeholder="?" oninput="updateProgress()"/></div>
                 </div>
             </div>
             <div class="q-inline">
                 <span class="q-num purple">10</span>
                 <div class="q-body">
                     <div class="text">Frame a square <strong>12" × 12"</strong> photo. Molding needed and cost?</div>
-                    <div class="eq-row">P = <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/> in = <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/> ft → $<input type="text" class="eq-input wide" placeholder="?" oninput="updateProgress()"/></div>
+                    <div class="eq-row">P = <input type="text" id="a22" class="eq-input" placeholder="?" oninput="updateProgress()"/> in = <input type="text" id="a23" class="eq-input" placeholder="?" oninput="updateProgress()"/> ft → $<input type="text" id="a24" class="eq-input wide" placeholder="?" oninput="updateProgress()"/></div>
                 </div>
             </div>
 
@@ -300,21 +310,21 @@
                 <div class="q-body">
                     <div class="text">Room is <strong>14 ft × 11 ft</strong>. Install baseboard but skip 2 doorways (each 3 ft wide). How many feet?</div>
                     <div class="hint">P − 2(3) = ?</div>
-                    <div class="eq-row">P = <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/> − 6 = <input type="text" class="eq-input wide" placeholder="?" oninput="updateProgress()"/> ft</div>
+                    <div class="eq-row">P = <input type="text" id="a25" class="eq-input" placeholder="?" oninput="updateProgress()"/> − 6 = <input type="text" id="a26" class="eq-input wide" placeholder="?" oninput="updateProgress()"/> ft</div>
                 </div>
             </div>
             <div class="q-inline">
                 <span class="q-num purple">12</span>
                 <div class="q-body">
                     <div class="text">Gift box top: <strong>18 in × 12 in</strong>. Ribbon around edge + 8 extra inches for bow. Total ribbon?</div>
-                    <div class="eq-row">P + 8 = <input type="text" class="eq-input wide" placeholder="?" oninput="updateProgress()"/> in</div>
+                    <div class="eq-row">P + 8 = <input type="text" id="a27" class="eq-input wide" placeholder="?" oninput="updateProgress()"/> in</div>
                 </div>
             </div>
             <div class="q-inline">
                 <span class="q-num purple">13</span>
                 <div class="q-body">
                     <div class="text">Regular octagon dog pen, each side <strong>5 ft</strong>. How much fencing?</div>
-                    <div class="eq-row">P = 8 × <input type="text" class="eq-input" placeholder="?" oninput="updateProgress()"/> = <input type="text" class="eq-input wide" placeholder="?" oninput="updateProgress()"/> ft</div>
+                    <div class="eq-row">P = 8 × <input type="text" id="a28" class="eq-input" placeholder="?" oninput="updateProgress()"/> = <input type="text" id="a29" class="eq-input wide" placeholder="?" oninput="updateProgress()"/> ft</div>
                 </div>
             </div>
             <div class="q-inline">
@@ -327,7 +337,7 @@
                         <button class="mc-btn" onclick="selectMC(this)">7 pieces</button>
                         <button class="mc-btn" onclick="selectMC(this)">8 pieces</button>
                     </div>
-                    <input type="hidden" class="answer-hidden"/>
+                    <input type="hidden" id="a_mc14" class="answer-hidden"/>
                 </div>
             </div>
 
@@ -338,6 +348,7 @@
     <div class="submit-wrap">
         <button class="submit-btn" id="submitBtn" onclick="doSubmit()">📤 Submit Worksheet</button>
         <div id="submitMsg"></div>
+        <div id="gradeMsg"></div>
     </div>
 
     <!-- PIN + Answer Key -->
@@ -419,21 +430,91 @@
     <script src="../firebase-config.js?v=5"></script>
     <script src="../grade-sync.js?v=5"></script>
     <script>
+    
     async function doSubmit() {
         const btn = document.getElementById('submitBtn');
         const msg = document.getElementById('submitMsg');
-        btn.disabled = true; btn.textContent = '⏳ Submitting...';
+        const gradeMsg = document.getElementById('gradeMsg');
+        btn.disabled = true; btn.textContent = '⏳ Grading...';
+        
+        // Answer key: [id, accepted answers (as numbers or strings), tolerance]
+        const KEY = [
+            ['a1', [12], 0], ['a2', [8], 0], ['a3', [40], 0],
+            ['a4', [6.5], 0], ['a5', [26], 0],
+            ['a6', [36], 0],
+            ['a7', [4], 0], ['a8', [24], 0],
+            ['a9', [7], 0],
+            ['a10', [15], 0], ['a11', [10], 0], ['a12', [50], 0], ['a13', [50], 0], ['a14', [225], 0],
+            ['a15', [12], 0], ['a16', [12], 0], ['a17', [144], 0],
+            ['a18', [64], 0],
+            ['a19', [72], 0], ['a20', [6], 0], ['a21', [13.5, 13.50], 0.01],
+            ['a22', [48], 0], ['a23', [4], 0], ['a24', [9, 9.00], 0.01],
+            ['a25', [50], 0], ['a26', [44], 0],
+            ['a27', [68], 0],
+            ['a28', [5], 0], ['a29', [40], 0],
+        ];
+        
+        let correct = 0;
+        let total = KEY.length + 1; // +1 for MC
+        let wrong = [];
+        
+        // Grade eq-inputs
+        KEY.forEach(([id, answers, tol]) => {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.classList.remove('wrong', 'correct');
+            const val = parseFloat(el.value.replace(/[$,\s]/g, ''));
+            const isRight = answers.some(a => !isNaN(val) && Math.abs(val - a) <= (tol || 0.01));
+            if (isRight) {
+                correct++;
+                el.classList.add('correct');
+            } else if (el.value.trim()) {
+                el.classList.add('wrong');
+                wrong.push(id);
+            } else {
+                el.classList.add('wrong');
+                wrong.push(id);
+            }
+        });
+        
+        // Grade MC (Q14)
+        const mcEl = document.getElementById('a_mc14');
+        const mcBtns = document.querySelectorAll('[data-q="14"] .mc-btn');
+        mcBtns.forEach(b => b.classList.remove('wrong', 'correct-answer'));
+        if (mcEl && mcEl.value === '7 pieces') {
+            correct++;
+            mcBtns.forEach(b => { if (b.textContent === '7 pieces') b.classList.add('correct-answer'); });
+        } else {
+            wrong.push('mc14');
+            mcBtns.forEach(b => {
+                if (b.classList.contains('selected')) b.classList.add('wrong');
+                if (b.textContent === '7 pieces') b.classList.add('correct-answer');
+            });
+        }
+        
+        const score = Math.round((correct / total) * 100 * 10) / 10;
+        
+        // Show student message (no score!)
+        gradeMsg.style.display = 'block';
+        if (correct === total) {
+            gradeMsg.className = 'perfect';
+            gradeMsg.textContent = '✅ Your work has been graded. Great job!';
+        } else {
+            gradeMsg.className = 'review';
+            gradeMsg.textContent = '📝 Your work has been graded. Now look over the problems you missed.';
+        }
+        
+        // Scroll to message
+        gradeMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        
+        // Submit score to Firebase (teacher sees the actual score in gradebook)
         try {
-            let filled = 0;
-            document.querySelectorAll('.answer-hidden').forEach(i => { if(i.value) filled++; });
-            document.querySelectorAll('.eq-input').forEach(i => { if(i.value.trim()) filled++; });
-            const total = 24;
-            const score = Math.round((filled / total) * 100 * 10) / 10;
-            const result = await submitScore('w04', score, { filled, total, type: 'completion' });
-            if (result) { msg.textContent = '✅ Submitted!'; msg.style.color = '#2E7D32'; btn.textContent = '✓ Submitted'; }
+            const result = await submitScore('w04', score, { correct, total, type: 'auto-graded', wrong });
+            if (result) { msg.textContent = ''; btn.textContent = '✓ Submitted'; }
             else { msg.textContent = '⚠️ Log in on Student Portal first.'; msg.style.color = '#E65100'; btn.disabled = false; btn.textContent = '📤 Submit Worksheet'; }
         } catch(e) { msg.textContent = '⚠️ Error — try again.'; msg.style.color = '#E65100'; btn.disabled = false; btn.textContent = '📤 Submit Worksheet'; }
     }
+
     </script>
     <script>if(localStorage.getItem('math_current_user')){const b=document.getElementById('showAnswerBtn');if(b)b.style.display='none';}</script>
 <script src="../scratchpad.js"></script>
