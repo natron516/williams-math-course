@@ -431,28 +431,31 @@
     <script src="../grade-sync.js?v=5"></script>
     <script>
     
+    // Answer key: [id, accepted answers (as numbers or strings), tolerance]
+    const KEY = [
+        ['a1', [12], 0], ['a2', [8], 0], ['a3', [40], 0],
+        ['a4', [6.5], 0], ['a5', [26], 0],
+        ['a6', [36], 0],
+        ['a7', [4], 0], ['a8', [24], 0],
+        ['a9', [7], 0],
+        ['a10', [15], 0], ['a11', [10], 0], ['a12', [50], 0], ['a13', [50], 0], ['a14', [225], 0],
+        ['a15', [12], 0], ['a16', [12], 0], ['a17', [144], 0],
+        ['a18', [64], 0],
+        ['a19', [72], 0], ['a20', [6], 0], ['a21', [13.5, 13.50], 0.01],
+        ['a22', [48], 0], ['a23', [4], 0], ['a24', [9, 9.00], 0.01],
+        ['a25', [50], 0], ['a26', [44], 0],
+        ['a27', [68], 0],
+        ['a28', [5], 0], ['a29', [40], 0],
+    ];
+
+    let submitAttempt = 0;
+
     async function doSubmit() {
         const btn = document.getElementById('submitBtn');
         const msg = document.getElementById('submitMsg');
         const gradeMsg = document.getElementById('gradeMsg');
         btn.disabled = true; btn.textContent = '⏳ Grading...';
-        
-        // Answer key: [id, accepted answers (as numbers or strings), tolerance]
-        const KEY = [
-            ['a1', [12], 0], ['a2', [8], 0], ['a3', [40], 0],
-            ['a4', [6.5], 0], ['a5', [26], 0],
-            ['a6', [36], 0],
-            ['a7', [4], 0], ['a8', [24], 0],
-            ['a9', [7], 0],
-            ['a10', [15], 0], ['a11', [10], 0], ['a12', [50], 0], ['a13', [50], 0], ['a14', [225], 0],
-            ['a15', [12], 0], ['a16', [12], 0], ['a17', [144], 0],
-            ['a18', [64], 0],
-            ['a19', [72], 0], ['a20', [6], 0], ['a21', [13.5, 13.50], 0.01],
-            ['a22', [48], 0], ['a23', [4], 0], ['a24', [9, 9.00], 0.01],
-            ['a25', [50], 0], ['a26', [44], 0],
-            ['a27', [68], 0],
-            ['a28', [5], 0], ['a29', [40], 0],
-        ];
+        submitAttempt++;
         
         let correct = 0;
         let total = KEY.length + 1; // +1 for MC
@@ -468,11 +471,11 @@
             if (isRight) {
                 correct++;
                 el.classList.add('correct');
-            } else if (el.value.trim()) {
-                el.classList.add('wrong');
-                wrong.push(id);
+                el.readOnly = true; // lock correct answers
+                el.style.opacity = '0.85';
             } else {
                 el.classList.add('wrong');
+                el.readOnly = false;
                 wrong.push(id);
             }
         });
@@ -483,34 +486,48 @@
         mcBtns.forEach(b => b.classList.remove('wrong', 'correct-answer'));
         if (mcEl && mcEl.value === '7 pieces') {
             correct++;
-            mcBtns.forEach(b => { if (b.textContent === '7 pieces') b.classList.add('correct-answer'); });
+            mcBtns.forEach(b => {
+                if (b.textContent === '7 pieces') b.classList.add('correct-answer');
+                b.onclick = null; b.style.pointerEvents = 'none'; // lock MC
+            });
         } else {
             wrong.push('mc14');
             mcBtns.forEach(b => {
                 if (b.classList.contains('selected')) b.classList.add('wrong');
-                if (b.textContent === '7 pieces') b.classList.add('correct-answer');
+                // Reset selection so they can pick again
+                b.classList.remove('selected');
             });
+            if (mcEl) mcEl.value = '';
         }
         
         const score = Math.round((correct / total) * 100 * 10) / 10;
         
-        // Show student message (no score!)
+        // Show student message
         gradeMsg.style.display = 'block';
         if (correct === total) {
             gradeMsg.className = 'perfect';
             gradeMsg.textContent = '✅ Your work has been graded. Great job!';
+            btn.textContent = '✓ Submitted';
+            // Scroll wrong answers into view? No — all correct, just scroll to message
         } else {
             gradeMsg.className = 'review';
-            gradeMsg.textContent = '📝 Your work has been graded. Now look over the problems you missed.';
+            gradeMsg.textContent = '📝 Your work has been graded. Fix the red boxes and resubmit!';
+            // Re-enable button for resubmit
+            btn.disabled = false;
+            btn.textContent = '🔄 Fix & Resubmit';
+            // Scroll to the first wrong answer
+            const firstWrong = wrong[0] === 'mc14'
+                ? document.querySelector('[data-q="14"]')
+                : document.getElementById(wrong[0]);
+            if (firstWrong) firstWrong.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            else gradeMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
-        
-        // Scroll to message
-        gradeMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
         
         // Submit score to Firebase (teacher sees the actual score in gradebook)
         try {
-            const result = await submitScore('w04', score, { correct, total, type: 'auto-graded', wrong });
-            if (result) { msg.textContent = ''; btn.textContent = '✓ Submitted'; }
+            const attempt = submitAttempt;
+            const result = await submitScore('w04', score, { correct, total, type: 'auto-graded', wrong, attempt });
+            if (result) { msg.textContent = ''; if (correct === total) btn.textContent = '✓ Submitted'; }
             else { msg.textContent = '⚠️ Log in on Student Portal first.'; msg.style.color = '#E65100'; btn.disabled = false; btn.textContent = '📤 Submit Worksheet'; }
         } catch(e) { msg.textContent = '⚠️ Error — try again.'; msg.style.color = '#E65100'; btn.disabled = false; btn.textContent = '📤 Submit Worksheet'; }
     }
