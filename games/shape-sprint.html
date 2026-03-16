@@ -250,7 +250,7 @@ function generateProblems() {
     const types = [
         'rect_perim', 'rect_area', 'square_perim', 'square_area',
         'tri_perim', 'tri_area', 'para_area',
-        'reg_poly_perim'
+        'reg_poly_perim', 'compound_perim', 'compound_perim'
     ];
     // Generate 15 problems with a good mix
     for (let i = 0; i < TOTAL; i++) {
@@ -308,6 +308,55 @@ function makeProblem(type) {
             const names = {5:'pentagon',6:'hexagon',8:'octagon'};
             return { question: `Find the PERIMETER of this regular ${names[sides]}`, answer: sides*len, svg: svgRegPoly(sides,len), dims: `${sides} sides, each = ${len}` };
         }
+        case 'compound_perim': {
+            return makeCompoundProblem();
+        }
+    }
+}
+
+function makeCompoundProblem() {
+    const variant = randInt(0, 2);
+    switch(variant) {
+        case 0: {
+            // L-shape: big rectangle with a rectangular notch cut from one corner
+            const W = randInt(10, 18), H = randInt(8, 14);
+            const cw = randInt(3, Math.floor(W/2) - 1), ch = randInt(3, Math.floor(H/2) - 1);
+            // Perimeter: trace outside edges
+            const perim = W + (H - ch) + (W - cw) + ch + cw + H - (H - ch) ;
+            // Simpler: W + H + (W-cw) + (H-ch) + cw + ch = 2W + 2H
+            // Wait — that's not right. Let me trace carefully:
+            // Top: W across, down H-ch, left W-cw, down ch, left... no.
+            // Actually for L-shape cut from top-right corner:
+            // Bottom-left start going clockwise: right W, up H, left (W-cw), down ch, left cw, down (H-ch)
+            // = W + H + (W-cw) + ch + cw + (H-ch) = 2*W + 2*H
+            // Hmm that simplifies — let me use a different shape.
+            // L-shape where corner is removed: go right W, up (H-ch), left (W-cw), up ch, left cw... wait
+            // Let me just trace it properly:
+            // Start bottom-left, go right W → up H → left (W-cw) → down ch → left cw → down (H-ch)
+            const p = W + H + (W - cw) + ch + cw + (H - ch);
+            return { question: `Find the PERIMETER of this L-shape`, answer: p, svg: svgLShape(W, H, cw, ch), dims: `see diagram` };
+        }
+        case 1: {
+            // T-shape: rectangle on top of a narrower rectangle
+            const topW = randInt(10, 18), topH = randInt(3, 6);
+            const botW = randInt(4, topW - 4), botH = randInt(4, 8);
+            const offset = Math.floor((topW - botW) / 2);
+            // Trace clockwise from top-left:
+            // right topW, down topH, left offset, down botH, left botW, up botH, left (topW - botW - offset), up topH
+            const p = topW + topH + (topW - botW - offset) + botH + botW + botH + offset + topH;
+            // Simplify: topW + 2*topH + (topW - botW - offset) + offset + 2*botH + botW = topW + 2*topH + topW - botW + 2*botH + botW = 2*topW + 2*topH + 2*botH
+            return { question: `Find the PERIMETER of this T-shape`, answer: 2*topW + 2*topH + 2*botH, svg: svgTShape(topW, topH, botW, botH), dims: `see diagram` };
+        }
+        case 2: {
+            // Two rectangles side by side (step shape)
+            const w1 = randInt(5, 10), h1 = randInt(6, 12);
+            const w2 = randInt(5, 10), h2 = randInt(4, h1 - 1);
+            // Step: left rect w1×h1, right rect w2×h2 attached at bottom-right
+            // Trace clockwise from top-left of left rect:
+            // right w1, down (h1-h2), right w2, down h2, left (w1+w2), up h1
+            const p = w1 + (h1 - h2) + w2 + h2 + (w1 + w2) + h1;
+            return { question: `Find the PERIMETER of this step shape`, answer: p, svg: svgStepShape(w1, h1, w2, h2), dims: `see diagram` };
+        }
     }
 }
 
@@ -354,6 +403,59 @@ function svgCircle(r) {
         <text x="${cx+cr/2}" y="${cy-8}" style="${TS}">r=${r}</text>
         <circle cx="${cx}" cy="${cy}" r="3" fill="#F7931E"/>`);
 }
+function svgLShape(W, H, cw, ch) {
+    // L-shape: full rectangle with top-right corner cut out
+    // Points (clockwise from bottom-left): (0,H) → (W,H) → (W,ch) → (W-cw,ch) → (W-cw,0) → (0,0)
+    const s = Math.min(220/W, 140/H); // scale to fit SVG
+    const ox = (SVG_W - W*s)/2, oy = (SVG_H - H*s)/2;
+    const pts = [
+        `${ox},${oy+H*s}`, `${ox+W*s},${oy+H*s}`, `${ox+W*s},${oy+ch*s}`,
+        `${ox+(W-cw)*s},${oy+ch*s}`, `${ox+(W-cw)*s},${oy}`, `${ox},${oy}`
+    ];
+    // Labels on the outside edges
+    return svgWrap(`<polygon points="${pts.join(' ')}" style="${LS}"/>
+        <text x="${ox+W*s/2}" y="${oy+H*s+16}" style="${TS}">${W}</text>
+        <text x="${ox+W*s+14}" y="${oy+(H*s+ch*s)/2}" style="${TS}">${H-ch}</text>
+        <text x="${ox+(W-cw/2)*s}" y="${oy+ch*s-6}" style="${TS}">${cw}</text>
+        <text x="${ox+(W-cw)*s-14}" y="${oy+ch*s/2}" style="${TS}">${ch}</text>
+        <text x="${ox-14}" y="${oy+H*s/2}" style="${TS}">${H}</text>
+        <text x="${ox+(W-cw)*s/2}" y="${oy-6}" style="${TS}">${W-cw}</text>`);
+}
+
+function svgTShape(topW, topH, botW, botH) {
+    const s = Math.min(220/topW, 140/(topH+botH));
+    const ox = (SVG_W - topW*s)/2, oy = (SVG_H - (topH+botH)*s)/2;
+    const bx = ox + ((topW-botW)/2)*s; // bottom rect x offset
+    const pts = [
+        `${ox},${oy}`, `${ox+topW*s},${oy}`, `${ox+topW*s},${oy+topH*s}`,
+        `${bx+botW*s},${oy+topH*s}`, `${bx+botW*s},${oy+(topH+botH)*s}`,
+        `${bx},${oy+(topH+botH)*s}`, `${bx},${oy+topH*s}`, `${ox},${oy+topH*s}`
+    ];
+    return svgWrap(`<polygon points="${pts.join(' ')}" style="${LS}"/>
+        <text x="${ox+topW*s/2}" y="${oy-6}" style="${TS}">${topW}</text>
+        <text x="${ox-14}" y="${oy+topH*s/2}" style="${TS}">${topH}</text>
+        <text x="${bx-14}" y="${oy+topH*s+botH*s/2}" style="${TS}">${botH}</text>
+        <text x="${bx+botW*s/2}" y="${oy+(topH+botH)*s+16}" style="${TS}">${botW}</text>`);
+}
+
+function svgStepShape(w1, h1, w2, h2) {
+    const totalW = w1+w2, totalH = h1;
+    const s = Math.min(220/totalW, 140/totalH);
+    const ox = (SVG_W - totalW*s)/2, oy = (SVG_H - totalH*s)/2;
+    const stepY = oy + (h1-h2)*s; // where the step drops
+    const pts = [
+        `${ox},${oy}`, `${ox+w1*s},${oy}`, `${ox+w1*s},${stepY}`,
+        `${ox+(w1+w2)*s},${stepY}`, `${ox+(w1+w2)*s},${oy+h1*s}`,
+        `${ox},${oy+h1*s}`
+    ];
+    return svgWrap(`<polygon points="${pts.join(' ')}" style="${LS}"/>
+        <text x="${ox+w1*s/2}" y="${oy-6}" style="${TS}">${w1}</text>
+        <text x="${ox-14}" y="${oy+h1*s/2}" style="${TS}">${h1}</text>
+        <text x="${ox+w1*s+w2*s/2}" y="${stepY-6}" style="${TS}">${w2}</text>
+        <text x="${ox+(w1+w2)*s+14}" y="${stepY+(h2*s)/2}" style="${TS}">${h2}</text>
+        <text x="${ox+w1*s+14}" y="${oy+(h1-h2)*s/2}" style="${TS}">${h1-h2}</text>`);
+}
+
 function svgRegPoly(sides, len) {
     const cx = 130, cy = 90, r = 65;
     let pts = [];
