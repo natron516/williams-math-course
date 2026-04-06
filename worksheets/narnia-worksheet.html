@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Narnia Math Adventures — Special Worksheet</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Lato:wght@400;700&display=swap');
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #fdf6f0;
+      font-family: 'Lato', sans-serif;
+      color: #2d2d2d;
+      padding: 24px 16px 48px;
+    }
+
+    .page {
+      max-width: 780px;
+      margin: 0 auto;
+    }
+
+    /* ── Header ── */
+    .header {
+      text-align: center;
+      border-top: 4px solid #8b4a6b;
+      border-bottom: 2px solid #c9889e;
+      padding: 18px 12px;
+      margin-bottom: 28px;
+      background: #fff0f5;
+      border-radius: 4px;
+    }
+    .header .lion-icon { font-size: 2.4rem; margin-bottom: 4px; }
+    .header h1 {
+      font-family: 'Crimson Text', serif;
+      font-size: 2rem;
+      color: #6b2a4a;
+      letter-spacing: 0.5px;
+    }
+    .header .subtitle {
+      font-size: 0.95rem;
+      color: #9a5070;
+      margin-top: 4px;
+      font-style: italic;
+    }
+
+    /* ── Name / Date row ── */
+    .info-row {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 28px;
+    }
+    .info-row label {
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: #6b2a4a;
+      margin-right: 6px;
+    }
+    .info-row .field {
+      flex: 1;
+      border-bottom: 1.5px solid #b07090;
+      padding-bottom: 4px;
+      min-height: 24px;
+    }
+
+    /* ── Section headers ── */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #6b2a4a;
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 4px;
+      margin: 28px 0 14px;
+      font-family: 'Crimson Text', serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+    }
+    .section-header .icon { font-size: 1.3rem; }
+
+    /* ── Problem cards ── */
+    .problem {
+      background: #fff;
+      border: 1.5px solid #ddc0cc;
+      border-left: 5px solid #c9889e;
+      border-radius: 6px;
+      padding: 16px 20px;
+      margin-bottom: 16px;
+    }
+    .problem .num {
+      font-weight: 700;
+      color: #8b4a6b;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+    .problem .story {
+      font-family: 'Crimson Text', serif;
+      font-size: 1.05rem;
+      line-height: 1.6;
+      margin-bottom: 14px;
+      color: #3a2030;
+    }
+    .problem .story em {
+      color: #6b2a4a;
+      font-style: italic;
+    }
+    .problem .question {
+      font-weight: 700;
+      color: #2d2d2d;
+      margin-bottom: 14px;
+      font-size: 0.97rem;
+    }
+
+    /* ── Work / answer areas ── */
+    .work-area {
+      position: relative;
+    }
+    .work-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #9a5070;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+    canvas.draw {
+      display: block;
+      width: 100%;
+      height: 110px;
+      border: 1px dashed #c9889e;
+      border-radius: 4px;
+      background: #fffbfc;
+      touch-action: none;
+      cursor: crosshair;
+    }
+    .answer-line {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .answer-line label {
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: #6b2a4a;
+      white-space: nowrap;
+    }
+    .answer-box {
+      border: none;
+      border-bottom: 2px solid #8b4a6b;
+      background: transparent;
+      font-size: 1.1rem;
+      font-family: 'Lato', sans-serif;
+      color: #2d2d2d;
+      width: 180px;
+      padding: 2px 4px;
+      outline: none;
+    }
+    .answer-box:focus { border-bottom-color: #c9889e; }
+
+    /* ── Geometry problem extras ── */
+    .geo-figure {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+    .geo-figure svg {
+      flex-shrink: 0;
+    }
+
+    /* ── Bonus section ── */
+    .bonus .problem {
+      border-left-color: #e8a030;
+      background: #fffbf0;
+    }
+    .bonus .section-header { background: #b07020; }
+
+    /* ── Footer quote ── */
+    .quote {
+      text-align: center;
+      margin-top: 36px;
+      padding: 16px 24px;
+      background: #fff0f5;
+      border-radius: 6px;
+      border: 1px solid #ddc0cc;
+    }
+    .quote p {
+      font-family: 'Crimson Text', serif;
+      font-size: 1.05rem;
+      font-style: italic;
+      color: #6b2a4a;
+      line-height: 1.7;
+    }
+    .quote cite {
+      display: block;
+      margin-top: 6px;
+      font-size: 0.85rem;
+      color: #9a5070;
+      font-style: normal;
+    }
+
+    /* ── Print styles ── */
+    @media print {
+      body { background: white; padding: 0; }
+      canvas.draw { background: white; }
+      .problem { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="lion-icon">🦁</div>
+    <h1>Narnia Math Adventures</h1>
+    <div class="subtitle">A Special Story Problems Worksheet</div>
+  </div>
+
+  <!-- Name / Date -->
+  <div class="info-row">
+    <div><label>Name:</label><div class="field"></div></div>
+    <div style="flex:0 0 180px;"><label>Date:</label><div class="field"></div></div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!--  SECTION 1: Addition & Subtraction    -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section-header"><span class="icon">➕</span> Addition &amp; Subtraction</div>
+
+  <!-- Problem 1 -->
+  <div class="problem">
+    <div class="num">Problem 1</div>
+    <div class="story">
+      When Lucy first stepped through the wardrobe into <em>Narnia</em>, she found herself in a snowy wood. Mr. Tumnus the faun had been carrying <strong>14 parcels</strong> of supplies from the market — dried fish, chestnuts, and a small bottle of oil. On the way home through the snow he dropped <strong>6 parcels</strong> and could only go back for <strong>3</strong> of them.
+    </div>
+    <div class="question">How many parcels did Mr. Tumnus arrive home with?</div>
+    <div class="work-area">
+      <div class="work-label">Show your work</div>
+      <canvas class="draw" id="c1"></canvas>
+    </div>
+    <div class="answer-line"><label>Answer:</label><input class="answer-box" type="text" /></div>
+  </div>
+
+  <!-- Problem 2 -->
+  <div class="problem">
+    <div class="num">Problem 2</div>
+    <div class="story">
+      After the great battle at <em>Beruna</em>, Aslan's army tended to the wounded. Edmund had treated <strong>23 Narnian soldiers</strong> on the first day and <strong>17 more</strong> on the second day. Meanwhile <strong>8 soldiers</strong> were well enough to return to their posts before the count was finished.
+    </div>
+    <div class="question">How many soldiers still needed care at the end of the second day?</div>
+    <div class="work-area">
+      <div class="work-label">Show your work</div>
+      <canvas class="draw" id="c2"></canvas>
+    </div>
+    <div class="answer-line"><label>Answer:</label><input class="answer-box" type="text" /></div>
+  </div>
+
+  <!-- ══════════════════════════════════ -->
+  <!--  SECTION 2: Multiplication        -->
+  <!-- ══════════════════════════════════ -->
+  <div class="section-header"><span class="icon">✖️</span> Multiplication</div>
+
+  <!-- Problem 3 -->
+  <div class="problem">
+    <div class="num">Problem 3</div>
+    <div class="story">
+      Father Christmas visited <em>Narnia</em> at last! He gave gifts at <strong>9 different villages</strong>. At each village he left exactly <strong>6 packages</strong> — one for every family.
+    </div>
+    <div class="question">How many packages did Father Christmas leave in all?</div>
+    <div class="work-area">
+      <div class="work-label">Show your work</div>
+      <canvas class="draw" id="c3"></canvas>
+    </div>
+    <div class="answer-line"><label>Answer:</label><input class="answer-box" type="text" /></div>
+  </div>
+
+  <!-- Problem 4 -->
+  <div class="problem">
+    <div class="num">Problem 4</div>
+    <div class="story">
+      King Peter was training his army at <em>Cair Paravel</em>. He arranged his soldiers in <strong>8 rows</strong> with <strong>12 soldiers</strong> in each row for the morning drill.
+    </div>
+    <div class="question">How many soldiers were on the training field in all?</div>
+    <div class="work-area">
+      <div class="work-label">Show your work</div>
+      <canvas class="draw" id="c4"></canvas>
+    </div>
+    <div class="answer-line"><label>Answer:</label><input class="answer-box" type="text" /></div>
+  </div>
+
+  <!-- ══════════════════════════════════ -->
+  <!--  SECTION 3: Division              -->
+  <!-- ══════════════════════════════════ -->
+  <div class="section-header"><span class="icon">➗</span> Division</div>
+
+  <!-- Problem 5 -->
+  <div class="problem">
+    <div class="num">Problem 5</div>
+    <div class="story">
+      After the thaw, the Beavers helped stock the larder at <em>Cair Paravel</em>. They brought <strong>72 freshly caught trout</strong> to the castle kitchen. The head cook divided them equally among <strong>9 barrels</strong> for smoking and storing.
+    </div>
+    <div class="question">How many trout went into each barrel?</div>
+    <div class="work-area">
+      <div class="work-label">Show your work</div>
+      <canvas class="draw" id="c5"></canvas>
+    </div>
+    <div class="answer-line"><label>Answer:</label><input class="answer-box" type="text" /></div>
+  </div>
+
+  <!-- Problem 6 -->
+  <div class="problem">
+    <div class="num">Problem 6</div>
+    <div class="story">
+      Queen Susan organized a great feast. She had baked <strong>56 honey cakes</strong> — a recipe she had learned from the Dwarfs of <em>Narnia</em>. She wanted to place them equally on <strong>7 platters</strong> around the long table.
+    </div>
+    <div class="question">How many honey cakes were on each platter?</div>
+    <div class="work-area">
+      <div class="work-label">Show your work</div>
+      <canvas class="draw" id="c6"></canvas>
+    </div>
+    <div class="answer-line"><label>Answer:</label><input class="answer-box" type="text" /></div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!--  SECTION 4: English Measures          -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section-header"><span class="icon">📏</span> Measurement (Inches, Feet &amp; Miles)</div>
+
+  <!-- Problem 7 -->
+  <div class="problem">
+    <div class="num">Problem 7</div>
+    <div class="story">
+      Reepicheep, the brave mouse of <em>Narnia</em>, stood only <strong>9 inches</strong> tall. His sword was exactly <strong>1 foot long</strong>. He challenged anyone who dared to mock a mouse that carried a sword longer than himself!
+    </div>
+    <div class="question">How many inches longer was Reepicheep's sword than his own height? (Hint: convert 1 foot to inches first.)</div>
+    <div class="work-area">
+      <div class="work-label">Show your work</div>
+      <canvas class="draw" id="c7"></canvas>
+    </div>
+    <div class="answer-line"><label>Answer:</label><input class="answer-box" type="text" /></div>
+  </div>
+
+  <!-- Problem 8 -->
+  <div class="problem">
+    <div class="num">Problem 8</div>
+    <div class="story">
+      The <em>Dawn Treader</em> sailed <strong>3 miles</strong> east in the morning and then another <strong>5,280 feet</strong> after lunch before dropping anchor near an island.
+    </div>
+    <div class="question">How many total feet did the Dawn Treader sail that day? (Remember: 1 mile = 5,280 feet)</div>
+    <div class="work-area">
+      <div class="work-label">Show your work</div>
+      <canvas class="draw" id="c8"></canvas>
+    </div>
+    <div class="answer-line"><label>Answer:</label><input class="answer-box" type="text" /></div>
+  </div>
+
+  <!-- Problem 9 -->
+  <div class="problem">
+    <div class="num">Problem 9</div>
+    <div class="story">
+      Jill Pole and Eustace Scrubb were following the signs given to them in <em>The Silver Chair</em>. Their map showed that Harfang Castle was <strong>4 miles away</strong>, but they had already walked <strong>7,920 feet</strong> in the right direction.
+    </div>
+    <div class="question">How many feet do they still have to walk to reach the castle?</div>
+    <div class="work-area">
+      <div class="work-label">Show your work</div>
+      <canvas class="draw" id="c9"></canvas>
+    </div>
+    <div class="answer-line"><label>Answer:</label><input class="answer-box" type="text" /></div>
+  </div>
+
+  <!-- ══════════════════════════════════ -->
+  <!--  SECTION 5: Geometry              -->
+  <!-- ══════════════════════════════════ -->
+  <div class="section-header"><span class="icon">📐</span> Geometry</div>
+
+  <!-- Problem 10 — Perimeter -->
+  <div class="problem">
+    <div class="num">Problem 10 — Perimeter</div>
+    <div class="story">
+      The great courtyard of <em>Cair Paravel</em> was shaped like a rectangle. King Peter decided to build a stone wall all the way around it. The courtyard was <strong>40 feet long</strong> and <strong>25 feet wide</strong>.
+    </div>
+    <div class="question">How many feet of stone wall would Peter need to surround the entire courtyard?</div>
+    <div class="geo-figure">
+      <svg width="200" height="110" viewBox="0 0 200 110">
+        <rect x="20" y="20" width="160" height="70" fill="#fff0f5" stroke="#8b4a6b" stroke-width="2"/>
+        <text x="100" y="14" text-anchor="middle" font-size="12" fill="#6b2a4a">40 ft</text>
+        <text x="188" y="60" text-anchor="middle" font-size="12" fill="#6b2a4a">25 ft</text>
+        <text x="100" y="105" text-anchor="middle" font-size="12" fill="#6b2a4a">40 ft</text>
+        <text x="10" y="60" text-anchor="middle" font-size="12" fill="#6b2a4a">25 ft</text>
+      </svg>
+    </div>
+    <div class="work-area">
+      <div class="work-label">Show your work</div>
+      <canvas class="draw" id="c10"></canvas>
+    </div>
+    <div class="answer-line"><label>Answer:</label><input class="answer-box" type="text" /></div>
+  </div>
+
+  <!-- Problem 11 — Area -->
+  <div class="problem">
+    <div class="num">Problem 11 — Area</div>
+    <div class="story">
+      Aslan gave the Pevensies a royal garden at <em>Cair Paravel</em>. It was a perfect square with each side measuring <strong>12 feet</strong>. They wanted to plant sweet Narnian flowers across every inch of it.
+    </div>
+    <div class="question">What is the area of the royal garden in square feet?</div>
+    <div class="geo-figure">
+      <svg width="130" height="120" viewBox="0 0 130 120">
+        <rect x="20" y="20" width="90" height="90" fill="#fff0f5" stroke="#8b4a6b" stroke-width="2"/>
+        <text x="65" y="14" text-anchor="middle" font-size="12" fill="#6b2a4a">12 ft</text>
+        <text x="118" y="68" text-anchor="middle" font-size="12" fill="#6b2a4a">12 ft</text>
+      </svg>
+    </div>
+    <div class="work-area">
+      <div class="work-label">Show your work</div>
+      <canvas class="draw" id="c11"></canvas>
+    </div>
+    <div class="answer-line"><label>Answer:</label><input class="answer-box" type="text" /></div>
+  </div>
+
+  <!-- Problem 12 — Triangle -->
+  <div class="problem">
+    <div class="num">Problem 12 — Triangle Perimeter</div>
+    <div class="story">
+      The White Witch's stone table on the hill of <em>Narnia</em> was surrounded by a triangular stone platform. The three sides measured <strong>15 feet</strong>, <strong>20 feet</strong>, and <strong>18 feet</strong>.
+    </div>
+    <div class="question">What was the total distance around the triangular platform?</div>
+    <div class="geo-figure">
+      <svg width="160" height="120" viewBox="0 0 160 120">
+        <polygon points="80,10 155,105 5,105" fill="#fff0f5" stroke="#8b4a6b" stroke-width="2"/>
+        <text x="118" y="65" text-anchor="middle" font-size="11" fill="#6b2a4a">20 ft</text>
+        <text x="42" y="65" text-anchor="middle" font-size="11" fill="#6b2a4a">18 ft</text>
+        <text x="80" y="118" text-anchor="middle" font-size="11" fill="#6b2a4a">15 ft</text>
+      </svg>
+    </div>
+    <div class="work-area">
+      <div class="work-label">Show your work</div>
+      <canvas class="draw" id="c12"></canvas>
+    </div>
+    <div class="answer-line"><label>Answer:</label><input class="answer-box" type="text" /></div>
+  </div>
+
+  <!-- ══════════════════════════════════ -->
+  <!--  BONUS                            -->
+  <!-- ══════════════════════════════════ -->
+  <div class="bonus">
+    <div class="section-header"><span class="icon">⭐</span> Bonus Challenge</div>
+
+    <div class="problem">
+      <div class="num">Bonus Problem</div>
+      <div class="story">
+        At the end of their voyage on the <em>Dawn Treader</em>, Reepicheep paddled his tiny coracle toward Aslan's Country. The circular opening in the wave at the end of the world had a diameter of <strong>10 feet</strong>. (Use π ≈ 3.14)
+      </div>
+      <div class="question">
+        <strong>Part A:</strong> What was the radius of the opening?<br><br>
+        <strong>Part B:</strong> What was the circumference of the opening? (C = π × d)
+      </div>
+      <div class="work-area">
+        <div class="work-label">Show your work</div>
+        <canvas class="draw" id="c13"></canvas>
+      </div>
+      <div class="answer-line"><label>Part A:</label><input class="answer-box" type="text" placeholder="radius = _____ ft" /></div>
+      <div class="answer-line" style="margin-top:8px;"><label>Part B:</label><input class="answer-box" type="text" placeholder="circumference ≈ _____ ft" /></div>
+    </div>
+  </div>
+
+  <!-- Footer quote -->
+  <div class="quote">
+    <p>"In our world too, a stable once had something inside it that was bigger than our whole world."</p>
+    <cite>— C.S. Lewis, <em>The Last Battle</em></cite>
+  </div>
+
+</div><!-- end .page -->
+
+<!-- ── Drawing canvas script ── -->
+<script>
+  document.querySelectorAll('canvas.draw').forEach(canvas => {
+    const ctx = canvas.getContext('2d');
+    let drawing = false, lastX = 0, lastY = 0;
+
+    function getPos(e) {
+      const r = canvas.getBoundingClientRect();
+      const scaleX = canvas.width / r.width;
+      const scaleY = canvas.height / r.height;
+      if (e.touches) {
+        return [(e.touches[0].clientX - r.left) * scaleX, (e.touches[0].clientY - r.top) * scaleY];
+      }
+      return [(e.clientX - r.left) * scaleX, (e.clientY - r.top) * scaleY];
+    }
+
+    function resize() {
+      const r = canvas.getBoundingClientRect();
+      const img = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      canvas.width = r.width * devicePixelRatio;
+      canvas.height = r.height * devicePixelRatio;
+      ctx.putImageData(img, 0, 0);
+      ctx.strokeStyle = '#2d2d2d';
+      ctx.lineWidth = 2;
+      ctx.lineCap = 'round';
+    }
+    resize();
+
+    canvas.addEventListener('mousedown',  e => { drawing = true; [lastX, lastY] = getPos(e); });
+    canvas.addEventListener('mousemove',  e => {
+      if (!drawing) return;
+      ctx.beginPath(); ctx.moveTo(lastX, lastY);
+      [lastX, lastY] = getPos(e);
+      ctx.lineTo(lastX, lastY); ctx.stroke();
+    });
+    canvas.addEventListener('mouseup',   () => drawing = false);
+    canvas.addEventListener('mouseleave',() => drawing = false);
+
+    canvas.addEventListener('touchstart', e => {
+      e.preventDefault(); drawing = true; [lastX, lastY] = getPos(e);
+    }, {passive:false});
+    canvas.addEventListener('touchmove', e => {
+      e.preventDefault();
+      if (!drawing) return;
+      ctx.beginPath(); ctx.moveTo(lastX, lastY);
+      [lastX, lastY] = getPos(e);
+      ctx.lineTo(lastX, lastY); ctx.stroke();
+    }, {passive:false});
+    canvas.addEventListener('touchend', () => drawing = false);
+  });
+</script>
+</body>
+</html>
