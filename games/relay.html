@@ -384,7 +384,7 @@ async function createRoom(){
       timerSecs,
       teamNames,
       scores:  [0,0,0,0,0,0],
-      correct: [[],[],[],[],[],[]],
+      c0:[], c1:[], c2:[], c3:[], c4:[], c5:[],
       firstHit: {},
       teams: {},
       createdAt: firebase.firestore.FieldValue.serverTimestamp()
@@ -445,8 +445,8 @@ function listenAsTeacher(){
   unsubGame = gameRef.onSnapshot(snap=>{
     const d = snap.data(); if(!d) return;
     liveScores  = d.scores  || liveScores;
-    liveCorrect = d.correct || liveCorrect;
-    firstHit    = d.firstHit|| firstHit;
+    liveCorrect = [d.c0||[],d.c1||[],d.c2||[],d.c3||[],d.c4||[],d.c5||[]];
+    firstHit    = d.firstHit|| {};
     if(d.status==='ended') showWin(d);
     updateTeacherBoard(d.teamNames||[]);
     updateQNav();
@@ -583,7 +583,7 @@ function listenAsStudent(){
   unsubGame = gameRef.onSnapshot(snap=>{
     const d = snap.data(); if(!d) return;
     liveScores  = d.scores  || liveScores;
-    liveCorrect = d.correct || liveCorrect;
+    liveCorrect = [d.c0||[],d.c1||[],d.c2||[],d.c3||[],d.c4||[],d.c5||[]];
     firstHit    = d.firstHit|| {};
     timerSecs   = d.timerSecs ?? timerSecs;
     updateSTimer();
@@ -669,12 +669,13 @@ async function teamSubmit(){
         const gs = await tx.get(gameRef);
         const gd = gs.data();
         const ns = [...(gd.scores||[0,0,0,0,0,0])];
-        const nc = (gd.correct||[[],[],[],[],[],[]]).map(a=>[...a]);
+        const ck = 'c'+myTeamIdx;
+        const ca = [...(gd[ck]||[])];
         const nh = {...(gd.firstHit||{})};
         ns[myTeamIdx]=(ns[myTeamIdx]||0)+pts;
-        if(!nc[myTeamIdx].includes(q)) nc[myTeamIdx].push(q);
+        if(!ca.includes(q)) ca.push(q);
         if(!(String(q) in nh)) nh[String(q)]=myTeamIdx;
-        tx.update(gameRef,{scores:ns,correct:nc,firstHit:nh});
+        tx.update(gameRef,{scores:ns,[ck]:ca,firstHit:nh});
       });
       await gameRef.collection('answers').add({
         tIdx:myTeamIdx, tName:myTeamName, qIdx:q,
@@ -715,7 +716,7 @@ function showWin(d){
   clearInterval(timerInt);
   const teamNames= d.teamNames||[];
   const scores   = d.scores||liveScores;
-  const correct  = d.correct||liveCorrect;
+  const correct  = [d.c0||[],d.c1||[],d.c2||[],d.c3||[],d.c4||[],d.c5||[]];
   const ranked   = teamNames.map((n,i)=>({n,s:scores[i]||0,c:(correct[i]||[]).length})).sort((a,b)=>b.s-a.s);
   document.getElementById('win-h').textContent=`🏆 ${ranked[0].n} Wins!`;
   document.getElementById('win-q').innerHTML=QUOTES[Math.floor(Math.random()*QUOTES.length)];
