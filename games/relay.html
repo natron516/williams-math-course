@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Narnia Math Relay</title>
+<style>
+:root {
+  --gold:#c9a227; --dark:#1a1a2e; --card:#0f3460; --accent:#e94560;
+  --green:#2ecc71; --text:#f0e6d3; --muted:#a0968a;
+  --t0:#e74c3c; --t1:#3498db; --t2:#2ecc71; --t3:#f39c12; --t4:#9b59b6; --t5:#1abc9c;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Georgia,serif;background:var(--dark);color:var(--text);min-height:100vh}
+
+/* ── SCREENS ── */
+.screen{display:none;min-height:100vh;padding:1.5rem;background:radial-gradient(ellipse at top,#1a1a3e,#0a0a1a)}
+.screen.active{display:block}
+#home{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+
+h1{font-size:2.2rem;color:var(--gold);text-shadow:0 0 20px rgba(201,162,39,.4);margin-bottom:.3rem}
+.sub{color:var(--muted);font-style:italic;margin-bottom:2rem}
+
+.card{background:var(--card);border:1px solid rgba(201,162,39,.4);border-radius:16px;padding:1.5rem;max-width:580px;margin:0 auto}
+.card h2{color:var(--gold);margin-bottom:1.2rem;font-size:1.2rem}
+
+label{display:block;color:var(--muted);font-size:.85rem;margin-bottom:.3rem;margin-top:.8rem}
+input,select{width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:.65rem 1rem;color:var(--text);font-size:1rem;font-family:inherit}
+input:focus,select:focus{outline:none;border-color:var(--gold)}
+
+.team-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-bottom:.8rem}
+.trow{display:flex;gap:.5rem;align-items:center}
+.tdot{width:12px;height:12px;border-radius:50%;flex-shrink:0}
+
+.btn{display:block;width:100%;padding:.9rem;border:none;border-radius:12px;font-family:inherit;font-size:1.05rem;font-weight:bold;cursor:pointer;margin-top:1rem;transition:transform .1s,opacity .2s}
+.btn:hover{transform:translateY(-1px)}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.btn-gold{background:linear-gradient(135deg,var(--gold),#a0821e);color:#1a1a1a}
+.btn-green{background:linear-gradient(135deg,#2ecc71,#1a8c4e);color:#fff}
+.btn-red{background:linear-gradient(135deg,var(--accent),#a02030);color:#fff}
+.btn-outline{background:transparent;border:1px solid var(--gold);color:var(--gold);padding:.6rem 1.2rem;width:auto;display:inline-block}
+
+/* ── GAME SCREEN ── */
+#game-screen{padding:1rem}
+.g-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:.8rem;flex-wrap:wrap;gap:.5rem}
+.g-title{color:var(--gold);font-size:1.1rem;font-weight:bold}
+.timer{font-size:1.8rem;font-weight:bold;font-family:monospace;color:var(--gold)}
+.timer.urgent{color:var(--accent);animation:blink 1s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.g-controls{display:flex;gap:.4rem;flex-wrap:wrap}
+.cbtn{padding:.4rem .8rem;border:1px solid var(--gold);border-radius:8px;background:transparent;color:var(--gold);font-family:inherit;font-size:.82rem;cursor:pointer}
+.cbtn:hover{background:rgba(201,162,39,.2)}
+.cbtn.red{border-color:var(--accent);color:var(--accent)}
+
+/* Scoreboard */
+.scoreboard{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;margin-bottom:.8rem}
+@media(max-width:500px){.scoreboard{grid-template-columns:repeat(2,1fr)}}
+.tc{border-radius:10px;padding:.7rem;border:2px solid transparent;transition:all .2s}
+.tc.lead{border-color:var(--gold);transform:scale(1.03)}
+.tc h3{font-size:.78rem;margin-bottom:.1rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tc .pts{font-size:1.6rem;font-weight:bold;font-family:monospace}
+.tc .prog{font-size:.7rem;color:rgba(255,255,255,.5);margin-top:.1rem}
+.pbar{height:4px;border-radius:2px;background:rgba(255,255,255,.1);margin-top:.3rem;overflow:hidden}
+.pfill{height:100%;border-radius:2px;transition:width .4s}
+
+.tc[data-t="0"]{background:linear-gradient(135deg,rgba(231,76,60,.3),rgba(231,76,60,.08))}
+.tc[data-t="1"]{background:linear-gradient(135deg,rgba(52,152,219,.3),rgba(52,152,219,.08))}
+.tc[data-t="2"]{background:linear-gradient(135deg,rgba(46,204,113,.3),rgba(46,204,113,.08))}
+.tc[data-t="3"]{background:linear-gradient(135deg,rgba(243,156,18,.3),rgba(243,156,18,.08))}
+.tc[data-t="4"]{background:linear-gradient(135deg,rgba(155,89,182,.3),rgba(155,89,182,.08))}
+.tc[data-t="5"]{background:linear-gradient(135deg,rgba(26,188,156,.3),rgba(26,188,156,.08))}
+.tc[data-t="0"] .pts,.tc[data-t="0"] h3{color:var(--t0)}
+.tc[data-t="1"] .pts,.tc[data-t="1"] h3{color:var(--t1)}
+.tc[data-t="2"] .pts,.tc[data-t="2"] h3{color:var(--t2)}
+.tc[data-t="3"] .pts,.tc[data-t="3"] h3{color:var(--t3)}
+.tc[data-t="4"] .pts,.tc[data-t="4"] h3{color:var(--t4)}
+.tc[data-t="5"] .pts,.tc[data-t="5"] h3{color:var(--t5)}
+.pfill[data-t="0"]{background:var(--t0)}.pfill[data-t="1"]{background:var(--t1)}
+.pfill[data-t="2"]{background:var(--t2)}.pfill[data-t="3"]{background:var(--t3)}
+.pfill[data-t="4"]{background:var(--t4)}.pfill[data-t="5"]{background:var(--t5)}
+
+/* Question card */
+.qcard{background:var(--card);border-radius:12px;padding:1.1rem;border-left:4px solid var(--gold);margin-bottom:.8rem}
+.qcard .qlabel{color:var(--gold);font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.4rem}
+.qcard .qbody{line-height:1.7;font-size:1rem}
+.qcard .qhint{color:var(--muted);font-size:.8rem;margin-top:.5rem;font-style:italic}
+.qcard .qpts{display:inline-block;background:rgba(201,162,39,.2);color:var(--gold);border-radius:20px;padding:.15rem .6rem;font-size:.75rem;margin-top:.4rem}
+
+/* Team answer panels */
+.team-panels{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.7rem;margin-bottom:.6rem}
+.tpanel{border-radius:10px;padding:.9rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1)}
+.tpanel h4{font-size:.82rem;margin-bottom:.5rem}
+.tpanel[data-t="0"] h4{color:var(--t0)}.tpanel[data-t="1"] h4{color:var(--t1)}
+.tpanel[data-t="2"] h4{color:var(--t2)}.tpanel[data-t="3"] h4{color:var(--t3)}
+.tpanel[data-t="4"] h4{color:var(--t4)}.tpanel[data-t="5"] h4{color:var(--t5)}
+.ans-row{display:flex;gap:.4rem;margin-bottom:.35rem}
+.ainput{flex:1;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:.5rem .7rem;color:var(--text);font-size:1rem;font-family:inherit}
+.ainput:focus{outline:none;border-color:var(--gold)}
+.ainput:disabled{opacity:.4}
+.asubmit{padding:.5rem .8rem;border-radius:8px;border:none;font-family:inherit;font-size:.85rem;font-weight:bold;cursor:pointer}
+.asubmit:disabled{opacity:.4;cursor:not-allowed}
+.tpanel[data-t="0"] .asubmit{background:var(--t0);color:#fff}
+.tpanel[data-t="1"] .asubmit{background:var(--t1);color:#fff}
+.tpanel[data-t="2"] .asubmit{background:var(--t2);color:#fff}
+.tpanel[data-t="3"] .asubmit{background:var(--t3);color:#fff}
+.tpanel[data-t="4"] .asubmit{background:var(--t4);color:#fff}
+.tpanel[data-t="5"] .asubmit{background:var(--t5);color:#fff}
+.apass{padding:.5rem .7rem;border-radius:8px;border:1px solid rgba(255,255,255,.2);background:transparent;color:var(--muted);font-family:inherit;font-size:.82rem;cursor:pointer}
+.apass:hover{background:rgba(255,255,255,.08)}
+.apass:disabled{opacity:.3;cursor:not-allowed}
+.astatus{font-size:.78rem;min-height:1.2em;text-align:center;border-radius:6px;padding:.2rem;transition:all .3s}
+.astatus.ok{color:var(--green);background:rgba(46,204,113,.1)}
+.astatus.no{color:var(--accent);background:rgba(233,69,96,.1)}
+.astatus.pass{color:var(--muted)}
+
+/* Q navigator */
+.qnav{display:flex;gap:.35rem;flex-wrap:wrap;margin-top:.6rem}
+.qpill{padding:.2rem .55rem;border-radius:20px;font-size:.72rem;cursor:pointer;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.04);color:var(--muted);transition:all .15s}
+.qpill.active{background:var(--gold);color:#1a1a1a;border-color:var(--gold);font-weight:bold}
+.qpill.done{background:rgba(46,204,113,.2);border-color:var(--green);color:var(--green)}
+.qpill.passed{background:rgba(243,156,18,.15);border-color:var(--t3);color:var(--t3)}
+
+/* ── WIN SCREEN ── */
+#win-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.trophy{font-size:5rem;animation:pop .5s ease}
+@keyframes pop{0%{transform:scale(0)}80%{transform:scale(1.2)}100%{transform:scale(1)}}
+.win-h{font-size:2rem;color:var(--gold);margin:.5rem 0}
+.win-q{color:var(--muted);font-style:italic;margin-bottom:1.5rem;font-size:.88rem}
+.podium{display:flex;flex-direction:column;gap:.5rem;max-width:400px;width:100%;margin:0 auto 1.5rem}
+.prow{display:flex;justify-content:space-between;align-items:center;padding:.65rem 1rem;border-radius:10px;background:rgba(255,255,255,.05);font-size:.95rem}
+.prow.first{background:rgba(201,162,39,.2);border:1px solid var(--gold);font-weight:bold}
+
+#toast{position:fixed;top:1rem;right:1rem;background:var(--card);border:1px solid var(--gold);border-radius:10px;padding:.65rem 1rem;font-size:.88rem;opacity:0;transform:translateY(-8px);transition:all .3s;z-index:999;max-width:250px;pointer-events:none}
+#toast.show{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+
+<!-- HOME -->
+<div id="home" class="screen active">
+  <h1>⚔️ Narnia Math Relay</h1>
+  <p class="sub">Team relay race — pass the iPad, answer the question</p>
+  <button class="btn btn-gold" style="max-width:280px" onclick="goSetup()">🦁 Set Up Game</button>
+  <p style="color:var(--muted);font-size:.8rem;margin-top:2rem;font-style:italic">"Courage, dear heart." — C.S. Lewis</p>
+</div>
+
+<!-- SETUP -->
+<div id="setup-screen" class="screen">
+  <div class="card">
+    <h2>🏰 Game Setup</h2>
+    <div style="color:var(--muted);font-size:.85rem;margin-bottom:.8rem">Name your 6 teams:</div>
+    <div class="team-grid" id="team-name-grid"></div>
+    <label>Timer</label>
+    <select id="timer-sel">
+      <option value="1500" selected>25 minutes</option>
+      <option value="1800">30 minutes</option>
+      <option value="1200">20 minutes</option>
+      <option value="900">15 minutes</option>
+    </select>
+    <button class="btn btn-gold" onclick="startGame()">🚀 Start Game</button>
+    <button class="btn btn-outline" style="margin-top:.5rem" onclick="goHome()">← Back</button>
+  </div>
+</div>
+
+<!-- GAME -->
+<div id="game-screen" class="screen">
+  <div class="g-header">
+    <div class="g-title">⚔️ Narnia Relay</div>
+    <div class="timer" id="timer-disp">25:00</div>
+    <div class="g-controls">
+      <button class="cbtn" id="pause-btn" onclick="togglePause()">⏸ Pause</button>
+      <button class="cbtn" onclick="prevQ()">◀</button>
+      <button class="cbtn" onclick="nextQ()">▶</button>
+      <button class="cbtn red" onclick="endGame()">🏁 End</button>
+    </div>
+  </div>
+  <div class="scoreboard" id="scoreboard"></div>
+  <div class="qcard">
+    <div class="qlabel">Question <span id="qnum">1</span> of <span id="qtot">20</span> &nbsp;<span id="qpts-badge" class="qpts"></span></div>
+    <div class="qbody" id="qbody"></div>
+    <div class="qhint" id="qhint"></div>
+    <div class="qnav" id="qnav"></div>
+  </div>
+  <div class="team-panels" id="team-panels"></div>
+  <div style="text-align:center;color:var(--muted);font-size:.75rem;margin-top:.3rem">
+    ✅ Correct = 10 pts (15 for ⭐ bonus) &nbsp;·&nbsp; ⚡ First correct = +2 bonus &nbsp;·&nbsp; ↩ Pass = skips to back of queue
+  </div>
+</div>
+
+<!-- WIN -->
+<div id="win-screen" class="screen">
+  <div class="trophy">🏆</div>
+  <div class="win-h" id="win-h">Team Aslan Wins!</div>
+  <div class="win-q" id="win-q"></div>
+  <div class="podium" id="podium"></div>
+  <button class="btn btn-gold" style="max-width:240px" onclick="location.reload()">🦁 Play Again</button>
+</div>
+
+<div id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════
+//  QUESTIONS
+// ═══════════════════════════════════════
+const QS = [
+  {q:"🦁 <b>Mr. Tumnus's Parcels</b><br>Mr. Tumnus had 14 parcels. He dropped 6 and went back for 3. How many did he arrive home with?", a:["11"], pts:10, hint:"14 − 6 + 3"},
+  {q:"🔢 <b>Multiplication</b><br>A classroom has 6 rows with 8 desks each. How many desks total?", a:["48"], pts:10, hint:"6 × 8"},
+  {q:"🎅 <b>Father Christmas</b><br>Father Christmas visited 9 villages, leaving 6 packages at each. How many packages total?", a:["54"], pts:10, hint:"9 × 6"},
+  {q:"🔢 <b>Fractions</b><br>There are 20 students. ¾ remembered their homework. How many remembered?", a:["15"], pts:10, hint:"20 × 3 ÷ 4"},
+  {q:"🐟 <b>Beaver's Barrels</b><br>72 trout divided equally among 9 barrels. How many trout per barrel?", a:["8"], pts:10, hint:"72 ÷ 9"},
+  {q:"📐 <b>Perimeter</b><br>A rectangle is 15 ft long and 10 ft wide. What is its perimeter?", a:["50","50 feet","50ft"], pts:10, hint:"P = 2×(l+w)"},
+  {q:"🏰 <b>Cair Paravel Courtyard</b><br>King Peter's courtyard: 40 ft long, 25 ft wide. How many feet of wall to surround it completely?", a:["130","130 feet","130ft"], pts:10, hint:"P = 2×(40+25)"},
+  {q:"💯 <b>Percentages</b><br>A store has 80 items. 25% are sold out. How many are sold out?", a:["20"], pts:10, hint:"80 × 0.25"},
+  {q:"💰 <b>Edmund's Gold Coins</b><br>King Edmund had 200 gold coins and gave 15% to the Talking Animals. How many coins?", a:["30"], pts:10, hint:"200 × 0.15"},
+  {q:"📏 <b>Area</b><br>A square garden has sides of 9 ft. What is the area in square feet?", a:["81","81 sq ft","81 square feet"], pts:10, hint:"A = 9 × 9"},
+  {q:"🌸 <b>Aslan's Royal Garden</b><br>A perfect square garden with sides of 12 ft. What is the area in square feet?", a:["144","144 sq ft","144 square feet"], pts:10, hint:"A = 12 × 12"},
+  {q:"📏 <b>Unit Conversion</b><br>A bookshelf is 3 feet tall. How many inches tall is it? (1 ft = 12 in)", a:["36","36 inches"], pts:10, hint:"3 × 12"},
+  {q:"⚔️ <b>Reepicheep's Sword</b><br>Reepicheep stands 9 inches tall; his sword is 1 foot long. How many inches longer is his sword than his height?", a:["3","3 inches"], pts:10, hint:"12 − 9"},
+  {q:"🔢 <b>Multi-Step</b><br>5 boxes of pencils × 4 packs each × 12 pencils per pack. How many pencils total?", a:["240"], pts:10, hint:"5 × 4 × 12"},
+  {q:"🍰 <b>Mr. Tumnus's Cakes</b><br>Mr. Tumnus baked 24 cakes and set out ¾ for Lucy. How many cakes did he set out for Lucy?", a:["18"], pts:10, hint:"24 × 3 ÷ 4"},
+  {q:"⏰ <b>Time</b><br>A movie starts at 2:15 PM and runs 1 hour 45 minutes. What time does it end?", a:["4:00","4:00 pm","4:00 PM","4 pm","4 PM"], pts:10, hint:"2:15 + 1:45"},
+  {q:"🐭 <b>Mice at the Stone Table</b><br>12 mice each chewed through 3 cords. How many cord-chews in total?", a:["36"], pts:10, hint:"12 × 3"},
+  {q:"🔢 <b>Division with Remainder</b><br>46 students split into groups of 5. How many complete groups, and how many left over?", a:["9 groups, 1 left over","9 groups 1 left over","9 r 1","9r1","9 remainder 1","9 groups with 1 left","9 with 1 left over"], pts:10, hint:"46 ÷ 5"},
+  {q:"🍬 <b>⭐ BONUS — Turkish Delight</b><br>Room 1: 9 shelves × 12 boxes. Room 2: 6 shelves × 15 boxes. Room 3: 4 shelves × 18 boxes. Every box has 8 pieces. How many total pieces?", a:["1488","1,488"], pts:15, hint:"(9×12 + 6×15 + 4×18) × 8"},
+  {q:"🐉 <b>⭐ BONUS — Dragon's Hoard</b><br>8 rings @ 15 coins, 6 goblets @ 24 coins, 12 bags @ 30 coins, 4 necklaces @ 55 coins, 9 swords @ 20 coins. Grand total value?", a:["1258","1,258"], pts:15, hint:"120+144+360+220+180"}
+];
+
+const TCOLORS = ['#e74c3c','#3498db','#2ecc71','#f39c12','#9b59b6','#1abc9c'];
+const TNAMES_DEFAULT = ['Team Aslan','Team Pevensie','Team Dawn Treader','Team Silver Chair','Team Reepicheep','Team Jill'];
+const MEDALS = ['🥇','🥈','🥉','4️⃣','5️⃣','6️⃣'];
+const QUOTES = [
+  '"Further up and further in!" — C.S. Lewis, The Last Battle',
+  '"Courage, dear heart." — C.S. Lewis, The Voyage of the Dawn Treader',
+  '"In our world too, a stable once had something inside it that was bigger than our whole world." — C.S. Lewis',
+  '"You have listened to fears, child. Come, let me breathe on you." — Aslan'
+];
+
+// ═══════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════
+let teamNames = [...TNAMES_DEFAULT];
+let scores    = [0,0,0,0,0,0];
+// Per-team queue of question indices (relay order)
+let queues    = [[],[],[],[],[],[]];
+// Per-team: set of correctly answered q indices
+let correct   = [[],[],[],[],[],[]];
+let timerSecs = 1500;
+let timerInt  = null;
+let paused    = false;
+let firstThisQ= {}; // qIdx -> first team to answer correctly
+
+// ═══════════════════════════════════════
+//  NAVIGATION
+// ═══════════════════════════════════════
+function goHome(){ setScreen('home'); }
+function goSetup(){ buildSetupGrid(); setScreen('setup-screen'); }
+
+function setScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+// ═══════════════════════════════════════
+//  SETUP
+// ═══════════════════════════════════════
+function buildSetupGrid(){
+  const g = document.getElementById('team-name-grid');
+  g.innerHTML = TNAMES_DEFAULT.map((n,i)=>`
+    <div class="trow">
+      <div class="tdot" style="background:${TCOLORS[i]}"></div>
+      <input id="tn${i}" value="${n}" style="width:100%">
+    </div>`).join('');
+}
+
+function startGame(){
+  teamNames = Array.from({length:6},(_,i)=>document.getElementById(`tn${i}`).value.trim()||TNAMES_DEFAULT[i]);
+  timerSecs = parseInt(document.getElementById('timer-sel').value);
+  scores    = [0,0,0,0,0,0];
+  correct   = [[],[],[],[],[],[]];
+  firstThisQ= {};
+  // Each team gets full shuffled queue
+  const base = QS.map((_,i)=>i);
+  queues = Array.from({length:6},()=>[...base]);
+
+  buildScoreboard();
+  buildTeamPanels();
+  buildQNav();
+  renderAllPanels();
+  startTimer();
+  setScreen('game-screen');
+}
+
+// ═══════════════════════════════════════
+//  SCOREBOARD
+// ═══════════════════════════════════════
+function buildScoreboard(){
+  document.getElementById('scoreboard').innerHTML = teamNames.map((n,i)=>`
+    <div class="tc" data-t="${i}" id="tc${i}">
+      <h3>${n}</h3>
+      <div class="pts" id="pts${i}">0</div>
+      <div class="prog" id="prog${i}">0/${QS.length}</div>
+      <div class="pbar"><div class="pfill" data-t="${i}" id="fill${i}" style="width:0%"></div></div>
+    </div>`).join('');
+}
+
+function updateScoreboard(){
+  const mx = Math.max(...scores);
+  teamNames.forEach((_,i)=>{
+    document.getElementById(`pts${i}`).textContent  = scores[i];
+    document.getElementById(`prog${i}`).textContent = `${correct[i].length}/${QS.length}`;
+    document.getElementById(`fill${i}`).style.width = (correct[i].length/QS.length*100)+'%';
+    document.getElementById(`tc${i}`).classList.toggle('lead', scores[i]===mx && scores[i]>0);
+  });
+}
+
+// ═══════════════════════════════════════
+//  TEAM PANELS — each shows their current Q
+// ═══════════════════════════════════════
+function buildTeamPanels(){
+  document.getElementById('team-panels').innerHTML = teamNames.map((n,i)=>`
+    <div class="tpanel" data-t="${i}" id="panel${i}">
+      <h4 id="phead${i}">🏳️ ${n}</h4>
+      <div style="font-size:.78rem;color:var(--muted);margin-bottom:.5rem" id="pqinfo${i}"></div>
+      <div class="ans-row">
+        <input class="ainput" id="ain${i}" placeholder="Answer…" onkeydown="if(event.key==='Enter')submit(${i})">
+        <button class="asubmit" id="asub${i}" onclick="submit(${i})">✓</button>
+        <button class="apass" id="apass${i}" onclick="pass(${i})" title="Skip — goes to back of queue">↩ Pass</button>
+      </div>
+      <div class="astatus" id="ast${i}"></div>
+    </div>`).join('');
+}
+
+function renderAllPanels(){
+  teamNames.forEach((_,i)=>renderPanel(i));
+  updateScoreboard();
+  updateQNav();
+}
+
+function renderPanel(t){
+  const q = currentQForTeam(t);
+  const inp  = document.getElementById(`ain${t}`);
+  const sub  = document.getElementById(`asub${t}`);
+  const pas  = document.getElementById(`apass${t}`);
+  const info = document.getElementById(`pqinfo${t}`);
+  const stat = document.getElementById(`ast${t}`);
+
+  if (q === null){
+    info.textContent = '🎉 All questions answered!';
+    inp.disabled = sub.disabled = pas.disabled = true;
+    stat.textContent = '';
+    return;
+  }
+
+  const alreadyDone = correct[t].includes(q);
+  if (alreadyDone){
+    // shouldn't happen if queue managed correctly — just show next
+    advanceQueue(t); renderPanel(t); return;
+  }
+
+  info.innerHTML = `Q${q+1}${q>=18?' ⭐':''}: ${QS[q].pts} pts &nbsp;·&nbsp; <span style="color:var(--muted);font-size:.72rem">💡 ${QS[q].hint}</span>`;
+  inp.value = '';
+  inp.disabled = false;
+  sub.disabled = false;
+  pas.disabled = queues[t].length <= 1; // can't pass if only 1 left
+  stat.textContent = '';
+  stat.className = 'astatus';
+  setTimeout(()=>inp.focus(),50);
+}
+
+function currentQForTeam(t){
+  // front of queue, skip already-done
+  while(queues[t].length > 0 && correct[t].includes(queues[t][0])){
+    queues[t].shift();
+  }
+  return queues[t].length > 0 ? queues[t][0] : null;
+}
+
+// ═══════════════════════════════════════
+//  SUBMIT & PASS
+// ═══════════════════════════════════════
+function submit(t){
+  const inp = document.getElementById(`ain${t}`);
+  const raw = inp.value.trim();
+  if (!raw) return;
+  const q = currentQForTeam(t);
+  if (q === null) return;
+
+  const isCorrect = QS[q].a.some(ans =>
+    ans.toLowerCase() === raw.toLowerCase() ||
+    ans.replace(/[^0-9]/g,'') === raw.replace(/[^0-9]/g,'')
+  );
+
+  const stat = document.getElementById(`ast${t}`);
+
+  if (isCorrect){
+    const first = !(q in firstThisQ);
+    if (first) firstThisQ[q] = t;
+    const pts = QS[q].pts + (first ? 2 : 0);
+    scores[t] += pts;
+    correct[t].push(q);
+    advanceQueue(t);
+
+    stat.textContent = `✅ +${pts} pts${first?' ⚡ First!':''}`;
+    stat.className   = 'astatus ok';
+    document.getElementById(`ain${t}`).disabled = true;
+    document.getElementById(`asub${t}`).disabled = true;
+    document.getElementById(`apass${t}`).disabled = true;
+    toast(`⚡ ${teamNames[t]}: +${pts} pts!`);
+    updateScoreboard();
+    updateQNav();
+
+    // Check if all teams done
+    if (correct.every((c,i)=>c.length===QS.length || queues[i].length===0)){
+      setTimeout(endGame, 1200);
+    } else {
+      setTimeout(()=>renderPanel(t), 1000);
+    }
+  } else {
+    stat.textContent = '❌ Try again!';
+    stat.className   = 'astatus no';
+    inp.select();
+    setTimeout(()=>{ stat.textContent=''; stat.className='astatus'; }, 2000);
+  }
+}
+
+function pass(t){
+  const q = currentQForTeam(t);
+  if (q===null) return;
+  // Move front of queue to back
+  queues[t].shift();
+  queues[t].push(q);
+  const stat = document.getElementById(`ast${t}`);
+  stat.textContent = '↩ Passed — comes back later';
+  stat.className   = 'astatus pass';
+  updateQNav();
+  setTimeout(()=>renderPanel(t), 600);
+}
+
+function advanceQueue(t){
+  if (queues[t].length>0) queues[t].shift();
+}
+
+// ═══════════════════════════════════════
+//  Q NAV (overview for teacher)
+// ═══════════════════════════════════════
+function buildQNav(){
+  document.getElementById('qtot').textContent = QS.length;
+  document.getElementById('qnav').innerHTML = QS.map((_,i)=>`
+    <span class="qpill" id="qpill${i}">${i>=18?'⭐':''}Q${i+1}</span>`).join('');
+  // show first question info
+  showQInfo(0);
+}
+
+function showQInfo(idx){
+  document.getElementById('qnum').textContent  = idx+1;
+  document.getElementById('qbody').innerHTML   = QS[idx].q;
+  document.getElementById('qhint').textContent = '💡 Hint: '+QS[idx].hint;
+  document.getElementById('qpts-badge').textContent = QS[idx].pts+' pts'+(idx>=18?' ⭐':'');
+}
+
+function updateQNav(){
+  QS.forEach((_,i)=>{
+    const pill = document.getElementById(`qpill${i}`);
+    if (!pill) return;
+    const anyDone   = correct.some(c=>c.includes(i));
+    const anyPassed = !anyDone && queues.some(q=>q.indexOf(i)>0);
+    pill.classList.toggle('done',   anyDone);
+    pill.classList.toggle('passed', !anyDone && anyPassed);
+  });
+  // Show info for most active Q across teams
+  const frontQs = teamNames.map((_,t)=>currentQForTeam(t)).filter(q=>q!==null);
+  if (frontQs.length>0){
+    // show the lowest numbered active Q
+    const minQ = Math.min(...frontQs);
+    showQInfo(minQ);
+    document.querySelectorAll('.qpill').forEach((p,i)=>p.classList.toggle('active',i===minQ));
+  }
+}
+
+// ═══════════════════════════════════════
+//  TIMER
+// ═══════════════════════════════════════
+function startTimer(){
+  updateTimerDisp();
+  timerInt = setInterval(()=>{
+    if (paused) return;
+    timerSecs--;
+    updateTimerDisp();
+    if (timerSecs<=0){ clearInterval(timerInt); endGame(); }
+  },1000);
+}
+function updateTimerDisp(){
+  const m=Math.floor(timerSecs/60), s=timerSecs%60;
+  const el=document.getElementById('timer-disp');
+  el.textContent=`${m}:${s.toString().padStart(2,'0')}`;
+  el.classList.toggle('urgent',timerSecs<=60);
+}
+function togglePause(){
+  paused=!paused;
+  document.getElementById('pause-btn').textContent=paused?'▶ Resume':'⏸ Pause';
+  toast(paused?'⏸ Paused':'▶ Resumed');
+}
+function prevQ(){ /* nav hint only */ }
+function nextQ(){ /* nav hint only */ }
+
+// ═══════════════════════════════════════
+//  END GAME
+// ═══════════════════════════════════════
+function endGame(){
+  clearInterval(timerInt);
+  const ranked = teamNames.map((n,i)=>({n,s:scores[i],c:correct[i].length})).sort((a,b)=>b.s-a.s);
+  document.getElementById('win-h').textContent = `🏆 ${ranked[0].n} Wins!`;
+  document.getElementById('win-q').innerHTML   = QUOTES[Math.floor(Math.random()*QUOTES.length)];
+  document.getElementById('podium').innerHTML  = ranked.map((r,i)=>`
+    <div class="prow ${i===0?'first':''}">
+      <span>${MEDALS[i]} ${r.n}</span>
+      <span>${r.s} pts · ${r.c}/${QS.length} ✓</span>
+    </div>`).join('');
+  setScreen('win-screen');
+}
+
+// ═══════════════════════════════════════
+//  TOAST
+// ═══════════════════════════════════════
+let toastT=null;
+function toast(msg){
+  const el=document.getElementById('toast');
+  el.textContent=msg; el.classList.add('show');
+  clearTimeout(toastT); toastT=setTimeout(()=>el.classList.remove('show'),2200);
+}
+</script>
+</body>
+</html>
