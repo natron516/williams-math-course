@@ -593,11 +593,12 @@ function listenAsStudent(){
       document.getElementById('ts-waiting').style.display='none';
       document.getElementById('ts-playing').style.display='block';
       timerInt = setInterval(()=>{ timerSecs--; updateSTimer(); if(timerSecs<=0) clearInterval(timerInt); },1000);
-      renderTeamQ();
+      renderTeamQ(); // only render on first start
     }
     if(d.status==='paused' && timerInt){ clearInterval(timerInt); timerInt=null; }
     if(d.status==='running' && !timerInt && document.getElementById('ts-playing').style.display==='block'){
       timerInt = setInterval(()=>{ timerSecs--; updateSTimer(); if(timerSecs<=0) clearInterval(timerInt); },1000);
+      // do NOT call renderTeamQ here — would wipe the input
     }
     if(d.status==='ended') showWin(d);
   });
@@ -646,6 +647,10 @@ async function teamSubmit(){
   const raw = inp.value.trim(); if(!raw) return;
   const q   = localQueue[0]; if(q===undefined) return;
   const stat= document.getElementById('ts-status');
+  // Disable immediately to prevent double-submit
+  inp.disabled=true;
+  document.getElementById('ts-sub').disabled=true;
+  document.getElementById('ts-pass').disabled=true;
 
   const ok = QS[q].a.some(ans=>
     ans.toLowerCase()===raw.toLowerCase()||
@@ -657,9 +662,6 @@ async function teamSubmit(){
     const pts   = QS[q].pts + (first?2:0);
     localDone.push(q);
     localQueue.shift();
-    inp.disabled=true;
-    document.getElementById('ts-sub').disabled=true;
-    document.getElementById('ts-pass').disabled=true;
     stat.textContent=`✅ Correct! +${pts} pts${first?' ⚡ First!':''}`;
     stat.className='ts-status ok';
 
@@ -688,7 +690,12 @@ async function teamSubmit(){
   } else {
     stat.textContent='❌ Not quite — try again!';
     stat.className='ts-status no';
-    inp.select();
+    // Re-enable input so they can try again
+    inp.disabled=false;
+    inp.value='';
+    document.getElementById('ts-sub').disabled=false;
+    document.getElementById('ts-pass').disabled = localQueue.length<=1;
+    inp.focus();
     try {
       await gameRef.collection('answers').add({
         tIdx:myTeamIdx, tName:myTeamName, qIdx:q,
