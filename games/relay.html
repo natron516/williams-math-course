@@ -733,26 +733,26 @@ async function teamSubmit(){
     stat.textContent=`✅ Correct! +${pts} pts${first?' ⚡ First!':''}`;
     stat.className='ts-status ok';
 
-    // Atomic Firebase update
+    // Write score to Firebase — read-modify-write on scores array
     try {
-      await db.runTransaction(async tx=>{
-        const gs = await tx.get(gameRef);
-        const gd = gs.data();
-        const ns = [...(gd.scores||[0,0,0,0,0,0])];
-        const ck = 'c'+myTeamIdx;
-        const ca = [...(gd[ck]||[])];
-        const nh = {...(gd.firstHit||{})};
-        ns[myTeamIdx]=(ns[myTeamIdx]||0)+pts;
-        if(!ca.includes(q)) ca.push(q);
-        if(!(String(q) in nh)) nh[String(q)]=myTeamIdx;
-        tx.update(gameRef,{scores:ns,[ck]:ca,firstHit:nh});
+      const ck = 'c'+myTeamIdx;
+      const snap2 = await gameRef.get();
+      const gd    = snap2.data();
+      const ns    = [...(gd.scores||[0,0,0,0,0,0])];
+      ns[myTeamIdx] = (parseInt(ns[myTeamIdx])||0) + pts;
+      const fh    = {...(gd.firstHit||{})};
+      if(!(String(q) in fh)) fh[String(q)] = myTeamIdx;
+      await gameRef.update({
+        scores: ns,
+        [ck]: firebase.firestore.FieldValue.arrayUnion(q),
+        firstHit: fh
       });
       await gameRef.collection('answers').add({
         tIdx:myTeamIdx, tName:myTeamName, qIdx:q,
         answer:raw, correct:true, pts,
         ts:firebase.firestore.FieldValue.serverTimestamp()
       });
-    } catch(e){ console.error(e); }
+    } catch(e){ console.error('Firebase write error:',e.message); }
 
     setTimeout(renderTeamQ, 1200);
   } else {
