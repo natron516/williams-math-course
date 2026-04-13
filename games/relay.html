@@ -26,14 +26,15 @@ input:focus,select:focus{outline:none;border-color:var(--gold)}
 .tdot{width:12px;height:12px;border-radius:50%;flex-shrink:0}
 .team-grid{display:grid;grid-template-columns:1fr 1fr;gap:.4rem .8rem;margin-bottom:.8rem}
 .btn{display:block;width:100%;padding:.9rem;border:none;border-radius:12px;font-family:inherit;font-size:1.05rem;font-weight:bold;cursor:pointer;margin-top:.8rem;transition:transform .1s}
-.btn:hover{transform:translateY(-1px)}
+.btn:active{transform:scale(.98)}
 .btn-gold{background:linear-gradient(135deg,var(--gold),#a0821e);color:#1a1a1a}
 .btn-green{background:linear-gradient(135deg,#2ecc71,#1a8c4e);color:#fff}
-.btn-sm{width:auto;display:inline-block;padding:.5rem 1rem;font-size:.9rem;margin-top:.5rem}
-.btn-outline{background:transparent;border:1px solid var(--gold);color:var(--gold)}
+.btn-outline{background:transparent;border:2px solid var(--gold);color:var(--gold)}
+.btn-sm{padding:.5rem 1rem;font-size:.9rem;width:auto;display:inline-block}
+.err{color:var(--accent);font-size:.85rem;margin-top:.5rem;min-height:1.2em;text-align:center}
 
-/* GAME */
-#game-screen{padding:1rem}
+/* GAME HEADER */
+#teacher-dash{padding:1rem}
 .g-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:.8rem;flex-wrap:wrap;gap:.5rem}
 .g-title{color:var(--gold);font-size:1.1rem;font-weight:bold}
 .timer{font-size:1.8rem;font-weight:bold;font-family:monospace;color:var(--gold)}
@@ -44,7 +45,7 @@ input:focus,select:focus{outline:none;border-color:var(--gold)}
 .cbtn:hover{background:rgba(201,162,39,.2)}
 .cbtn.red{border-color:var(--accent);color:var(--accent)}
 
-/* Scoreboard */
+/* SCOREBOARD */
 .scoreboard{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;margin-bottom:.8rem}
 @media(max-width:500px){.scoreboard{grid-template-columns:repeat(2,1fr)}}
 .tc{border-radius:10px;padding:.7rem;border:2px solid transparent;transition:all .2s}
@@ -63,36 +64,21 @@ input:focus,select:focus{outline:none;border-color:var(--gold)}
 .pfill[data-t="0"]{background:var(--t0)}.pfill[data-t="1"]{background:var(--t1)}.pfill[data-t="2"]{background:var(--t2)}
 .pfill[data-t="3"]{background:var(--t3)}.pfill[data-t="4"]{background:var(--t4)}.pfill[data-t="5"]{background:var(--t5)}
 
-/* Team panels */
-.team-panels{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.7rem;margin-bottom:.6rem}
-.tpanel{border-radius:10px;padding:.9rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1)}
-.tpanel h4{font-size:.82rem;margin-bottom:.4rem}
-.tpanel[data-t="0"] h4{color:var(--t0)}.tpanel[data-t="1"] h4{color:var(--t1)}.tpanel[data-t="2"] h4{color:var(--t2)}
-.tpanel[data-t="3"] h4{color:var(--t3)}.tpanel[data-t="4"] h4{color:var(--t4)}.tpanel[data-t="5"] h4{color:var(--t5)}
-.pqinfo{font-size:.75rem;color:var(--muted);margin-bottom:.45rem;line-height:1.4}
-.arow{display:flex;gap:.4rem;margin-bottom:.3rem}
-.ain{flex:1;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:.5rem .7rem;color:var(--text);font-size:1rem;font-family:inherit}
-.ain:focus{outline:none;border-color:var(--gold)}
-.ain:disabled{opacity:.4}
-.asub{padding:.5rem .75rem;border-radius:8px;border:none;font-family:inherit;font-size:.85rem;font-weight:bold;cursor:pointer;color:#fff}
-.asub:disabled{opacity:.4;cursor:not-allowed}
-.apass{padding:.5rem .65rem;border-radius:8px;border:1px solid rgba(255,255,255,.2);background:transparent;color:var(--muted);font-family:inherit;font-size:.8rem;cursor:pointer;white-space:nowrap}
-.apass:hover{background:rgba(255,255,255,.08)}
-.apass:disabled{opacity:.3;cursor:not-allowed}
-.tpanel[data-t="0"] .asub{background:var(--t0)}.tpanel[data-t="1"] .asub{background:var(--t1)}.tpanel[data-t="2"] .asub{background:var(--t2)}
-.tpanel[data-t="3"] .asub{background:var(--t3)}.tpanel[data-t="4"] .asub{background:var(--t4)}.tpanel[data-t="5"] .asub{background:var(--t5)}
-.ast{font-size:.78rem;min-height:1.1em;text-align:center;border-radius:6px;padding:.2rem;transition:all .3s}
-.ast.ok{color:var(--green);background:rgba(46,204,113,.1)}.ast.no{color:var(--accent);background:rgba(233,69,96,.1)}.ast.ps{color:var(--muted)}
-
-/* Q overview */
+/* Q NAV */
 .qcard{background:var(--card);border-radius:12px;padding:1rem;border-left:4px solid var(--gold);margin-bottom:.8rem}
 .qlbl{color:var(--gold);font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.35rem}
 .qnav{display:flex;gap:.3rem;flex-wrap:wrap;margin-top:.6rem}
-.qpill{padding:.18rem .5rem;border-radius:20px;font-size:.7rem;cursor:default;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:var(--muted)}
+.qpill{padding:.18rem .5rem;border-radius:20px;font-size:.7rem;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:var(--muted)}
 .qpill.done{background:rgba(46,204,113,.2);border-color:var(--green);color:var(--green)}
-.qpill.passed{background:rgba(243,156,18,.12);border-color:var(--t3);color:var(--t3)}
 
-/* TEAM iPAD screens */
+/* FEED */
+.feed{background:rgba(255,255,255,.03);border-radius:10px;padding:.8rem;max-height:200px;overflow-y:auto}
+.feed-title{color:var(--muted);font-size:.78rem;margin-bottom:.4rem}
+.feed-items{display:flex;flex-direction:column;gap:.3rem;font-size:.82rem}
+.feed-item{display:flex;gap:.5rem;align-items:center;padding:.25rem .4rem;border-radius:5px}
+.feed-item.ok{background:rgba(46,204,113,.1)}.feed-item.no{background:rgba(233,69,96,.08)}
+
+/* TEAM SCREEN */
 #team-screen{padding:1.2rem;max-width:560px;margin:0 auto}
 .ts-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:.8rem}
 .ts-badge{padding:.3rem .9rem;border-radius:20px;font-size:.88rem;font-weight:bold}
@@ -102,30 +88,26 @@ input:focus,select:focus{outline:none;border-color:var(--gold)}
 .ts-chip{padding:.25rem .65rem;border-radius:20px;font-size:.75rem;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1)}
 .ts-chip.lead{border-color:var(--gold)}
 .ts-qcard{background:var(--card);border-radius:14px;padding:1.2rem;border-left:4px solid var(--gold);margin-bottom:.8rem}
-.ts-qlbl{color:var(--gold);font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.5rem}
+.ts-qlbl{color:var(--gold);font-size:.75rem;text-transform:uppercase;margin-bottom:.5rem}
 .ts-qbody{line-height:1.7;font-size:1rem}
 .ts-hint{color:var(--muted);font-size:.8rem;margin-top:.5rem;font-style:italic}
 .ts-arow{display:flex;gap:.5rem;margin-bottom:.5rem}
 .ts-ain{flex:1;background:rgba(255,255,255,.08);border:2px solid rgba(255,255,255,.2);border-radius:10px;padding:.75rem 1rem;color:var(--text);font-size:1.1rem;font-family:inherit}
 .ts-ain:focus{outline:none;border-color:var(--gold)}
 .ts-ain:disabled{opacity:.5}
-.ts-sub{padding:.75rem 1.1rem;border-radius:10px;border:none;font-family:inherit;font-size:1rem;font-weight:bold;cursor:pointer;color:#fff;white-space:nowrap}
+.ts-sub{padding:.75rem 1.1rem;border-radius:10px;border:none;font-family:inherit;font-size:1rem;font-weight:bold;cursor:pointer;color:#fff}
 .ts-sub:disabled{opacity:.4;cursor:not-allowed}
 .ts-pass{padding:.75rem 1rem;border-radius:10px;border:1px solid rgba(255,255,255,.2);background:transparent;color:var(--muted);font-family:inherit;font-size:.9rem;cursor:pointer}
-.ts-pass:hover{background:rgba(255,255,255,.08)}
 .ts-pass:disabled{opacity:.3;cursor:not-allowed}
-.ts-status{font-size:.95rem;min-height:1.4em;text-align:center;border-radius:8px;padding:.3rem;transition:all .3s}
-.ts-status.ok{color:var(--green);background:rgba(46,204,113,.1)}.ts-status.no{color:var(--accent);background:rgba(233,69,96,.1)}.ts-status.ps{color:var(--muted)}
+.ts-status{font-size:.95rem;min-height:1.4em;text-align:center;border-radius:8px;padding:.3rem;margin-top:.2rem}
+.ts-status.ok{color:var(--green);background:rgba(46,204,113,.1)}
+.ts-status.no{color:var(--accent);background:rgba(233,69,96,.1)}
+.ts-status.ps{color:var(--muted)}
 
-/* Join screen */
-#join-screen{padding:1.5rem;max-width:500px;margin:0 auto}
-.join-err{color:var(--accent);font-size:.85rem;margin-top:.5rem;min-height:1.2em;text-align:center}
-
-/* Code display */
+/* LOBBY */
 .code-box{background:var(--card);border:2px solid var(--gold);border-radius:14px;padding:1.2rem;text-align:center;margin-bottom:1.2rem}
 .code-box p{color:var(--muted);font-size:.85rem;margin-bottom:.3rem}
 .code-big{font-size:3rem;font-weight:bold;color:var(--gold);letter-spacing:.25em;font-family:monospace}
-.joined-count{color:var(--muted);font-size:.83rem;margin-top:.4rem}
 
 /* WIN */
 #win-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
@@ -137,43 +119,30 @@ input:focus,select:focus{outline:none;border-color:var(--gold)}
 .prow{display:flex;justify-content:space-between;align-items:center;padding:.65rem 1rem;border-radius:10px;background:rgba(255,255,255,.05)}
 .prow.first{background:rgba(201,162,39,.2);border:1px solid var(--gold);font-weight:bold}
 
+.spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(201,162,39,.3);border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:.3rem}
+@keyframes spin{to{transform:rotate(360deg)}}
 #toast{position:fixed;top:1rem;right:1rem;background:var(--card);border:1px solid var(--gold);border-radius:10px;padding:.65rem 1rem;font-size:.88rem;opacity:0;transform:translateY(-8px);transition:all .3s;z-index:999;max-width:260px;pointer-events:none}
 #toast.show{opacity:1;transform:translateY(0)}
-
-.spinner{display:inline-block;width:18px;height:18px;border:2px solid rgba(201,162,39,.3);border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:.4rem}
-@keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
 
 <!-- HOME -->
 <div id="home" class="screen active">
-  <h1>⚔️ Narnia Math Relay</h1>
-  <p class="sub">Team relay race — pass the iPad, answer the question</p>
+  <h1>&#9876;&#65039; Narnia Math Relay</h1>
+  <p class="sub">Team relay race &mdash; pass the iPad, answer the question</p>
   <div style="display:flex;flex-direction:column;gap:.8rem;max-width:300px;width:100%">
-    <button class="btn btn-gold" onclick="goSetup()">👩‍🏫 Teacher — Set Up Game</button>
-    <button class="btn btn-outline" onclick="goRejoin()">🔑 Teacher — Rejoin Existing Game</button>
-    <button class="btn btn-outline" onclick="goJoin()">🎒 Student — Join Game</button>
+    <button class="btn btn-gold" onclick="showScreen('setup-screen');buildSetup()">&#128105;&#8205;&#127979; Teacher &mdash; New Game</button>
+    <button class="btn btn-outline" onclick="showScreen('rejoin-screen')">&#128273; Teacher &mdash; Rejoin Game</button>
+    <button class="btn btn-outline" onclick="showScreen('join-screen')">&#127890; Student &mdash; Join Game</button>
   </div>
-  <p style="color:var(--muted);font-size:.8rem;margin-top:2rem;font-style:italic">"Courage, dear heart." — C.S. Lewis</p>
-</div>
-
-<!-- TEACHER REJOIN -->
-<div id="rejoin-screen" class="screen">
-  <div class="card">
-    <h2>🔑 Rejoin as Teacher</h2>
-    <label>Game Code</label>
-    <input id="rc-code" placeholder="6-letter code" autocomplete="off" style="text-transform:uppercase" maxlength="6">
-    <button class="btn btn-gold" onclick="rejoinGame()">🦁 Rejoin Dashboard</button>
-    <div class="join-err" id="rejoin-err"></div>
-    <button class="btn btn-outline btn-sm" style="margin-top:.5rem" onclick="goHome()">← Back</button>
-  </div>
+  <p style="color:var(--muted);font-size:.8rem;margin-top:2rem;font-style:italic">&ldquo;Courage, dear heart.&rdquo; &mdash; C.S. Lewis</p>
 </div>
 
 <!-- TEACHER SETUP -->
 <div id="setup-screen" class="screen">
   <div class="card">
-    <h2>🏰 Game Setup</h2>
+    <h2>&#127984; Game Setup</h2>
     <div style="color:var(--muted);font-size:.85rem;margin-bottom:.8rem">Name your 6 teams:</div>
     <div class="team-grid" id="team-name-grid"></div>
     <label>Timer</label>
@@ -183,64 +152,76 @@ input:focus,select:focus{outline:none;border-color:var(--gold)}
       <option value="1200">20 minutes</option>
       <option value="900">15 minutes</option>
     </select>
-    <button class="btn btn-gold" id="create-btn" onclick="createRoom()">🦁 Create Game Room</button>
-    <div id="create-err" style="color:var(--accent);font-size:.85rem;margin-top:.5rem;min-height:1em;text-align:center"></div>
-    <button class="btn btn-outline btn-sm" style="margin-top:.5rem" onclick="goHome()">← Back</button>
+    <button class="btn btn-gold" onclick="createRoom()">&#129409; Create Game Room</button>
+    <div class="err" id="create-err"></div>
+    <button class="btn btn-outline" style="margin-top:.5rem" onclick="showScreen('home')">&#8592; Back</button>
   </div>
 </div>
 
-<!-- LOBBY (teacher waiting) -->
+<!-- TEACHER REJOIN -->
+<div id="rejoin-screen" class="screen">
+  <div class="card">
+    <h2>&#128273; Rejoin as Teacher</h2>
+    <label>Game Code (shown when you created the room)</label>
+    <input id="rc-code" placeholder="e.g. Y35S3D" autocomplete="off" style="text-transform:uppercase;font-size:1.4rem;letter-spacing:.15em;text-align:center" maxlength="6">
+    <button class="btn btn-gold" onclick="rejoinGame()">&#129409; Rejoin Dashboard</button>
+    <div class="err" id="rejoin-err"></div>
+    <button class="btn btn-outline" style="margin-top:.5rem" onclick="showScreen('home')">&#8592; Back</button>
+  </div>
+</div>
+
+<!-- LOBBY -->
 <div id="lobby-screen" class="screen">
   <div class="card" style="text-align:center">
-    <h2>🏰 Game Room Ready</h2>
+    <h2>&#127984; Room Ready</h2>
     <div class="code-box">
       <p>Show this code to your students</p>
       <div class="code-big" id="code-display">------</div>
-      <div class="joined-count" id="joined-count">Waiting for teams to join…</div>
+      <div style="color:var(--muted);font-size:.83rem;margin-top:.4rem" id="joined-count">Waiting for teams&hellip;</div>
     </div>
-    <div id="joined-list" style="color:var(--muted);font-size:.82rem;margin-bottom:1rem;text-align:left;line-height:1.8"></div>
-    <button class="btn btn-green" id="start-btn" onclick="launchGame()">🚀 Start Game</button>
-    <p style="color:var(--muted);font-size:.78rem;margin-top:.5rem">You can start with however many teams are ready</p>
+    <div id="joined-list" style="color:var(--muted);font-size:.82rem;margin-bottom:1rem;text-align:left;line-height:2"></div>
+    <button class="btn btn-green" onclick="launchGame()">&#128640; Start Game</button>
+    <p style="color:var(--muted);font-size:.78rem;margin-top:.5rem">Start whenever you're ready &mdash; teams can still join after</p>
   </div>
 </div>
 
 <!-- TEACHER DASHBOARD -->
 <div id="teacher-dash" class="screen" style="padding:1rem">
   <div class="g-header">
-    <div class="g-title">⚔️ Narnia Relay — Live</div>
+    <div class="g-title">&#9876;&#65039; Narnia Relay &mdash; Live &nbsp;<span style="color:var(--muted);font-size:.75rem" id="dash-code"></span></div>
     <div class="timer" id="t-timer">25:00</div>
     <div class="g-ctrl">
-      <button class="cbtn" id="pause-btn" onclick="togglePause()">⏸ Pause</button>
-      <button class="cbtn red" onclick="endGame()">🏁 End</button>
+      <button class="cbtn" id="pause-btn" onclick="teacherPause()">&#9208; Pause</button>
+      <button class="cbtn red" onclick="teacherEnd()">&#127937; End</button>
     </div>
   </div>
   <div class="scoreboard" id="scoreboard"></div>
   <div class="qcard">
-    <div class="qlbl">Question progress overview</div>
-    <div id="t-qbody" style="font-size:.85rem;color:var(--muted)">Questions are shown on each team's iPad</div>
+    <div class="qlbl">Question progress</div>
+    <div style="font-size:.85rem;color:var(--muted)">Each team sees their own question on their iPad</div>
     <div class="qnav" id="qnav"></div>
   </div>
-  <div id="live-feed" style="background:rgba(255,255,255,.03);border-radius:10px;padding:.8rem;max-height:200px;overflow-y:auto">
-    <div style="color:var(--muted);font-size:.78rem;margin-bottom:.4rem">⚡ Live answers</div>
-    <div id="feed-items" style="display:flex;flex-direction:column;gap:.3rem;font-size:.82rem"></div>
+  <div class="feed">
+    <div class="feed-title">&#9889; Live answers</div>
+    <div class="feed-items" id="feed-items"></div>
   </div>
 </div>
 
 <!-- STUDENT JOIN -->
 <div id="join-screen" class="screen">
   <div class="card">
-    <h2>🎒 Join the Relay!</h2>
-    <label>Team Name</label>
+    <h2>&#127890; Join the Relay!</h2>
+    <label>Your Team Name</label>
     <input id="s-name" placeholder="e.g. Team Aslan" autocomplete="off">
-    <label>Game Code</label>
-    <input id="s-code" placeholder="6-letter code from teacher" autocomplete="off" style="text-transform:uppercase" maxlength="6">
-    <button class="btn btn-gold" onclick="joinGame()">🚪 Join!</button>
-    <div class="join-err" id="join-err"></div>
-    <button class="btn btn-outline btn-sm" style="margin-top:.5rem" onclick="goHome()">← Back</button>
+    <label>Game Code (from teacher's screen)</label>
+    <input id="s-code" placeholder="6-letter code" autocomplete="off" style="text-transform:uppercase;font-size:1.4rem;letter-spacing:.15em;text-align:center" maxlength="6">
+    <button class="btn btn-gold" onclick="joinGame()">&#128682; Join!</button>
+    <div class="err" id="join-err"></div>
+    <button class="btn btn-outline" style="margin-top:.5rem" onclick="showScreen('home')">&#8592; Back</button>
   </div>
 </div>
 
-<!-- TEAM GAME (one per iPad) -->
+<!-- TEAM GAME -->
 <div id="team-screen" class="screen">
   <div class="ts-header">
     <div class="ts-badge" id="ts-badge">Team</div>
@@ -248,9 +229,9 @@ input:focus,select:focus{outline:none;border-color:var(--gold)}
   </div>
   <div class="ts-scores" id="ts-scores"></div>
   <div id="ts-waiting" style="text-align:center;padding:3rem 1rem">
-    <div style="font-size:3rem;margin-bottom:1rem;animation:spin 3s linear infinite">🦁</div>
-    <div style="color:var(--gold);font-size:1.2rem;margin-bottom:.5rem">Waiting for teacher to start…</div>
-    <div style="color:var(--muted);font-style:italic;font-size:.88rem">"Further up and further in!"</div>
+    <div style="font-size:3rem;margin-bottom:1rem;display:inline-block;animation:spin 3s linear infinite">&#129409;</div>
+    <div style="color:var(--gold);font-size:1.2rem;margin-bottom:.5rem">You're in! Waiting for teacher to start&hellip;</div>
+    <div style="color:var(--muted);font-style:italic;font-size:.88rem">&ldquo;Further up and further in!&rdquo;</div>
   </div>
   <div id="ts-playing" style="display:none">
     <div class="ts-qcard">
@@ -259,34 +240,29 @@ input:focus,select:focus{outline:none;border-color:var(--gold)}
       <div class="ts-hint" id="ts-hint"></div>
     </div>
     <div class="ts-arow">
-      <input class="ts-ain" id="ts-ain" placeholder="Your answer…" autocomplete="off" onkeydown="if(event.key==='Enter')teamSubmit()">
-      <button class="ts-sub" id="ts-sub" onclick="teamSubmit()">✓ Submit</button>
-      <button class="ts-pass" id="ts-pass" onclick="teamPass()">↩ Pass</button>
+      <input class="ts-ain" id="ts-ain" placeholder="Your answer&hellip;" autocomplete="off">
+      <button class="ts-sub" id="ts-sub" onclick="teamSubmit()">&#10003; Submit</button>
+      <button class="ts-pass" id="ts-pass" onclick="teamPass()">&#8617; Pass</button>
     </div>
     <div class="ts-status" id="ts-status"></div>
-    <div style="color:var(--muted);font-size:.72rem;text-align:center;margin-top:.5rem">Pass = skips to back of queue · First correct = +2 bonus pts</div>
+    <div style="color:var(--muted);font-size:.72rem;text-align:center;margin-top:.5rem">Pass = question goes to back of queue &nbsp;&middot;&nbsp; First correct = +2 bonus pts</div>
   </div>
 </div>
 
 <!-- WIN -->
 <div id="win-screen" class="screen">
-  <div class="trophy">🏆</div>
-  <div class="win-h" id="win-h">Team Aslan Wins!</div>
+  <div class="trophy">&#127942;</div>
+  <div class="win-h" id="win-h">Team Wins!</div>
   <div class="win-q" id="win-q"></div>
   <div class="podium" id="podium"></div>
-  <button class="btn btn-gold" style="max-width:240px" onclick="location.reload()">🦁 Play Again</button>
+  <button class="btn btn-gold" style="max-width:240px" onclick="location.reload()">&#129409; Play Again</button>
 </div>
 
 <div id="toast"></div>
 
-<!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-
 <script>
-// ══════════════════════════
-//  FIREBASE
-// ══════════════════════════
 firebase.initializeApp({
   apiKey:"AIzaSyA5qnahNEDXEo4CvDZi7PIqcKGfga0Oqn4",
   authDomain:"mrswilliamsmath-1d6de.firebaseapp.com",
@@ -295,530 +271,528 @@ firebase.initializeApp({
   messagingSenderId:"370339384366",
   appId:"1:370339384366:web:e2e5abfd8263b84db223bf"
 });
-const db = firebase.firestore();
+var db = firebase.firestore();
 
-// ══════════════════════════
-//  QUESTIONS
-// ══════════════════════════
-const QS = [
-  {q:"🦁 <b>Mr. Tumnus's Parcels</b><br>Mr. Tumnus had 14 parcels. He dropped 6 and went back for 3. How many did he arrive home with?",a:["11"],pts:10,hint:"14 − 6 + 3"},
-  {q:"🔢 <b>Multiplication</b><br>A classroom has 6 rows with 8 desks each. How many desks total?",a:["48"],pts:10,hint:"6 × 8"},
-  {q:"🎅 <b>Father Christmas</b><br>Father Christmas visited 9 villages, leaving 6 packages at each. How many packages total?",a:["54"],pts:10,hint:"9 × 6"},
-  {q:"🔢 <b>Fractions</b><br>There are 20 students. ¾ remembered their homework. How many remembered?",a:["15"],pts:10,hint:"20 × 3 ÷ 4"},
-  {q:"🐟 <b>Beaver's Barrels</b><br>72 trout divided equally among 9 barrels. How many trout per barrel?",a:["8"],pts:10,hint:"72 ÷ 9"},
-  {q:"📐 <b>Perimeter</b><br>A rectangle is 15 ft long and 10 ft wide. What is its perimeter?",a:["50","50 feet","50ft"],pts:10,hint:"P = 2×(l+w)"},
-  {q:"🏰 <b>Cair Paravel Courtyard</b><br>King Peter's courtyard: 40 ft long, 25 ft wide. How many feet of wall to surround it?",a:["130","130 feet","130ft"],pts:10,hint:"P = 2×(40+25)"},
-  {q:"💯 <b>Percentages</b><br>A store has 80 items. 25% are sold out. How many are sold out?",a:["20"],pts:10,hint:"80 × 0.25"},
-  {q:"💰 <b>Edmund's Gold Coins</b><br>King Edmund had 200 gold coins and gave 15% to the Talking Animals. How many coins?",a:["30"],pts:10,hint:"200 × 0.15"},
-  {q:"📏 <b>Area</b><br>A square garden has sides of 9 ft. What is the area in square feet?",a:["81","81 sq ft","81 square feet"],pts:10,hint:"A = 9 × 9"},
-  {q:"🌸 <b>Aslan's Royal Garden</b><br>A perfect square garden with sides of 12 ft. What is the area in square feet?",a:["144","144 sq ft","144 square feet"],pts:10,hint:"A = 12 × 12"},
-  {q:"📏 <b>Unit Conversion</b><br>A bookshelf is 3 feet tall. How many inches? (1 ft = 12 in)",a:["36","36 inches"],pts:10,hint:"3 × 12"},
-  {q:"⚔️ <b>Reepicheep's Sword</b><br>Reepicheep stands 9 inches tall; his sword is 1 foot long. How many inches longer is his sword than he is tall?",a:["3","3 inches"],pts:10,hint:"12 − 9"},
-  {q:"🔢 <b>Multi-Step</b><br>5 boxes of pencils × 4 packs each × 12 pencils per pack. How many pencils total?",a:["240"],pts:10,hint:"5 × 4 × 12"},
-  {q:"🍰 <b>Mr. Tumnus's Cakes</b><br>Mr. Tumnus baked 24 cakes and set out ¾ for Lucy. How many cakes for Lucy?",a:["18"],pts:10,hint:"24 × 3 ÷ 4"},
-  {q:"⏰ <b>Time</b><br>A movie starts at 2:15 PM and runs 1 hour 45 minutes. What time does it end?",a:["4:00","4:00 pm","4:00 PM","4 pm","4 PM"],pts:10,hint:"2:15 + 1:45"},
-  {q:"🐭 <b>Mice at the Stone Table</b><br>12 mice each chewed through 3 cords. How many cord-chews in total?",a:["36"],pts:10,hint:"12 × 3"},
-  {q:"🔢 <b>Division with Remainder</b><br>46 students split into groups of 5. How many complete groups, and how many left over?",a:["9 groups, 1 left over","9 groups 1 left over","9 r 1","9r1","9 remainder 1","9 with 1 left"],pts:10,hint:"46 ÷ 5"},
-  {q:"🍬 <b>⭐ BONUS — Turkish Delight</b><br>Room 1: 9 shelves × 12 boxes. Room 2: 6 shelves × 15 boxes. Room 3: 4 shelves × 18 boxes. Every box has 8 pieces. Total pieces?",a:["1488","1,488"],pts:15,hint:"(9×12 + 6×15 + 4×18) × 8"},
-  {q:"🐉 <b>⭐ BONUS — Dragon's Hoard</b><br>8 rings@15 coins, 6 goblets@24, 12 bags@30, 4 necklaces@55, 9 swords@20. Grand total?",a:["1258","1,258"],pts:15,hint:"120+144+360+220+180"}
+var QS = [
+  {q:"&#129409; <b>Mr. Tumnus's Parcels</b><br>Mr. Tumnus had 14 parcels. He dropped 6 and went back for 3. How many did he arrive home with?",a:["11"],pts:10,hint:"14 - 6 + 3"},
+  {q:"&#128290; <b>Multiplication</b><br>A classroom has 6 rows with 8 desks each. How many desks total?",a:["48"],pts:10,hint:"6 x 8"},
+  {q:"&#127877; <b>Father Christmas</b><br>Father Christmas visited 9 villages, leaving 6 packages at each. How many packages total?",a:["54"],pts:10,hint:"9 x 6"},
+  {q:"&#128290; <b>Fractions</b><br>There are 20 students. 3/4 remembered their homework. How many remembered?",a:["15"],pts:10,hint:"20 x 3 / 4"},
+  {q:"&#128031; <b>Beaver's Barrels</b><br>72 trout divided equally among 9 barrels. How many trout per barrel?",a:["8"],pts:10,hint:"72 / 9"},
+  {q:"&#128208; <b>Perimeter</b><br>A rectangle is 15 ft long and 10 ft wide. What is its perimeter?",a:["50","50 feet","50ft"],pts:10,hint:"P = 2x(l+w)"},
+  {q:"&#127984; <b>Cair Paravel Courtyard</b><br>King Peter's courtyard: 40 ft long, 25 ft wide. How many feet of wall to surround it?",a:["130","130 feet","130ft"],pts:10,hint:"P = 2x(40+25)"},
+  {q:"&#128175; <b>Percentages</b><br>A store has 80 items. 25% are sold out. How many are sold out?",a:["20"],pts:10,hint:"80 x 0.25"},
+  {q:"&#128176; <b>Edmund's Gold Coins</b><br>King Edmund had 200 gold coins and gave 15% to the Talking Animals. How many coins?",a:["30"],pts:10,hint:"200 x 0.15"},
+  {q:"&#128207; <b>Area</b><br>A square garden has sides of 9 ft. What is the area in square feet?",a:["81","81 sq ft","81 square feet"],pts:10,hint:"A = 9 x 9"},
+  {q:"&#127864; <b>Aslan's Royal Garden</b><br>A perfect square garden with sides of 12 ft. What is the area in square feet?",a:["144","144 sq ft","144 square feet"],pts:10,hint:"A = 12 x 12"},
+  {q:"&#128207; <b>Unit Conversion</b><br>A bookshelf is 3 feet tall. How many inches? (1 ft = 12 in)",a:["36","36 inches"],pts:10,hint:"3 x 12"},
+  {q:"&#9876;&#65039; <b>Reepicheep's Sword</b><br>Reepicheep stands 9 inches tall; his sword is 1 foot long. How many inches longer is his sword than his height?",a:["3","3 inches"],pts:10,hint:"12 - 9"},
+  {q:"&#128290; <b>Multi-Step</b><br>5 boxes of pencils x 4 packs each x 12 pencils per pack. How many pencils total?",a:["240"],pts:10,hint:"5 x 4 x 12"},
+  {q:"&#127856; <b>Mr. Tumnus's Cakes</b><br>Mr. Tumnus baked 24 cakes and set out 3/4 for Lucy. How many cakes for Lucy?",a:["18"],pts:10,hint:"24 x 3 / 4"},
+  {q:"&#9200; <b>Time</b><br>A movie starts at 2:15 PM and runs 1 hour 45 minutes. What time does it end?",a:["4:00","4:00 pm","4:00 PM","4 pm","4 PM"],pts:10,hint:"2:15 + 1:45"},
+  {q:"&#128000; <b>Mice at the Stone Table</b><br>12 mice each chewed through 3 cords. How many cord-chews in total?",a:["36"],pts:10,hint:"12 x 3"},
+  {q:"&#128290; <b>Division with Remainder</b><br>46 students split into groups of 5. How many complete groups, and how many left over?",a:["9 groups, 1 left over","9 groups 1 left over","9 r 1","9r1","9 remainder 1","9 with 1 left"],pts:10,hint:"46 / 5"},
+  {q:"&#127852; <b>BONUS - Turkish Delight</b><br>Room 1: 9 shelves x 12 boxes. Room 2: 6 shelves x 15 boxes. Room 3: 4 shelves x 18 boxes. Every box has 8 pieces. Total pieces?",a:["1488","1,488"],pts:15,hint:"(9x12 + 6x15 + 4x18) x 8"},
+  {q:"&#128009; <b>BONUS - Dragon's Hoard</b><br>8 rings at 15 coins, 6 goblets at 24, 12 bags at 30, 4 necklaces at 55, 9 swords at 20. Grand total?",a:["1258","1,258"],pts:15,hint:"120+144+360+220+180"}
 ];
 
-const TCOLORS = ['#e74c3c','#3498db','#2ecc71','#f39c12','#9b59b6','#1abc9c'];
-const TCSS    = ['var(--t0)','var(--t1)','var(--t2)','var(--t3)','var(--t4)','var(--t5)'];
-const MEDALS  = ['🥇','🥈','🥉','4️⃣','5️⃣','6️⃣'];
-const QUOTES  = [
-  '"Further up and further in!" — C.S. Lewis',
-  '"Courage, dear heart." — C.S. Lewis',
-  '"In our world too, a stable once had something inside it that was bigger than our whole world." — C.S. Lewis',
-  '"You have listened to fears, child. Come, let me breathe on you." — Aslan'
+var TCOLORS = ['#e74c3c','#3498db','#2ecc71','#f39c12','#9b59b6','#1abc9c'];
+var TCSS = ['var(--t0)','var(--t1)','var(--t2)','var(--t3)','var(--t4)','var(--t5)'];
+var MEDALS = ['1st','2nd','3rd','4th','5th','6th'];
+var QUOTES = [
+  '"Further up and further in!" - C.S. Lewis',
+  '"Courage, dear heart." - C.S. Lewis',
+  '"In our world too, a stable once had something inside it that was bigger than our whole world." - C.S. Lewis',
+  '"You have listened to fears, child. Come, let me breathe on you." - Aslan'
 ];
+var DEFAULT_NAMES = ['Team Aslan','Team Pevensie','Team Dawn Treader','Team Silver Chair','Team Reepicheep','Team Jill'];
 
-// ══════════════════════════
-//  STATE
-// ══════════════════════════
-let isTeacher = false;
-let gameCode  = null;
-let gameRef   = null;
-let myTeamIdx = -1;    // student only
-let myTeamName= '';
-let timerInt  = null;
-let timerSecs = 1500;
-let paused    = false;
-let localQueue= [];    // student only — local question queue
-let localDone = [];    // student only — correct q indices
-let firstHit  = {};    // qIdx -> teamIdx that answered first
-let liveScores= [0,0,0,0,0,0];
-let liveCorrect=[[],[],[],[],[],[]];
-let unsubGame = null;
+// State
+var gameCode = null;
+var gameRef = null;
+var isTeacher = false;
+var myTeamIdx = -1;
+var myTeamName = '';
+var timerSecs = 1500;
+var timerInt = null;
+var paused = false;
+var localQueue = [];
+var localDone = [];
+var liveScores = [0,0,0,0,0,0];
+var liveCorrect = [[],[],[],[],[],[]];
+var liveTeamNames = [];
+var firstHit = {};
+var gameStarted = false;
+var unsubGame = null;
 
-// ══════════════════════════
-//  SCREEN NAV
-// ══════════════════════════
-function goHome(){ setScreen('home'); }
-function goSetup(){ buildSetupGrid(); setScreen('setup-screen'); }
-function goJoin(){ setScreen('join-screen'); }
-function goRejoin(){ setScreen('rejoin-screen'); }
-
-async function rejoinGame(){
-  const code = document.getElementById('rc-code').value.trim().toUpperCase();
-  const err  = document.getElementById('rejoin-err');
-  err.textContent='';
-  if(code.length!==6){ err.textContent='Enter the 6-letter game code'; return; }
-  err.innerHTML='<span class="spinner"></span>Looking up game…';
-  try {
-    const ref  = db.collection('relay_games').doc(code);
-    const snap = await ref.get();
-    if(!snap.exists){ err.textContent='Game not found — check the code'; return; }
-    const d = snap.data();
-    gameCode  = code;
-    gameRef   = ref;
-    isTeacher = true;
-    timerSecs = d.timerSecs ?? 1500;
-    liveScores  = d.scores  || [0,0,0,0,0,0];
-    liveCorrect = [d.c0||[],d.c1||[],d.c2||[],d.c3||[],d.c4||[],d.c5||[]];
-    // Rebuild team name inputs so dashboard can read them
-    const tn = d.teamNames || [];
-    // Store for dashboard
-    window._rejoinTeamNames = tn;
-    if(d.status==='lobby'){
-      document.getElementById('code-display').textContent = code;
-      setScreen('lobby-screen');
-      gameRef.onSnapshot(snap=>{
-        const d=snap.data(); if(!d) return;
-        const teams=d.teams||{};
-        const entries=Object.entries(teams);
-        document.getElementById('joined-count').textContent=entries.length===0?'Waiting for teams to join…':`${entries.length} team${entries.length>1?'s':''} joined`;
-        document.getElementById('joined-list').innerHTML=entries.map(([k,v])=>`<span style="color:${TCOLORS[v.idx]};margin-right:.8rem">● ${v.name}</span>`).join('');
-      });
-    } else if(d.status==='ended'){
-      showWin(d);
-    } else {
-      // running or paused — go straight to dashboard
-      setScreen('teacher-dash');
-      // Build scoreboard with real team names
-      // Store team names so buildTeacherDash / listenAsTeacher can use them
-      window._rejoinTeamNames = tn;
-      document.getElementById('scoreboard').innerHTML = tn.map((n,i)=>`
-        <div class="tc" data-t="${i}" id="tc${i}">
-          <h3>${n}</h3>
-          <div class="pts" id="pts${i}">${liveScores[i]||0}</div>
-          <div class="prog" id="prog${i}">${(liveCorrect[i]||[]).length}/${QS.length}</div>
-          <div class="pbar"><div class="pfill" data-t="${i}" id="fill${i}" style="width:${((liveCorrect[i]||[]).length/QS.length*100)}%"></div></div>
-        </div>`).join('');
-      document.getElementById('qnav').innerHTML=QS.map((_,i)=>`<span class="qpill" id="qpill${i}">${i>=18?'⭐':''}Q${i+1}</span>`).join('');
-      updateQNav();
-      startTeacherTimer();
-      listenAsTeacher();
-    }
-  } catch(e){
-    err.textContent='Error: '+e.message;
-    console.error(e);
-  }
-}
-function setScreen(id){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+// ── SCREENS ──
+function showScreen(id) {
+  var screens = document.querySelectorAll('.screen');
+  for (var i = 0; i < screens.length; i++) screens[i].classList.remove('active');
   document.getElementById(id).classList.add('active');
 }
 
-// ══════════════════════════
-//  SETUP GRID
-// ══════════════════════════
-function buildSetupGrid(){
-  const names = ['Team Aslan','Team Pevensie','Team Dawn Treader','Team Silver Chair','Team Reepicheep','Team Jill'];
-  document.getElementById('team-name-grid').innerHTML = names.map((n,i)=>`
-    <div class="trow">
-      <div class="tdot" style="background:${TCOLORS[i]}"></div>
-      <input id="tn${i}" value="${n}">
-    </div>`).join('');
+// ── SETUP ──
+function buildSetup() {
+  var g = document.getElementById('team-name-grid');
+  var html = '';
+  for (var i = 0; i < 6; i++) {
+    html += '<div class="trow"><div class="tdot" style="background:' + TCOLORS[i] + '"></div><input id="tn' + i + '" value="' + DEFAULT_NAMES[i] + '"></div>';
+  }
+  g.innerHTML = html;
 }
 
-// ══════════════════════════
-//  CREATE ROOM
-// ══════════════════════════
-async function createRoom(){
-  const btn = document.getElementById('create-btn');
-  const err = document.getElementById('create-err');
+// ── CREATE ROOM ──
+function createRoom() {
+  var btn = document.getElementById('create-btn');
+  var err = document.getElementById('create-err');
   err.textContent = '';
-  btn.disabled = true;
-  btn.innerHTML = '<span class="spinner"></span>Creating…';
 
-  try {
-    const teamNames = Array.from({length:6},(_,i)=>document.getElementById(`tn${i}`).value.trim()||`Team ${i+1}`);
-    timerSecs = parseInt(document.getElementById('timer-sel').value);
-    gameCode  = Math.random().toString(36).substring(2,8).toUpperCase();
-    gameRef   = db.collection('relay_games').doc(gameCode);
+  var teamNames = [];
+  for (var i = 0; i < 6; i++) {
+    var el = document.getElementById('tn' + i);
+    teamNames.push(el ? el.value.trim() || DEFAULT_NAMES[i] : DEFAULT_NAMES[i]);
+  }
+  timerSecs = parseInt(document.getElementById('timer-sel').value) || 1500;
+  var code = '';
+  var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  for (var j = 0; j < 6; j++) code += chars[Math.floor(Math.random() * chars.length)];
+  gameCode = code;
+  gameRef = db.collection('relay_games').doc(code);
+  isTeacher = true;
+  liveTeamNames = teamNames;
+
+  err.innerHTML = '<span class="spinner"></span>Creating room...';
+
+  gameRef.set({
+    code: code,
+    status: 'lobby',
+    timerSecs: timerSecs,
+    teamNames: teamNames,
+    scores: [0,0,0,0,0,0],
+    c0:[], c1:[], c2:[], c3:[], c4:[], c5:[],
+    firstHit: {},
+    teams: {},
+    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+  }).then(function() {
+    document.getElementById('code-display').textContent = code;
+    document.getElementById('dash-code').textContent = code;
+    showScreen('lobby-screen');
+    err.textContent = '';
+    // watch joins
+    gameRef.onSnapshot(function(snap) {
+      var d = snap.data();
+      if (!d) return;
+      var teams = d.teams || {};
+      var entries = Object.keys(teams);
+      document.getElementById('joined-count').textContent = entries.length === 0 ? 'Waiting for teams...' : entries.length + ' team' + (entries.length > 1 ? 's' : '') + ' joined';
+      var html = '';
+      for (var k in teams) {
+        var t = teams[k];
+        html += '<span style="color:' + TCOLORS[t.idx] + ';margin-right:.8rem">&#9679; ' + t.name + '</span>';
+      }
+      document.getElementById('joined-list').innerHTML = html;
+    });
+  }).catch(function(e) {
+    err.textContent = 'Error: ' + e.message;
+  });
+}
+
+// ── LAUNCH ──
+function launchGame() {
+  gameRef.update({ status: 'running', startedAt: firebase.firestore.FieldValue.serverTimestamp() }).then(function() {
+    showScreen('teacher-dash');
+    document.getElementById('dash-code').textContent = gameCode;
+    buildTeacherDash();
+    startTeacherTimer();
+    listenAsTeacher();
+  });
+}
+
+// ── REJOIN ──
+function rejoinGame() {
+  var code = document.getElementById('rc-code').value.trim().toUpperCase();
+  var err = document.getElementById('rejoin-err');
+  err.textContent = '';
+  if (code.length !== 6) { err.textContent = 'Enter the 6-letter game code'; return; }
+  err.innerHTML = '<span class="spinner"></span>Looking up game...';
+
+  db.collection('relay_games').doc(code).get().then(function(snap) {
+    if (!snap.exists) { err.textContent = 'Game not found - check the code'; return; }
+    var d = snap.data();
+    gameCode = code;
+    gameRef = db.collection('relay_games').doc(code);
     isTeacher = true;
+    timerSecs = d.timerSecs || 1500;
+    liveScores = d.scores || [0,0,0,0,0,0];
+    liveCorrect = [d.c0||[],d.c1||[],d.c2||[],d.c3||[],d.c4||[],d.c5||[]];
+    liveTeamNames = d.teamNames || DEFAULT_NAMES;
+    firstHit = d.firstHit || {};
+    err.textContent = '';
 
-    await gameRef.set({
-      code: gameCode,
-      status: 'lobby',
-      timerSecs,
-      teamNames,
-      scores:  [0,0,0,0,0,0],
-      c0:[], c1:[], c2:[], c3:[], c4:[], c5:[],
-      firstHit: {},
-      teams: {},
-      createdAt: firebase.firestore.FieldValue.serverTimestamp()
-    });
+    if (d.status === 'lobby') {
+      document.getElementById('code-display').textContent = code;
+      showScreen('lobby-screen');
+    } else if (d.status === 'ended') {
+      showWin(d);
+    } else {
+      showScreen('teacher-dash');
+      document.getElementById('dash-code').textContent = code;
+      buildTeacherDash();
+      startTeacherTimer();
+      listenAsTeacher();
+    }
+  }).catch(function(e) {
+    err.textContent = 'Error: ' + e.message;
+  });
+}
 
-    document.getElementById('code-display').textContent = gameCode;
-    setScreen('lobby-screen');
+// ── TEACHER DASH ──
+function buildTeacherDash() {
+  var names = liveTeamNames.length ? liveTeamNames : DEFAULT_NAMES;
+  var sb = '';
+  for (var i = 0; i < 6; i++) {
+    var done = liveCorrect[i] ? liveCorrect[i].length : 0;
+    var pct = (done / QS.length * 100).toFixed(0);
+    sb += '<div class="tc" data-t="' + i + '" id="tc' + i + '"><h3>' + names[i] + '</h3><div class="pts" id="pts' + i + '">' + (liveScores[i]||0) + '</div><div class="prog" id="prog' + i + '">' + done + '/' + QS.length + '</div><div class="pbar"><div class="pfill" data-t="' + i + '" id="fill' + i + '" style="width:' + pct + '%"></div></div></div>';
+  }
+  document.getElementById('scoreboard').innerHTML = sb;
+  var nav = '';
+  for (var j = 0; j < QS.length; j++) {
+    nav += '<span class="qpill" id="qpill' + j + '">' + (j >= 18 ? 'BONUS ' : '') + 'Q' + (j+1) + '</span>';
+  }
+  document.getElementById('qnav').innerHTML = nav;
+  updateQNav();
+}
 
-    // watch for teams joining
-    gameRef.onSnapshot(snap=>{
-      const d = snap.data(); if(!d) return;
-      const teams = d.teams || {};
-      const entries = Object.entries(teams);
-      document.getElementById('joined-count').textContent =
-        entries.length===0 ? 'Waiting for teams to join…' : `${entries.length} team${entries.length>1?'s':''} joined`;
-      document.getElementById('joined-list').innerHTML = entries.map(([k,v])=>
-        `<span style="color:${TCOLORS[v.idx]};margin-right:.8rem">● ${v.name}</span>`
-      ).join('');
-    });
-  } catch(e){
-    err.textContent = 'Error: '+e.message;
-    btn.disabled = false;
-    btn.textContent = '🦁 Create Game Room';
+function updateTeacherDash() {
+  var mx = Math.max.apply(null, liveScores.concat([0]));
+  for (var i = 0; i < 6; i++) {
+    var el = document.getElementById('pts' + i); if (!el) continue;
+    el.textContent = liveScores[i] || 0;
+    var done = liveCorrect[i] ? liveCorrect[i].length : 0;
+    document.getElementById('prog' + i).textContent = done + '/' + QS.length;
+    document.getElementById('fill' + i).style.width = (done / QS.length * 100) + '%';
+    document.getElementById('tc' + i).classList.toggle('lead', (liveScores[i]||0) === mx && mx > 0);
+  }
+  updateQNav();
+}
+
+function updateQNav() {
+  for (var i = 0; i < QS.length; i++) {
+    var pill = document.getElementById('qpill' + i); if (!pill) continue;
+    var done = false;
+    for (var t = 0; t < 6; t++) { if (liveCorrect[t] && liveCorrect[t].indexOf(i) >= 0) { done = true; break; } }
+    pill.classList.toggle('done', done);
   }
 }
 
-// ══════════════════════════
-//  LAUNCH GAME
-// ══════════════════════════
-async function launchGame(){
-  await gameRef.update({ status:'running', startedAt: firebase.firestore.FieldValue.serverTimestamp() });
-  setScreen('teacher-dash');
-  buildTeacherDash();
-  startTeacherTimer();
-  listenAsTeacher();
-}
-
-// ══════════════════════════
-//  TEACHER DASH
-// ══════════════════════════
-function buildTeacherDash(){
-  // scoreboard
-  const snap = gameRef; // we'll build from liveScores
-  const names = Array.from({length:6},(_,i)=>document.getElementById(`tn${i}`)?.value||`Team ${i+1}`);
-  document.getElementById('scoreboard').innerHTML = names.map((n,i)=>`
-    <div class="tc" data-t="${i}" id="tc${i}">
-      <h3>${n}</h3>
-      <div class="pts" id="pts${i}">0</div>
-      <div class="prog" id="prog${i}">0/${QS.length}</div>
-      <div class="pbar"><div class="pfill" data-t="${i}" id="fill${i}" style="width:0%"></div></div>
-    </div>`).join('');
-  // q nav pills
-  document.getElementById('qnav').innerHTML = QS.map((_,i)=>`
-    <span class="qpill" id="qpill${i}">${i>=18?'⭐':''}Q${i+1}</span>`).join('');
-}
-
-function listenAsTeacher(){
-  unsubGame = gameRef.onSnapshot(snap=>{
-    const d = snap.data(); if(!d) return;
-    liveScores  = d.scores  || liveScores;
+function listenAsTeacher() {
+  if (unsubGame) unsubGame();
+  unsubGame = gameRef.onSnapshot(function(snap) {
+    var d = snap.data(); if (!d) return;
+    liveScores = d.scores || [0,0,0,0,0,0];
     liveCorrect = [d.c0||[],d.c1||[],d.c2||[],d.c3||[],d.c4||[],d.c5||[]];
-    firstHit    = d.firstHit|| {};
-    if(d.status==='ended') showWin(d);
-    updateTeacherBoard(d.teamNames||[]);
-    updateQNav();
+    firstHit = d.firstHit || {};
+    liveTeamNames = d.teamNames || liveTeamNames;
+    if (d.status === 'ended') { showWin(d); return; }
+    updateTeacherDash();
   });
-  // live answer feed
-  gameRef.collection('answers').orderBy('ts','desc').limit(20)
-    .onSnapshot(snap=>{
-      document.getElementById('feed-items').innerHTML = snap.docs.map(d=>{
-        const x=d.data();
-        return `<div style="display:flex;gap:.5rem;align-items:center;padding:.25rem .4rem;border-radius:5px;background:${x.correct?'rgba(46,204,113,.1)':'rgba(233,69,96,.08)'}">
-          <span style="color:${x.correct?'var(--green)':'var(--accent)'};font-size:.8rem">${x.correct?'✓':'✗'}</span>
-          <span style="color:${TCSS[x.tIdx]}">${x.tName}</span>
-          <span style="color:var(--muted)">→ "${x.answer}"</span>
-          ${x.correct?`<span style="color:var(--green)">+${x.pts}</span>`:''}
-        </div>`;
-      }).join('');
+  gameRef.collection('answers').orderBy('ts','desc').limit(20).onSnapshot(function(snap) {
+    var html = '';
+    snap.docs.forEach(function(doc) {
+      var x = doc.data();
+      html += '<div class="feed-item ' + (x.correct ? 'ok' : 'no') + '"><span style="color:' + (x.correct ? 'var(--green)' : 'var(--accent)') + '">' + (x.correct ? '&#10003;' : '&#10007;') + '</span><span style="color:' + TCSS[x.tIdx] + '">' + x.tName + '</span><span style="color:var(--muted)">&#8594; "' + x.answer + '"</span>' + (x.correct ? '<span style="color:var(--green)">+' + x.pts + '</span>' : '') + '</div>';
     });
-}
-
-function updateTeacherBoard(teamNames){
-  const mx = Math.max(...liveScores,0);
-  // Use passed teamNames, or rejoin cache, or setup inputs
-  const names = (teamNames && teamNames.length) ? teamNames
-    : (window._rejoinTeamNames || Array.from({length:6},(_,i)=>document.getElementById(`tn${i}`)?.value||`Team ${i+1}`));
-  liveScores.forEach((s,i)=>{
-    const el=document.getElementById(`pts${i}`); if(!el) return;
-    el.textContent=s;
-    document.getElementById(`prog${i}`).textContent=`${(liveCorrect[i]||[]).length}/${QS.length}`;
-    document.getElementById(`fill${i}`).style.width=((liveCorrect[i]||[]).length/QS.length*100)+'%';
-    document.getElementById(`tc${i}`).classList.toggle('lead',s===mx&&s>0);
-    // update name in case it wasn't set
-    const h=document.getElementById(`tc${i}`)?.querySelector('h3'); if(h) h.textContent=names[i]||`Team ${i+1}`;
+    document.getElementById('feed-items').innerHTML = html;
   });
 }
 
-function updateQNav(){
-  QS.forEach((_,i)=>{
-    const pill=document.getElementById(`qpill${i}`); if(!pill) return;
-    const done   = liveCorrect.some(c=>(c||[]).includes(i));
-    const passed = !done; // simplification — just show done
-    pill.classList.toggle('done', done);
-  });
-}
-
-function startTeacherTimer(){
+function startTeacherTimer() {
+  if (timerInt) clearInterval(timerInt);
   updateTTimer();
-  timerInt = setInterval(()=>{
-    if(paused) return;
+  timerInt = setInterval(function() {
+    if (paused) return;
     timerSecs--;
     updateTTimer();
-    gameRef.update({timerSecs}).catch(()=>{});
-    if(timerSecs<=0){ clearInterval(timerInt); endGame(); }
-  },1000);
+    gameRef.update({ timerSecs: timerSecs }).catch(function(){});
+    if (timerSecs <= 0) { clearInterval(timerInt); teacherEnd(); }
+  }, 1000);
 }
-function updateTTimer(){
-  const m=Math.floor(timerSecs/60),s=timerSecs%60;
-  const el=document.getElementById('t-timer');
-  el.textContent=`${m}:${s.toString().padStart(2,'0')}`;
-  el.classList.toggle('urgent',timerSecs<=60);
+function updateTTimer() {
+  var m = Math.floor(timerSecs/60), s = timerSecs % 60;
+  var el = document.getElementById('t-timer');
+  el.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+  el.classList.toggle('urgent', timerSecs <= 60);
 }
-function togglePause(){
-  paused=!paused;
-  document.getElementById('pause-btn').textContent=paused?'▶ Resume':'⏸ Pause';
-  gameRef.update({status:paused?'paused':'running'}).catch(()=>{});
-  toast(paused?'⏸ Paused':'▶ Resumed');
+function teacherPause() {
+  paused = !paused;
+  document.getElementById('pause-btn').textContent = paused ? '&#9654; Resume' : '&#9208; Pause';
+  gameRef.update({ status: paused ? 'paused' : 'running' }).catch(function(){});
 }
-async function endGame(){
+function teacherEnd() {
   clearInterval(timerInt);
-  const snap = await gameRef.get();
-  await gameRef.update({status:'ended'});
-  showWin(snap.data());
+  gameRef.get().then(function(snap) {
+    gameRef.update({ status: 'ended' });
+    showWin(snap.data());
+  });
 }
 
-// ══════════════════════════
-//  STUDENT JOIN
-// ══════════════════════════
-async function joinGame(){
-  const nameEl = document.getElementById('s-name');
-  const codeEl = document.getElementById('s-code');
-  const err    = document.getElementById('join-err');
-  const name   = nameEl.value.trim();
-  const code   = codeEl.value.trim().toUpperCase();
-  err.textContent='';
+// ── STUDENT JOIN ──
+function joinGame() {
+  var name = document.getElementById('s-name').value.trim();
+  var code = document.getElementById('s-code').value.trim().toUpperCase();
+  var err = document.getElementById('join-err');
+  err.textContent = '';
+  if (!name) { err.textContent = 'Enter your team name'; return; }
+  if (code.length !== 6) { err.textContent = 'Enter the 6-letter game code'; return; }
+  err.innerHTML = '<span class="spinner"></span>Joining...';
 
-  if(!name){ err.textContent='Enter your team name'; return; }
-  if(code.length!==6){ err.textContent='Enter the 6-letter game code'; return; }
+  db.collection('relay_games').doc(code).get().then(function(snap) {
+    if (!snap.exists) { err.textContent = 'Game not found - check the code'; return; }
+    var d = snap.data();
+    if (d.status === 'ended') { err.textContent = 'That game has already ended'; return; }
 
-  err.innerHTML='<span class="spinner"></span>Joining…';
-
-  try {
-    const ref  = db.collection('relay_games').doc(code);
-    const snap = await ref.get();
-    if(!snap.exists){ err.textContent='Game not found — check the code'; return; }
-    const d = snap.data();
-    if(d.status==='ended'){ err.textContent='That game has already ended'; return; }
-
-    // Assign team index — match name to teamNames list, or pick next available
-    const teamNames = d.teamNames || [];
-    let idx = teamNames.findIndex(n=>n.toLowerCase()===name.toLowerCase());
-    if(idx===-1){
-      // pick next slot not yet taken
-      const taken = Object.values(d.teams||{}).map(t=>t.idx);
-      idx = [0,1,2,3,4,5].find(i=>!taken.includes(i)) ?? 0;
+    // Find team index
+    var teamNames = d.teamNames || DEFAULT_NAMES;
+    var idx = -1;
+    for (var i = 0; i < teamNames.length; i++) {
+      if (teamNames[i].toLowerCase() === name.toLowerCase()) { idx = i; break; }
+    }
+    if (idx === -1) {
+      // pick next available slot
+      var taken = [];
+      var teams = d.teams || {};
+      for (var k in teams) taken.push(teams[k].idx);
+      for (var j = 0; j < 6; j++) { if (taken.indexOf(j) === -1) { idx = j; break; } }
+      if (idx === -1) idx = 0;
     }
 
-    myTeamName = name || teamNames[idx] || `Team ${idx+1}`;
-    myTeamIdx  = idx;
-    gameCode   = code;
-    gameRef    = ref;
-    timerSecs  = d.timerSecs || 1500;
+    myTeamIdx = idx;
+    myTeamName = name;
+    gameCode = code;
+    gameRef = db.collection('relay_games').doc(code);
+    timerSecs = d.timerSecs || 1500;
+    liveTeamNames = teamNames;
+    liveScores = d.scores || [0,0,0,0,0,0];
+    liveCorrect = [d.c0||[],d.c1||[],d.c2||[],d.c3||[],d.c4||[],d.c5||[]];
+    firstHit = d.firstHit || {};
 
-    await ref.update({ [`teams.${name.replace(/[^a-zA-Z0-9]/g,'_')}`]: { name: myTeamName, idx } });
+    // build queue
+    localQueue = [];
+    for (var q = 0; q < QS.length; q++) localQueue.push(q);
+    localDone = [];
 
-    // Build local queue
-    localQueue = QS.map((_,i)=>i);
-    localDone  = [];
+    var safeKey = name.replace(/[^a-zA-Z0-9]/g,'_');
+    gameRef.update({ ['teams.' + safeKey]: { name: myTeamName, idx: myTeamIdx } }).catch(function(){});
 
-    // Style team badge
-    const badge = document.getElementById('ts-badge');
+    // style badge
+    var badge = document.getElementById('ts-badge');
     badge.textContent = myTeamName;
-    badge.style.background = TCOLORS[idx]+'33';
-    badge.style.color       = TCOLORS[idx];
-    badge.style.border      = `1px solid ${TCOLORS[idx]}`;
-
+    badge.style.background = TCOLORS[idx] + '33';
+    badge.style.color = TCOLORS[idx];
+    badge.style.border = '1px solid ' + TCOLORS[idx];
     document.getElementById('ts-sub').style.background = TCOLORS[idx];
     document.getElementById('ts-qtot').textContent = QS.length;
 
-    setScreen('team-screen');
+    err.textContent = '';
+    showScreen('team-screen');
     listenAsStudent();
-  } catch(e){
-    err.textContent = 'Error: '+e.message;
-  }
-}
-
-// ══════════════════════════
-//  STUDENT LISTENER
-// ══════════════════════════
-function listenAsStudent(){
-  unsubGame = gameRef.onSnapshot(snap=>{
-    const d = snap.data(); if(!d) return;
-    liveScores  = d.scores  || liveScores;
-    liveCorrect = [d.c0||[],d.c1||[],d.c2||[],d.c3||[],d.c4||[],d.c5||[]];
-    firstHit    = d.firstHit|| {};
-    timerSecs   = d.timerSecs ?? timerSecs;
-    updateSTimer();
-    updateSScores(d.teamNames||[]);
-
-    if(d.status==='running' && !timerInt){
-      document.getElementById('ts-waiting').style.display='none';
-      document.getElementById('ts-playing').style.display='block';
-      timerInt = setInterval(()=>{ timerSecs--; updateSTimer(); if(timerSecs<=0) clearInterval(timerInt); },1000);
-      renderTeamQ(); // only render on first start
-    }
-    if(d.status==='paused' && timerInt){ clearInterval(timerInt); timerInt=null; }
-    if(d.status==='running' && !timerInt && document.getElementById('ts-playing').style.display==='block'){
-      timerInt = setInterval(()=>{ timerSecs--; updateSTimer(); if(timerSecs<=0) clearInterval(timerInt); },1000);
-      // do NOT call renderTeamQ here — would wipe the input
-    }
-    if(d.status==='ended') showWin(d);
+  }).catch(function(e) {
+    err.textContent = 'Error: ' + e.message;
   });
 }
 
-function updateSTimer(){
-  const m=Math.floor(timerSecs/60),s=timerSecs%60;
-  const el=document.getElementById('ts-timer');
-  el.textContent=`${m}:${s.toString().padStart(2,'0')}`;
-  el.classList.toggle('urgent',timerSecs<=60);
-}
-function updateSScores(teamNames){
-  const mx=Math.max(...liveScores,0);
-  document.getElementById('ts-scores').innerHTML=liveScores.map((s,i)=>`
-    <div class="ts-chip ${s===mx&&s>0?'lead':''}" style="color:${TCSS[i]}">${teamNames[i]||'Team '+(i+1)}: ${s}</div>
-  `).join('');
+// ── STUDENT GAME ──
+function listenAsStudent() {
+  if (unsubGame) unsubGame();
+  unsubGame = gameRef.onSnapshot(function(snap) {
+    var d = snap.data(); if (!d) return;
+    liveScores = d.scores || liveScores;
+    liveCorrect = [d.c0||[],d.c1||[],d.c2||[],d.c3||[],d.c4||[],d.c5||[]];
+    firstHit = d.firstHit || {};
+    timerSecs = d.timerSecs != null ? d.timerSecs : timerSecs;
+    updateSTimer();
+    updateSScores(d.teamNames || liveTeamNames);
+
+    if (d.status === 'running' && !gameStarted) {
+      gameStarted = true;
+      document.getElementById('ts-waiting').style.display = 'none';
+      document.getElementById('ts-playing').style.display = 'block';
+      if (!timerInt) {
+        timerInt = setInterval(function() {
+          timerSecs--;
+          updateSTimer();
+          if (timerSecs <= 0) clearInterval(timerInt);
+        }, 1000);
+      }
+      renderTeamQ();
+    }
+    if (d.status === 'paused' && timerInt) { clearInterval(timerInt); timerInt = null; }
+    if (d.status === 'running' && !timerInt && gameStarted) {
+      timerInt = setInterval(function() {
+        timerSecs--;
+        updateSTimer();
+        if (timerSecs <= 0) clearInterval(timerInt);
+      }, 1000);
+    }
+    if (d.status === 'ended') showWin(d);
+  });
 }
 
-function renderTeamQ(){
-  // Skip already done in local queue
-  while(localQueue.length>0 && localDone.includes(localQueue[0])) localQueue.shift();
-  const q = localQueue[0];
-  if(q===undefined){
-    document.getElementById('ts-qbody').innerHTML='🎉 Your team answered all questions!';
-    document.getElementById('ts-hint').textContent='';
-    document.getElementById('ts-ain').disabled=true;
-    document.getElementById('ts-sub').disabled=true;
-    document.getElementById('ts-pass').disabled=true;
+function updateSTimer() {
+  var m = Math.floor(timerSecs/60), s = timerSecs % 60;
+  var el = document.getElementById('ts-timer');
+  el.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+  el.classList.toggle('urgent', timerSecs <= 60);
+}
+function updateSScores(names) {
+  var mx = Math.max.apply(null, liveScores.concat([0]));
+  var html = '';
+  for (var i = 0; i < 6; i++) {
+    html += '<div class="ts-chip' + (liveScores[i] === mx && mx > 0 ? ' lead' : '') + '" style="color:' + TCSS[i] + '">' + (names[i]||'Team '+(i+1)) + ': ' + (liveScores[i]||0) + '</div>';
+  }
+  document.getElementById('ts-scores').innerHTML = html;
+}
+
+function renderTeamQ() {
+  // skip already done
+  while (localQueue.length > 0 && localDone.indexOf(localQueue[0]) >= 0) localQueue.shift();
+  if (localQueue.length === 0) {
+    document.getElementById('ts-qbody').innerHTML = 'Your team answered all questions!';
+    document.getElementById('ts-hint').textContent = '';
+    document.getElementById('ts-ain').disabled = true;
+    document.getElementById('ts-sub').disabled = true;
+    document.getElementById('ts-pass').disabled = true;
     return;
   }
-  document.getElementById('ts-qnum').textContent  = q+1;
-  document.getElementById('ts-qpts').textContent  = QS[q].pts+' pts'+(q>=18?' ⭐':'');
-  document.getElementById('ts-qbody').innerHTML   = QS[q].q;
-  document.getElementById('ts-hint').textContent  = '💡 Hint: '+QS[q].hint;
-  document.getElementById('ts-ain').value='';
-  document.getElementById('ts-ain').disabled=false;
-  document.getElementById('ts-sub').disabled=false;
-  document.getElementById('ts-pass').disabled = localQueue.length<=1;
-  document.getElementById('ts-status').textContent='';
-  document.getElementById('ts-status').className='ts-status';
-  setTimeout(()=>document.getElementById('ts-ain').focus(),100);
+  var q = localQueue[0];
+  document.getElementById('ts-qnum').textContent = q + 1;
+  document.getElementById('ts-qpts').textContent = QS[q].pts + ' pts' + (q >= 18 ? ' BONUS' : '');
+  document.getElementById('ts-qbody').innerHTML = QS[q].q;
+  document.getElementById('ts-hint').textContent = 'Hint: ' + QS[q].hint;
+  document.getElementById('ts-ain').value = '';
+  document.getElementById('ts-ain').disabled = false;
+  document.getElementById('ts-sub').disabled = false;
+  document.getElementById('ts-pass').disabled = localQueue.length <= 1;
+  document.getElementById('ts-status').textContent = '';
+  document.getElementById('ts-status').className = 'ts-status';
+  // add enter key listener
+  var ain = document.getElementById('ts-ain');
+  ain.onkeydown = function(e) { if (e.key === 'Enter') teamSubmit(); };
+  setTimeout(function() { ain.focus(); }, 100);
 }
 
-async function teamSubmit(){
-  const inp = document.getElementById('ts-ain');
-  const raw = inp.value.trim(); if(!raw) return;
-  const q   = localQueue[0]; if(q===undefined) return;
-  const stat= document.getElementById('ts-status');
-  // Disable immediately to prevent double-submit
-  inp.disabled=true;
-  document.getElementById('ts-sub').disabled=true;
-  document.getElementById('ts-pass').disabled=true;
+function teamSubmit() {
+  var inp = document.getElementById('ts-ain');
+  var raw = inp.value.trim();
+  if (!raw) return;
+  var q = localQueue[0];
+  if (q === undefined) return;
+  var stat = document.getElementById('ts-status');
 
-  const ok = QS[q].a.some(ans=>
-    ans.toLowerCase()===raw.toLowerCase()||
-    ans.replace(/[^0-9]/g,'')===raw.replace(/[^0-9]/g,'')
-  );
+  // disable immediately
+  inp.disabled = true;
+  document.getElementById('ts-sub').disabled = true;
+  document.getElementById('ts-pass').disabled = true;
 
-  if(ok){
-    const first = !(String(q) in firstHit);
-    const pts   = QS[q].pts + (first?2:0);
+  var ok = false;
+  for (var i = 0; i < QS[q].a.length; i++) {
+    if (QS[q].a[i].toLowerCase() === raw.toLowerCase()) { ok = true; break; }
+    if (QS[q].a[i].replace(/[^0-9]/g,'') !== '' && QS[q].a[i].replace(/[^0-9]/g,'') === raw.replace(/[^0-9]/g,'')) { ok = true; break; }
+  }
+
+  if (ok) {
+    var isFirst = !(String(q) in firstHit);
+    var pts = QS[q].pts + (isFirst ? 2 : 0);
     localDone.push(q);
     localQueue.shift();
-    stat.textContent=`✅ Correct! +${pts} pts${first?' ⚡ First!':''}`;
-    stat.className='ts-status ok';
+    stat.textContent = 'Correct! +' + pts + ' pts' + (isFirst ? ' First!' : '');
+    stat.className = 'ts-status ok';
 
-    // Write score to Firebase — read-modify-write on scores array
-    try {
-      const ck = 'c'+myTeamIdx;
-      const snap2 = await gameRef.get();
-      const gd    = snap2.data();
-      const ns    = [...(gd.scores||[0,0,0,0,0,0])];
-      ns[myTeamIdx] = (parseInt(ns[myTeamIdx])||0) + pts;
-      const fh    = {...(gd.firstHit||{})};
-      if(!(String(q) in fh)) fh[String(q)] = myTeamIdx;
-      await gameRef.update({
-        scores: ns,
-        [ck]: firebase.firestore.FieldValue.arrayUnion(q),
-        firstHit: fh
+    // write to Firebase
+    gameRef.get().then(function(snap) {
+      var gd = snap.data();
+      var ns = gd.scores ? gd.scores.slice() : [0,0,0,0,0,0];
+      ns[myTeamIdx] = (parseInt(ns[myTeamIdx]) || 0) + pts;
+      var ck = 'c' + myTeamIdx;
+      var ca = gd[ck] ? gd[ck].slice() : [];
+      if (ca.indexOf(q) === -1) ca.push(q);
+      var fh = gd.firstHit ? Object.assign({}, gd.firstHit) : {};
+      if (!(String(q) in fh)) fh[String(q)] = myTeamIdx;
+      var update = { scores: ns, firstHit: fh };
+      update[ck] = ca;
+      return gameRef.update(update);
+    }).then(function() {
+      return gameRef.collection('answers').add({
+        tIdx: myTeamIdx, tName: myTeamName, qIdx: q,
+        answer: raw, correct: true, pts: pts,
+        ts: firebase.firestore.FieldValue.serverTimestamp()
       });
-      await gameRef.collection('answers').add({
-        tIdx:myTeamIdx, tName:myTeamName, qIdx:q,
-        answer:raw, correct:true, pts,
-        ts:firebase.firestore.FieldValue.serverTimestamp()
-      });
-    } catch(e){ console.error('Firebase write error:',e.message); }
+    }).catch(function(e) { console.error('write error', e); });
 
     setTimeout(renderTeamQ, 1200);
+
   } else {
-    stat.textContent='❌ Not quite — try again!';
-    stat.className='ts-status no';
-    // Re-enable input so they can try again
-    inp.disabled=false;
-    inp.value='';
-    document.getElementById('ts-sub').disabled=false;
-    document.getElementById('ts-pass').disabled = localQueue.length<=1;
+    stat.textContent = 'Not quite - try again!';
+    stat.className = 'ts-status no';
+    inp.disabled = false;
+    inp.value = '';
+    document.getElementById('ts-sub').disabled = false;
+    document.getElementById('ts-pass').disabled = localQueue.length <= 1;
     inp.focus();
-    try {
-      await gameRef.collection('answers').add({
-        tIdx:myTeamIdx, tName:myTeamName, qIdx:q,
-        answer:raw, correct:false, pts:0,
-        ts:firebase.firestore.FieldValue.serverTimestamp()
-      });
-    } catch(e){}
-    setTimeout(()=>{ if(stat.className==='ts-status no'){ stat.textContent=''; stat.className='ts-status'; }},2000);
+    gameRef.collection('answers').add({
+      tIdx: myTeamIdx, tName: myTeamName, qIdx: q,
+      answer: raw, correct: false, pts: 0,
+      ts: firebase.firestore.FieldValue.serverTimestamp()
+    }).catch(function(){});
+    setTimeout(function() {
+      if (stat.className === 'ts-status no') {
+        stat.textContent = '';
+        stat.className = 'ts-status';
+      }
+    }, 2000);
   }
 }
 
-function teamPass(){
-  const q=localQueue.shift();
+function teamPass() {
+  var q = localQueue.shift();
   localQueue.push(q);
-  const stat=document.getElementById('ts-status');
-  stat.textContent='↩ Skipped — comes back later';
-  stat.className='ts-status ps';
-  setTimeout(renderTeamQ,600);
+  var stat = document.getElementById('ts-status');
+  stat.textContent = 'Skipped - comes back later';
+  stat.className = 'ts-status ps';
+  setTimeout(renderTeamQ, 600);
 }
 
-// ══════════════════════════
-//  WIN SCREEN
-// ══════════════════════════
-function showWin(d){
+// ── WIN ──
+function showWin(d) {
   clearInterval(timerInt);
-  const teamNames= d.teamNames||[];
-  const scores   = d.scores||liveScores;
-  const correct  = [d.c0||[],d.c1||[],d.c2||[],d.c3||[],d.c4||[],d.c5||[]];
-  const ranked   = teamNames.map((n,i)=>({n,s:scores[i]||0,c:(correct[i]||[]).length})).sort((a,b)=>b.s-a.s);
-  document.getElementById('win-h').textContent=`🏆 ${ranked[0].n} Wins!`;
-  document.getElementById('win-q').innerHTML=QUOTES[Math.floor(Math.random()*QUOTES.length)];
-  document.getElementById('podium').innerHTML=ranked.map((r,i)=>`
-    <div class="prow ${i===0?'first':''}">
-      <span>${MEDALS[i]} ${r.n}</span>
-      <span>${r.s} pts · ${r.c}/${QS.length} ✓</span>
-    </div>`).join('');
-  setScreen('win-screen');
+  var names = (d && d.teamNames) ? d.teamNames : liveTeamNames;
+  var scores = (d && d.scores) ? d.scores : liveScores;
+  var correct = d ? [d.c0||[],d.c1||[],d.c2||[],d.c3||[],d.c4||[],d.c5||[]] : liveCorrect;
+  var teams = [];
+  for (var i = 0; i < 6; i++) {
+    teams.push({ n: names[i]||'Team '+(i+1), s: scores[i]||0, c: correct[i] ? correct[i].length : 0 });
+  }
+  teams.sort(function(a,b) { return b.s - a.s; });
+  document.getElementById('win-h').textContent = teams[0].n + ' Wins!';
+  document.getElementById('win-q').textContent = QUOTES[Math.floor(Math.random() * QUOTES.length)];
+  var html = '';
+  for (var j = 0; j < teams.length; j++) {
+    html += '<div class="prow' + (j===0?' first':'') + '"><span>' + MEDALS[j] + ' ' + teams[j].n + '</span><span>' + teams[j].s + ' pts - ' + teams[j].c + '/' + QS.length + '</span></div>';
+  }
+  document.getElementById('podium').innerHTML = html;
+  showScreen('win-screen');
 }
 
-// ══════════════════════════
-//  TOAST
-// ══════════════════════════
-let toastT=null;
-function toast(msg){
-  const el=document.getElementById('toast');
-  el.textContent=msg; el.classList.add('show');
-  clearTimeout(toastT); toastT=setTimeout(()=>el.classList.remove('show'),2200);
+// ── TOAST ──
+var toastT = null;
+function toast(msg) {
+  var el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastT);
+  toastT = setTimeout(function() { el.classList.remove('show'); }, 2200);
 }
 </script>
 </body>
