@@ -152,9 +152,22 @@ input:focus,select:focus{outline:none;border-color:var(--gold)}
   <p class="sub">Team relay race — pass the iPad, answer the question</p>
   <div style="display:flex;flex-direction:column;gap:.8rem;max-width:300px;width:100%">
     <button class="btn btn-gold" onclick="goSetup()">👩‍🏫 Teacher — Set Up Game</button>
+    <button class="btn btn-outline" onclick="goRejoin()">🔑 Teacher — Rejoin Existing Game</button>
     <button class="btn btn-outline" onclick="goJoin()">🎒 Student — Join Game</button>
   </div>
   <p style="color:var(--muted);font-size:.8rem;margin-top:2rem;font-style:italic">"Courage, dear heart." — C.S. Lewis</p>
+</div>
+
+<!-- TEACHER REJOIN -->
+<div id="rejoin-screen" class="screen">
+  <div class="card">
+    <h2>🔑 Rejoin as Teacher</h2>
+    <label>Game Code</label>
+    <input id="rc-code" placeholder="6-letter code" autocomplete="off" style="text-transform:uppercase" maxlength="6">
+    <button class="btn btn-gold" onclick="rejoinGame()">🦁 Rejoin Dashboard</button>
+    <div class="join-err" id="rejoin-err"></div>
+    <button class="btn btn-outline btn-sm" style="margin-top:.5rem" onclick="goHome()">← Back</button>
+  </div>
 </div>
 
 <!-- TEACHER SETUP -->
@@ -344,6 +357,61 @@ let unsubGame = null;
 function goHome(){ setScreen('home'); }
 function goSetup(){ buildSetupGrid(); setScreen('setup-screen'); }
 function goJoin(){ setScreen('join-screen'); }
+function goRejoin(){ setScreen('rejoin-screen'); }
+
+async function rejoinGame(){
+  const code = document.getElementById('rc-code').value.trim().toUpperCase();
+  const err  = document.getElementById('rejoin-err');
+  err.textContent='';
+  if(code.length!==6){ err.textContent='Enter the 6-letter game code'; return; }
+  err.innerHTML='<span class="spinner"></span>Looking up game…';
+  try {
+    const ref  = db.collection('relay_games').doc(code);
+    const snap = await ref.get();
+    if(!snap.exists){ err.textContent='Game not found — check the code'; return; }
+    const d = snap.data();
+    gameCode  = code;
+    gameRef   = ref;
+    isTeacher = true;
+    timerSecs = d.timerSecs ?? 1500;
+    liveScores  = d.scores  || [0,0,0,0,0,0];
+    liveCorrect = [d.c0||[],d.c1||[],d.c2||[],d.c3||[],d.c4||[],d.c5||[]];
+    // Rebuild team name inputs so dashboard can read them
+    const tn = d.teamNames || [];
+    // Store for dashboard
+    window._rejoinTeamNames = tn;
+    if(d.status==='lobby'){
+      document.getElementById('code-display').textContent = code;
+      setScreen('lobby-screen');
+      gameRef.onSnapshot(snap=>{
+        const d=snap.data(); if(!d) return;
+        const teams=d.teams||{};
+        const entries=Object.entries(teams);
+        document.getElementById('joined-count').textContent=entries.length===0?'Waiting for teams to join…':`${entries.length} team${entries.length>1?'s':''} joined`;
+        document.getElementById('joined-list').innerHTML=entries.map(([k,v])=>`<span style="color:${TCOLORS[v.idx]};margin-right:.8rem">● ${v.name}</span>`).join('');
+      });
+    } else if(d.status==='ended'){
+      showWin(d);
+    } else {
+      // running or paused — go straight to dashboard
+      setScreen('teacher-dash');
+      // Build scoreboard with real team names
+      document.getElementById('scoreboard').innerHTML = tn.map((n,i)=>`
+        <div class="tc" data-t="${i}" id="tc${i}">
+          <h3>${n}</h3>
+          <div class="pts" id="pts${i}">${liveScores[i]||0}</div>
+          <div class="prog" id="prog${i}">${(liveCorrect[i]||[]).length}/${QS.length}</div>
+          <div class="pbar"><div class="pfill" data-t="${i}" id="fill${i}" style="width:${((liveCorrect[i]||[]).length/QS.length*100)}%"></div></div>
+        </div>`).join('');
+      document.getElementById('qnav').innerHTML=QS.map((_,i)=>`<span class="qpill" id="qpill${i}">${i>=18?'⭐':''}Q${i+1}</span>`).join('');
+      updateQNav();
+      startTeacherTimer();
+      listenAsTeacher();
+    }
+  } catch(e){
+    err.textContent='Error: '+e.message;
+  }
+}
 function setScreen(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
