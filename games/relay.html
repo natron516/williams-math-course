@@ -396,6 +396,8 @@ async function rejoinGame(){
       // running or paused — go straight to dashboard
       setScreen('teacher-dash');
       // Build scoreboard with real team names
+      // Store team names so buildTeacherDash / listenAsTeacher can use them
+      window._rejoinTeamNames = tn;
       document.getElementById('scoreboard').innerHTML = tn.map((n,i)=>`
         <div class="tc" data-t="${i}" id="tc${i}">
           <h3>${n}</h3>
@@ -410,6 +412,7 @@ async function rejoinGame(){
     }
   } catch(e){
     err.textContent='Error: '+e.message;
+    console.error(e);
   }
 }
 function setScreen(id){
@@ -536,12 +539,17 @@ function listenAsTeacher(){
 
 function updateTeacherBoard(teamNames){
   const mx = Math.max(...liveScores,0);
+  // Use passed teamNames, or rejoin cache, or setup inputs
+  const names = (teamNames && teamNames.length) ? teamNames
+    : (window._rejoinTeamNames || Array.from({length:6},(_,i)=>document.getElementById(`tn${i}`)?.value||`Team ${i+1}`));
   liveScores.forEach((s,i)=>{
     const el=document.getElementById(`pts${i}`); if(!el) return;
     el.textContent=s;
     document.getElementById(`prog${i}`).textContent=`${(liveCorrect[i]||[]).length}/${QS.length}`;
     document.getElementById(`fill${i}`).style.width=((liveCorrect[i]||[]).length/QS.length*100)+'%';
     document.getElementById(`tc${i}`).classList.toggle('lead',s===mx&&s>0);
+    // update name in case it wasn't set
+    const h=document.getElementById(`tc${i}`)?.querySelector('h3'); if(h) h.textContent=names[i]||`Team ${i+1}`;
   });
 }
 
