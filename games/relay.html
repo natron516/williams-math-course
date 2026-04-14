@@ -596,7 +596,8 @@ function startTeacherTimer() {
     if (paused) return;
     timerSecs--;
     updateTTimer();
-    gameRef.update({ timerSecs: timerSecs }).catch(function(){});
+    // Only write timer to Firebase every 30s to avoid hammering student snapshots
+    if (timerSecs % 30 === 0) gameRef.update({ timerSecs: timerSecs }).catch(function(){});
     if (timerSecs <= 0) { clearInterval(timerInt); teacherEnd(); }
   }, 1000);
 }
@@ -689,27 +690,32 @@ function listenAsStudent() {
   if (unsubGame) unsubGame();
   unsubGame = gameRef.onSnapshot(function(snap) {
     var d = snap.data(); if (!d) return;
+
+    // Update scores + names ONLY — never touch timerSecs or question card here
     liveScores = d.scores || liveScores;
     liveCorrect = [d.c0||[],d.c1||[],d.c2||[],d.c3||[],d.c4||[],d.c5||[]];
     firstHit = d.firstHit || {};
-    timerSecs = d.timerSecs != null ? d.timerSecs : timerSecs;
-    updateSTimer();
     updateSScores(d.teamNames || liveTeamNames);
 
     if (d.status === 'running' && !gameStarted) {
+      // First time game starts — kick off local timer and show question
       gameStarted = true;
+      timerSecs = d.timerSecs || timerSecs; // sync once at start only
       document.getElementById('ts-waiting').style.display = 'none';
       document.getElementById('ts-playing').style.display = 'block';
-      if (!timerInt) {
-        timerInt = setInterval(function() {
-          timerSecs--;
-          updateSTimer();
-          if (timerSecs <= 0) clearInterval(timerInt);
-        }, 1000);
-      }
+      timerInt = setInterval(function() {
+        timerSecs--;
+        updateSTimer();
+        if (timerSecs <= 0) clearInterval(timerInt);
+      }, 1000);
       renderTeamQ();
     }
-    if (d.status === 'paused' && timerInt) { clearInterval(timerInt); timerInt = null; }
+
+    // Pause/resume — just stop/start local timer, don't re-render anything
+    if (d.status === 'paused' && timerInt) {
+      clearInterval(timerInt);
+      timerInt = null;
+    }
     if (d.status === 'running' && !timerInt && gameStarted) {
       timerInt = setInterval(function() {
         timerSecs--;
@@ -717,6 +723,7 @@ function listenAsStudent() {
         if (timerSecs <= 0) clearInterval(timerInt);
       }, 1000);
     }
+
     if (d.status === 'ended') showWin(d);
   });
 }
