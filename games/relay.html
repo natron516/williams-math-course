@@ -273,28 +273,96 @@ firebase.initializeApp({
 });
 var db = firebase.firestore();
 
-var QS = [
-  {q:"&#129409; <b>Mr. Tumnus's Parcels</b><br>Mr. Tumnus had 14 parcels. He dropped 6 and went back for 3. How many did he arrive home with?",a:["11"],pts:10,hint:"14 - 6 + 3"},
-  {q:"&#128290; <b>Multiplication</b><br>A classroom has 6 rows with 8 desks each. How many desks total?",a:["48"],pts:10,hint:"6 x 8"},
-  {q:"&#127877; <b>Father Christmas</b><br>Father Christmas visited 9 villages, leaving 6 packages at each. How many packages total?",a:["54"],pts:10,hint:"9 x 6"},
-  {q:"&#128290; <b>Fractions</b><br>There are 20 students. 3/4 remembered their homework. How many remembered?",a:["15"],pts:10,hint:"20 x 3 / 4"},
-  {q:"&#128031; <b>Beaver's Barrels</b><br>72 trout divided equally among 9 barrels. How many trout per barrel?",a:["8"],pts:10,hint:"72 / 9"},
-  {q:"&#128208; <b>Perimeter</b><br>A rectangle is 15 ft long and 10 ft wide. What is its perimeter?",a:["50","50 feet","50ft"],pts:10,hint:"P = 2x(l+w)"},
-  {q:"&#127984; <b>Cair Paravel Courtyard</b><br>King Peter's courtyard: 40 ft long, 25 ft wide. How many feet of wall to surround it?",a:["130","130 feet","130ft"],pts:10,hint:"P = 2x(40+25)"},
-  {q:"&#128175; <b>Percentages</b><br>A store has 80 items. 25% are sold out. How many are sold out?",a:["20"],pts:10,hint:"80 x 0.25"},
-  {q:"&#128176; <b>Edmund's Gold Coins</b><br>King Edmund had 200 gold coins and gave 15% to the Talking Animals. How many coins?",a:["30"],pts:10,hint:"200 x 0.15"},
-  {q:"&#128207; <b>Area</b><br>A square garden has sides of 9 ft. What is the area in square feet?",a:["81","81 sq ft","81 square feet"],pts:10,hint:"A = 9 x 9"},
-  {q:"&#127864; <b>Aslan's Royal Garden</b><br>A perfect square garden with sides of 12 ft. What is the area in square feet?",a:["144","144 sq ft","144 square feet"],pts:10,hint:"A = 12 x 12"},
-  {q:"&#128207; <b>Unit Conversion</b><br>A bookshelf is 3 feet tall. How many inches? (1 ft = 12 in)",a:["36","36 inches"],pts:10,hint:"3 x 12"},
-  {q:"&#9876;&#65039; <b>Reepicheep's Sword</b><br>Reepicheep stands 9 inches tall; his sword is 1 foot long. How many inches longer is his sword than his height?",a:["3","3 inches"],pts:10,hint:"12 - 9"},
-  {q:"&#128290; <b>Multi-Step</b><br>5 boxes of pencils x 4 packs each x 12 pencils per pack. How many pencils total?",a:["240"],pts:10,hint:"5 x 4 x 12"},
-  {q:"&#127856; <b>Mr. Tumnus's Cakes</b><br>Mr. Tumnus baked 24 cakes and set out 3/4 for Lucy. How many cakes for Lucy?",a:["18"],pts:10,hint:"24 x 3 / 4"},
-  {q:"&#9200; <b>Time</b><br>A movie starts at 2:15 PM and runs 1 hour 45 minutes. What time does it end?",a:["4:00","4:00 pm","4:00 PM","4 pm","4 PM"],pts:10,hint:"2:15 + 1:45"},
-  {q:"&#128000; <b>Mice at the Stone Table</b><br>12 mice each chewed through 3 cords. How many cord-chews in total?",a:["36"],pts:10,hint:"12 x 3"},
-  {q:"&#128290; <b>Division with Remainder</b><br>46 students split into groups of 5. How many complete groups, and how many left over?",a:["9 groups, 1 left over","9 groups 1 left over","9 r 1","9r1","9 remainder 1","9 with 1 left"],pts:10,hint:"46 / 5"},
-  {q:"&#127852; <b>BONUS - Turkish Delight</b><br>Room 1: 9 shelves x 12 boxes. Room 2: 6 shelves x 15 boxes. Room 3: 4 shelves x 18 boxes. Every box has 8 pieces. Total pieces?",a:["1488","1,488"],pts:15,hint:"(9x12 + 6x15 + 4x18) x 8"},
-  {q:"&#128009; <b>BONUS - Dragon's Hoard</b><br>8 rings at 15 coins, 6 goblets at 24, 12 bags at 30, 4 necklaces at 55, 9 swords at 20. Grand total?",a:["1258","1,258"],pts:15,hint:"120+144+360+220+180"}
+// Full question bank — 60 problems. Each game picks 20 at random.
+var ALL_QS = [
+  // ── ADDITION ──
+  {q:"&#129409; <b>Mr. Tumnus's Parcels</b><br>Mr. Tumnus had 14 parcels. He dropped 6 and went back for 3. How many did he arrive home with?",a:["11"],pts:10,hint:"14 - 6 + 3",cat:"add"},
+  {q:"&#129409; <b>Narnian Army</b><br>Aslan gathered 47 Talking Animals and 38 Dwarfs for the battle. How many fighters in all?",a:["85"],pts:10,hint:"47 + 38",cat:"add"},
+  {q:"&#129409; <b>Edmund's Battle</b><br>Edmund treated 23 soldiers on the first day and 17 more on the second. How many soldiers did he treat in total?",a:["40"],pts:10,hint:"23 + 17",cat:"add"},
+  {q:"&#129409; <b>The Wardrobe</b><br>Lucy spent 34 minutes in Narnia on her first visit and 52 minutes on her second. How many minutes total?",a:["86"],pts:10,hint:"34 + 52",cat:"add"},
+  {q:"&#129409; <b>Cair Paravel Feast</b><br>The great feast had 125 Narnians on one side of the table and 98 on the other. How many guests in all?",a:["223"],pts:10,hint:"125 + 98",cat:"add"},
+  {q:"&#129409; <b>The Dawn Treader</b><br>The ship carried 36 barrels of water and picked up 24 more at an island. How many barrels total?",a:["60"],pts:10,hint:"36 + 24",cat:"add"},
+  {q:"&#129409; <b>Jill's Signs</b><br>Jill recited her 4 signs 3 times in the morning and 3 times at night for 5 days. How many total recitations?",a:["120"],pts:10,hint:"4 x 3 x 2 x 5... or think: 6 times a day x 5 days x 4 signs",cat:"add"},
+  {q:"&#129409; <b>Tirian's Army</b><br>330 Narnians gathered, but 90 slipped away. How many stayed to fight?",a:["240"],pts:10,hint:"330 - 90",cat:"add"},
+  {q:"&#129409; <b>Shasta's Journey</b><br>Shasta traveled 46 miles on Monday and 37 miles on Tuesday. How many miles did he travel in two days?",a:["83"],pts:10,hint:"46 + 37",cat:"add"},
+  {q:"&#129409; <b>Professor Kirke's House</b><br>The house had 7 floors with 8 rooms each. How many rooms total?",a:["56"],pts:10,hint:"7 x 8",cat:"add"},
+  // ── SUBTRACTION ──
+  {q:"&#9876;&#65039; <b>Reepicheep's Sword</b><br>Reepicheep stands 9 inches tall; his sword is 12 inches long. How many inches longer is his sword?",a:["3","3 inches"],pts:10,hint:"12 - 9",cat:"sub"},
+  {q:"&#9876;&#65039; <b>White Witch's Winter</b><br>Narnia had been frozen for 100 years. After Aslan came, 37 years of spring passed. How many years of winter came first?",a:["63"],pts:10,hint:"100 - 37",cat:"sub"},
+  {q:"&#9876;&#65039; <b>Water Supply</b><br>The Dawn Treader had 400 barrels of water. The crew used 25% of them. How many barrels were used?",a:["100"],pts:10,hint:"400 x 0.25",cat:"sub"},
+  {q:"&#9876;&#65039; <b>Beaver's Fish</b><br>Mr. and Mrs. Beaver had 300 pounds of smoked fish. They ate 40% before Aslan came. How many pounds did they eat?",a:["120"],pts:10,hint:"300 x 0.40",cat:"sub"},
+  {q:"&#9876;&#65039; <b>Jill's Walk</b><br>Harfang Castle was 4 miles away (21,120 feet). Jill had walked 7,920 feet. How many feet remained?",a:["13200","13,200"],pts:10,hint:"21120 - 7920",cat:"sub"},
+  {q:"&#9876;&#65039; <b>Loyal Narnians</b><br>330 Narnians came to fight. 90 were deceived and left. Of those who stayed, half had swords. How many had swords?",a:["120"],pts:10,hint:"(330-90) / 2",cat:"sub"},
+  {q:"&#9876;&#65039; <b>The Stone Table</b><br>Aslan was bound with 148 cords. The mice chewed through 36 of them. How many cords were left?",a:["112"],pts:10,hint:"148 - 36",cat:"sub"},
+  {q:"&#9876;&#65039; <b>Narnia Supplies</b><br>The castle kitchen had 500 loaves of bread. After the feast, 347 were eaten. How many remained?",a:["153"],pts:10,hint:"500 - 347",cat:"sub"},
+  // ── MULTIPLICATION ──
+  {q:"&#128290; <b>Father Christmas</b><br>Father Christmas visited 9 villages and left 6 packages at each. How many packages total?",a:["54"],pts:10,hint:"9 x 6",cat:"mult"},
+  {q:"&#128290; <b>King Peter's Army</b><br>Peter arranged 8 rows of soldiers with 12 in each row. How many soldiers total?",a:["96"],pts:10,hint:"8 x 12",cat:"mult"},
+  {q:"&#128290; <b>Honey Cakes</b><br>Queen Susan placed 56 honey cakes equally on 7 platters. How many cakes per platter?",a:["8"],pts:10,hint:"56 / 7",cat:"mult"},
+  {q:"&#128290; <b>Mice Cords</b><br>12 mice each chewed through 3 cords. How many cord-chews total?",a:["36"],pts:10,hint:"12 x 3",cat:"mult"},
+  {q:"&#128290; <b>Beaver's Barrels</b><br>72 trout divided equally among 9 barrels. How many trout per barrel?",a:["8"],pts:10,hint:"72 / 9",cat:"mult"},
+  {q:"&#128290; <b>Train Cars</b><br>360 evacuee children divided equally among 9 train cars. How many children per car?",a:["40"],pts:10,hint:"360 / 9",cat:"mult"},
+  {q:"&#128290; <b>Pencil Boxes</b><br>5 boxes of pencils, 4 packs each, 12 pencils per pack. How many pencils total?",a:["240"],pts:10,hint:"5 x 4 x 12",cat:"mult"},
+  {q:"&#128290; <b>Narnian Loaves</b><br>The Dwarfs baked 36 loaves. Only 2/3 were handed out. How many loaves were handed out?",a:["24"],pts:10,hint:"36 x 2 / 3",cat:"mult"},
+  {q:"&#128290; <b>Multiplication Drill</b><br>What is 7 x 8?",a:["56"],pts:10,hint:"7 x 8",cat:"mult"},
+  {q:"&#128290; <b>Multiplication Drill</b><br>What is 9 x 7?",a:["63"],pts:10,hint:"9 x 7",cat:"mult"},
+  {q:"&#128290; <b>Multiplication Drill</b><br>What is 6 x 8?",a:["48"],pts:10,hint:"6 x 8",cat:"mult"},
+  {q:"&#128290; <b>Multiplication Drill</b><br>What is 12 x 11?",a:["132"],pts:10,hint:"12 x 11",cat:"mult"},
+  {q:"&#128290; <b>Multiplication Drill</b><br>What is 8 x 8?",a:["64"],pts:10,hint:"8 x 8",cat:"mult"},
+  {q:"&#128290; <b>Multiplication Drill</b><br>What is 7 x 9?",a:["63"],pts:10,hint:"7 x 9",cat:"mult"},
+  {q:"&#128290; <b>Multiplication Drill</b><br>What is 11 x 6?",a:["66"],pts:10,hint:"11 x 6",cat:"mult"},
+  {q:"&#128290; <b>Multiplication Drill</b><br>What is 4 x 13?",a:["52"],pts:10,hint:"4 x 13",cat:"mult"},
+  // ── FRACTIONS / PERCENTAGES ──
+  {q:"&#127856; <b>Mr. Tumnus's Cakes</b><br>Mr. Tumnus baked 24 cakes and set out 3/4 for Lucy. How many cakes for Lucy?",a:["18"],pts:10,hint:"24 x 3 / 4",cat:"frac"},
+  {q:"&#127856; <b>Fractions Drill</b><br>There are 20 students. 3/4 remembered their homework. How many remembered?",a:["15"],pts:10,hint:"20 x 3 / 4",cat:"frac"},
+  {q:"&#128176; <b>Edmund's Gold</b><br>King Edmund had 200 gold coins and gave 15% to the Talking Animals. How many coins did he give?",a:["30"],pts:10,hint:"200 x 0.15",cat:"frac"},
+  {q:"&#128175; <b>Percentages</b><br>A store has 80 items. 25% are sold out. How many are sold out?",a:["20"],pts:10,hint:"80 x 0.25",cat:"frac"},
+  {q:"&#128176; <b>Water Barrels</b><br>The Dawn Treader had 400 barrels of water and used 25%. How many barrels remained?",a:["300"],pts:10,hint:"400 - (400 x 0.25)",cat:"frac"},
+  {q:"&#127856; <b>Fraction Drill</b><br>What is 1/2 of 64?",a:["32"],pts:10,hint:"64 / 2",cat:"frac"},
+  {q:"&#127856; <b>Fraction Drill</b><br>What is 1/3 of 90?",a:["30"],pts:10,hint:"90 / 3",cat:"frac"},
+  {q:"&#127856; <b>Fraction Drill</b><br>What is 2/5 of 50?",a:["20"],pts:10,hint:"50 / 5 x 2",cat:"frac"},
+  // ── GEOMETRY ──
+  {q:"&#128208; <b>Perimeter</b><br>A rectangle is 15 ft long and 10 ft wide. What is its perimeter?",a:["50","50 feet","50ft"],pts:10,hint:"P = 2x(l+w)",cat:"geo"},
+  {q:"&#127984; <b>Cair Paravel</b><br>King Peter's courtyard: 40 ft long, 25 ft wide. How many feet of wall to surround it?",a:["130","130 feet","130ft"],pts:10,hint:"P = 2x(40+25)",cat:"geo"},
+  {q:"&#128207; <b>Area</b><br>A square garden has sides of 9 ft. What is the area?",a:["81","81 sq ft","81 square feet"],pts:10,hint:"A = 9 x 9",cat:"geo"},
+  {q:"&#127864; <b>Aslan's Garden</b><br>A square garden with sides of 12 ft. What is the area in square feet?",a:["144","144 sq ft","144 square feet"],pts:10,hint:"A = 12 x 12",cat:"geo"},
+  {q:"&#128208; <b>Triangle</b><br>The White Witch's stone platform had three sides: 15 ft, 20 ft, and 18 ft. What is the total distance around it?",a:["53","53 feet","53ft"],pts:10,hint:"15 + 20 + 18",cat:"geo"},
+  // ── UNIT CONVERSION / TIME ──
+  {q:"&#128207; <b>Unit Conversion</b><br>A bookshelf is 3 feet tall. How many inches? (1 ft = 12 in)",a:["36","36 inches"],pts:10,hint:"3 x 12",cat:"conv"},
+  {q:"&#9200; <b>Time</b><br>A movie starts at 2:15 PM and runs 1 hour 45 minutes. What time does it end?",a:["4:00","4:00 pm","4:00 PM","4 pm","4 PM"],pts:10,hint:"2:15 + 1:45",cat:"conv"},
+  {q:"&#9200; <b>Dawn Treader Voyage</b><br>The ship sailed 3 miles east, then another 5,280 feet. How many total feet did it sail? (1 mile = 5,280 ft)",a:["21120","21,120"],pts:10,hint:"(3 x 5280) + 5280",cat:"conv"},
+  {q:"&#9200; <b>Silver Chair</b><br>Jill recited her signs for 14 days, 3 times a day. How many total recitations?",a:["42"],pts:10,hint:"14 x 3",cat:"conv"},
+  {q:"&#9200; <b>Time Drill</b><br>Convert 2 hours and 40 minutes into minutes only.",a:["160","160 minutes"],pts:10,hint:"(2 x 60) + 40",cat:"conv"},
+  {q:"&#9200; <b>Time Drill</b><br>Convert 1 hour and 15 minutes into minutes only.",a:["75","75 minutes"],pts:10,hint:"60 + 15",cat:"conv"},
+  // ── BONUS (hard) ──
+  {q:"&#127852; <b>BONUS - Turkish Delight</b><br>Room 1: 9 shelves x 12 boxes. Room 2: 6 shelves x 15 boxes. Room 3: 4 shelves x 18 boxes. Every box has 8 pieces. Total pieces?",a:["1488","1,488"],pts:15,hint:"(9x12 + 6x15 + 4x18) x 8",cat:"bonus"},
+  {q:"&#128009; <b>BONUS - Dragon's Hoard</b><br>8 rings at 15 coins, 6 goblets at 24, 12 bags at 30, 4 necklaces at 55, 9 swords at 20. Grand total?",a:["1258","1,258"],pts:15,hint:"120+144+360+220+180",cat:"bonus"},
+  {q:"&#128009; <b>BONUS - Wood Between Worlds</b><br>Digory visited 3 worlds: 45 minutes, 30 minutes, and 1 hour 15 minutes. Total minutes exploring?",a:["150"],pts:15,hint:"45 + 30 + 75",cat:"bonus"},
+  {q:"&#128009; <b>BONUS - The Last Battle</b><br>330 Narnians came. 90 left. Half of those remaining had swords, and a quarter of those also had shields. How many had shields?",a:["30"],pts:15,hint:"(330-90)/2/4",cat:"bonus"}
 ];
+
+// Pick 20 random questions per game (always include 2 bonus, rest random)
+function buildGameQS() {
+  var bonus = [], regular = [];
+  for (var i = 0; i < ALL_QS.length; i++) {
+    if (ALL_QS[i].cat === 'bonus') bonus.push(ALL_QS[i]);
+    else regular.push(ALL_QS[i]);
+  }
+  // shuffle regular
+  for (var j = regular.length - 1; j > 0; j--) {
+    var k = Math.floor(Math.random() * (j + 1));
+    var tmp = regular[j]; regular[j] = regular[k]; regular[k] = tmp;
+  }
+  // shuffle bonus
+  for (var j = bonus.length - 1; j > 0; j--) {
+    var k = Math.floor(Math.random() * (j + 1));
+    var tmp = bonus[j]; bonus[j] = bonus[k]; bonus[k] = tmp;
+  }
+  // pick 18 regular + 2 bonus
+  return regular.slice(0, 18).concat(bonus.slice(0, 2));
+}
+
+var QS = buildGameQS();
 
 var TCOLORS = ['#e74c3c','#3498db','#2ecc71','#f39c12','#9b59b6','#1abc9c'];
 var TCSS = ['var(--t0)','var(--t1)','var(--t2)','var(--t3)','var(--t4)','var(--t5)'];
