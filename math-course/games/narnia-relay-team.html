@@ -296,23 +296,40 @@ async function submitAnswer() {
   });
 
   if (correct) {
-    const pts = q.pts;
     ans.disabled = true;
     btn.disabled = true;
-    fb.textContent = '✅ Correct! +' + pts + ' pts';
+
+    // Use a transaction to check if we're the first correct answer (bonus +2)
+    const gameDocRef = db.collection('relay_games').doc(gameId);
+    let finalPts = q.pts;
+
+    await db.runTransaction(async function(tx) {
+      const snap = await tx.get(gameDocRef);
+      const data = snap.data() || {};
+      const teams = data.teams || {};
+
+      // Check if any other team already answered this question correctly
+      const alreadyAnswered = Object.keys(teams).some(function(k) {
+        return k !== teamKey && (teams[k].answered || []).includes(currentQ);
+      });
+
+      finalPts = q.pts + (alreadyAnswered ? 0 : 2);
+      const newAnswered = myAnswered.concat([currentQ]);
+      const newScore = (teams[teamKey] ? (teams[teamKey].score || 0) : myScore) + finalPts;
+
+      tx.update(gameDocRef, {
+        [teamKey + '.answered']: newAnswered,
+        [teamKey + '.score']: newScore,
+        ['teams.' + teamKey + '.answered']: newAnswered,
+        ['teams.' + teamKey + '.score']: newScore
+      });
+    });
+
+    const bonusMsg = finalPts > q.pts ? ' ⚡ +2 first answer bonus!' : '';
+    fb.textContent = '✅ Correct! +' + finalPts + ' pts' + bonusMsg;
     fb.className = 'feedback ok';
     playCorrect();
-    showFlash('+' + pts);
-
-    const newAnswered = myAnswered.concat([currentQ]);
-    const newScore = myScore + pts;
-
-    await db.collection('relay_games').doc(gameId).update({
-      [teamKey + '.answered']: newAnswered,
-      [teamKey + '.score']: newScore,
-      ['teams.' + teamKey + '.answered']: newAnswered,
-      ['teams.' + teamKey + '.score']: newScore
-    });
+    showFlash('+' + finalPts);
   } else {
     fb.textContent = '❌ Try again!';
     fb.className = 'feedback bad';
