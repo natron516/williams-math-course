@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Narnia Relay — Teacher</title>
+<style>
+  :root {
+    --gold:#c9a227; --dark:#1a1a2e; --card:#0f3460; --accent:#e94560;
+    --green:#2ecc71; --text:#f0e6d3; --muted:#a0968a;
+    --t0:#e74c3c; --t1:#3498db; --t2:#2ecc71; --t3:#f39c12; --t4:#9b59b6; --t5:#1abc9c;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Georgia',serif;background:radial-gradient(ellipse at top,#1a1a3e,#0a0a1a);color:var(--text);min-height:100vh;padding:1rem;}
+
+  /* ── SETUP ── */
+  #setup{max-width:600px;margin:0 auto;padding-top:2rem;}
+  .logo{text-align:center;margin-bottom:2rem;}
+  .logo h1{font-size:2.2rem;color:var(--gold);text-shadow:0 0 20px rgba(201,162,39,.5);}
+  .logo p{color:var(--muted);font-style:italic;margin-top:.4rem;}
+  .card{background:var(--card);border:1px solid var(--gold);border-radius:16px;padding:1.8rem;margin-bottom:1.2rem;}
+  .card h2{color:var(--gold);margin-bottom:1.2rem;font-size:1.1rem;}
+  .team-row{display:flex;gap:.7rem;margin-bottom:.7rem;align-items:center;}
+  .dot{width:13px;height:13px;border-radius:50%;flex-shrink:0;}
+  .ti{flex:1;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:.55rem .9rem;color:var(--text);font-size:1rem;font-family:inherit;}
+  .ti:focus{outline:none;border-color:var(--gold);}
+  .row{display:flex;gap:1rem;align-items:center;margin-top:.8rem;flex-wrap:wrap;}
+  .row label{color:var(--muted);font-size:.9rem;}
+  select{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:.45rem .9rem;color:var(--text);font-size:1rem;font-family:inherit;}
+  .big-btn{width:100%;padding:1rem;background:linear-gradient(135deg,var(--gold),#a0821e);border:none;border-radius:12px;color:#1a1a1a;font-size:1.2rem;font-weight:bold;font-family:inherit;cursor:pointer;margin-top:1.2rem;transition:transform .1s,box-shadow .2s;}
+  .big-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(201,162,39,.4);}
+  .big-btn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
+
+  /* ── DASHBOARD ── */
+  #dash{display:none;}
+  .dash-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:.5rem;}
+  .dash-header h1{color:var(--gold);font-size:1.4rem;}
+  .timer{font-size:2.2rem;font-weight:bold;font-family:monospace;color:var(--gold);}
+  .timer.urgent{color:var(--accent);animation:pulse 1s infinite;}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+  .hdr-btns{display:flex;gap:.5rem;flex-wrap:wrap;}
+  .hbtn{padding:.45rem .9rem;border:1px solid var(--gold);border-radius:8px;background:transparent;color:var(--gold);font-family:inherit;cursor:pointer;font-size:.85rem;}
+  .hbtn:hover{background:rgba(201,162,39,.2);}
+  .hbtn.red{border-color:var(--accent);color:var(--accent);}
+  .hbtn.red:hover{background:rgba(233,69,96,.2);}
+
+  /* Scoreboard */
+  .scores{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.7rem;margin-bottom:1.2rem;}
+  .sc{border-radius:12px;padding:.9rem 1.1rem;border:2px solid transparent;transition:transform .2s,border-color .2s;}
+  .sc.lead{border-color:var(--gold);transform:scale(1.03);}
+  .sc h3{font-size:.95rem;margin-bottom:.2rem;}
+  .sc-score{font-size:2.4rem;font-weight:bold;font-family:monospace;}
+  .sc-prog{font-size:.75rem;color:rgba(255,255,255,.6);margin-top:.3rem;}
+  .pb{height:5px;background:rgba(255,255,255,.1);border-radius:3px;margin-top:.4rem;overflow:hidden;}
+  .pbf{height:100%;border-radius:3px;transition:width .4s;}
+
+  /* Question area */
+  .q-section{background:var(--card);border-radius:12px;padding:1.2rem;margin-bottom:1rem;}
+  .q-section h3{color:var(--gold);font-size:.9rem;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.8rem;}
+  .q-nav{display:flex;gap:.35rem;flex-wrap:wrap;margin-bottom:1rem;}
+  .qp{padding:.28rem .6rem;border-radius:16px;font-size:.75rem;cursor:pointer;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.05);color:var(--muted);transition:all .15s;user-select:none;}
+  .qp.active{background:var(--gold);color:#1a1a1a;border-color:var(--gold);font-weight:bold;}
+  .qp.done{background:rgba(46,204,113,.2);border-color:var(--green);color:var(--green);}
+  .q-display{line-height:1.7;font-size:1rem;padding:.8rem;background:rgba(255,255,255,.04);border-radius:8px;border-left:3px solid var(--gold);}
+  .q-hint{color:var(--muted);font-size:.8rem;margin-top:.5rem;}
+  .push-btn{margin-top:.8rem;width:100%;padding:.75rem;background:linear-gradient(135deg,var(--gold),#a0821e);border:none;border-radius:10px;color:#1a1a1a;font-size:1rem;font-weight:bold;font-family:inherit;cursor:pointer;}
+  .push-btn:hover{opacity:.9;}
+
+  /* Team answer status */
+  .answers-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:.6rem;margin-top:.8rem;}
+  .ans-chip{border-radius:8px;padding:.5rem .8rem;font-size:.82rem;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;align-items:center;}
+  .ans-chip.correct{background:rgba(46,204,113,.15);border-color:var(--green);}
+  .ans-chip.wrong{background:rgba(233,69,96,.1);border-color:var(--accent);}
+  .chip-name{font-weight:bold;}
+  .chip-status{font-size:.85rem;}
+
+  /* Team link section */
+  .links-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:1.2rem;margin-bottom:1rem;}
+  .links-card h3{color:var(--gold);font-size:.9rem;margin-bottom:.8rem;}
+  .link-row{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap;}
+  .link-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+  .link-name{font-size:.85rem;flex:1;min-width:80px;}
+  .copy-btn{font-size:.72rem;padding:.25rem .6rem;border-radius:5px;border:1px solid var(--gold);background:transparent;color:var(--gold);cursor:pointer;font-family:inherit;white-space:nowrap;}
+  .copy-btn:hover{background:rgba(201,162,39,.2);}
+  .link-url{font-size:.65rem;color:var(--muted);word-break:break-all;margin-left:1.2rem;margin-bottom:.3rem;}
+
+  #msg{text-align:center;color:var(--muted);font-size:.85rem;margin-top:.8rem;min-height:1.2em;}
+</style>
+</head>
+<body>
+
+<!-- SETUP -->
+<div id="setup">
+  <div class="logo">
+    <h1>⚔️ Narnia Math Relay</h1>
+    <p>Teacher Control Panel</p>
+  </div>
+  <div class="card">
+    <h2>🏰 Name the 6 Teams</h2>
+    <div class="team-row"><div class="dot" style="background:var(--t0)"></div><input class="ti" id="t0" value="Team Aslan"></div>
+    <div class="team-row"><div class="dot" style="background:var(--t1)"></div><input class="ti" id="t1" value="Team Pevensie"></div>
+    <div class="team-row"><div class="dot" style="background:var(--t2)"></div><input class="ti" id="t2" value="Team Dawn Treader"></div>
+    <div class="team-row"><div class="dot" style="background:var(--t3)"></div><input class="ti" id="t3" value="Team Silver Chair"></div>
+    <div class="team-row"><div class="dot" style="background:var(--t4)"></div><input class="ti" id="t4" value="Team Magician's Nephew"></div>
+    <div class="team-row"><div class="dot" style="background:var(--t5)"></div><input class="ti" id="t5" value="Team Last Battle"></div>
+    <div class="row">
+      <label>Timer:</label>
+      <select id="timer-sel">
+        <option value="1500" selected>25 min</option>
+        <option value="1200">20 min</option>
+        <option value="1800">30 min</option>
+        <option value="900">15 min</option>
+        <option value="600">10 min</option>
+      </select>
+    </div>
+    <button class="big-btn" id="start-btn" onclick="startGame()">🦁 Start the Relay!</button>
+    <div id="msg"></div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dash">
+  <div class="dash-header">
+    <h1>⚔️ Narnia Relay — Teacher</h1>
+    <div class="timer" id="timer">25:00</div>
+    <div class="hdr-btns">
+      <button class="hbtn" id="pause-btn" onclick="togglePause()">⏸ Pause</button>
+      <button class="hbtn red" onclick="endGame()">🏁 End Game</button>
+    </div>
+  </div>
+
+  <!-- Scoreboard -->
+  <div class="scores" id="scores"></div>
+
+  <!-- Team links -->
+  <div class="links-card" id="links-card">
+    <h3>📱 Team iPad Links</h3>
+    <div id="team-links"></div>
+  </div>
+
+  <!-- Question control -->
+  <div class="q-section">
+    <h3>📜 Push Question to All Teams</h3>
+    <div class="q-nav" id="q-nav"></div>
+    <div class="q-display" id="q-display"></div>
+    <div class="q-hint" id="q-hint"></div>
+    <button class="push-btn" onclick="pushQuestion()">📡 Push This Question to All iPads</button>
+    <div style="margin-top:1rem;">
+      <div style="font-size:.8rem;color:var(--muted);margin-bottom:.5rem;">Team Answers — Current Question:</div>
+      <div class="answers-grid" id="answers-grid"></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script>
+const QUESTIONS = [
+  {q:"🦁 <b>Mr. Tumnus's Parcels</b><br>Mr. Tumnus was carrying 14 parcels. He dropped 6 and could only go back for 3. How many did he arrive home with?",a:["11"],pts:10,hint:"14 − 6 + 3"},
+  {q:"🔢 <b>Multiplication Review</b><br>A classroom has 6 rows of desks with 8 desks in each row. How many desks total?",a:["48"],pts:10,hint:"6 × 8"},
+  {q:"🎅 <b>Father Christmas's Gifts</b><br>Father Christmas visited 9 villages and left 6 packages at each. How many packages total?",a:["54"],pts:10,hint:"9 × 6"},
+  {q:"🔢 <b>Fraction Review</b><br>There are 20 students. ¾ remembered homework. How many remembered?",a:["15"],pts:10,hint:"20 × 3 ÷ 4"},
+  {q:"🐟 <b>The Beaver's Barrels</b><br>72 trout divided equally among 9 barrels. How many per barrel?",a:["8"],pts:10,hint:"72 ÷ 9"},
+  {q:"📐 <b>Perimeter Review</b><br>A rectangle is 15 feet long and 10 feet wide. What is its perimeter?",a:["50","50 feet","50ft"],pts:10,hint:"P = 2 × (15 + 10)"},
+  {q:"🏰 <b>Cair Paravel Courtyard</b><br>King Peter's courtyard: 40 ft long, 25 ft wide. How many feet of stone wall surrounds it?",a:["130","130 feet","130ft"],pts:10,hint:"P = 2 × (40 + 25)"},
+  {q:"💯 <b>Percentage Review</b><br>80 items on sale. 25% are sold out. How many are sold out?",a:["20"],pts:10,hint:"80 ÷ 4"},
+  {q:"💰 <b>Edmund's Gold Coins</b><br>King Edmund had 200 gold coins and gave 15% to the Talking Animals. How many did he give away?",a:["30"],pts:10,hint:"200 × 0.15"},
+  {q:"📏 <b>Area Review</b><br>A square garden has sides of 9 feet. What is its area?",a:["81","81 sq ft","81 square feet"],pts:10,hint:"9 × 9"},
+  {q:"🌸 <b>Aslan's Royal Garden</b><br>A perfect square with each side 12 feet. What is the area?",a:["144","144 sq ft","144 square feet"],pts:10,hint:"12 × 12"},
+  {q:"📏 <b>Unit Conversion</b><br>A bookshelf is 3 feet tall. How many inches? (1 ft = 12 in)",a:["36","36 inches"],pts:10,hint:"3 × 12"},
+  {q:"⚔️ <b>Reepicheep's Sword</b><br>Reepicheep is 9 inches tall. His sword is 1 foot long. How many inches longer is the sword than him?",a:["3","3 inches"],pts:10,hint:"12 − 9"},
+  {q:"🔢 <b>Multi-Step Problem</b><br>5 boxes of pencils. Each box has 4 packs. Each pack has 12 pencils. How many pencils total?",a:["240"],pts:10,hint:"5 × 4 × 12"},
+  {q:"🍰 <b>Mr. Tumnus's Cakes</b><br>Mr. Tumnus baked 24 cakes and set out ¾ for Lucy. How many did he set out?",a:["18"],pts:10,hint:"24 × 3 ÷ 4"},
+  {q:"⏰ <b>Time Review</b><br>A movie starts at 2:15 PM and runs 1 hour 45 minutes. What time does it end?",a:["4:00","4:00 pm","4 pm","4:00 PM"],pts:10,hint:"2:15 + 1:45"},
+  {q:"🐭 <b>The Mice at the Stone Table</b><br>12 mice each chewed through 3 cords. How many cord-chews total?",a:["36"],pts:10,hint:"12 × 3"},
+  {q:"🔢 <b>Division Review</b><br>46 students split into groups of 5. How many complete groups, and how many left over?",a:["9 groups, 1 left over","9 groups 1 left over","9r1","9 remainder 1"],pts:10,hint:"46 ÷ 5"},
+  {q:"🍬 <b>BONUS ⭐ — Edmund's Turkish Delight</b><br>Room 1: 9 shelves × 12 boxes. Room 2: 6 shelves × 15 boxes. Room 3: 4 shelves × 18 boxes. Each box has 8 pieces. Total pieces?",a:["1488"],pts:15,hint:"(9×12 + 6×15 + 4×18) × 8 = 270 × 8"},
+  {q:"🐉 <b>BONUS ⭐ — Eustace's Dragon Hoard</b><br>8 rings @ 15 coins, 6 goblets @ 24, 12 bags @ 30, 4 necklaces @ 55, 9 swords @ 20. Grand total?",a:["1258","1,258"],pts:15,hint:"(8×15)+(6×24)+(12×30)+(4×55)+(9×20)"}
+];
+
+const COLORS = ['#e74c3c','#3498db','#2ecc71','#f39c12','#9b59b6','#1abc9c'];
+const BASE = 'https://natron516.github.io/williams-math-course/games/';
+
+firebase.initializeApp({
+  apiKey:"AIzaSyA5qnahNEDXEo4CvDZi7PIqcKGfga0Oqn4",
+  authDomain:"mrswilliamsmath-1d6de.firebaseapp.com",
+  projectId:"mrswilliamsmath-1d6de",
+  storageBucket:"mrswilliamsmath-1d6de.firebasestorage.app",
+  messagingSenderId:"370339384366",
+  appId:"1:370339384366:web:e2e5abfd8263b84db223bf"
+});
+const db = firebase.firestore();
+
+let gameId = null;
+let gameRef = null;
+let teamNames = [];
+let scores = [0,0,0,0,0,0];
+let teamAnswers = {}; // teamKey -> {qIdx, correct, value}
+let currentQ = 0;
+let timerSecs = 1500;
+let timerInterval = null;
+let paused = false;
+
+// ── START GAME ─────────────────────────────────────────────────────
+async function startGame() {
+  const btn = document.getElementById('start-btn');
+  btn.disabled = true;
+  document.getElementById('msg').textContent = 'Creating game…';
+
+  teamNames = [0,1,2,3,4,5].map(i => document.getElementById('t'+i).value.trim() || 'Team '+(i+1));
+  timerSecs = parseInt(document.getElementById('timer-sel').value);
+
+  gameId = 'relay_' + Date.now().toString(36);
+  gameRef = db.collection('relay_games').doc(gameId);
+
+  const teams = {};
+  teamNames.forEach((n,i) => { teams['team'+i] = {name:n, score:0, answered:[]}; });
+
+  await gameRef.set({
+    teams,
+    timerSeconds: timerSecs,
+    currentQ: 0,
+    startedAt: firebase.firestore.FieldValue.serverTimestamp(),
+    status: 'active'
+  });
+
+  document.getElementById('setup').style.display = 'none';
+  document.getElementById('dash').style.display = 'block';
+
+  buildLinks();
+  buildQNav();
+  showQ(0);
+  startTimer();
+  listenForAnswers();
+}
+
+// ── LINKS ──────────────────────────────────────────────────────────
+function buildLinks() {
+  const container = document.getElementById('team-links');
+  container.innerHTML = teamNames.map((name,i) => {
+    const url = BASE + 'narnia-relay-team.html?game=' + gameId + '&team=' + i;
+    return '<div class="link-row">' +
+      '<div class="link-dot" style="background:' + COLORS[i] + '"></div>' +
+      '<span class="link-name">' + name + '</span>' +
+      '<button class="copy-btn" onclick="copyURL(\'' + url + '\',this)">Copy Link</button>' +
+      '</div>' +
+      '<div class="link-url">' + url + '</div>';
+  }).join('');
+}
+
+function copyURL(url, btn) {
+  navigator.clipboard.writeText(url).then(function() {
+    btn.textContent = '✅ Copied!';
+    setTimeout(function(){ btn.textContent = 'Copy Link'; }, 2000);
+  });
+}
+
+// ── Q NAV ──────────────────────────────────────────────────────────
+function buildQNav() {
+  const nav = document.getElementById('q-nav');
+  nav.innerHTML = QUESTIONS.map(function(q,i) {
+    return '<span class="qp" id="qp'+i+'" onclick="showQ('+i+')">' +
+      'Q'+(i+1)+(i>=18?'⭐':'') + '</span>';
+  }).join('');
+}
+
+function showQ(idx) {
+  currentQ = idx;
+  const q = QUESTIONS[idx];
+  document.getElementById('q-display').innerHTML =
+    '<div style="font-size:.75rem;color:var(--muted);margin-bottom:.4rem;">Q'+(idx+1)+(idx>=18?' — BONUS':'')+' &nbsp;·&nbsp; '+q.pts+' pts</div>' +
+    q.q;
+  document.getElementById('q-hint').textContent = '💡 ' + q.hint;
+  document.querySelectorAll('.qp').forEach(function(p,i){
+    p.classList.remove('active');
+    if(i===idx) p.classList.add('active');
+  });
+  renderAnswerChips();
+}
+
+// ── PUSH QUESTION ──────────────────────────────────────────────────
+async function pushQuestion() {
+  if (!gameRef) return;
+  // Clear previous answers for this question in state
+  teamAnswers = {};
+  renderAnswerChips();
+  await gameRef.update({ currentQ: currentQ });
+}
+
+// ── LISTEN FOR TEAM ANSWERS ────────────────────────────────────────
+function listenForAnswers() {
+  gameRef.onSnapshot(function(snap) {
+    if (!snap.exists) return;
+    const data = snap.data();
+    // Update scores
+    [0,1,2,3,4,5].forEach(function(i){
+      const t = data.teams['team'+i];
+      if (t) scores[i] = t.score || 0;
+    });
+    renderScores(data.teams);
+    // Check for answer submissions on current question
+    const ans = data.answers || {};
+    teamAnswers = ans;
+    renderAnswerChips();
+  });
+}
+
+// ── SCOREBOARD ─────────────────────────────────────────────────────
+function renderScores(teams) {
+  const max = Math.max.apply(null, [0,1,2,3,4,5].map(function(i){ return (teams['team'+i]||{}).score||0; }));
+  const sb = document.getElementById('scores');
+  sb.innerHTML = [0,1,2,3,4,5].map(function(i){
+    const t = teams['team'+i] || {name:teamNames[i],score:0,answered:[]};
+    const sc = t.score||0;
+    const ans = (t.answered||[]).length;
+    const pct = (ans/QUESTIONS.length*100).toFixed(0);
+    const lead = sc===max && sc>0;
+    return '<div class="sc' + (lead?' lead':'') + '" style="background:linear-gradient(135deg,'+COLORS[i]+'22,'+COLORS[i]+'08)">' +
+      '<h3 style="color:'+COLORS[i]+'">' + t.name + '</h3>' +
+      '<div class="sc-score" style="color:'+COLORS[i]+'">' + sc + '</div>' +
+      '<div class="sc-prog">' + ans + ' / ' + QUESTIONS.length + ' answered</div>' +
+      '<div class="pb"><div class="pbf" style="width:'+pct+'%;background:'+COLORS[i]+'"></div></div>' +
+      '</div>';
+  }).join('');
+}
+
+// ── ANSWER CHIPS ───────────────────────────────────────────────────
+function renderAnswerChips() {
+  const grid = document.getElementById('answers-grid');
+  grid.innerHTML = [0,1,2,3,4,5].map(function(i){
+    const key = 'team'+i;
+    const a = teamAnswers[key];
+    let cls = '', icon = '⏳', val = 'Waiting…';
+    if (a && a.qIdx === currentQ) {
+      if (a.correct) { cls=' correct'; icon='✅'; val=a.value; }
+      else { cls=' wrong'; icon='❌'; val=a.value; }
+    }
+    return '<div class="ans-chip'+cls+'">' +
+      '<span class="chip-name" style="color:'+COLORS[i]+'">' + teamNames[i] + '</span>' +
+      '<span class="chip-status">' + icon + (val!=='Waiting…' ? ' '+val : '') + '</span>' +
+      '</div>';
+  }).join('');
+}
+
+// ── TIMER ──────────────────────────────────────────────────────────
+function startTimer() {
+  updateTimerDisplay();
+  timerInterval = setInterval(function(){
+    if(paused) return;
+    timerSecs--;
+    updateTimerDisplay();
+    if(timerSecs<=0){ clearInterval(timerInterval); endGame(); }
+  },1000);
+}
+
+function updateTimerDisplay() {
+  const m = Math.floor(timerSecs/60);
+  const s = timerSecs%60;
+  const el = document.getElementById('timer');
+  el.textContent = m+':'+(s<10?'0':'')+s;
+  el.classList.toggle('urgent', timerSecs<=60);
+}
+
+function togglePause() {
+  paused=!paused;
+  document.getElementById('pause-btn').textContent = paused ? '▶ Resume' : '⏸ Pause';
+}
+
+// ── END GAME ───────────────────────────────────────────────────────
+async function endGame() {
+  clearInterval(timerInterval);
+  if (!gameRef) return;
+  await gameRef.update({status:'ended'});
+}
+</script>
+</body>
+</html>
