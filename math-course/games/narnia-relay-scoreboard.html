@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Narnia Math Relay — Live Scoreboard</title>
+<style>
+  :root {
+    --gold: #c9a227;
+    --dark: #1a1a2e;
+    --card: #0f3460;
+    --accent: #e94560;
+    --green: #2ecc71;
+    --text: #f0e6d3;
+    --muted: #a0968a;
+    --team1: #e74c3c; --team2: #3498db; --team3: #2ecc71;
+    --team4: #f39c12; --team5: #9b59b6; --team6: #1abc9c;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Georgia', serif;
+    background: radial-gradient(ellipse at top, #1a1a3e 0%, #0a0a1a 100%);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 1.5rem;
+  }
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .header h1 { color: var(--gold); font-size: 1.8rem; text-shadow: 0 0 20px rgba(201,162,39,0.4); }
+  .timer-display {
+    font-size: 2.5rem;
+    font-weight: bold;
+    font-family: monospace;
+    color: var(--gold);
+    text-shadow: 0 0 12px rgba(201,162,39,0.5);
+  }
+  .timer-display.urgent { color: var(--accent); animation: pulse 1s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+  /* Podium / big score cards */
+  .scoreboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .team-card {
+    border-radius: 14px;
+    padding: 1.2rem 1.5rem;
+    border: 2px solid transparent;
+    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .team-card.leading {
+    border-color: var(--gold);
+    transform: scale(1.03);
+    box-shadow: 0 0 24px rgba(201,162,39,0.35);
+  }
+  .team-card[data-t="0"] { background: linear-gradient(135deg, rgba(231,76,60,0.25), rgba(231,76,60,0.08)); }
+  .team-card[data-t="1"] { background: linear-gradient(135deg, rgba(52,152,219,0.25), rgba(52,152,219,0.08)); }
+  .team-card[data-t="2"] { background: linear-gradient(135deg, rgba(46,204,113,0.25), rgba(46,204,113,0.08)); }
+  .team-card[data-t="3"] { background: linear-gradient(135deg, rgba(243,156,18,0.25), rgba(243,156,18,0.08)); }
+  .team-card[data-t="4"] { background: linear-gradient(135deg, rgba(155,89,182,0.25), rgba(155,89,182,0.08)); }
+  .team-card[data-t="5"] { background: linear-gradient(135deg, rgba(26,188,156,0.25), rgba(26,188,156,0.08)); }
+
+  .rank-badge {
+    position: absolute; top: 0.6rem; right: 0.8rem;
+    font-size: 1.5rem;
+  }
+  .team-card h3 { font-size: 1.1rem; margin-bottom: 0.2rem; }
+  .team-card[data-t="0"] h3 { color: var(--team1); }
+  .team-card[data-t="1"] h3 { color: var(--team2); }
+  .team-card[data-t="2"] h3 { color: var(--team3); }
+  .team-card[data-t="3"] h3 { color: var(--team4); }
+  .team-card[data-t="4"] h3 { color: var(--team5); }
+  .team-card[data-t="5"] h3 { color: var(--team6); }
+  .score-num {
+    font-size: 3rem;
+    font-weight: bold;
+    font-family: monospace;
+    line-height: 1;
+    margin: 0.2rem 0;
+  }
+  .team-card[data-t="0"] .score-num { color: var(--team1); }
+  .team-card[data-t="1"] .score-num { color: var(--team2); }
+  .team-card[data-t="2"] .score-num { color: var(--team3); }
+  .team-card[data-t="3"] .score-num { color: var(--team4); }
+  .team-card[data-t="4"] .score-num { color: var(--team5); }
+  .team-card[data-t="5"] .score-num { color: var(--team6); }
+  .team-prog { font-size: 0.8rem; color: rgba(255,255,255,0.6); margin-top: 0.4rem; }
+  .prog-bar { height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; margin-top: 0.4rem; overflow: hidden; }
+  .prog-fill { height: 100%; border-radius: 3px; transition: width 0.5s; }
+  .team-card[data-t="0"] .prog-fill { background: var(--team1); }
+  .team-card[data-t="1"] .prog-fill { background: var(--team2); }
+  .team-card[data-t="2"] .prog-fill { background: var(--team3); }
+  .team-card[data-t="3"] .prog-fill { background: var(--team4); }
+  .team-card[data-t="4"] .prog-fill { background: var(--team5); }
+  .team-card[data-t="5"] .prog-fill { background: var(--team6); }
+
+  /* Controls */
+  .controls { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  .ctrl-btn {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--gold);
+    border-radius: 8px;
+    background: transparent;
+    color: var(--gold);
+    font-family: inherit;
+    cursor: pointer;
+    font-size: 0.9rem;
+  }
+  .ctrl-btn:hover { background: rgba(201,162,39,0.2); }
+  .ctrl-btn.danger { border-color: var(--accent); color: var(--accent); }
+  .ctrl-btn.danger:hover { background: rgba(233,69,96,0.2); }
+
+  .status-bar { font-size: 0.8rem; color: var(--muted); text-align: center; margin-top: 1rem; }
+
+  /* Loading */
+  .centered {
+    display: flex; align-items: center; justify-content: center;
+    min-height: 60vh; flex-direction: column; gap: 1rem;
+    color: var(--muted);
+  }
+  .centered h2 { color: var(--gold); }
+</style>
+</head>
+<body>
+
+<div id="loading" class="centered"><h2>📊 Loading scoreboard…</h2></div>
+
+<div id="app" style="display:none">
+  <div class="header">
+    <h1>⚔️ Narnia Math Relay — Live Scores</h1>
+    <div class="timer-display" id="timer-display">--:--</div>
+  </div>
+
+  <div class="controls">
+    <button class="ctrl-btn" id="pause-btn" onclick="togglePause()">⏸ Pause Timer</button>
+    <button class="ctrl-btn danger" onclick="endGame()">🏁 End Game</button>
+  </div>
+
+  <div class="scoreboard" id="scoreboard"></div>
+  <div class="status-bar" id="status-bar">🔴 Live — updates automatically</div>
+</div>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script>
+const TEAM_COLORS = ['#e74c3c','#3498db','#2ecc71','#f39c12','#9b59b6','#1abc9c'];
+const MEDALS = ['🥇','🥈','🥉','4️⃣','5️⃣','6️⃣'];
+const TOTAL_Q = 20;
+
+firebase.initializeApp({
+  apiKey: "AIzaSyA5qnahNEDXEo4CvDZi7PIqcKGfga0Oqn4",
+  authDomain: "mrswilliamsmath-1d6de.firebaseapp.com",
+  projectId: "mrswilliamsmath-1d6de",
+  storageBucket: "mrswilliamsmath-1d6de.firebasestorage.app",
+  messagingSenderId: "370339384366",
+  appId: "1:370339384366:web:e2e5abfd8263b84db223bf"
+});
+const db = firebase.firestore();
+
+const params = new URLSearchParams(location.search);
+const gameId = params.get('game');
+
+let gameData = null;
+let timerInterval = null;
+let timerRemaining = 0;
+let paused = false;
+let initialised = false;
+
+if (!gameId) {
+  document.getElementById('loading').innerHTML = '<h2>⚠️ No game ID</h2><p>Open this from the teacher setup page.</p>';
+} else {
+  db.collection('relay_games').doc(gameId).onSnapshot(snap => {
+    if (!snap.exists) {
+      document.getElementById('loading').innerHTML = '<h2>⚠️ Game not found</h2>';
+      return;
+    }
+    gameData = snap.data();
+
+    if (!initialised && gameData.startedAt) {
+      const elapsed = Math.floor((Date.now() - gameData.startedAt.toMillis()) / 1000);
+      timerRemaining = Math.max(0, gameData.timerSeconds - elapsed);
+      startTimer();
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('app').style.display = 'block';
+      initialised = true;
+    }
+
+    renderScoreboard();
+
+    if (gameData.status === 'ended') {
+      clearInterval(timerInterval);
+      document.getElementById('status-bar').textContent = '🏁 Game ended';
+    }
+  });
+}
+
+function renderScoreboard() {
+  if (!gameData) return;
+  const teams = gameData.teams;
+
+  // Sort by score desc
+  const sorted = Object.entries(teams)
+    .map(([key, t]) => ({ key, idx: parseInt(key.replace('team','')), name: t.name, score: t.score||0, answered: (t.answered||[]).length }))
+    .sort((a,b) => b.score - a.score);
+
+  const maxScore = sorted[0]?.score || 0;
+  const sb = document.getElementById('scoreboard');
+
+  sb.innerHTML = sorted.map((t, rank) => `
+    <div class="team-card ${t.score === maxScore && t.score > 0 ? 'leading':''}" data-t="${t.idx}">
+      <div class="rank-badge">${MEDALS[rank]}</div>
+      <h3>${t.name}</h3>
+      <div class="score-num">${t.score}</div>
+      <div class="team-prog">${t.answered} / ${TOTAL_Q} questions answered</div>
+      <div class="prog-bar"><div class="prog-fill" style="width:${(t.answered/TOTAL_Q*100).toFixed(1)}%"></div></div>
+    </div>
+  `).join('');
+
+  document.getElementById('status-bar').textContent = `🔴 Live — last updated ${new Date().toLocaleTimeString()}`;
+}
+
+function startTimer() {
+  updateTimerDisplay();
+  timerInterval = setInterval(() => {
+    if (paused) return;
+    timerRemaining--;
+    updateTimerDisplay();
+    if (timerRemaining <= 0) {
+      clearInterval(timerInterval);
+      document.getElementById('timer-display').textContent = '0:00';
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const m = Math.floor(timerRemaining / 60);
+  const s = timerRemaining % 60;
+  const el = document.getElementById('timer-display');
+  el.textContent = `${m}:${s.toString().padStart(2,'0')}`;
+  el.classList.toggle('urgent', timerRemaining <= 60 && timerRemaining > 0);
+}
+
+function togglePause() {
+  paused = !paused;
+  document.getElementById('pause-btn').textContent = paused ? '▶ Resume' : '⏸ Pause Timer';
+}
+
+async function endGame() {
+  if (!confirm('End the game for all teams?')) return;
+  await db.collection('relay_games').doc(gameId).update({ status: 'ended' });
+}
+</script>
+</body>
+</html>

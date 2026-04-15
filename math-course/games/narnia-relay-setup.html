@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Narnia Math Relay — Teacher Setup</title>
+<style>
+  :root {
+    --gold: #c9a227;
+    --dark: #1a1a2e;
+    --deep: #16213e;
+    --card: #0f3460;
+    --accent: #e94560;
+    --green: #2ecc71;
+    --text: #f0e6d3;
+    --muted: #a0968a;
+    --team1: #e74c3c;
+    --team2: #3498db;
+    --team3: #2ecc71;
+    --team4: #f39c12;
+    --team5: #9b59b6;
+    --team6: #1abc9c;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Georgia', serif;
+    background: radial-gradient(ellipse at center, #1a1a3e 0%, #0a0a1a 100%);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+  .container { width: 100%; max-width: 640px; }
+  .title-block { text-align: center; margin-bottom: 2rem; }
+  .title-block h1 { font-size: 2.2rem; color: var(--gold); text-shadow: 0 0 20px rgba(201,162,39,0.5); }
+  .title-block p { color: var(--muted); margin-top: 0.5rem; font-style: italic; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--gold);
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+  }
+  .card h2 { color: var(--gold); margin-bottom: 1.2rem; font-size: 1.1rem; }
+  .team-row { display: flex; gap: 0.8rem; margin-bottom: 0.8rem; align-items: center; }
+  .team-dot { width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0; }
+  .team-input {
+    flex: 1;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 8px;
+    padding: 0.6rem 1rem;
+    color: var(--text);
+    font-size: 1rem;
+    font-family: inherit;
+  }
+  .team-input:focus { outline: none; border-color: var(--gold); }
+  .timer-row { display: flex; gap: 1rem; align-items: center; margin-top: 1rem; flex-wrap: wrap; }
+  .timer-row label { color: var(--muted); font-size: 0.9rem; }
+  .num-select {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    color: var(--text);
+    font-size: 1rem;
+    font-family: inherit;
+  }
+  .start-btn {
+    width: 100%;
+    padding: 1rem;
+    background: linear-gradient(135deg, var(--gold), #a0821e);
+    border: none;
+    border-radius: 12px;
+    color: #1a1a1a;
+    font-size: 1.2rem;
+    font-weight: bold;
+    font-family: inherit;
+    cursor: pointer;
+    margin-top: 1.5rem;
+    transition: transform 0.1s, box-shadow 0.2s;
+  }
+  .start-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(201,162,39,0.4); }
+  .start-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+  .team-link-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    display: none;
+  }
+  .team-link-card h2 { color: var(--gold); margin-bottom: 1rem; font-size: 1.1rem; }
+  .team-link-row { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.6rem; flex-wrap: wrap; }
+  .team-badge {
+    width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+  }
+  .team-link-row span { font-size: 0.9rem; flex: 1; min-width: 100px; }
+  .copy-link {
+    font-size: 0.75rem;
+    padding: 0.3rem 0.7rem;
+    border-radius: 6px;
+    border: 1px solid var(--gold);
+    background: transparent;
+    color: var(--gold);
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .copy-link:hover { background: rgba(201,162,39,0.2); }
+  .team-url { font-size: 0.7rem; color: var(--muted); word-break: break-all; margin-left: 1rem; margin-bottom: 0.4rem; }
+  .scoreboard-link-btn {
+    display: block;
+    width: 100%;
+    padding: 0.7rem;
+    margin-top: 1rem;
+    border-radius: 10px;
+    border: 1px solid var(--gold);
+    background: transparent;
+    color: var(--gold);
+    font-family: inherit;
+    font-size: 0.95rem;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+  }
+  .scoreboard-link-btn:hover { background: rgba(201,162,39,0.2); }
+  .status-dot {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--muted);
+    margin-right: 4px;
+  }
+  .status-dot.online { background: var(--green); box-shadow: 0 0 6px var(--green); }
+  .end-btn {
+    width: 100%;
+    padding: 0.8rem;
+    background: transparent;
+    border: 1px solid var(--accent);
+    border-radius: 10px;
+    color: var(--accent);
+    font-family: inherit;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 0.5rem;
+  }
+  .end-btn:hover { background: rgba(233,69,96,0.15); }
+  #status-msg { text-align: center; color: var(--muted); font-size: 0.9rem; margin-top: 1rem; min-height: 1.4em; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="title-block">
+    <h1>⚔️ Narnia Math Relay</h1>
+    <p>Teacher Setup — multiplayer mode</p>
+  </div>
+
+  <!-- Setup card -->
+  <div class="card" id="setup-card">
+    <h2>🏰 Name the 6 Teams</h2>
+    <div class="team-row"><div class="team-dot" style="background:var(--team1)"></div><input class="team-input" id="t0" value="Team Aslan" /></div>
+    <div class="team-row"><div class="team-dot" style="background:var(--team2)"></div><input class="team-input" id="t1" value="Team Pevensie" /></div>
+    <div class="team-row"><div class="team-dot" style="background:var(--team3)"></div><input class="team-input" id="t2" value="Team Dawn Treader" /></div>
+    <div class="team-row"><div class="team-dot" style="background:var(--team4)"></div><input class="team-input" id="t3" value="Team Silver Chair" /></div>
+    <div class="team-row"><div class="team-dot" style="background:var(--team5)"></div><input class="team-input" id="t4" value="Team Magician's Nephew" /></div>
+    <div class="team-row"><div class="team-dot" style="background:var(--team6)"></div><input class="team-input" id="t5" value="Team Last Battle" /></div>
+    <div class="timer-row">
+      <label>Timer:</label>
+      <select class="num-select" id="timer-select">
+        <option value="1500" selected>25 minutes</option>
+        <option value="1200">20 minutes</option>
+        <option value="1800">30 minutes</option>
+        <option value="900">15 minutes</option>
+        <option value="600">10 minutes</option>
+      </select>
+    </div>
+    <button class="start-btn" id="start-btn" onclick="startGame()">🦁 Start the Relay!</button>
+    <div id="status-msg"></div>
+  </div>
+
+  <!-- Links card (shown after game starts) -->
+  <div class="team-link-card" id="links-card">
+    <h2>📱 Send These Links to Each Team</h2>
+    <div id="team-links"></div>
+    <a class="scoreboard-link-btn" id="scoreboard-link" href="#" target="_blank">📊 Open Live Scoreboard</a>
+    <button class="end-btn" onclick="endGame()">🏁 End Game</button>
+  </div>
+</div>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script>
+const TEAM_COLORS = ['var(--team1)','var(--team2)','var(--team3)','var(--team4)','var(--team5)','var(--team6)'];
+const BASE_URL = 'https://natron516.github.io/williams-math-course/games/';
+
+firebase.initializeApp({
+  apiKey: "AIzaSyA5qnahNEDXEo4CvDZi7PIqcKGfga0Oqn4",
+  authDomain: "mrswilliamsmath-1d6de.firebaseapp.com",
+  projectId: "mrswilliamsmath-1d6de",
+  storageBucket: "mrswilliamsmath-1d6de.firebasestorage.app",
+  messagingSenderId: "370339384366",
+  appId: "1:370339384366:web:e2e5abfd8263b84db223bf"
+});
+const db = firebase.firestore();
+
+let gameId = null;
+
+async function startGame() {
+  const btn = document.getElementById('start-btn');
+  const msg = document.getElementById('status-msg');
+  btn.disabled = true;
+  msg.textContent = 'Starting game…';
+
+  const teams = ['t0','t1','t2','t3','t4','t5'].map(id => document.getElementById(id).value.trim() || `Team ${parseInt(id[1])+1}`);
+  const timerSeconds = parseInt(document.getElementById('timer-select').value);
+
+  // Generate a short game ID
+  gameId = 'relay_' + Date.now().toString(36);
+
+  const teamData = {};
+  teams.forEach((name, i) => {
+    teamData[`team${i}`] = { name, score: 0, answered: [] };
+  });
+
+  await db.collection('relay_games').doc(gameId).set({
+    teams: teamData,
+    timerSeconds,
+    startedAt: firebase.firestore.FieldValue.serverTimestamp(),
+    status: 'active'
+  });
+
+  msg.textContent = 'Game started! ✅';
+  document.getElementById('setup-card').style.display = 'none';
+  showLinks(teams);
+}
+
+function showLinks(teams) {
+  const card = document.getElementById('links-card');
+  card.style.display = 'block';
+
+  const container = document.getElementById('team-links');
+  container.innerHTML = teams.map((name, i) => {
+    const url = `${BASE_URL}narnia-relay-team.html?game=${gameId}&team=${i}`;
+    return `
+      <div class="team-link-row">
+        <div class="team-badge" style="background:${TEAM_COLORS[i]}"></div>
+        <span>${name}</span>
+        <button class="copy-link" onclick="copyURL('${url}', this)">Copy Link</button>
+      </div>
+      <div class="team-url">${url}</div>
+    `;
+  }).join('');
+
+  const sbUrl = `${BASE_URL}narnia-relay-scoreboard.html?game=${gameId}`;
+  document.getElementById('scoreboard-link').href = sbUrl;
+}
+
+function copyURL(url, btn) {
+  navigator.clipboard.writeText(url).then(() => {
+    btn.textContent = '✅ Copied!';
+    setTimeout(() => btn.textContent = 'Copy Link', 2000);
+  });
+}
+
+async function endGame() {
+  if (!gameId) return;
+  if (!confirm('End the game and show final scores?')) return;
+  await db.collection('relay_games').doc(gameId).update({ status: 'ended' });
+  window.open(`${BASE_URL}narnia-relay-scoreboard.html?game=${gameId}`, '_blank');
+}
+</script>
+</body>
+</html>
