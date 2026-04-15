@@ -504,20 +504,11 @@ let firstAnswerThisRound = null;
 let gameStarted = false;
 
 function startGame() {
-  // Reset all game state fresh
-  scores = [0, 0, 0, 0];
-  answered = [[], [], [], []];
-  currentQ = 0;
-  paused = false;
-  firstAnswerThisRound = null;
-  if (timerInterval) clearInterval(timerInterval);
-
   teamNames = ['t0','t1','t2','t3'].map(id => document.getElementById(id).value.trim() || `Team ${parseInt(id[1])+1}`);
   timerSeconds = parseInt(document.getElementById('timer-select').value);
 
   document.getElementById('setup-screen').style.display = 'none';
   document.getElementById('dashboard').style.display = 'block';
-  document.getElementById('win-screen').style.display = 'none';
 
   buildScoreboard();
   buildAnswerGrid();
@@ -641,20 +632,14 @@ function submitAnswer(teamIdx) {
 }
 
 function updateScoreboard() {
-  const activeScores = scores.slice(0, teamNames.length);
-  const maxScore = activeScores.length > 0 ? Math.max(...activeScores) : 0;
+  const maxScore = Math.max(...scores);
   teamNames.forEach((name, i) => {
-    const scoreEl = document.getElementById(`score-${i}`);
-    const progEl = document.getElementById(`prog-${i}`);
-    const fillEl = document.getElementById(`fill-${i}`);
+    document.getElementById(`score-${i}`).textContent = scores[i];
+    document.getElementById(`prog-${i}`).textContent = `${answered[i].length} / ${QUESTIONS.length} answered`;
+    const pct = (answered[i].length / QUESTIONS.length) * 100;
+    document.getElementById(`fill-${i}`).style.width = pct + '%';
     const card = document.getElementById(`team-card-${i}`);
-    if (scoreEl) scoreEl.textContent = scores[i];
-    if (progEl) progEl.textContent = `${answered[i].length} / ${QUESTIONS.length} answered`;
-    if (fillEl) {
-      const pct = (answered[i].length / QUESTIONS.length) * 100;
-      fillEl.style.width = pct + '%';
-    }
-    if (card) card.classList.toggle('leading', scores[i] === maxScore && scores[i] > 0);
+    card.classList.toggle('leading', scores[i] === maxScore && scores[i] > 0);
   });
 }
 
