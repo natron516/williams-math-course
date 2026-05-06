@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Classical Music Math Relay</title>
+<style>
+  :root {
+    --gold: #c9a227;
+    --dark: #12091a;
+    --deep: #1c1028;
+    --card: #2a1540;
+    --accent: #c94070;
+    --green: #2ecc71;
+    --text: #f5f0e8;
+    --muted: #b0a0c0;
+    --burgundy: #7a1f3a;
+    --ivory: #f5f0e8;
+    --team1: #e74c3c;
+    --team2: #3498db;
+    --team3: #2ecc71;
+    --team4: #f39c12;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Georgia', serif;
+    background: var(--dark);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── SETUP SCREEN ── */
+  #setup-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+    background: radial-gradient(ellipse at center, #2a1540 0%, #12091a 100%);
+  }
+  .title-block { text-align: center; margin-bottom: 2rem; }
+  .title-block h1 { font-size: 2.4rem; color: var(--gold); text-shadow: 0 0 20px rgba(201,162,39,0.5); }
+  .title-block p { color: var(--muted); margin-top: 0.5rem; font-style: italic; }
+  .setup-card {
+    background: var(--card);
+    border: 1px solid var(--gold);
+    border-radius: 16px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 600px;
+  }
+  .setup-card h2 { color: var(--gold); margin-bottom: 1.5rem; font-size: 1.2rem; }
+  .team-row { display: flex; gap: 1rem; margin-bottom: 1rem; align-items: center; }
+  .team-dot { width: 16px; height: 16px; border-radius: 50%; flex-shrink: 0; }
+  .team-input {
+    flex: 1;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 8px;
+    padding: 0.6rem 1rem;
+    color: var(--text);
+    font-size: 1rem;
+    font-family: inherit;
+  }
+  .team-input:focus { outline: none; border-color: var(--gold); }
+  .num-row { display: flex; gap: 1rem; margin: 1.5rem 0; align-items: center; flex-wrap: wrap; }
+  .num-row label { color: var(--muted); font-size: 0.9rem; }
+  .num-select {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    color: var(--text);
+    font-size: 1rem;
+    font-family: inherit;
+  }
+  .start-btn {
+    width: 100%;
+    padding: 1rem;
+    background: linear-gradient(135deg, var(--gold), #a0821e);
+    border: none;
+    border-radius: 12px;
+    color: #1a1a1a;
+    font-size: 1.2rem;
+    font-weight: bold;
+    font-family: inherit;
+    cursor: pointer;
+    transition: transform 0.1s, box-shadow 0.2s;
+    margin-top: 1rem;
+  }
+  .start-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(201,162,39,0.4); }
+  .quote { color: var(--muted); font-style: italic; font-size: 0.85rem; text-align: center; margin-top: 2rem; max-width: 500px; }
+
+  /* ── TEACHER DASHBOARD ── */
+  #dashboard {
+    display: none;
+    min-height: 100vh;
+    padding: 1rem;
+    background: radial-gradient(ellipse at top, #2a1540 0%, #12091a 100%);
+  }
+  .dash-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .dash-header h1 { color: var(--gold); font-size: 1.4rem; }
+  .timer-display {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--gold);
+    font-family: monospace;
+    text-shadow: 0 0 10px rgba(201,162,39,0.5);
+  }
+  .timer-display.urgent { color: var(--accent); animation: pulse 1s infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
+  .dash-controls { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .ctrl-btn {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--gold);
+    border-radius: 8px;
+    background: transparent;
+    color: var(--gold);
+    font-family: inherit;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.2s;
+  }
+  .ctrl-btn:hover { background: rgba(201,162,39,0.2); }
+  .ctrl-btn.danger { border-color: var(--accent); color: var(--accent); }
+  .ctrl-btn.danger:hover { background: rgba(201,64,112,0.2); }
+
+  /* Scoreboard */
+  .scoreboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .team-card {
+    border-radius: 12px;
+    padding: 1rem;
+    border: 2px solid transparent;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .team-card.leading { border-color: var(--gold); transform: scale(1.02); }
+  .team-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+  .team-score { font-size: 2.5rem; font-weight: bold; font-family: monospace; }
+  .team-progress { margin-top: 0.5rem; font-size: 0.8rem; color: rgba(255,255,255,0.7); }
+  .progress-bar { height: 6px; border-radius: 3px; background: rgba(255,255,255,0.15); margin-top: 0.4rem; overflow: hidden; }
+  .progress-fill { height: 100%; border-radius: 3px; transition: width 0.4s; }
+  .team-card[data-team="0"] { background: linear-gradient(135deg, rgba(231,76,60,0.3), rgba(231,76,60,0.1)); }
+  .team-card[data-team="1"] { background: linear-gradient(135deg, rgba(52,152,219,0.3), rgba(52,152,219,0.1)); }
+  .team-card[data-team="2"] { background: linear-gradient(135deg, rgba(46,204,113,0.3), rgba(46,204,113,0.1)); }
+  .team-card[data-team="3"] { background: linear-gradient(135deg, rgba(243,156,18,0.3), rgba(243,156,18,0.1)); }
+  .team-card[data-team="0"] .team-score, .team-card[data-team="0"] h3 { color: var(--team1); }
+  .team-card[data-team="1"] .team-score, .team-card[data-team="1"] h3 { color: var(--team2); }
+  .team-card[data-team="2"] .team-score, .team-card[data-team="2"] h3 { color: var(--team3); }
+  .team-card[data-team="3"] .team-score, .team-card[data-team="3"] h3 { color: var(--team4); }
+  .progress-fill[data-team="0"] { background: var(--team1); }
+  .progress-fill[data-team="1"] { background: var(--team2); }
+  .progress-fill[data-team="2"] { background: var(--team3); }
+  .progress-fill[data-team="3"] { background: var(--team4); }
+
+  /* Current question display */
+  .current-q {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 1.2rem;
+    margin-bottom: 1rem;
+    border-left: 4px solid var(--gold);
+  }
+  .current-q h4 { color: var(--gold); font-size: 0.85rem; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .q-nav { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.8rem; }
+  .q-pill {
+    padding: 0.3rem 0.7rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.05);
+    color: var(--muted);
+    transition: all 0.2s;
+  }
+  .q-pill.active { background: var(--gold); color: #1a1a1a; border-color: var(--gold); font-weight: bold; }
+  .q-pill.answered { background: rgba(46,204,113,0.2); border-color: var(--green); color: var(--green); }
+
+  /* Answer input area per team */
+  .answer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  .answer-panel {
+    border-radius: 10px;
+    padding: 1rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .answer-panel h4 { font-size: 0.85rem; margin-bottom: 0.6rem; }
+  .answer-panel[data-team="0"] h4 { color: var(--team1); }
+  .answer-panel[data-team="1"] h4 { color: var(--team2); }
+  .answer-panel[data-team="2"] h4 { color: var(--team3); }
+  .answer-panel[data-team="3"] h4 { color: var(--team4); }
+  .ans-input {
+    width: 100%;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 8px;
+    padding: 0.5rem 0.8rem;
+    color: var(--text);
+    font-size: 1rem;
+    font-family: inherit;
+    margin-bottom: 0.5rem;
+  }
+  .ans-input:focus { outline: none; border-color: var(--gold); }
+  .submit-ans {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 8px;
+    border: none;
+    font-family: inherit;
+    font-size: 0.9rem;
+    cursor: pointer;
+    font-weight: bold;
+    transition: opacity 0.2s;
+  }
+  .submit-ans:disabled { opacity: 0.4; cursor: not-allowed; }
+  .answer-panel[data-team="0"] .submit-ans { background: var(--team1); color: white; }
+  .answer-panel[data-team="1"] .submit-ans { background: var(--team2); color: white; }
+  .answer-panel[data-team="2"] .submit-ans { background: var(--team3); color: white; }
+  .answer-panel[data-team="3"] .submit-ans { background: var(--team4); color: white; }
+  .ans-status { font-size: 0.8rem; margin-top: 0.3rem; min-height: 1.2em; }
+  .ans-status.correct { color: var(--green); }
+  .ans-status.wrong { color: var(--accent); }
+
+  /* Toast */
+  #toast {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    background: var(--card);
+    border: 1px solid var(--gold);
+    border-radius: 10px;
+    padding: 0.8rem 1.2rem;
+    font-size: 0.95rem;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s;
+    z-index: 999;
+    max-width: 280px;
+  }
+  #toast.show { opacity: 1; transform: translateY(0); }
+
+  /* ── WIN SCREEN ── */
+  #win-screen {
+    display: none;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 2rem;
+    background: radial-gradient(ellipse at center, #2a1540 0%, #12091a 100%);
+  }
+  .confetti-emoji { font-size: 4rem; margin-bottom: 1rem; animation: bounce 0.6s infinite alternate; }
+  @keyframes bounce { from { transform: scale(1); } to { transform: scale(1.1); } }
+  .win-title { font-size: 2.5rem; color: var(--gold); margin-bottom: 0.5rem; }
+  .win-subtitle { color: var(--muted); font-style: italic; margin-bottom: 2rem; max-width: 500px; }
+  .final-scores { display: flex; flex-direction: column; gap: 0.8rem; max-width: 400px; margin: 0 auto 2rem; }
+  .final-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 1.2rem;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.06);
+    font-size: 1.1rem;
+  }
+  .final-row.winner { background: rgba(201,162,39,0.2); border: 1px solid var(--gold); font-weight: bold; }
+  .play-again {
+    padding: 0.8rem 2rem;
+    background: var(--gold);
+    border: none;
+    border-radius: 10px;
+    color: #1a1a1a;
+    font-size: 1rem;
+    font-weight: bold;
+    font-family: inherit;
+    cursor: pointer;
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .title-block h1 { font-size: 1.8rem; }
+    .timer-display { font-size: 1.5rem; }
+    .team-score { font-size: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════ SETUP SCREEN ══════════════ -->
+<div id="setup-screen">
+  <div class="title-block">
+    <h1>🎼 Classical Music Math Relay</h1>
+    <p>Team relay race — general math review</p>
+  </div>
+  <div class="setup-card">
+    <h2>🎻 Name Your Teams</h2>
+    <div class="team-row">
+      <div class="team-dot" style="background:var(--team1)"></div>
+      <input class="team-input" id="t0" value="Team Mozart" placeholder="Team 1 name" />
+    </div>
+    <div class="team-row">
+      <div class="team-dot" style="background:var(--team2)"></div>
+      <input class="team-input" id="t1" value="Team Beethoven" placeholder="Team 2 name" />
+    </div>
+    <div class="team-row">
+      <div class="team-dot" style="background:var(--team3)"></div>
+      <input class="team-input" id="t2" value="Team Bach" placeholder="Team 3 name" />
+    </div>
+    <div class="team-row">
+      <div class="team-dot" style="background:var(--team4)"></div>
+      <input class="team-input" id="t3" value="Team Vivaldi" placeholder="Team 4 name" />
+    </div>
+    <div class="num-row">
+      <label>Timer:</label>
+      <select class="num-select" id="timer-select">
+        <option value="1500" selected>25 minutes</option>
+        <option value="1200">20 minutes</option>
+        <option value="1800">30 minutes</option>
+        <option value="900">15 minutes</option>
+        <option value="600">10 minutes</option>
+      </select>
+    </div>
+    <button class="start-btn" onclick="startGame()">🎵 Begin the Relay!</button>
+  </div>
+  <p class="quote">"Music gives a soul to the universe, wings to the mind, flight to the imagination." — Plato (attributed)</p>
+</div>
+
+<!-- ══════════════ DASHBOARD ══════════════ -->
+<div id="dashboard">
+  <div class="dash-header">
+    <h1>🎼 Classical Music Math Relay</h1>
+    <div class="timer-display" id="timer-display">25:00</div>
+    <div class="dash-controls">
+      <button class="ctrl-btn" id="pause-btn" onclick="togglePause()">⏸ Pause</button>
+      <button class="ctrl-btn" onclick="showQuestion()">📋 Show Q</button>
+      <button class="ctrl-btn danger" onclick="endGame()">🏁 End Game</button>
+    </div>
+  </div>
+
+  <!-- Scoreboard -->
+  <div class="scoreboard" id="scoreboard"></div>
+
+  <!-- Current Question -->
+  <div class="current-q">
+    <h4>🎵 Current Question — <span id="q-label">Q1</span> of <span id="q-total">20</span></h4>
+    <div id="q-text" style="line-height:1.6; font-size:1rem;"></div>
+    <div class="q-nav" id="q-nav"></div>
+  </div>
+
+  <!-- Answer panels -->
+  <div class="answer-grid" id="answer-grid"></div>
+
+  <div style="text-align:center; color:var(--muted); font-size:0.8rem; margin-top:1rem;">
+    🎵 Each correct answer = 10 pts · Bonus round answers = 15 pts · First to answer = +2 pts bonus
+  </div>
+</div>
+
+<!-- ══════════════ WIN SCREEN ══════════════ -->
+<div id="win-screen" style="display:flex; display:none;">
+  <div class="confetti-emoji">🏆</div>
+  <div class="win-title" id="win-title">Team Mozart Wins!</div>
+  <div class="win-subtitle" id="win-subtitle"></div>
+  <div class="final-scores" id="final-scores"></div>
+  <button class="play-again" onclick="location.reload()">🎵 Play Again</button>
+</div>
+
+<div id="toast"></div>
+
+<script>
+// ══════════════════════════════════════════
+//  QUESTION BANK — Classical Music Theme
+//  80 questions; game picks 18 regular + 2 bonus = 20
+// ══════════════════════════════════════════
+const QUESTION_BANK = [
+  // ── ADDITION & SUBTRACTION ─────────────────────────────────────
+  {q:"🎻 <b>Vivaldi's Violin Strings</b><br>Vivaldi had 24 violin strings. He broke 7 during rehearsal and restrung 4 new ones. How many strings does he have now?", a:["21"], pts:10, hint:"24 − 7 + 4"},
+  {q:"🎹 <b>Mozart's Sonatas</b><br>Mozart wrote 18 piano sonatas before age 20 and 9 after. He dedicated 5 to patrons. How many were not dedicated?", a:["22"], pts:10, hint:"18 + 9 − 5"},
+  {q:"🎼 <b>Beethoven's Symphonies</b><br>Beethoven planned 11 symphonies but only finished 9. He sketched 3 extra movements. How many unfinished movements remained?", a:["5"], pts:10, hint:"(11 − 9) + 3"},
+  {q:"🎷 <b>Orchestra Seats</b><br>The concert hall had 48 seats in the front section and 37 in the back. 15 seats were reserved for VIPs. How many were available to the public?", a:["70"], pts:10, hint:"48 + 37 − 15"},
+  {q:"🎺 <b>Trumpet Players</b><br>An orchestra had 52 musicians. 19 left for intermission, then 8 returned early. How many were on stage?", a:["41"], pts:10, hint:"52 − 19 + 8"},
+  {q:"🎵 <b>Sheet Music Pages</b><br>A conductor had 64 pages of sheet music. She marked 27 pages for review. How many pages were not marked?", a:["37"], pts:10, hint:"64 − 27"},
+
+  // ── MULTIPLICATION ─────────────────────────────────────────────
+  {q:"🎻 <b>String Quartets</b><br>A music school formed 9 string quartets with 4 players each. How many string players in total?", a:["36"], pts:10, hint:"9 × 4"},
+  {q:"🎼 <b>Measures per Movement</b><br>A symphony has 8 movements with 12 measures each. How many measures in all?", a:["96"], pts:10, hint:"8 × 12"},
+  {q:"🎹 <b>Piano Keys Practice</b><br>A pianist practiced 12 scales with 3 variations each. How many scale variations total?", a:["36"], pts:10, hint:"12 × 3"},
+  {q:"🏛️ <b>Concert Hall Rows</b><br>The grand hall has 15 rows of seats with 11 seats per row. How many seats total?", a:["165"], pts:10, hint:"15 × 11"},
+  {q:"🎶 <b>Bach's Preludes</b><br>Bach wrote preludes in 9 groups of 14. How many preludes total?", a:["126"], pts:10, hint:"9 × 14"},
+  {q:"🎵 <b>Music Stands</b><br>Each of 7 orchestra sections has 12 music stands. How many stands in all?", a:["84"], pts:10, hint:"7 × 12"},
+
+  // ── DIVISION ───────────────────────────────────────────────────
+  {q:"🎻 <b>Dividing Sheet Music</b><br>72 pages of sheet music divided equally among 9 musicians. How many pages each?", a:["8"], pts:10, hint:"72 ÷ 9"},
+  {q:"🎺 <b>Orchestra Sections</b><br>240 musicians organized into 8 equal sections. How many per section?", a:["30"], pts:10, hint:"240 ÷ 8"},
+  {q:"🎼 <b>Sharing the Program</b><br>84 concert programs shared equally among 4 classes. How many programs per class?", a:["21"], pts:10, hint:"84 ÷ 4"},
+  {q:"🎹 <b>Piano Exercises</b><br>126 exercises divided into sets of 7. How many sets?", a:["18"], pts:10, hint:"126 ÷ 7"},
+  {q:"🎵 <b>Rehearsal Groups</b><br>48 choir members split into groups of 6. How many groups?", a:["8"], pts:10, hint:"48 ÷ 6"},
+
+  // ── FRACTIONS ──────────────────────────────────────────────────
+  {q:"🎶 <b>Fraction Review</b><br>There are 20 instruments in the orchestra. ¾ are string instruments. How many string instruments?", a:["15"], pts:10, hint:"20 × 3 ÷ 4"},
+  {q:"🎹 <b>Chopin's Nocturnes</b><br>Chopin composed 24 nocturnes. ¾ were dedicated to women. How many were dedicated?", a:["18"], pts:10, hint:"24 × 3 ÷ 4"},
+  {q:"🎻 <b>Violin Strings</b><br>The string section had 40 violins. Half were played by left-handed musicians. How many?", a:["20"], pts:10, hint:"40 ÷ 2"},
+  {q:"🎼 <b>Completed Scores</b><br>Brahms started 36 compositions. He completed ⅔ of them. How many did he complete?", a:["24"], pts:10, hint:"36 × 2 ÷ 3"},
+  {q:"🎵 <b>The Choir</b><br>A choir had 60 singers. ¼ were sopranos. How many sopranos?", a:["15"], pts:10, hint:"60 ÷ 4"},
+  {q:"🎺 <b>Rehearsal Time</b><br>The orchestra rehearsed 80 hours total. They spent ⅜ of the time on concertos. How many hours on concertos?", a:["30"], pts:10, hint:"80 × 3 ÷ 8"},
+
+  // ── PERCENTAGES ────────────────────────────────────────────────
+  {q:"💯 <b>Percentage Review</b><br>80 concert tickets were sold. 25% were student discounts. How many student tickets?", a:["20"], pts:10, hint:"80 ÷ 4"},
+  {q:"🎟️ <b>Sold-Out Concert</b><br>The concert hall held 200 guests. 15% were music students. How many were music students?", a:["30"], pts:10, hint:"200 × 0.15"},
+  {q:"🎻 <b>String Section</b><br>An orchestra has 500 musicians. 40% are in the string section. How many string players?", a:["200"], pts:10, hint:"500 × 0.40"},
+  {q:"🎼 <b>Completed Pieces</b><br>A composer planned 300 pieces. He completed 30%. How many did he complete?", a:["90"], pts:10, hint:"300 × 0.30"},
+  {q:"🎹 <b>Piano Students</b><br>A conservatory has 120 students. 75% study piano. How many piano students?", a:["90"], pts:10, hint:"120 × 0.75"},
+
+  // ── PERIMETER ──────────────────────────────────────────────────
+  {q:"📐 <b>Perimeter Review</b><br>A rehearsal room is 15 feet long and 10 feet wide. What is its perimeter?", a:["50","50 feet","50ft"], pts:10, hint:"2 × (15 + 10)"},
+  {q:"🏛️ <b>The Concert Stage</b><br>The stage is 40 ft long and 25 ft wide. How many feet of trim around the edge?", a:["130","130 feet","130ft"], pts:10, hint:"2 × (40 + 25)"},
+  {q:"🎵 <b>The Practice Room</b><br>A square practice room has sides of 8 feet each. What is the perimeter?", a:["32","32 feet","32ft"], pts:10, hint:"4 × 8"},
+  {q:"🎻 <b>The Recital Hall</b><br>A recital hall is 22 meters long and 9 meters wide. What is its perimeter?", a:["62","62 meters","62m"], pts:10, hint:"2 × (22 + 9)"},
+  {q:"🎼 <b>The Orchestra Pit</b><br>The orchestra pit is 35 ft long and 20 ft wide. How long is the railing around it?", a:["110","110 feet","110ft"], pts:10, hint:"2 × (35 + 20)"},
+
+  // ── AREA ───────────────────────────────────────────────────────
+  {q:"📏 <b>Area Review</b><br>A square music stand platform has sides of 9 feet. What is its area?", a:["81","81 sq ft","81 square feet"], pts:10, hint:"9 × 9"},
+  {q:"🎹 <b>The Grand Ballroom Stage</b><br>A perfect square stage has each side 12 feet. What is the area?", a:["144","144 sq ft","144 square feet"], pts:10, hint:"12 × 12"},
+  {q:"🏛️ <b>The Orchestra Hall</b><br>The hall is 18 feet long and 14 feet wide. What is its area?", a:["252","252 sq ft","252 square feet"], pts:10, hint:"18 × 14"},
+  {q:"🎶 <b>The Outdoor Stage</b><br>An outdoor stage is 25 meters long and 16 meters wide. What is its area?", a:["400","400 sq m","400 square meters"], pts:10, hint:"25 × 16"},
+  {q:"🎵 <b>The Green Room</b><br>The green room is 11 ft by 9 ft. What is its area?", a:["99","99 sq ft","99 square feet"], pts:10, hint:"11 × 9"},
+
+  // ── UNIT CONVERSION ────────────────────────────────────────────
+  {q:"📏 <b>Unit Conversion</b><br>A double bass is 3 feet tall. How many inches? (1 ft = 12 in)", a:["36","36 inches"], pts:10, hint:"3 × 12"},
+  {q:"🎻 <b>The Violin Bow</b><br>A violin bow is 9 inches shorter than a cello bow. The cello bow is 1 foot long. How long is the violin bow (in inches)?", a:["3","3 inches"], pts:10, hint:"12 − 9"},
+  {q:"🎺 <b>The Trumpet Length</b><br>A trumpet is 2 feet long when uncoiled. How many inches is that?", a:["24","24 inches"], pts:10, hint:"2 × 12"},
+  {q:"🚗 <b>Tour Distance</b><br>The orchestra toured 5 miles to the venue. How many feet is that? (1 mile = 5,280 feet)", a:["26400","26,400","26400 feet"], pts:10, hint:"5 × 5,280"},
+  {q:"🕰️ <b>The Long Tour</b><br>The orchestra's European tour lasted 3 years. How many months is that?", a:["36","36 months"], pts:10, hint:"3 × 12"},
+  {q:"⏱️ <b>Symphony Duration</b><br>Beethoven's 9th lasts 2 hours. How many minutes is that?", a:["120","120 minutes"], pts:10, hint:"2 × 60"},
+
+  // ── TIME ───────────────────────────────────────────────────────
+  {q:"⏰ <b>Time Review</b><br>A concert starts at 2:15 PM and runs 1 hour 45 minutes. What time does it end?", a:["4:00","4:00 pm","4 pm","4:00 PM"], pts:10, hint:"2:15 + 1:45"},
+  {q:"🌅 <b>Morning Rehearsal</b><br>Rehearsal began at 9:30 AM and lasted 2 hours 15 minutes. What time did it end?", a:["11:45","11:45 am","11:45 AM"], pts:10, hint:"9:30 + 2:15"},
+  {q:"🌙 <b>Evening Performance</b><br>The evening concert started at 6:00 PM and ran 3 hours 30 minutes. What time did it end?", a:["9:30","9:30 pm","9:30 PM"], pts:10, hint:"6:00 + 3:30"},
+  {q:"🏛️ <b>The Master Class</b><br>The master class started at 10:45 AM and ended at 1:15 PM. How long did it last?", a:["2 hours 30 minutes","2.5 hours","2h 30m","150 minutes"], pts:10, hint:"1:15 PM − 10:45 AM"},
+
+  // ── MULTI-STEP ─────────────────────────────────────────────────
+  {q:"🔢 <b>Multi-Step Problem</b><br>5 music stands. Each stand holds 4 folders. Each folder has 12 pages. Total pages?", a:["240"], pts:10, hint:"5 × 4 × 12"},
+  {q:"🎼 <b>Programs for the Concert</b><br>6 sections of the hall, each needing 4 ushers, each carrying 8 programs. How many programs total?", a:["192"], pts:10, hint:"6 × 4 × 8"},
+  {q:"🎹 <b>Recital Supplies</b><br>7 recitals each need 5 programs. Each program has 9 pages. How many pages total?", a:["315"], pts:10, hint:"7 × 5 × 9"},
+  {q:"🎻 <b>String Section</b><br>The string section has 4 rows of musicians. Each row has 6 players. Each player uses 3 bow strings per season. How many bow strings total?", a:["72"], pts:10, hint:"4 × 6 × 3"},
+  {q:"🏛️ <b>The Archive Room</b><br>The music library has 3 archive rooms. Each room has 8 shelves. Each shelf holds 25 scores. How many scores total?", a:["600"], pts:10, hint:"3 × 8 × 25"},
+
+  // ── DIVISION WITH REMAINDER ────────────────────────────────────
+  {q:"🔢 <b>Division Review</b><br>46 choir members split into groups of 5. How many complete groups, and how many singers left over?", a:["9 groups, 1 left over","9 groups 1 left over","9r1","9 remainder 1"], pts:10, hint:"46 ÷ 5"},
+  {q:"🎵 <b>Programs in Stacks</b><br>50 programs stacked in piles of 7. How many full piles, and how many programs left over?", a:["7 piles, 1 left over","7r1","7 remainder 1","7 piles 1 left"], pts:10, hint:"50 ÷ 7"},
+  {q:"🎻 <b>Bow Bundles</b><br>75 violin bows bundled in groups of 8. How many full bundles, and how many bows left over?", a:["9 bundles, 3 left over","9r3","9 remainder 3","9 bundles 3 left"], pts:10, hint:"75 ÷ 8"},
+
+  // ── WORD PROBLEMS (MIXED) ──────────────────────────────────────
+  {q:"🎹 <b>Practicing Scales</b><br>A pianist practices 12 scales per hour. How many scales in 3 hours?", a:["36","36 scales"], pts:10, hint:"12 × 3"},
+  {q:"🚂 <b>Tour by Train</b><br>The orchestra travels 15 miles per hour by train. How far in 4 hours?", a:["60","60 miles"], pts:10, hint:"15 × 4"},
+  {q:"🎟️ <b>Concert Tickets</b><br>A student bought a program for 45 cents and a bookmark for 78 cents. She paid with 150 cents. How much change did she get?", a:["27","27 cents"], pts:10, hint:"150 − 45 − 78"},
+  {q:"🎻 <b>Violin Practice</b><br>A violinist practiced 12 pieces each day for 6 days. She performed 58 of them perfectly. How many still needed work?", a:["14"], pts:10, hint:"(12 × 6) − 58"},
+  {q:"🍞 <b>Feeding the Orchestra</b><br>Each musician eats 3 sandwiches at intermission. There are 24 musicians. How many sandwiches for 5 intermissions?", a:["360"], pts:10, hint:"3 × 24 × 5"},
+  {q:"🎵 <b>The Metronome</b><br>A metronome has 2 batteries. Each battery lasts 45 hours. The musician has already used 12 hours. How many hours remain?", a:["78"], pts:10, hint:"(2 × 45) − 12"},
+  {q:"🎼 <b>Conducting Tempo</b><br>A conductor beats 8 measures per minute in adagio. How many measures in 15 minutes?", a:["120"], pts:10, hint:"8 × 15"},
+  {q:"🏛️ <b>Balcony Stairs</b><br>Each balcony level in the concert hall has 36 steps. There are 4 levels. How many steps total?", a:["144"], pts:10, hint:"36 × 4"},
+  {q:"⭐ <b>Featured Performers</b><br>The program listed 6 groups of 13 featured performers. How many featured performers total?", a:["78"], pts:10, hint:"6 × 13"},
+  {q:"🎺 <b>Instrument Inventory</b><br>The school had 96 brass instruments. 32 were loaned to students. Then 14 more arrived from storage. How many instruments now?", a:["78"], pts:10, hint:"96 − 32 + 14"},
+
+  // ── BONUS QUESTIONS (pts:15) ───────────────────────────────────
+  {q:"🎹 <b>BONUS ⭐ — Beethoven's Archives</b><br>Shelf 1: 9 rows × 12 scores. Shelf 2: 6 rows × 15 scores. Shelf 3: 4 rows × 18 scores. Each score has 8 pages. Total pages?", a:["1488"], pts:15, hint:"(9×12 + 6×15 + 4×18) × 8 = 270 × 8"},
+  {q:"🎻 <b>BONUS ⭐ — The Orchestra Auction</b><br>8 violins @ 15 coins, 6 cellos @ 24, 12 flutes @ 30, 4 harps @ 55, 9 trumpets @ 20. Grand total?", a:["1258","1,258"], pts:15, hint:"(8×15)+(6×24)+(12×30)+(4×55)+(9×20)"},
+  {q:"🚂 <b>BONUS ⭐ — The Grand Tour</b><br>The orchestra toured 3 legs: 120 miles, 85 miles, 97 miles. They returned halfway home. Total distance traveled?", a:["453","453 miles"], pts:15, hint:"120+85+97 = 302; return = 302÷2 = 151; 302+151"},
+  {q:"🏛️ <b>BONUS ⭐ — Concert Hall Renovation</b><br>The hall has 5 wings. Each wing has 4 floors. Each floor has 8 rooms. Each room needs 3 windows. How many windows total?", a:["480"], pts:15, hint:"5 × 4 × 8 × 3"},
+  {q:"💰 <b>BONUS ⭐ — The Music Fund</b><br>The fund has 4 accounts. Account 1: 125 coins. Account 2: 250 coins. Account 3: double account 1. Account 4: half of account 2. Total coins?", a:["625"], pts:15, hint:"125 + 250 + (2×125) + (250÷2)"},
+  {q:"🎼 <b>BONUS ⭐ — Festival Supplies</b><br>A music festival has 6 stages × 24 performers each. Each performer carries 3 instruments and 2 music folders. How many total items carried?", a:["720"], pts:15, hint:"6×24 = 144 performers; 144 × (3+2) = 144 × 5"}
+];
+
+// Fisher-Yates shuffle
+function shuffleArray(arr) {
+  var a = arr.slice();
+  for (var i = a.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+  }
+  return a;
+}
+
+// Pick 18 regular + 2 bonus = 20 questions
+function buildGameQuestions() {
+  var regular = QUESTION_BANK.filter(function(q){ return q.pts === 10; });
+  var bonus   = QUESTION_BANK.filter(function(q){ return q.pts === 15; });
+  var reg18 = shuffleArray(regular).slice(0, 18);
+  var bon2  = shuffleArray(bonus).slice(0, 2);
+  return reg18.concat(bon2);
+}
+
+// ══════════════════════════════════════════
+//  GAME STATE
+// ══════════════════════════════════════════
+let QUESTIONS = [];
+let teamNames = [];
+let scores    = [0, 0, 0, 0];
+let answered  = [[], [], [], []];
+let currentQ  = 0;
+let timerSeconds  = 1500;
+let timerInterval = null;
+let paused    = false;
+let firstAnswerThisRound = null;
+let gameStarted = false;
+
+function startGame() {
+  teamNames = ['t0','t1','t2','t3'].map(id => document.getElementById(id).value.trim() || `Team ${parseInt(id[1])+1}`);
+  timerSeconds = parseInt(document.getElementById('timer-select').value);
+  QUESTIONS = buildGameQuestions();
+
+  document.getElementById('setup-screen').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'block';
+
+  buildScoreboard();
+  buildAnswerGrid();
+  buildQNav();
+  showQ(0);
+  startTimer();
+  gameStarted = true;
+}
+
+function buildScoreboard() {
+  var sb = document.getElementById('scoreboard');
+  sb.innerHTML = teamNames.map(function(name, i){ return `
+    <div class="team-card" data-team="${i}" id="team-card-${i}">
+      <h3>${name}</h3>
+      <div class="team-score" id="score-${i}">0</div>
+      <div class="team-progress" id="prog-${i}">0 / ${QUESTIONS.length} answered</div>
+      <div class="progress-bar"><div class="progress-fill" data-team="${i}" id="fill-${i}" style="width:0%"></div></div>
+    </div>
+  `; }).join('');
+}
+
+function buildAnswerGrid() {
+  var ag = document.getElementById('answer-grid');
+  ag.innerHTML = teamNames.map(function(name, i){ return `
+    <div class="answer-panel" data-team="${i}">
+      <h4>🎵 ${name}</h4>
+      <input class="ans-input" id="ans-${i}" placeholder="Type answer..." onkeydown="if(event.key==='Enter') submitAnswer(${i})">
+      <button class="submit-ans" id="submit-${i}" onclick="submitAnswer(${i})">Submit</button>
+      <div class="ans-status" id="status-${i}"></div>
+    </div>
+  `; }).join('');
+}
+
+function buildQNav() {
+  var nav = document.getElementById('q-nav');
+  document.getElementById('q-total').textContent = QUESTIONS.length;
+  nav.innerHTML = QUESTIONS.map(function(q, i){ return `
+    <span class="q-pill" id="qpill-${i}" onclick="showQ(${i})">Q${i+1}${i>=18?' ⭐':''}</span>
+  `; }).join('');
+}
+
+function showQ(idx) {
+  currentQ = idx;
+  firstAnswerThisRound = null;
+  var q = QUESTIONS[idx];
+  document.getElementById('q-label').textContent = 'Q'+(idx+1)+(idx>=18?' (Bonus)':'');
+  document.getElementById('q-text').innerHTML = q.q + '<br><span style="color:var(--muted);font-size:0.8rem;margin-top:0.4rem;display:block">💡 Hint: '+q.hint+'</span>';
+
+  document.querySelectorAll('.q-pill').forEach(function(p,i){
+    p.classList.remove('active');
+    var anyCorrect = answered.some(function(a){ return a.includes(i); });
+    p.classList.toggle('answered', anyCorrect);
+  });
+  var pill = document.getElementById('qpill-'+idx);
+  if (pill) pill.classList.add('active');
+
+  teamNames.forEach(function(_, i){
+    var inp  = document.getElementById('ans-'+i);
+    var btn  = document.getElementById('submit-'+i);
+    var stat = document.getElementById('status-'+i);
+    var alreadyGot = answered[i].includes(idx);
+    inp.value = '';
+    inp.disabled = alreadyGot;
+    btn.disabled = alreadyGot;
+    stat.textContent = alreadyGot ? '✅ Already answered!' : '';
+    stat.className = 'ans-status ' + (alreadyGot ? 'correct' : '');
+  });
+}
+
+function showQuestion() {
+  document.querySelector('.current-q').scrollIntoView({ behavior: 'smooth' });
+}
+
+function submitAnswer(teamIdx) {
+  var inp  = document.getElementById('ans-'+teamIdx);
+  var stat = document.getElementById('status-'+teamIdx);
+  var btn  = document.getElementById('submit-'+teamIdx);
+  var raw  = inp.value.trim();
+  if (!raw) return;
+
+  var q = QUESTIONS[currentQ];
+  var correct = q.a.some(function(ans){
+    return ans.toLowerCase() === raw.toLowerCase() ||
+           ans.toLowerCase().replace(/[^0-9.]/g,'') === raw.toLowerCase().replace(/[^0-9.]/g,'');
+  });
+
+  if (correct) {
+    var pts = q.pts;
+    if (firstAnswerThisRound === null) {
+      firstAnswerThisRound = teamIdx;
+      pts += 2;
+      toast('⚡ ' + teamNames[teamIdx] + ' answered first! +' + pts + ' pts');
+    } else {
+      toast('✅ ' + teamNames[teamIdx] + ' correct! +' + pts + ' pts');
+    }
+    scores[teamIdx] += pts;
+    answered[teamIdx].push(currentQ);
+    inp.disabled = true;
+    btn.disabled = true;
+    stat.textContent = '✅ Correct! +' + pts + ' pts';
+    stat.className = 'ans-status correct';
+    updateScoreboard();
+    var pill = document.getElementById('qpill-'+currentQ);
+    if (pill) pill.classList.add('answered');
+    if (answered.some(function(a){ return a.length === QUESTIONS.length; })) {
+      setTimeout(function(){ endGame(); }, 1500);
+    }
+  } else {
+    stat.textContent = '❌ Try again!';
+    stat.className = 'ans-status wrong';
+    inp.select();
+    setTimeout(function(){ if (stat.textContent === '❌ Try again!') stat.textContent = ''; }, 2000);
+  }
+}
+
+function updateScoreboard() {
+  var maxScore = Math.max.apply(null, scores);
+  teamNames.forEach(function(name, i){
+    document.getElementById('score-'+i).textContent = scores[i];
+    document.getElementById('prog-'+i).textContent = answered[i].length + ' / ' + QUESTIONS.length + ' answered';
+    var pct = (answered[i].length / QUESTIONS.length) * 100;
+    document.getElementById('fill-'+i).style.width = pct + '%';
+    var card = document.getElementById('team-card-'+i);
+    card.classList.toggle('leading', scores[i] === maxScore && scores[i] > 0);
+  });
+}
+
+function startTimer() {
+  updateTimerDisplay();
+  timerInterval = setInterval(function(){
+    if (paused) return;
+    timerSeconds--;
+    updateTimerDisplay();
+    if (timerSeconds <= 0) {
+      clearInterval(timerInterval);
+      endGame();
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  var m  = Math.floor(timerSeconds / 60);
+  var s  = timerSeconds % 60;
+  var el = document.getElementById('timer-display');
+  el.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+  el.classList.toggle('urgent', timerSeconds <= 60);
+}
+
+function togglePause() {
+  paused = !paused;
+  document.getElementById('pause-btn').textContent = paused ? '▶ Resume' : '⏸ Pause';
+  toast(paused ? '⏸ Game paused' : '▶ Game resumed');
+}
+
+function endGame() {
+  clearInterval(timerInterval);
+  document.getElementById('dashboard').style.display = 'none';
+  var ws = document.getElementById('win-screen');
+  ws.style.display = 'flex';
+  ws.style.flexDirection = 'column';
+
+  var ranked = teamNames.map(function(name, i){
+    return { name: name, score: scores[i], answered: answered[i].length };
+  }).sort(function(a, b){ return b.score - a.score; });
+
+  var winner = ranked[0];
+  document.getElementById('win-title').textContent = '🏆 ' + winner.name + ' Wins!';
+
+  var quotes = [
+    '"Music is the shorthand of emotion." — Leo Tolstoy',
+    '"Without music, life would be a mistake." — Friedrich Nietzsche',
+    '"Music is the universal language of mankind." — Henry Wadsworth Longfellow',
+    '"Where words fail, music speaks." — Hans Christian Andersen'
+  ];
+  document.getElementById('win-subtitle').innerHTML = quotes[Math.floor(Math.random() * quotes.length)];
+
+  var medals = ['🥇','🥈','🥉','4️⃣'];
+  document.getElementById('final-scores').innerHTML = ranked.map(function(t, i){
+    return '<div class="final-row ' + (i===0?'winner':'') + '">' +
+      '<span>' + medals[i] + ' ' + t.name + '</span>' +
+      '<span>' + t.score + ' pts (' + t.answered + ' q)</span>' +
+      '</div>';
+  }).join('');
+}
+
+var toastTimer = null;
+function toast(msg) {
+  var el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){ el.classList.remove('show'); }, 2500);
+}
+</script>
+</body>
+</html>
